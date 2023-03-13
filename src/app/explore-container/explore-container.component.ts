@@ -57,10 +57,6 @@ export class ExploreContainerComponent implements OnInit {
     return this.inquisDamageLevels[this.deckConfig.inquisCardLevel] + this.inquisBaseDamage;
   }
 
-  changeGadgetBuff(event: any, type: any) {
-    this.heroes[this.deckConfig.hero][type] = parseFloat(event.target.value);
-  }
-
   changeSetBonus(event: any) {
     this.deckConfig.hasSetBonus = event.target.checked;
   }
@@ -150,8 +146,8 @@ export class ExploreContainerComponent implements OnInit {
     ronin: { damage: 900, critChance: 0, critDamage: 0 },
   };
   amulets: any = {
-    magic: { damage: 29, speed: 0, crit: 0, stat: 'damage' },
-    weakness: { damage: 0, speed: 0, crit: 0, stat: 'damage' }
+    magic: { damage: 29, speed: 0, crit: 0, stat: 'damage', name: 'Magic/Growth' },
+    weakness: { damage: 0, speed: 0, crit: 0, stat: 'damage', name: 'None' }
   };
 
   weapons: any = {
@@ -188,9 +184,9 @@ export class ExploreContainerComponent implements OnInit {
 
   cards: any = {
     'banner': { damage: 0, speed: 116, crit: 0, name: "Banner" },
-    'dryad_rage': { damage: 50, speed: 0, crit: 0, type: 'unit', name: 'Dryad' },
-    'dryad_growth': { damage: 0, speed: 0, crit: 0, name: 'Dryad' },
-    'harly': { damage: 0, speed: 0, crit: 0, name: "Harly" },
+    'dryad_rage': { damage: 50, speed: 0, crit: 0, type: 'unit', name: 'Dryad (Rage)' },
+    'dryad_growth': { damage: 0, speed: 0, crit: 0, name: 'Dryad (Growth)' },
+    'harly': { damage: 0, speed: 0, crit: 0, name: "Harly", type: 'none' },
     'sword': { damage: 200, speed: 0, crit: 5, type: 'unit', name: 'Sword' },
     'trapper': {
       damage: 0, speed: 0, crit: 0, type: 'armor', name: 'Trapper', dmgLevels: [
@@ -206,7 +202,7 @@ export class ExploreContainerComponent implements OnInit {
       ]
     },
     'chemist': { damage: 103, speed: 0, crit: 0, type: 'armor', name: 'Chemist' },
-    'scrapper': { damage: 0, speed: 0, crit: 0, type: 'armor', name: 'Scrapper' },
+    'scrapper': { damage: 0, speed: 0, crit: 0, type: 'none', name: 'Scrapper' },
     'knight_statue': { damage: 0, speed: 0, crit: 0, name: 'Knight Statue', critTiers: [5, 7.5, 10, 12.5, 15, 17.5, 20] },
     'witch_statue': { damage: 204, speed: 0, crit: 0, type: 'unit', name: 'Witch', merges: 15 },
     'grindstone': { damage: 93, speed: 0, crit: 0, type: 'flat', name: 'Grindstone' },
@@ -255,8 +251,9 @@ export class ExploreContainerComponent implements OnInit {
     this.amulets[this.deckConfig.amulet][this.amulets[this.deckConfig.amulet].stat] = parseFloat(ev.target.value); 
     this.deckConfig.amuletStats = this.amulets;
   }
-  changeHeroStat(ev: any) {
-    this.heroes[this.deckConfig.hero][this.heroes[this.deckConfig.hero].stat] = parseFloat(ev.target.value); 
+  changeHeroStat(ev: any, type: any) {
+    this.heroes[this.deckConfig.hero][type] = parseFloat(ev.target.value);
+    //this.heroes[this.deckConfig.hero][this.heroes[this.deckConfig.hero].stat] = parseFloat(ev.target.value); 
     this.deckConfig.heroStats = this.heroes;
   }
   changeGoldTile(ev: any){
@@ -298,8 +295,13 @@ export class ExploreContainerComponent implements OnInit {
     }
   }
 
-  getCardDisplayName(card: Card){
-    let cardInfo = this.cards[card.name];
+  getCardDisplayName(card: any){
+    let cardInfo;
+    if (card && card.name){
+      cardInfo = this.cards[card.name];
+    } else {
+      cardInfo = this.cards[card];
+    }
     return cardInfo.name;
   };
 
