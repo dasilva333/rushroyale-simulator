@@ -1,0 +1,26 @@
+
+
+dh lvl14
+base damage 773
+
+tier one
+l1 mana power 773
+l2 mana power 773+50=823
+l3 mana power 773+100=873
+
+bonus per rank 7%
+
+tier one with bonus
+l1 mana power 773x1.07=827
+l2 mana power 773+50=823*1.07=880
+l3 mana power 773+100=873*1.07=934
+
+sword level9
+base buff 23% (one stack)
+
+dh tier 1 mana l1 with 1 stack of sword buff would be 827 * 1.23 = 1017
+dh tier 1 mana l1 with 2 stack of sword buff would be 827 * 1.56 = 1290
+dh tier 1 mana l1 with 3 stack of sword buff would be 827 * 1.69 = 1397
+dh tier 1 mana l1 with 4 stack of sword buff would be 827 * 1.92 = 1587
+dh tier 1 mana l1 with 5 stack of sword buff would be 827 * 2.15 = 1778
+dh tier 1 mana l1 with 6 stack of sword buff would be 827 * 2.38 = 1968

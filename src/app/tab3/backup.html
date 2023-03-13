@@ -1,0 +1,370 @@
+<ion-row>
+    <ion-col size="7">
+
+      <ion-item class="ion-no-padding">
+        <ion-label><strong>Dmg Per Attack</strong></ion-label>
+
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-label>{{ totalDamagePerSecond().newAttackDamage | number: '1.0-1' }}</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-label><strong>Interval</strong></ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-label>{{ totalDamagePerSecond().newAttackSpeed | number }}/s</ion-label>
+      </ion-item>
+    </ion-col>
+    
+    
+<!-- 
+        <ion-label><strong>Base Dmg / sec</strong></ion-label>
+
+        <ion-label>{{ totalDamagePerSecond().dmgPerSecond | number: '1.0-1' }}</ion-label> -->
+  </ion-row>
+  <ion-row>
+    <ion-col size="24">
+
+      <ion-item class="ion-no-padding">
+        <ion-label><strong>Dmg Per Crit</strong></ion-label>
+
+        <ion-label>{{ totalDamagePerSecond().criticalDamage | number: '1.0-1' }}</ion-label>
+
+
+        <ion-label><strong>Crit Hits / sec</strong></ion-label>
+
+        <ion-label>{{ totalDamagePerSecond().critHitsPerSecond | number }}</ion-label>
+
+
+        <ion-label><strong>Crit Dmg / sec</strong></ion-label>
+
+        <ion-label>{{ totalDamagePerSecond().critDmgPerSecond | number: '1.0-1' }}</ion-label>
+
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="24">
+
+      <ion-item class="ion-no-padding">
+        <ion-label><strong>Total Combined Damage Per Second</strong></ion-label>
+
+        <ion-label>{{ totalDamagePerSecond().total | number: '1.0-1' }}</ion-label>
+
+
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <!-- <ion-row>
+<ion-col size="24">
+<ion-item class="ion-no-padding">
+  <p>{{ totalDamagePerSecond() | json }}</p>
+</ion-item>
+</ion-col>
+</ion-row> -->
+  <ion-row class="headerRow">
+    <ion-col size="6">
+      <ion-item class="ion-no-padding">
+        Item
+      </ion-item>
+    </ion-col>
+    <ion-col size="6">
+      <ion-item class="ion-no-padding">
+        <ion-label>Level/Tier</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-text>
+          <i>Damage</i> </ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-text>
+          <i>Crit</i> </ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-text>
+          <i>Speed</i> </ion-text>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="6">
+      <ion-item class="ion-no-padding">
+        <ion-label>Player Crit</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col size="6">
+      <ion-item class="ion-no-padding">
+        <ion-input [value]="deckConfig.playerCrit" (ionChange)="changePlayerCrit($event)"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-text>
+          -
+        </ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-text>
+          5%
+        </ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-text>
+          -
+        </ion-text>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12">
+      <ion-item class="ion-no-padding">
+        <ion-label>Main DPS Unit</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-text>
+          <ion-input [value]="mainDpsBaseDamage" (ionChange)="changeBaseDps($event)"></ion-input>
+        </ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-text>
+          <ion-input value="0"></ion-input>
+        </ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-text>
+          <ion-input [value]="mainDpsBaseSpeed" (ionChange)="changeBaseSpeed($event)"></ion-input>
+        </ion-text>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngFor="let card of deck; let i = index;">
+    <ion-col size-xs="8" size-lg="6">
+      <ion-item class="ion-no-padding">
+        <ion-select placeholder="Pick Card" [value]="card.name" (ionChange)="changeCard($event, card, i)">
+          <ion-select-option value="harly">Harly / PK / No-Buffs</ion-select-option>
+          <ion-select-option value="dryad_rage">Dryad Rage</ion-select-option>
+          <ion-select-option value="dryad_growth">Dryad Growth</ion-select-option>
+          <ion-select-option value="sword">Sword</ion-select-option>
+          <ion-select-option value="trapper">Trapper</ion-select-option>
+          <ion-select-option value="chemist">Chemist</ion-select-option>
+          <ion-select-option value="scrapper">Scrapper</ion-select-option>
+          <ion-select-option value="banner">Banner</ion-select-option>
+          <ion-select-option value="knight_statue">Knight Statue</ion-select-option>
+          <ion-select-option value="grindstone">Grindstone</ion-select-option>
+          <ion-select-option value="witch_statue">Witch Statue</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+    <ion-col size-xs="5" size-lg="6">
+      <ion-item class="ion-no-padding">
+        <ion-select placeholder="Level 9-12" [value]="card.level" (ionChange)="changeCardLevel($event, card)">
+
+          <ion-select-option *ngFor="let level of levels;" [value]="level">{{ level }}</ion-select-option>
+
+        </ion-select>
+        <ion-select placeholder="Tier 4-7" [value]="card.tier" (ionChange)="changeTierLevel($event, card)">
+          <ion-select-option *ngFor="let tier of tiers;" [value]="tier">{{ tier }}</ion-select-option>
+        </ion-select>
+        <ion-select placeholder="Merges" *ngIf="card.name == 'witch_statue'" [value]="card.merges"
+          (ionChange)="changeWitchMerges($event, card)">
+          <ion-select-option *ngFor="let merge of witchMerges;" [value]="merge">{{ merge }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+
+    <ion-col size="11">
+      <ion-item class="ion-no-padding ion-float-right">
+        <span *ngIf="getUnitType(card) == 'unit' || getUnitType(card) == 'armor'">
+          <ion-chip size="small" [color]="getUnitType(card) == 'unit' ? 'primary' : 'secondary'" title="Dmg Buff">
+            {{
+            getDmgBuff(card)
+            }}%</ion-chip>
+        </span>
+        <span *ngIf="getUnitType(card) == 'flat'">
+          <ion-chip size="small" color="danger" title="Dmg Buff"> {{ getDmgBuff(card)
+            }} pts</ion-chip>
+        </span>
+        &nbsp;<ion-chip size="small" color="success" title="Crit Buff"> {{ getCritBuff(card) }}%</ion-chip>
+
+        <ion-chip size="small" color="warning" title="Speed Buff"> {{ getSpeedBuff(card) }}%</ion-chip>
+
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="4" size-lg="6">
+      <ion-item class="ion-no-padding">
+        <ion-text>Hero</ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="8" size-lg="6">
+      <ion-item class="ion-no-padding">
+        <ion-select placeholder="Pick Hero" [value]="deckConfig.hero" (ionChange)="changeHero($event)">
+          <ion-select-option *ngFor="let hero of heroList();" [value]="hero">{{ hero }}</ion-select-option>
+        </ion-select>
+
+        <ion-input [value]="heroes[deckConfig.hero][heroes[deckConfig.hero].stat]"
+          (ionChange)="changeHeroStat($event)"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="12">
+      <ion-item class="ion-no-padding ion-float-right">
+        <ion-text>
+          <ion-chip color="primary" size="small" title="Dmg Buff"> {{ heroes[deckConfig.hero].damage
+            }}%</ion-chip>
+          <ion-chip color="success" size="small" title="Crit Buff"> {{ heroes[deckConfig.hero].crit
+            }}%</ion-chip>
+          <ion-chip color="warning" size="small" title="Speed Buff"> {{ heroes[deckConfig.hero].speed
+            }}%</ion-chip>
+        </ion-text>
+      </ion-item>
+    </ion-col>
+
+  </ion-row>
+  <ion-row>
+    <ion-col size="12">
+      <ion-item class="ion-no-padding">
+        <ion-text>Hero Config&nbsp;
+          <span *ngIf="deckConfig.hero == 'gadget'"><br class="ion-show-sm-down"><i>Gold Tile</i>&nbsp;</span>
+        </ion-text>
+
+        <ion-checkbox *ngIf="deckConfig.hero == 'gadget'" class="ion-no-padding ion-no-margin" size="small"
+          [checked]="heroes[deckConfig.hero].isGold" (ionChange)="changeGoldTile($event)"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-text>
+          <ion-input [value]="heroes[deckConfig.hero].damage"
+            (ionChange)="changeGadgetBuff($event,'damage')"></ion-input>
+        </ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-text>
+          <ion-input [value]="heroes[deckConfig.hero].crit"
+            (ionChange)="changeGadgetBuff($event,'crit')"></ion-input>
+        </ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item class="ion-no-padding">
+        <ion-text>
+          <ion-input [value]="heroes[deckConfig.hero].speed"
+            (ionChange)="changeGadgetBuff($event,'speed')"></ion-input>
+        </ion-text>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size-xs="5" size-lg="6">
+      <ion-item class="ion-no-padding">
+        <ion-label>Amulet</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col size-xs="7" size-lg="6">
+
+      <ion-item class="ion-no-padding">
+        <ion-select placeholder="Pick Amulet" [value]="deckConfig.amulet" (ionChange)="changeAmulet($event)">
+          <ion-select-option *ngFor="let amulet of amuletList();" [value]="amulet">{{ amulet
+            }}</ion-select-option>
+        </ion-select>
+
+        <ion-input [value]="amulets[deckConfig.amulet][amulets[deckConfig.amulet].stat]"
+          (ionChange)="changeAmuletStat($event)"></ion-input>%
+      </ion-item>
+    </ion-col>
+
+    <ion-col size="12">
+      <ion-item class="ion-no-padding ion-float-right">
+        <ion-text>
+          <ion-chip color="primary" size="small" title="Dmg Buff"> {{ amulets[deckConfig.amulet].damage
+            }}%</ion-chip>
+
+          <ion-chip color="success" size="small" title="Crit Buff"> {{ amulets[deckConfig.amulet].crit
+            }}%</ion-chip>
+
+          <ion-chip color="warning" size="small" title="Speed Buff"> {{ amulets[deckConfig.amulet].speed
+            }}%</ion-chip>
+        </ion-text>
+      </ion-item>
+    </ion-col>
+
+  </ion-row>
+  <ion-row>
+    <ion-col size-xs="5" size-lg="6">
+      <ion-item class="ion-no-padding">
+        <ion-label>Weapon</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col size-xs="7" size-lg="6">
+
+      <ion-item class="ion-no-padding">
+        <ion-select placeholder="Pick Weapon" [value]="deckConfig.weapon" (ionChange)="changeWeapon($event)">
+          <ion-select-option *ngFor="let weapon of weaponList();" [value]="weapon">{{ weapon
+            }}</ion-select-option>
+
+        </ion-select>
+        <ion-input [value]="weapons[deckConfig.weapon][weapons[deckConfig.weapon].stat]"
+          (ionChange)="changeWeaponStat($event)"></ion-input>%
+      </ion-item>
+    </ion-col>
+
+    <ion-col size="12">
+      <ion-item class="ion-no-padding ion-float-right">
+        <ion-text>
+          <ion-chip color="primary" size="small" title="Dmg Buff"> {{ weapons[deckConfig.weapon].damage
+            }}%</ion-chip>
+
+          <ion-chip [color]="deckConfig.weapon == 'bow' ? 'tertiary' : 'success'" title="Crit Buff" size="small">
+            {{
+            weapons[deckConfig.weapon].crit
+            }}%</ion-chip>
+
+          <ion-chip color="warning" size="small" title="Speed Buff"> {{ weapons[deckConfig.weapon].speed
+            }}%</ion-chip>
+        </ion-text>
+      </ion-item>
+    </ion-col>
+
+  </ion-row>
+  <ion-row>
+    <ion-col size="6">
+      <ion-item class="ion-no-padding">
+        <ion-label>
+          Set Bonus
+        </ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col size="18">
+      <ion-item class="ion-no-padding">
+        <ion-checkbox slot="start" class="ion-no-padding ion-no-margin" size="small"
+          [checked]="deckConfig.hasSetBonus" (ionChange)="changeSetBonus($event)"></ion-checkbox>
+        <ion-text>&nbsp;<i>10%+</i></ion-text>
+      </ion-item>
+    </ion-col>
+  </ion-row>

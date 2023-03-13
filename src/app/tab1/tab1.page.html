@@ -1,17 +1,53 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="false">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Dark&Light Inquis Calculator
     </ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header collapse="condense" class="ion-hide-sm-down">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Dark&Light Inquis Calculator</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-list>
+    <!-- <ion-item>
+      <ion-label>Dark Inquis Card Level</ion-label>
+
+      <ion-select placeholder="Level 9-12" [value]="cardLevel" (ionChange)="changeCardLevel($event)">
+        
+        <ion-select-option *ngFor="let level of levels;" [value]="level">{{ level }}</ion-select-option>
+        
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <strong>Base Damage</strong> {{ inquisDamageLevels[this.cardLevel] }} + {{ inquisBaseDamage }} = {{ getInquisBaseDamage() }}
+      </ion-label>
+    </ion-item> -->
+    <ion-fab slot="fixed" vertical="top" horizontal="end" style="top: -5px;">
+      <ion-fab-button color="success" (click)="saveInfo()">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <!-- <ion-item>
+      <ion-label style="padding-left:100px;"><strong>Player Crit %</strong></ion-label>
+      <ion-input placeholder="2000" [value]="playerCrit" (ionChange)="changePlayerCrit($event)"></ion-input>
+    </ion-item> -->
+    <ion-item class="ion-no-padding">
+      <ion-grid>
+        <ion-row>
+          <ion-col size-sm="12" size-md="12" size-lg="6" *ngFor="let deck of decks; let index = index;">
+
+            <app-explore-container name="Deck {{ index + 1 }}" [deckConfig]="deck"></app-explore-container>
+
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+  </ion-list>
 </ion-content>

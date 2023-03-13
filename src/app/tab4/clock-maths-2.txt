@@ -1,0 +1,13 @@
+let clockMultiplier = 0.15;
+let clockMaxManaReduction= 4;
+let clockBaseAttackSpeedReduction = 2;
+let cardLevel = 8;
+let minTierLevel = 3;
+let tierMultiplier = ((clockMultiplier * minTierLevel) + clockMultiplier).toFixed(2) * 1;
+console.log('tierMultiplier', tierMultiplier);
+let cardMultiplierLevel = ((((cardLevel - 7) * clockMultiplier) * 2) + clockMultiplier).toFixed(2) * 1;
+let tierBonus = minTierLevel - 1;
+console.log('cardMultiplierLevel', cardMultiplierLevel, 'tierBonus', tierBonus);
+let asReduction = (clockMaxManaReduction + cardMultiplierLevel + tierBonus + 0).toFixed(2)*1;
+let totalReduction = (clockBaseAttackSpeedReduction + asReduction) * -1;
+console.log('results', clockBaseAttackSpeedReduction, asReduction, totalReduction);

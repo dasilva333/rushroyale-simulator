@@ -1,0 +1,11 @@
+let clockMultiplier = 0.15;
+let clockMaxManaReduction= 4;
+let clockBaseAttackSpeedReduction = 2;
+let cardLevel = 9;
+let minTierLevel = 3;
+let multiplierLevel = ((cardLevel - 7) * clockMultiplier) * 2;
+let multiplierLevel2 = (clockMultiplier - multiplierLevel).toFixed(2) * -1;
+let asReduction = (clockMaxManaReduction + multiplierLevel) + (minTierLevel-1)
+let asReduction2 = (clockBaseAttackSpeedReduction);
+let totalReduction = ((asReduction + asReduction2) * -1).toFixed(2);
+console.log('cardLevelAttackSpeed', asReduction2, asReduction, multiplierLevel, multiplierLevel2, totalReduction);

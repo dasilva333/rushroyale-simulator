@@ -1,0 +1,183 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Clock Tool</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-xs="12" size-md="6">
+        <ion-list class="ion-no-padding">
+          <ion-item class="ion-no-padding">
+            <ion-thumbnail><img src="/assets/icons/clock.png"></ion-thumbnail>&nbsp;
+            <ion-label><strong>Your Clock</strong></ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Clock Card Level</ion-label>
+            <ion-select placeholder="Your Card Level" [value]="activeClockLevel" (ionChange)="changeClockLevel($event)">
+              <ion-select-option *ngFor="let level of levels;" [value]="level">{{ level }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Max Clocks Tiles</ion-label>
+            <ion-select placeholder="Max Clock Tiles" [value]="maxClockTiles" (ionChange)="changeClockTiles($event)">
+              <ion-select-option *ngFor="let tile of tiles;" [value]="tile">{{ tile }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <i>Maximum number of tiles available to use for clocks on the board</i>
+          </ion-item>
+          <ion-item>
+            <ion-label>Attack Speed Decrease </ion-label>
+            <ion-label>
+              <ion-chip><strong>T1</strong> {{ getAttackSpeedReduction(activeClockLevel,1) }}%
+              </ion-chip>
+              <ion-chip><strong>T7</strong> {{ getAttackSpeedReduction(activeClockLevel,7) }}%
+              </ion-chip>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <i>Displaying stats for Clock lvl. {{ activeClockLevel }} from tier 1 (T1) to tier 7 (T7) and assuming max
+              mana</i>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col size-xs="12" size-md="6">
+        <ion-list>
+          <ion-item>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <h1>Opponent's Items</h1>
+                  <p>Tap each item to activate</p>
+                </ion-col>
+              </ion-row>
+              <ion-row style="text-align: center; vertical-align: middle;">
+                <ion-col size-xs="4" size-md="2">
+                  <img (click)="setActiveCounter($event, 'banner')"
+                    style="height: 100px; opacity: 0.5;" src="/assets/icons/banner.png"><br>Banner
+                </ion-col>
+                <ion-col size-xs="4" size-md="2">
+                  <img (click)="setActiveCounter($event, 'knight_statue')" style="height: 100px; opacity: 0.5;"
+                    src="/assets/icons/knight_statue.png"><br>Knight Statue
+                </ion-col>
+                <ion-col size-xs="4" size-md="2">
+                  <img (click)="setActiveCounter($event, 'spear')" style="height: 80px; opacity: 0.5;"
+                    src="/assets/icons/spear.png"><br>Spear
+                </ion-col>
+                <ion-col size-xs="4" size-md="2">
+                  <img (click)="setActiveCounter($event, 'jay')" style="height: 80px; opacity: 0.5;"
+                    src="/assets/jay_tile.png"><br>Jay Tile
+                </ion-col>
+                <ion-col size-xs="4" size-md="2">
+                  <img (click)="setActiveCounter($event, 'gadget')" style="height: 80px; opacity: 0.5;"
+                  src="/assets/gadget_tile.png"><br>Gadget Tile
+                </ion-col>
+                <ion-col size-xs="4" size-md="2">
+                  <img (click)="setActiveCounter($event, 'zeus')" style="height: 80px; opacity: 0.5;"
+                    src="/assets/zeus_tile2.png"><br>Zeus Tile
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+          <ion-item *ngFor="let counter of activeCounters;" class="ion-no-padding">
+            <div *ngIf="counter == 'banner' || counter == 'knight_statue'" style="width: 100%;">
+              <!-- <ion-label><strong><span class="ion-text-capitalize">{{ counter }}</span> Buff</strong> {{ getItemBuff(counter, 1) }}% to {{ getItemBuff(counter, 7) }}%</ion-label> -->
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding">
+                        <ion-label><strong><span class="ion-text-capitalize">{{ counter }}</span> Buff</strong> {{
+                          getItemBuff(counter, 1) }}% to {{ getItemBuff(counter, 7) }}%</ion-label>
+
+                      </ion-item>
+                      <ion-item class="ion-no-padding">
+                        <ion-label>{{ counter }} card level</ion-label>
+                        <ion-select [value]="counters[counter].cardLevel"
+                          (ionChange)="changeCounterCardLevel($event,counter)">
+                          <ion-select-option *ngFor="let level of levels;" [value]="level">{{ level
+                            }}</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                    </ion-list>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size-xs="3">
+                    <ion-label><strong>Tier Buff</strong></ion-label>
+                  </ion-col>
+                  <ion-col size-xs="8">
+                    <ion-label><strong>Clocks Needed</strong></ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row class="ion-no-padding" *ngFor="let tier of tiers;">
+                  <ion-col size-xs="1">
+                    <ion-label>{{ tier }}</ion-label>
+                  </ion-col>
+                  <ion-col size-xs="2">
+                    <ion-label>{{ getItemBuff(counter, tier) }}%</ion-label>
+                  </ion-col>
+                  <ion-col size-xs="9">
+                    <ion-chip size="small" *ngFor="let clock of getClockNeeded(getItemBuff(counter, tier))">{{ clock
+                      }}</ion-chip>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+
+            <div style="width: 100%" *ngIf="counter == 'spear' || counter == 'jay' || counter == 'gadget' || counter == 'zeus'">
+              <ion-item class="ion-no-padding">
+
+                <ion-label position="stacked"><strong>Input your opponent's {{ counter }} buff %</strong> </ion-label>
+                <ion-input [value]="counters[counter].buff" placeholder="{{ counter }} Buff %"
+                  (ionChange)="changeCounterBuff($event, counter)"></ion-input>
+              </ion-item>
+              <ion-item class="ion-no-padding">
+                <ion-label>
+                  <strong>Clocks Needed</strong>
+                </ion-label>
+                <ion-chip size="small" *ngFor="let clock of getClockNeeded(counters.spear.buff)">{{ clock
+                }}</ion-chip>
+              </ion-item>
+            </div>
+            <!-- <ion-label><strong>Tier 1 {{ counter}} 0% increase</strong> <strong>Tier 7 {{ counter}} 0% increase</strong></ion-label> -->
+          </ion-item>
+          <ion-item *ngIf="activeCounters.length > 1" class="ion-no-padding">
+            <ion-label>
+              <strong>Grand Total</strong> {{ getTotalBuffs() }}%
+              <strong>Clocks Needed</strong>
+            </ion-label>
+            <ion-chip size="small" *ngFor="let clock of getClockNeeded(getTotalBuffs())">{{ clock }}</ion-chip>
+          </ion-item>
+          <ion-item *ngIf="activeCounters.length > 0" class="ion-no-padding">
+            <ion-label>Negate Amount</ion-label>
+            <ion-select placeholder="Negate Amount" [value]="negateAmount" (ionChange)="changeNegateAmount($event)">
+              <ion-select-option value="0.5">50%</ion-select-option>
+              <ion-select-option value="1">100%</ion-select-option>
+              <ion-select-option value="1.25">125%</ion-select-option>
+              <ion-select-option value="1.5">150%</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item *ngIf="activeCounters.length > 0" class="ion-no-padding">
+            <i>
+              <strong>Negate Amount</strong> Use this to determine how many clocks needed to reduce the effectiveness of their items 
+              by half, completely or an additional amount.
+              <!-- 50% reduces effectiveness by half, 100% reduces effectiveness completely,
+              150% reduces 50% additional attack speed on top of negating their buff -->
+            </i>
+          </ion-item>
+          <ion-item *ngIf="negateAmount != '1'" class="ion-no-padding">
+            <ion-label>
+              <strong>New Total</strong> {{ getNegatedTotal() }}%
+              <strong>Clocks Needed</strong>
+            </ion-label>
+            <ion-chip size="small" *ngFor="let clock of getClockNeeded(getNegatedTotal())">{{ clock }}</ion-chip>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

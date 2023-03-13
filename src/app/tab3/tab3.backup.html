@@ -1,0 +1,132 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title>
+        Decks
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content [fullscreen]="true">
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">Decks</ion-title>
+      </ion-toolbar>
+    </ion-header>
+  
+    <ion-card>
+      <style>
+        table td,
+        table td ion-thumbnail,
+        table td img {
+          border: 1px solid gray;
+          width: 100px;
+          height: 100px;
+          text-align: center;
+          vertical-align: middle;
+        }
+      </style>
+      <ion-card-content>
+        <!-- <table>
+          <tr>
+            <td>
+              <a href="#">
+                <ion-icon name="add-circle-outline" size="large"></ion-icon>
+              </a>
+            </td>
+            <td *ngFor="let card of deck">
+              <ion-thumbnail size="large"><img src="/assets/icons/{{ card }}.png"></ion-thumbnail>
+            </td>
+          </tr>
+        </table> -->
+        <ion-grid>
+          <ion-row>
+            <ion-col *ngFor="let card of deck; let index = index;">
+              <a href="#/tabs/tab3" (click)="setOpen(true, index)">
+                <ion-thumbnail style="--size: 56px;"><img src="/assets/icons/{{ card }}.png"></ion-thumbnail>
+              </a>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <!-- 
+        <ion-button (click)="setOpen(true)" expand="block">Open</ion-button> -->
+  
+        <ion-modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)">
+          <ng-template>
+            <ion-header>
+              <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-button (click)="cancel()">Cancel</ion-button>
+                </ion-buttons>
+                <ion-title>Pick Replacement</ion-title>
+                <!-- <ion-buttons slot="end">
+                  <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+                </ion-buttons> -->
+              </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+              <ion-grid>
+                <ion-row>
+                  <ion-col *ngFor="let card of getBasicCards();" size="3">
+                    <ion-item>
+                      <a href="#/tabs/tab3" (click)="confirm(card)">
+                        <ion-thumbnail title="{{ card }}" style="--size: 56px;"><img
+                            src="/assets/icons/{{ card }}.png"></ion-thumbnail>
+                      </a>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+  
+      </ion-card-content>
+  
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let card of deck; let index = index;" class="ion-no-padding">
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-item class="ion-no-padding">
+                    <ion-label>{{ card }}</ion-label>
+                    <ion-select placeholder="Card Level" [value]="cardLevels[index]">
+                      <ion-select-option *ngFor="let level of levels;" [value]="level">{{ level }}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-item class="ion-no-padding">
+                    <ion-label>Formations</ion-label>
+                    <ion-chip color="primary" *ngFor="let formation of formations[index];">{{ formation[0] }} x Tier {{
+                      formation[1] }}s</ion-chip>
+                    <!-- <ion-chip color="primary">3x Tier 1s</ion-chip> -->
+                    <ion-button (click)="addFormation(index)"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-item class="ion-no-padding">
+                    <ion-label>
+                      <strong>Stats</strong>
+                      <span *ngFor="let formation of formations[index]">
+                        <ion-chip color="primary">Dmg Per Hit t{{ formation[1] }}x{{ formation[0] }} | Per Unit {{ getDamageForTier(formation[0],index) }} | Combined 0</ion-chip>
+                      </span>
+  
+                      <ion-chip color="secondary">Total Damage 5,000</ion-chip>
+  
+                      <ion-chip color="tertiary">Morale {{ getMorale(index) }}</ion-chip>
+                    </ion-label>
+  
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>

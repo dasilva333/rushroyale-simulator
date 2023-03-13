@@ -9,7 +9,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "publish": "ionic build --prod && surge www -d tools-for-rushroyale.surge.sh"
   },
   "private": true,
   "dependencies": {

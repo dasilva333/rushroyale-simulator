@@ -1,0 +1,131 @@
+<ion-card no-margin>
+    <ion-card-header>
+      <ion-card-title>{{ name }}</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-list>
+  
+        <ion-item>
+          <ion-label>Dark Inquis Tier</ion-label>
+          <ion-select placeholder="Pick Tier" [value]="inquisTierLevel" (ionChange)="changeInquisTier($event)">
+  
+            <ion-select-option *ngFor="let tier of tiers;" [value]="tier">{{ tier }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngFor="let card of deck; let i = index;">
+          <ion-select placeholder="Pick Card" [value]="card.name" slot="start" (ionChange)="changeCard($event, card, i)">
+            <ion-select-option value="dryad_rage">Dryad Rage</ion-select-option>
+            <ion-select-option value="dryad_growth">Dryad Growth</ion-select-option>
+            <ion-select-option value="harly">Harly</ion-select-option>
+            <ion-select-option value="sword">Sword</ion-select-option>
+            <ion-select-option value="trapper">Trapper</ion-select-option>
+            <ion-select-option value="chemist">Chemist</ion-select-option>
+            <ion-select-option value="scrapper">Scrapper</ion-select-option>
+            <ion-select-option value="banner">Banner</ion-select-option>
+            <ion-select-option value="knight_statue">Knight Statue</ion-select-option>
+            <ion-select-option value="witch_statue">Witch Statue</ion-select-option>
+          </ion-select>
+          <ion-select placeholder="Level 9-12" [value]="card.level" (ionChange)="changeCardLevel($event, card)">
+  
+            <ion-select-option *ngFor="let level of levels;" [value]="level">{{ level }}</ion-select-option>
+  
+          </ion-select>
+          <ion-select placeholder="Tier 4-7" [value]="card.tier" (ionChange)="changeTierLevel($event, card)">
+            <ion-select-option *ngFor="let tier of tiers;" [value]="tier">{{ tier }}</ion-select-option>
+          </ion-select>
+          <ion-select placeholder="Merges" *ngIf="card.name == 'witch_statue'" [value]="card.merges"
+            (ionChange)="changeWitchMerges($event, card)">
+            <ion-select-option *ngFor="let merge of witchMerges;" [value]="merge">{{ merge }}</ion-select-option>
+          </ion-select>
+  
+          <ion-label *ngIf="card.name == 'sword'" slot="end">
+            &nbsp;<ion-chip color="warning">{{ getSwordDmg(card) }}%</ion-chip>
+            <ion-chip color="success">{{ getSwordCrit(card) }}%</ion-chip>
+          </ion-label>
+  
+          <ion-label *ngIf="card.name == 'knight_statue'" slot="end">
+            &nbsp;<ion-chip color="warning">{{ getKsSpeed(card) }}%</ion-chip>
+            <ion-chip color="success">{{ getKsCrit(card) }}%</ion-chip>
+          </ion-label>
+  
+          <ion-label *ngIf="card.name == 'trapper'" slot="end">
+            &nbsp;<ion-chip color="primary"> {{ getTrapperBuff(card) }}%</ion-chip>
+          </ion-label>
+  
+          <ion-label *ngIf="card.name == 'chemist'" slot="end">
+            &nbsp;<ion-chip color="primary"> {{ getChemistBuff(card) }}%</ion-chip>
+          </ion-label>
+  
+          <ion-label *ngIf="card.name == 'banner'" slot="end">
+            &nbsp;<ion-chip color="primary"> {{ getBannerBuff(card) }}%</ion-chip>
+          </ion-label>
+  
+          <ion-label *ngIf="card.name == 'witch_statue'" slot="end">
+            &nbsp;<ion-chip color="primary"> {{ getWitchBuff(card) }}%</ion-chip>
+          </ion-label>
+  
+          <ion-label *ngIf="card.name == 'dryad_rage'" slot="end">
+            &nbsp;<ion-chip color="primary"> {{ getDryadBuff(card) }}%</ion-chip>
+          </ion-label> 
+  
+          <ion-label *ngIf="card.name == 'scrapper' || card.name == 'dryad_growth' || card.name == 'harly'" slot="end">
+            &nbsp;<ion-chip color="primary"> 0%</ion-chip>
+          </ion-label> 
+        </ion-item>
+  
+        <ion-item>
+          <ion-label slot="start">Hero</ion-label>
+          <ion-select slot="start" placeholder="Pick Hero" [value]="activeHero" (ionChange)="changeHero($event)">
+            <ion-select-option *ngFor="let hero of heroList();" [value]="hero">{{ hero }}</ion-select-option>
+          </ion-select>
+          <ion-label slot="end">
+            &nbsp;<ion-chip color="primary" *ngIf="heroes[activeHero].damage > 0"> {{ heroes[activeHero].damage }}%</ion-chip>
+            &nbsp;<ion-chip color="success" *ngIf="heroes[activeHero].crit > 0"> {{ heroes[activeHero].crit }}%</ion-chip>
+            &nbsp;<ion-chip color="warning" *ngIf="heroes[activeHero].speed > 0"> {{ heroes[activeHero].speed }}%</ion-chip>
+          </ion-label>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label slot="start">Amulet</ion-label>
+          <ion-select slot="start" placeholder="Pick Amulet" [value]="activeAmulet" (ionChange)="changeAmulet($event)">
+            <ion-select-option *ngFor="let amulet of amuletList();" [value]="amulet">{{ amulet }}</ion-select-option>
+          </ion-select>
+          
+          <ion-label slot="end">
+            &nbsp;<ion-chip color="primary" *ngIf="amulets[activeAmulet].damage > 0"> {{ amulets[activeAmulet].damage }}%</ion-chip>
+            &nbsp;<ion-chip color="success" *ngIf="amulets[activeAmulet].crit > 0"> {{ amulets[activeAmulet].crit }}%</ion-chip>
+            &nbsp;<ion-chip color="warning" *ngIf="amulets[activeAmulet].speed > 0"> {{ amulets[activeAmulet].speed }}%</ion-chip>
+          </ion-label>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label slot="start">Weapon</ion-label>
+          <ion-select slot="start" placeholder="Pick Weapon" [value]="activeWeapon" (ionChange)="changeWeapon($event)">
+            <ion-select-option *ngFor="let weapon of weaponList();" [value]="weapon">{{ weapon }}</ion-select-option>
+            
+          </ion-select>
+          
+          <ion-label slot="end">
+            &nbsp;<ion-chip color="primary" *ngIf="weapons[activeWeapon].damage > 0"> {{ weapons[activeWeapon].damage }}%</ion-chip>
+            &nbsp;<ion-chip color="success" *ngIf="weapons[activeWeapon].crit > 0"> {{ weapons[activeWeapon].crit }}%</ion-chip>
+            &nbsp;<ion-chip color="warning" *ngIf="weapons[activeWeapon].speed > 0"> {{ weapons[activeWeapon].speed }}%</ion-chip>
+          </ion-label>
+          <!-- <ion-input placeholder="% Buff" [value]="weaponBuff"></ion-input> -->
+        </ion-item>
+  
+        <ion-item>
+          <ion-label>
+            <i>Damage</i> <ion-chip color="primary">{{ totalDmgBuff() }}%</ion-chip>
+            <i>Crit</i> <ion-chip color="success">{{ totalCritBuff() }}%</ion-chip>
+            <i>Speed</i> <ion-chip color="warning">{{ totalSpeedBuff() }}%</ion-chip>
+          </ion-label>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label><strong>Total Damage</strong></ion-label>
+          <ion-label>{{ totalDamagePerSecond() | number }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>

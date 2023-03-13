@@ -1,17 +1,106 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Grid Tool
     </ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> 
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <!-- <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
+      <ion-title size="large">Sword Buffs Counter</ion-title>
     </ion-toolbar>
-  </ion-header>
+  </ion-header> -->
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <!-- <app-explore-container name="Tab 2 page"></app-explore-container> -->
+  <style>
+    table {
+      border: 5px solid silver; height: 240px; width: 400px;
+      margin: 5px;
+    }
+    table td { 
+      border: 3px solid #ccc;
+      height: 60px;
+      width: 60px;
+      position: relative;
+    }
+    /* table td:hover {
+      background-color: lightgray;
+    } */
+    table label {
+      font-size: 2em;
+
+      position: absolute;
+      top: 33%;
+      left: 45%;
+    }
+    .positive { 
+      opacity: 0.3;
+      background-color: lightgreen;
+      position: absolute;
+      height: 50%;
+      width: 100%;
+      top: 0;
+    }
+    /* .positive:hover { 
+      background-color: green;
+    } */
+    .negative { 
+      opacity: 0.3;
+      background-color: lightpink;
+      position: absolute;
+      height: 50%;
+      width: 100%;
+      top: 50%;
+    }
+    /* .negative:hover { 
+      background-color: red;
+    } */
+   </style>
+  <!-- <ion-card>
+    <ion-card-content>   -->
+      <!-- <ion-item> -->
+      <table style="">
+        <tr *ngFor="let row of gridRows; let rowIndex = index;">
+          <td *ngFor="let value of row; let columnIndex = index;">
+            <label>{{ value }}</label> 
+            <div class="positive" (click)="clickedTile(rowIndex, columnIndex, 1)">&nbsp;</div>
+            <div class="negative" (click)="clickedTile(rowIndex, columnIndex, -1)">&nbsp;</div> 
+          </td> 
+        </tr>
+       </table>
+
+       <ion-item>
+       <ion-button color="danger" (click)="resetBoard()">Reset Board</ion-button>
+      </ion-item>
+
+      <ion-card>
+        <ion-card-header>
+          <h5>Uses for Grid Tool</h5>
+        </ion-card-header>
+        <ion-card-content>
+
+          <ul>
+            <li><strong>Sword Buffs Counter</strong>  <i>Helps optimize game experience</i></li>
+            <ul>
+              <li>Play a game with Enchanted Sword</li>
+              <li>Run this page during the game</li>
+              <li>Merge swords</li>
+              <li>Memorize orb counts</li>
+              <li>Note it down on this tool</li>
+              <li>Green is to count up, red to count down, numbers wrap around</li>
+            </ul>
+            <li><strong>Formation Builder</strong>  <i>Helps explain layouts</i></li>
+            <ul>
+              <li>Set each tile to whatever numbers you want</li>
+              <li>Screenshot page and denote what each number means</li>
+              <li>Share screenshot to quickly explain formations</li>
+            </ul>
+          </ul>
+        </ion-card-content>
+      </ion-card>
+    <!--</ion-item> -->
+     <!-- </ion-card-content>
+  </ion-card>   -->
 </ion-content>
