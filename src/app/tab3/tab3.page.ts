@@ -8,7 +8,8 @@ type Card = {
    name: string,
    level: number,
    tier: number,
-   merges: number
+   merges: number,
+   mode: string
 }
 @Component({
   selector: 'app-tab3',
@@ -202,7 +203,7 @@ deckConfig: any = {
     'scrapper': { damage: 0, speed: 0, crit: 0, type: 'armor' },
     'knight_statue': { damage: 0, speed: 0, crit: 0, critTiers: [5, 7.5, 10, 12.5, 15, 17.5, 20] },
     'witch_statue': { damage: 204, speed: 0, crit: 0, type: 'unit', merges: 15 },
-    'grindstone': { damage: 93, speed: 0, crit: 0, type: 'flat' },
+    'grindstone': { damage: 93, speed: 0, crit: 0, type: 'flat', mode: 'mt' },
   }
 
   /* ks_speeds
@@ -517,8 +518,8 @@ deckConfig: any = {
 
   getGrindstoneDmg(card: Card){
     //=C21+(C22*(C24-1))+(floor(C21 * ((B28-1)*0.5)))
-    let baseDamage = 415;
-    let bonusDamage = 50;
+    let baseDamage = card.mode == 'st' ? 415 : 89;
+    let bonusDamage = card.mode == 'st' ? 50 : 10;
     let cardMana = 5;
     let totalDamage = baseDamage + (bonusDamage * (cardMana - 1))+(Math.floor(baseDamage * ((card.tier-1)*0.5)));
     return totalDamage;
