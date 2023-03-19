@@ -25,6 +25,7 @@ export class ExploreContainerComponent implements OnInit {
   deck: any = [];
   activeWeaponStat = 'speed';
   weaponBuff = 0;
+  armorBuff = 0;
 
   inquisDamageLevels: any = {
     9: 320,
@@ -46,8 +47,38 @@ export class ExploreContainerComponent implements OnInit {
     message: 'Preview your damage while active',
   };
 
+  activeEnchantment = '';
+  mainDpsIncrease: any = {
+    damage: 0,
+    crit: 0,
+    speed: 0
+  };
+
+  increaseBaseStat(ev: any, type: any) {
+    this.mainDpsIncrease[type] = ev.detail.value;
+    
+    //console.log('this.deckConfig.mainDpsBaseCrit', this.deckConfig.mainDpsBaseCrit);
+    if (type == 'crit'){
+      this.deckConfig.mainDpsBaseCrit = this.deckConfig.mainDpsBaseCrit * ((this.mainDpsIncrease[type] / 100) + 1);
+    } else if (type == 'speed'){
+      this.deckConfig.mainDpsBaseSpeed = this.deckConfig.mainDpsBaseSpeed / ((this.mainDpsIncrease[type] / 100) + 1);
+    } else if (type == 'damage'){
+      this.deckConfig.mainDpsBaseDamage = this.deckConfig.mainDpsBaseDamage * ((this.mainDpsIncrease[type] / 100) + 1);
+    }
+    //console.log('this.deckConfig.mainDpsBaseCrit', this.deckConfig.mainDpsBaseCrit);
+  }
+
   addEnchantment(ev: any) {
-    this.deckConfig.enchantments.push(ev.target.value);
+    if (ev.target.value != ''){
+      if (this.deckConfig.enchantments.length < 3){
+        this.deckConfig.enchantments.push(ev.target.value);
+      }
+      //console.log('ev.target.selectedIndex', ev.target);
+      this.activeEnchantment = ev.target.value;
+      setTimeout(() => {
+        this.activeEnchantment = '';
+      }, 21);
+    }
   }
 
   removeEnchantment(enchantmentId: any){
@@ -184,9 +215,16 @@ export class ExploreContainerComponent implements OnInit {
     sword: { alliance: 25, faction: 24, stat: 'damage' },
   };
 
+  armor: any = {
+    none: { alliance: 0, faction: 0, stat: 'none' },
+    jacket: { alliance: 7.5, faction: 7.5, stat: 'speed' },
+    chainmail: { alliance: 0, faction: 0, stat: 'damage' },
+    knights_armor: { alliance: 0, faction: 0, stat: 'crit' }
+  };
+
   heroes: any = {
     trainer: { damage: 8, speed: 0, crit: 0, stat: 'damage' },
-    gadget: { damage: 22, speed: 20, crit: 3, stat: 'damage', isGold: false },
+    gadget: { damage: 22, speed: 20, crit: 3, baseDamage: 15, baseSpeed: 10, baseCrit:2, stat: 'damage', isGold: false },
     jay: { damage: 0, speed: 33, crit: 0, stat: 'speed' },
     trickster: { damage: 40, speed: 0, crit: 0, stat: 'damage' },
     snowflake: { damage: 50, speed: 0, crit: 0, stat: 'damage' },
@@ -219,6 +257,9 @@ export class ExploreContainerComponent implements OnInit {
   weaponList() {
     return Object.keys(this.weapons);
   }
+  armorList() {
+    return Object.keys(this.armor);
+  }
 
 
   cards: any = {
@@ -228,7 +269,7 @@ export class ExploreContainerComponent implements OnInit {
     'harly': { levelTierMatters: false, damage: 0, speed: 0, crit: 0, name: "Harly", type: 'none' },
     'sword': { levelTierMatters: false, damage: 200, speed: 0, crit: 5, type: 'unit', name: 'Sword' },
     'trapper': {
-      levelTierMatters: false, 
+      levelTierMatters: true, 
       damage: 0, speed: 0, crit: 0, type: 'armor', name: 'Trapper', dmgLevels: [
         100,
         110, //level 8
@@ -279,13 +320,19 @@ export class ExploreContainerComponent implements OnInit {
   }
   changeWeapon(ev: any) {
     this.deckConfig.weapon = ev.target.value;
-    //add support for more weapons later
-    let statName = this.deckConfig.weapon == 'spear' ? 'speed' : 'damage';
-    this.weaponBuff = this.weapons[this.deckConfig.weapon][statName];
+    this.weaponBuff = this.weapons[this.deckConfig.weapon][this.weapons[this.deckConfig.weapon].stat];
+  }
+  changeArmor(ev: any) {
+    this.deckConfig.armor = ev.target.value;
+    this.armorBuff = this.armor[this.deckConfig.weapon][this.armor[this.deckConfig.armor].stat];
   }
   changeWeaponStat(ev: any, type: any) {
     this.weapons[this.deckConfig.weapon][type] = parseFloat(ev.target.value);
     this.deckConfig.weaponStats = this.weapons;
+  }
+  changeArmorStat(ev: any, type: any) {
+    this.armor[this.deckConfig.armor][type] = parseFloat(ev.target.value);
+    this.deckConfig.armorStats = this.armor;
   }
   changeAmuletStat(ev: any, type: any) {
     this.amulets[this.deckConfig.amulet][type] = parseFloat(ev.target.value);
@@ -422,6 +469,7 @@ export class ExploreContainerComponent implements OnInit {
     if (this.deckConfig.hero == 'snowflake') {
       dmgBuffs.push(this.heroes.snowflake.damage);
     }
+
     return dmgBuffs;
   }
 
@@ -447,10 +495,9 @@ export class ExploreContainerComponent implements OnInit {
 
     //heroes
     let activeHeroInfo = this.heroes[this.deckConfig.hero];
-    let heroBuff = activeHeroInfo.damage;
+    let heroBuff = parseFloat(activeHeroInfo.damage);
     if (this.deckConfig.hero == 'gadget' && activeHeroInfo.isGold) {
-      heroBuff = heroBuff * 2;
-      dmgBuffs.push(2);
+      heroBuff = heroBuff + activeHeroInfo.baseDamage;
     }
     dmgBuffs.push(heroBuff);
 
@@ -464,6 +511,13 @@ export class ExploreContainerComponent implements OnInit {
       let weaponFactionBuff = this.weapons[this.deckConfig.weapon].faction;
       dmgBuffs.push(this.weapons[this.deckConfig.weapon].alliance);
       dmgBuffs.push(this.deckConfig.hasSetBonus ? weaponFactionBuff * 1.1 : weaponFactionBuff);
+    }
+
+    //armor
+    if (this.armor[this.deckConfig.armor].stat == 'damage') {
+      let armorFactionDebuff = this.armor[this.deckConfig.armor].faction;
+      dmgBuffs.push(this.armor[this.deckConfig.armor].alliance * -1);
+      dmgBuffs.push((this.deckConfig.hasSetBonus ? armorFactionDebuff * 1.1 : armorFactionDebuff) * -1);
     }
 
     //enchantments
@@ -496,6 +550,22 @@ export class ExploreContainerComponent implements OnInit {
       let bowFactionBuff = this.weapons[this.deckConfig.weapon].faction;
       critDmgBuffs.push(this.deckConfig.hasSetBonus ? bowFactionBuff * 1.1 : bowFactionBuff);
     }
+
+        //armor
+        if (this.armor[this.deckConfig.armor].stat == 'crit') {
+          let armorFactionDebuff = this.armor[this.deckConfig.armor].faction;
+          critDmgBuffs.push(this.armor[this.deckConfig.armor].alliance * -1);
+          critDmgBuffs.push((this.deckConfig.hasSetBonus ? armorFactionDebuff * 1.1 : armorFactionDebuff) * -1);
+        }
+    //enchantments
+    /*if (this.deckConfig.enchantments.length){
+      for (let enchantment of this.deckConfig.enchantments){
+        if (this.enchantments[enchantment].stat == 'crit'){
+          critDmgBuffs.push(this.enchantments[enchantment].buff);
+        }
+      }
+    }*/
+
     if (includeTalent && this.deckConfig.talent == 'unity') {
       critDmgBuffs.push(this.talents[this.deckConfig.talent].critDamage);
     }
@@ -524,20 +594,20 @@ export class ExploreContainerComponent implements OnInit {
     //heroes
     //critBuff = critBuff + this.heroes[this.deckConfig.hero].crit;
     let activeHeroInfo = this.heroes[this.deckConfig.hero];
-    let heroBuff = activeHeroInfo.crit;
+    let heroBuff = parseFloat(activeHeroInfo.crit);
     if (this.deckConfig.hero == 'gadget' && activeHeroInfo.isGold) {
-      heroBuff = heroBuff * 2;
+      heroBuff = heroBuff + activeHeroInfo.baseCrit;
     }
     critBuffs.push(heroBuff);
 
-    //enchantments
+/*    //enchantments
     if (this.deckConfig.enchantments.length){
       for (let enchantment of this.deckConfig.enchantments){
         if (this.enchantments[enchantment].stat == 'crit'){
           critBuffs.push(this.enchantments[enchantment].buff);
         }
       }
-    }
+    }*/
     
     if (includeTalent && this.deckConfig.talent == 'unity') {
       critBuffs.push(this.talents[this.deckConfig.talent].critChance);
@@ -718,15 +788,15 @@ export class ExploreContainerComponent implements OnInit {
     //heroes
     //speedBuff = speedBuff + this.heroes[this.deckConfig.hero].speed;
     let activeHeroInfo = this.heroes[this.deckConfig.hero];
-    let heroBuff = activeHeroInfo.speed;
+    let heroBuff = parseFloat(activeHeroInfo.speed);
     if (this.deckConfig.hero == 'gadget' && activeHeroInfo.isGold) {
-      heroBuff = heroBuff * 2;
+      heroBuff = heroBuff + activeHeroInfo.baseSpeed;
     }
     speedBuffs.push(heroBuff);
 
 
     //weapon
-    if (this.weapons[this.deckConfig.weapon] == 'speed') {
+    if (this.weapons[this.deckConfig.weapon].stat == 'speed') {
       let weaponFactionBuff = this.weapons[this.deckConfig.weapon].faction;
       speedBuffs.push(this.weapons[this.deckConfig.weapon].alliance);
       speedBuffs.push(this.deckConfig.hasSetBonus ? weaponFactionBuff * 1.1 : weaponFactionBuff);
@@ -742,6 +812,12 @@ export class ExploreContainerComponent implements OnInit {
       }
     }
 
+    //armor
+    if (this.armor[this.deckConfig.armor].stat == 'speed') {
+      let armorFactionDebuff = this.armor[this.deckConfig.armor].faction;
+      speedBuffs.push(this.armor[this.deckConfig.armor].alliance * -1);
+      speedBuffs.push((this.deckConfig.hasSetBonus ? armorFactionDebuff * 1.1 : armorFactionDebuff) * -1);
+    }
     return speedBuffs;
   }
 
@@ -778,7 +854,15 @@ export class ExploreContainerComponent implements OnInit {
     let critHitsPerSecond = hitsPerSecond * totalCritBuffPercent;
 
     let totalCritDmgBuff = this.sumOfArray(this.totalCritDmgBuff(includeTalent));
-    let criticalDamage = newAttackDamage * ((this.deckConfig.playerCrit + totalCritDmgBuff) / 100);
+    let enchanmentCritDmgBuff = 0;
+    if (this.deckConfig.enchantments.length){
+      for (let enchantment of this.deckConfig.enchantments){
+        if (this.enchantments[enchantment].stat == 'crit'){
+          enchanmentCritDmgBuff = enchanmentCritDmgBuff + this.enchantments[enchantment].buff;
+        }
+      }
+    }
+    let criticalDamage = newAttackDamage * (((this.deckConfig.playerCrit * (1 + (enchanmentCritDmgBuff/100))) + totalCritDmgBuff) / 100);
     //console.log('criticalDamage', criticalDamage);
     critDmgPerSecond = criticalDamage * critHitsPerSecond;
     let results = {

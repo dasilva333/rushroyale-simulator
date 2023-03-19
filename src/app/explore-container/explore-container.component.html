@@ -18,9 +18,6 @@
           <ion-button (click)="cancel()">Cancel</ion-button>
         </ion-buttons>
         <ion-title>Pick Replacement</ion-title>
-        <!-- <ion-buttons slot="end">
-          <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
-        </ion-buttons> -->
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
@@ -30,16 +27,6 @@
             <ion-row>
               <ion-col *ngFor="let card of getBasicCards();" size="8"
                 style="text-align: center; vertical-align: middle;">
-                <!-- <ion-item lines="none" style="border:1px solid purple;" class="ion-no-margin ion-no-padding">
-                  <ion-label position="stacked" class="ion-text-capitalize" style="width: 100%; border:1px solid blue; position: relative; top: -5px; display:block; text-align: center;">
-                    <h1>{{ getCardDisplayName(card) }}</h1>
-                  </ion-label>
-                  <ion-item>
-                    <a style="border:1px solid green; display:block; text-align: center;" href="#/tabs/tab1" (click)="confirm(card)">
-                      <img src="/assets/icons/{{ card }}.png">
-                    </a>
-                  </ion-item>
-                </ion-item> -->
                 <table>
                   <tr>
                     <td>
@@ -63,27 +50,12 @@
 
 <ion-grid>
   <ion-row>
-    <ion-col size="24">
-      <!-- <table class="cardSelector">
-        <tr>
-          <td *ngFor="let card of deck; let index = index;">
-            <a href="#/tabs/tab1" (click)="setCardByImage(true, index)">
-              <ion-thumbnail><img src="/assets/icons/{{ getCardName(card) }}.png"></ion-thumbnail>
-            </a>
-          </td>
-        </tr>
-      </table> -->
-      <ion-grid>
-        <ion-row>
-          <ion-col *ngFor="let card of deck; let index = index;">
-            <a href="#/tabs/tab1" (click)="setCardByImage(true, index)">
-              <ion-thumbnail style="--size: 65px;"><img src="/assets/icons/{{ getCardName(card) }}.png"></ion-thumbnail>
-            </a>
-          </ion-col>
-          <ion-col size="2"></ion-col>
-        </ion-row>
-      </ion-grid>
+    <ion-col *ngFor="let card of deck; let index = index;">
+      <a href="#/tabs/tab1" (click)="setCardByImage(true, index)">
+        <ion-thumbnail style="--size: 65px;"><img src="/assets/icons/{{ getCardName(card) }}.png"></ion-thumbnail>
+      </a>
     </ion-col>
+    <ion-col size="2"></ion-col>
   </ion-row>
   <ion-row>
     <ion-col size="8">
@@ -162,55 +134,20 @@
     <ion-col size="18" style="text-align: center;">
       <ion-item class="ion-no-margin ion-no-padding">
         <ion-text class="ion-no-margin ion-no-padding">
-          <ion-chip size="xsmall" title="Damage Buff" color="primary">Dmg {{ sumOfArray(totalDmgBuff(false)) }}%</ion-chip>
-          <ion-chip size="xsmall" title="Armor Destruction" color="secondary">Armor {{ sumOfArray(totalArmorBuff()) }}%</ion-chip>
-          <ion-chip size="xsmall" title="Crit-Chance Buff" color="success">Crit {{ sumOfArray(totalCritBuff(false)) }}%</ion-chip>
-          <ion-chip size="xsmall" title="Crit-Dmg Buff" color="tertiary">C.Dmg {{ sumOfArray(totalCritDmgBuff(false)) }}%</ion-chip>
-          <ion-chip size="xsmall" title="Speed Buff" color="warning">Speed {{ sumOfArray(totalSpeedBuff()) }}%</ion-chip>
+          <ion-chip size="xsmall" title="Damage Buff" color="primary">Dmg {{ sumOfArray(totalDmgBuff(false))
+            }}%</ion-chip>
+          <ion-chip size="xsmall" title="Armor Destruction" color="secondary">Armor {{ sumOfArray(totalArmorBuff())
+            }}%</ion-chip>
+          <ion-chip size="xsmall" title="Crit-Chance Buff" color="success">Crit {{ sumOfArray(totalCritBuff(false))
+            }}%</ion-chip>
+          <ion-chip size="xsmall" title="Crit-Dmg Buff" color="tertiary">C.Dmg {{ sumOfArray(totalCritDmgBuff(false))
+            }}%</ion-chip>
+          <ion-chip size="xsmall" title="Speed Buff" color="warning">Speed {{ sumOfArray(totalSpeedBuff())
+            }}%</ion-chip>
         </ion-text>
       </ion-item>
     </ion-col>
   </ion-row>
-  <!-- <ion-row>
-    <ion-col size-xs="3" size-sm="5">
-      <ion-item class="ion-no-padding ion-no-margin">
-        <ion-text><strong class="ion-hide-sm-down">Total </strong><strong>Buffs</strong></ion-text>
-      </ion-item>
-    </ion-col>
-    <ion-col size-xs="21" size-sm="19" style="text-align: center;">
-      <ion-item class="ion-no-padding ion-float-right">
-        <ion-text>
-          <ion-chip size="small" title="Damage Buff" color="primary">{{ totalDmgBuff() }}%</ion-chip>
-          <ion-chip size="small" title="Armor Destruction" color="secondary">{{ totalArmorBuff() }}%</ion-chip>
-          <ion-chip size="small" title="Crit-Chance Buff" color="success">{{ totalCritBuff() }}%</ion-chip>
-          <ion-chip size="small" title="Crit-Dmg Buff" color="tertiary">{{ totalCritDmgBuff() }}%</ion-chip>
-          <ion-chip size="small" title="Speed Buff" color="warning">{{ totalSpeedBuff() }}%</ion-chip>
-        </ion-text>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="6" size-xs="12">
-
-      <ion-item class="ion-no-padding">
-        <ion-label *ngIf="deckConfig.talent == 'none'"><strong>First Hit
-            Damage</strong></ion-label>
-        <ion-label *ngIf="deckConfig.talent == 'ronin' || deckConfig.talent == 'unity'"><strong>Max Hit
-            Damage</strong></ion-label>
-      </ion-item>
-    </ion-col>
-    <ion-col size="6" size-xs="12">
-      <ion-item class="ion-no-padding">
-        <ion-label>{{ totalDamagePerSecond(false) | number }}</ion-label>
-      </ion-item>
-    </ion-col>
-    <ion-col size="12" size-xs="24" *ngIf="deckConfig.talent == 'unity'">
-      <ion-item class="ion-no-padding">
-        <ion-label><strong>Combined Damage (x7)</strong></ion-label>
-        <ion-label>&nbsp;{{ totalDamagePerSecond(false) * 7 | number }}</ion-label>
-      </ion-item>
-    </ion-col>
-  </ion-row> -->
   <ion-row>
     <ion-col size="24">
       <ion-item class="ion-no-padding">
@@ -220,6 +157,7 @@
       </ion-item>
     </ion-col>
   </ion-row>
+
   <ion-row class="ion-no-margin ion-no-padding">
     <ion-col size="24">
       <ion-item lines="none" class="ion-no-margin ion-no-padding">
@@ -235,7 +173,8 @@
         <ion-card-header style="text-align: left;" class="ion-no-margin ion-no-padding" style="padding: 5px;">
 
           <ion-item lines="none" class="">
-            <ion-thumbnail slot="start"><img src="/assets/icons/{{ deckConfig.mainDpsUnit | lowercase }}.png"></ion-thumbnail> 
+            <ion-thumbnail slot="start"><img
+                src="/assets/icons/{{ deckConfig.mainDpsUnit | lowercase }}{{ deckConfig.mainDpsUnit == 'Inquisitor' && deckConfig.inquisCardLevel == 15 ? '_max' : '' }}.png"></ion-thumbnail>
             &nbsp;
             <ion-select [value]="deckConfig.mainDpsUnit" style="width: 100%;" (ionChange)="changeDpsUnit($event)">
               <ion-select-option value="Inquisitor">Inquisitor</ion-select-option>
@@ -244,7 +183,8 @@
           </ion-item>
         </ion-card-header>
         <ion-card-content class="ion-no-margin ion-no-padding" style="padding:2px;">
-          <table class="ion-no-margin ion-no-padding" style="width: 100%; display:block; margin:0; padding: 0;" *ngIf="deckConfig.mainDpsUnit == 'Inquisitor'">
+          <table class="ion-no-margin ion-no-padding" style="width: 100%; display:block; margin:0; padding: 0;"
+            *ngIf="deckConfig.mainDpsUnit == 'Inquisitor'">
             <tr>
               <td>
                 <ion-item lines="none" class="ion-no-margin">
@@ -335,7 +275,8 @@
               </td>
             </tr>
           </table>
-          <table class="ion-no-margin ion-no-padding" style="width: 100%; display:block; margin:0; padding: 0;" *ngIf="deckConfig.mainDpsUnit == 'Generic'">
+          <table class="ion-no-margin ion-no-padding" style="width: 100%; display:block; margin:0; padding: 0;"
+            *ngIf="deckConfig.mainDpsUnit == 'Generic'">
             <tr>
               <td>
                 <ion-item lines="none" class="ion-no-margin">
@@ -350,7 +291,7 @@
                   <ion-input [value]="deckConfig.mainDpsBaseSpeed" (ionChange)="changeBaseSpeed($event)"></ion-input>
                 </ion-item>
               </td>
-              
+
 
               <td>
                 <ion-item lines="none" class="ion-no-margin">
@@ -358,7 +299,34 @@
                   <ion-input [value]="deckConfig.mainDpsBaseCrit" (ionChange)="changeBaseCrit($event)"></ion-input>
                 </ion-item>
               </td>
-              
+
+            </tr>
+            <tr>
+              <td>
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Increase {{ mainDpsIncrease.damage }}%</ion-label>
+                  <ion-range [value]="mainDpsIncrease.damage" [pin]="true" [ticks]="true" [snaps]="true" [min]="0"
+                    [max]="1000" (ionKnobMoveEnd)="increaseBaseStat($event,'damage')"></ion-range>
+                </ion-item>
+              </td>
+
+              <td>
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Increase {{ mainDpsIncrease.speed}}%</ion-label>
+                  <ion-range [value]="mainDpsIncrease.speed" [pin]="true" [ticks]="true" [snaps]="true" [min]="0"
+                    [max]="1000" (ionKnobMoveEnd)="increaseBaseStat($event,'speed')"></ion-range>
+                </ion-item>
+              </td>
+
+
+              <td>
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Increase {{ mainDpsIncrease.crit}}%</ion-label>
+                  <ion-range [value]="mainDpsIncrease.crit" [pin]="true" [ticks]="true" [snaps]="true" [min]="0"
+                    [max]="1000" (ionKnobMoveEnd)="increaseBaseStat($event,'crit')"></ion-range>
+                </ion-item>
+              </td>
+
             </tr>
           </table>
         </ion-card-content>
@@ -373,7 +341,7 @@
             <span (click)="setCardByImage(true, index)">
               <ion-thumbnail style="display: inline-block; height: 45px; vertical-align: middle;"><img
                   src="/assets/icons/{{ getCardName(card) }}.png"></ion-thumbnail>
-                  {{ getCardDisplayName(card) }}
+              {{ getCardDisplayName(card) }}
             </span>
           </ion-card-subtitle>
         </ion-card-header>
@@ -414,7 +382,8 @@
               <td colspan="3">
                 <ion-item lines="none">
                   <ion-label position="stacked">Mode</ion-label>
-                  <ion-select placeholder="Mode" [value]="card.mode" style="width: 100%;" (ionChange)="changeGrindstoneMode($event, card)">
+                  <ion-select placeholder="Mode" [value]="card.mode" style="width: 100%;"
+                    (ionChange)="changeGrindstoneMode($event, card)">
                     <ion-select-option value="st">Single Target</ion-select-option>
                     <ion-select-option value="mt">Multi Target</ion-select-option>
                   </ion-select>
@@ -465,8 +434,9 @@
               <td style="width: 60%;">
                 <ion-item lines="none">
                   <ion-label position="stacked">Hero</ion-label>
-                  <ion-select placeholder="Hero" [selectedText]="deckConfig.hero.substr(0,1).toUpperCase() + deckConfig.hero.substr(1,deckConfig.hero.length)" style="width: 100%;" [value]="deckConfig.hero"
-                    (ionChange)="changeHero($event)">
+                  <ion-select placeholder="Hero"
+                    [selectedText]="deckConfig.hero.substr(0,1).toUpperCase() + deckConfig.hero.substr(1,deckConfig.hero.length)"
+                    style="width: 100%;" [value]="deckConfig.hero" (ionChange)="changeHero($event)">
                     <ion-select-option *ngFor="let hero of heroList();" [value]="hero" class="ion-text-capitalize">{{
                       hero }}</ion-select-option>
                   </ion-select>
@@ -549,7 +519,8 @@
               <ion-col>
                 <ion-item lines="none" class="ion-no-margin" style="padding:0px;">
                   <ion-label position="stacked">Amulet</ion-label>
-                  <ion-select style="width: 100%;" placeholder="Pick Amulet" [value]="deckConfig.amulet" (ionChange)="changeAmulet($event)">
+                  <ion-select style="width: 100%;" placeholder="Pick Amulet" [value]="deckConfig.amulet"
+                    (ionChange)="changeAmulet($event)">
                     <ion-select-option *ngFor="let amulet of amuletList();" [value]="amulet">{{ amulets[amulet].name
                       }}</ion-select-option>
                   </ion-select>
@@ -557,7 +528,8 @@
               </ion-col>
               <ion-col *ngIf="amulets[deckConfig.amulet].stat != 'none'">
                 <ion-item lines="none" class="ion-no-margin">
-                  <ion-label position="stacked" class="ion-text-capitalize">Alliance {{ amulets[deckConfig.amulet].stat }}
+                  <ion-label position="stacked" class="ion-text-capitalize">Alliance {{ amulets[deckConfig.amulet].stat
+                    }}
                     %</ion-label>
                   <ion-input [value]="amulets[deckConfig.amulet].alliance"
                     (ionChange)="changeAmuletStat($event,'alliance')"></ion-input>
@@ -565,12 +537,13 @@
               </ion-col>
               <ion-col *ngIf="amulets[deckConfig.amulet].stat != 'none'">
                 <ion-item lines="none" class="ion-no-margin">
-                  <ion-label position="stacked" class="ion-text-capitalize">Faction {{ amulets[deckConfig.amulet].stat }}
+                  <ion-label position="stacked" class="ion-text-capitalize">Faction {{ amulets[deckConfig.amulet].stat
+                    }}
                     %</ion-label>
                   <ion-input [value]="amulets[deckConfig.amulet].faction"
                     (ionChange)="changeAmuletStat($event,'faction')"></ion-input>
                 </ion-item>
-              </ion-col> 
+              </ion-col>
             </ion-row>
           </ion-grid>
         </ion-card-content>
@@ -584,7 +557,8 @@
               <ion-col>
                 <ion-item lines="none" class="ion-no-margin">
                   <ion-label position="stacked">Weapon</ion-label>
-                  <ion-select style="width: 100%;" placeholder="Pick Weapon" [value]="deckConfig.weapon" (ionChange)="changeWeapon($event)">
+                  <ion-select style="width: 100%;" placeholder="Pick Weapon" [value]="deckConfig.weapon"
+                    (ionChange)="changeWeapon($event)">
                     <ion-select-option *ngFor="let weapon of weaponList();" [value]="weapon">{{ weapon
                       }}</ion-select-option>
 
@@ -593,7 +567,8 @@
               </ion-col>
               <ion-col *ngIf="weapons[deckConfig.weapon].stat != 'none'">
                 <ion-item lines="none" class="ion-no-margin">
-                  <ion-label position="stacked" class="ion-text-capitalize">Alliance {{ weapons[deckConfig.weapon].stat }}
+                  <ion-label position="stacked" class="ion-text-capitalize">Alliance {{ weapons[deckConfig.weapon].stat
+                    }}
                     %</ion-label>
 
                   <ion-input [value]="weapons[deckConfig.weapon].alliance"
@@ -602,7 +577,8 @@
               </ion-col>
               <ion-col *ngIf="weapons[deckConfig.weapon].stat != 'none'">
                 <ion-item lines="none" class="ion-no-margin">
-                  <ion-label position="stacked" class="ion-text-capitalize">Faction {{ weapons[deckConfig.weapon].stat }}
+                  <ion-label position="stacked" class="ion-text-capitalize">Faction {{ weapons[deckConfig.weapon].stat
+                    }}
                     %</ion-label>
 
                   <ion-input [value]="weapons[deckConfig.weapon].faction"
@@ -616,33 +592,96 @@
       </ion-card>
     </ion-col>
   </ion-row>
+
   <ion-row class="ion-no-margin ion-no-padding">
-    <ion-col size="24" class="ion-no-margin ion-no-padding">
-      <ion-card style="width: 98%; margin: 3px;">
+    <ion-col size="12" class="ion-no-margin ion-no-padding">
+      <ion-card style="width: 95%; margin: 3px;">
+        <ion-card-content class="ion-no-margin ion-no-padding" style="padding:2px;">
+
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Armor</ion-label>
+                  <ion-select style="width: 100%;" placeholder="Pick Armor" [value]="deckConfig.armor"
+                    (ionChange)="changeArmor($event)">
+                    <ion-select-option *ngFor="let armor of armorList();" [value]="armor">{{ armor
+                      }}</ion-select-option>
+
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="armor[deckConfig.armor].stat != 'none'">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked" class="ion-text-capitalize">Alliance {{ armor[deckConfig.armor].stat
+                    }}
+                    %</ion-label>
+
+                  <ion-input [value]="armor[deckConfig.armor].alliance"
+                    (ionChange)="changeArmorStat($event,'alliance')"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="armor[deckConfig.armor].stat != 'none'">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked" class="ion-text-capitalize">Faction {{ armor[deckConfig.armor].stat
+                    }}
+                    %</ion-label>
+
+                  <ion-input [value]="armor[deckConfig.armor].faction"
+                    (ionChange)="changeArmorStat($event,'faction')"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <!-- <ion-row>
+              <ion-col>
+                <ion-item class="ion-no-margin ion-no-padding">
+                  <ion-list>
+                    <ion-radio-group value="this">
+                      <ion-item lines="none">
+                        <ion-label>Apply to this deck</ion-label>
+                        <ion-radio slot="end" value="this"></ion-radio>
+                      </ion-item>
+
+                      <ion-item lines="none">
+                        <ion-label>Apply to other deck</ion-label>
+                        <ion-radio slot="end" value="other"></ion-radio>
+                      </ion-item>
+
+                    </ion-radio-group>
+                  </ion-list>
+                </ion-item>
+              </ion-col>
+            </ion-row> -->
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col size="12" class="ion-no-margin ion-no-padding">
+      <ion-card style="width: 95%; margin: 3px;">
         <ion-card-content class="ion-no-margin ion-no-padding" style="padding:2px;">
           <table class="ion-no-margin ion-no-padding" style="width: 100%; display:block; margin:0; padding: 0;">
             <tr>
-              <td style="width: 60%;">
+              <td>
                 <ion-item lines="none">
                   <ion-label position="stacked">Enchantments</ion-label>
-                  <!-- <ion-select placeholder="Hero" [selectedText]="deckConfig.hero.substr(0,1).toUpperCase() + deckConfig.hero.substr(1,deckConfig.hero.length)" style="width: 100%;" [value]="deckConfig.hero"
-                    (ionChange)="changeHero($event)">
-                    <ion-select-option *ngFor="let hero of heroList();" [value]="hero" class="ion-text-capitalize">{{
-                      hero }}</ion-select-option> -->
-                      <!--  placeholder="Select One">
-       -->
-                      <ion-select placeholder="Add Enchantment" [interfaceOptions]="enchantmentPopoverOptions" interface="popover" (ionChange)="addEnchantment($event)">
+                  <ion-select style="width: 100%;" placeholder="Add Enchantment"
+                    [interfaceOptions]="enchantmentPopoverOptions" [value]="activeEnchantment" interface="popover"
+                    (ionChange)="addEnchantment($event)">
+                    <ion-select-option value="">Add Enchantment</ion-select-option>
                     <ion-select-option *ngFor="let enchantment of enchantmentList();" [value]="enchantment">{{
                       enchantments[enchantment].name }}</ion-select-option>
                   </ion-select>
                 </ion-item>
               </td>
+            </tr>
+            <tr *ngIf="deckConfig.enchantments.length > 0">
               <td>
-                <ion-item>
-                  <ion-chip *ngFor="let enchantment of deckConfig.enchantments" (click)="removeEnchantment(enchantment)">
+                <ion-item class="ion-no-padding ion-no-margin">
+                  <ion-chip size="small" *ngFor="let enchantment of deckConfig.enchantments"
+                    (click)="removeEnchantment(enchantment)">
                     <ion-icon name="close-circle-outline"></ion-icon>
                     <ion-label>{{ enchantments[enchantment].name }}</ion-label>
-                    
+
                   </ion-chip>
                 </ion-item>
               </td>
@@ -651,10 +690,10 @@
               <td colspan="2">
                 <ion-list>
                   <ion-item *ngFor="let enchantment of deckConfig.enchantments">
-                    <ion-text><strong>{{ enchantments[enchantment].name }}</strong> - 
+                    <ion-text><strong>{{ enchantments[enchantment].name }}</strong> -
                       Increase {{ enchantments[enchantment].stat }} by {{ enchantments[enchantment].buff }}% for
                       {{ enchantments[enchantment].duration }} secs.
-                      </ion-text>
+                    </ion-text>
                   </ion-item>
                 </ion-list>
               </td>
@@ -665,4 +704,3 @@
     </ion-col>
   </ion-row>
 </ion-grid>
-<!-- </ion-item> -->

@@ -9,7 +9,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class Tab1Page {
 
-  buildVersion: any = 110;
+  buildVersion: any = 112;
   decks = [
     {
       cards: [
@@ -21,6 +21,7 @@ export class Tab1Page {
       hero: 'gadget',
       amulet: 'magic',
       weapon: 'bow',
+      armor: 'jacket',
       talent: 'none',
       absorbs: 0,
       mainDpsUnit: 'Inquisitor',
@@ -40,6 +41,7 @@ export class Tab1Page {
       hero: 'gadget',
       amulet: 'magic',
       weapon: 'bow',
+      armor: 'jacket',
       talent: 'none',
       absorbs: 15,
       mainDpsUnit: 'Generic',
@@ -75,6 +77,65 @@ export class Tab1Page {
         this.decks = JSON.parse(savedDecks);
       }
     }
+  }
+
+  isManagementOpen: boolean = false;
+  importedDeckText: string = '';
+
+  onWillDismiss(ev: any){
+    this.isManagementOpen = false;
+  }
+  cancel(){
+    this.isManagementOpen = false;
+  }
+  openManagement(){
+    this.isManagementOpen = true;
+  }
+  exportDeck(deckIndex: number) {
+    let deckText = JSON.stringify(this.decks[deckIndex], null, 4);
+    this.dyanmicDownloadByHtmlTag({
+      fileName: `deck_export_${ (new Date()).toISOString() }`,
+      text: deckText
+    });
+  }
+  importDeck(deckIndex: number) {
+    if (this.importedDeckText != ''){
+      this.decks[deckIndex] = JSON.parse(this.importedDeckText);
+      this.isManagementOpen = false;
+    }
+  }
+  private setting = {
+    element: {
+      dynamicDownload: null as unknown as HTMLElement
+    }
+  }
+  private dyanmicDownloadByHtmlTag(arg: {
+    fileName: string,
+    text: string
+  }) {
+    if (!this.setting.element.dynamicDownload) {
+      this.setting.element.dynamicDownload = document.createElement('a');
+    }
+    const element = this.setting.element.dynamicDownload;
+    const fileType = arg.fileName.indexOf('.json') > -1 ? 'text/json' : 'text/plain';
+    element.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(arg.text)}`);
+    element.setAttribute('download', arg.fileName);
+
+    var event = new MouseEvent("click");
+    element.dispatchEvent(event);
+  }
+
+  async cloneDeck(sourceDeck: number, targetDeck: number) {
+    let sourceDeckObj = JSON.parse(JSON.stringify(this.decks[sourceDeck]));
+    this.decks[targetDeck] = sourceDeckObj;
+    
+    const toast = await this.toastController.create({
+      message: `Copied Deck ${sourceDeck + 1} to ${ targetDeck + 1 }`,
+      duration: 1500,
+      position: 'top'
+    });
+
+    await toast.present();
   }
 
   async saveInfo() {
