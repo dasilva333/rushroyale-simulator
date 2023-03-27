@@ -178,6 +178,7 @@
             &nbsp;
             <ion-select [value]="deckConfig.mainDpsUnit" style="width: 100%;" (ionChange)="changeDpsUnit($event)">
               <ion-select-option value="Inquisitor">Inquisitor</ion-select-option>
+              <ion-select-option value="Boreas">Boreas</ion-select-option>
               <ion-select-option value="Generic">Generic</ion-select-option>
             </ion-select>
           </ion-item>
@@ -276,7 +277,7 @@
             </tr>
           </table>
           <table class="ion-no-margin ion-no-padding" style="width: 100%; display:block; margin:0; padding: 0;"
-            *ngIf="deckConfig.mainDpsUnit == 'Generic'">
+            *ngIf="deckConfig.mainDpsUnit == 'Generic' || deckConfig.mainDpsUnit == 'Boreas'">
             <tr>
               <td>
                 <ion-item lines="none" class="ion-no-margin">
@@ -328,6 +329,30 @@
               </td>
 
             </tr>
+            <tr *ngIf="deckConfig.mainDpsUnit == 'Boreas'">
+              <td>
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">First Phase Duration</ion-label>
+                  <ion-input [value]="deckConfig.mainDpsFirstPhase" (ionChange)="changeDeckConfig($event,'mainDpsFirstPhase')"></ion-input>
+                </ion-item>
+              </td>
+
+              <td>
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Second Phase Duration</ion-label>
+                  <ion-input [value]="deckConfig.mainDpsSecondPhase" (ionChange)="changeDeckConfig($event,'mainDpsSecondPhase')"></ion-input>
+                </ion-item>
+              </td>
+
+
+              <td>
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Activation Interval</ion-label>
+                  <ion-input [value]="deckConfig.mainDpsActivationInterval" (ionChange)="changeDeckConfig($event,'mainDpsActivationInterval')"></ion-input>
+                </ion-item>
+              </td>
+
+            </tr>
           </table>
         </ion-card-content>
       </ion-card>
@@ -347,8 +372,8 @@
         </ion-card-header>
         <ion-card-content class="ion-no-margin ion-no-padding" style="padding:2px;">
           <table class="ion-no-margin ion-no-padding" style="width: 100%; display:block; margin:0; padding: 0;">
-            <tr *ngIf="getCardTierMatters(card)">
-              <td>
+            <tr *ngIf="getCardTierMatters(card).indexOf(true) > -1">
+              <td *ngIf="getCardTierMatters(card)[0]">
                 <ion-item lines="none">
                   <ion-label position="stacked">Level</ion-label>
                   <ion-select placeholder="Level 9-12" [value]="card.level" (ionChange)="changeCardLevel($event, card)">
@@ -358,7 +383,7 @@
                   </ion-select>
                 </ion-item>
               </td>
-              <td>
+              <td *ngIf="getCardTierMatters(card)[1]">
                 <ion-item class="ion-no-margin ion-no-padding" lines="none">
                   <ion-label position="stacked">Tier</ion-label>
                   <ion-select placeholder="Tier 4-7" [value]="card.tier" (ionChange)="changeTierLevel($event, card)">
@@ -367,10 +392,10 @@
                 </ion-item>
               </td>
             </tr>
-            <tr *ngIf="card.name == 'witch_statue' || card.name == 'dryad_rage'">
+            <tr *ngIf="card.name == 'witch_statue' || card.name == 'dryad_rage' || card.name == 'sword'">
               <td colspan="2">
                 <ion-item lines="none">
-                  <ion-label position="stacked">Merges</ion-label>
+                  <ion-label position="stacked">Merges / Stacks</ion-label>
                   <ion-select placeholder="Merges" [value]="card.merges" (ionChange)="changeWitchMerges($event, card)">
                     <ion-select-option *ngFor="let merge of cardMerges(card);" [value]="merge">{{ merge
                       }}</ion-select-option>
@@ -387,6 +412,7 @@
                     <ion-select-option value="st">Single Target</ion-select-option>
                     <ion-select-option value="mt">Multi Target</ion-select-option>
                   </ion-select>
+                  <ion-button (click)="changeGrindstoneOptions()">Talents</ion-button>
                 </ion-item>
               </td>
             </tr>

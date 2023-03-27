@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { IonModal } from '@ionic/angular';
+import { AlertController, IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 
 type Card = {
@@ -28,18 +28,20 @@ export class ExploreContainerComponent implements OnInit {
   armorBuff = 0;
 
   inquisDamageLevels: any = {
-    9: 320,
-    10: 344,
-    11: 371,
-    12: 403,
-    13: 439,
-    14: 481,
-    15: 529
+    7: 320,
+    8: 338,
+    9: 359,
+    10: 383,
+    11: 410,
+    12: 442,
+    13: 478,
+    14: 520,
+    15: 568
   };
-  inquisBaseDamage = 159;
+  inquisBaseDamage = 120;
 
-  constructor() {
-  }
+  constructor(private alertController: AlertController) {}
+
 
   enchantmentPopoverOptions = {
     header: 'Enchantment',
@@ -103,6 +105,10 @@ export class ExploreContainerComponent implements OnInit {
     return this.inquisDamageLevels[this.deckConfig.inquisCardLevel] + this.inquisBaseDamage;
   }
 
+  changeDeckConfig(event: any, field: string) {
+    this.deckConfig[field] = event.target.value;
+  }
+
   changeSetBonus(event: any) {
     this.deckConfig.hasSetBonus = event.target.checked;
   }
@@ -113,7 +119,7 @@ export class ExploreContainerComponent implements OnInit {
 
   dmgWithAbsorbs() {
     let firstBonusPerStack = 0.06;
-    let secondBonusPerStack = 0.025;
+    let secondBonusPerStack = 0.035;
     let firstBonusLimit = 20;
     let newDamage = 0;
     let baseAttackDmg = this.getInquisBaseDamage();
@@ -159,6 +165,9 @@ export class ExploreContainerComponent implements OnInit {
       if (this.deck[this.activeIndex].name == 'dryad_rage') {
         this.deck[this.activeIndex].merges = 20;
       }
+      if (this.deck[this.activeIndex].name == 'sword') {
+        this.deck[this.activeIndex].merges = 10;
+      }
     }
     this.isModalOpen = false;
   }
@@ -200,7 +209,7 @@ export class ExploreContainerComponent implements OnInit {
   talents: any = {
     none: { damage: 0, critChance: 0, critDamage: 0 },
     unity: { damage: 615, critChance: 8, critDamage: 35 },
-    ronin: { damage: 900, critChance: 0, critDamage: 0 },
+    ronin: { damage: 800, critChance: 0, critDamage: 0 },
   };
 
   amulets: any = {
@@ -240,6 +249,8 @@ export class ExploreContainerComponent implements OnInit {
       maxMerges = 20;
     } else if (card.name == 'witch_statue'){
       maxMerges = 30;
+    } else if (card.name == 'sword'){
+      maxMerges = 10;
     }
     return Array(maxMerges).fill(0).map((x, i) => i + 1);
   }
@@ -263,13 +274,13 @@ export class ExploreContainerComponent implements OnInit {
 
 
   cards: any = {
-    'banner': { levelTierMatters: true, damage: 0, speed: 116, crit: 0, name: "Banner" },
-    'dryad_rage': { levelTierMatters: false, damage: 50, speed: 0, crit: 0, type: 'unit', name: 'Dryad (Rage)', merges: 10 },
-    'dryad_growth': { levelTierMatters: false, damage: 0, speed: 0, crit: 0, name: 'Dryad (Growth)' },
-    'harly': { levelTierMatters: false, damage: 0, speed: 0, crit: 0, name: "Harly", type: 'none' },
-    'sword': { levelTierMatters: false, damage: 200, speed: 0, crit: 5, type: 'unit', name: 'Sword' },
+    'banner': { level: true, tier: true, damage: 0, speed: 116, crit: 0, name: "Banner" },
+    'dryad_rage': { level: false, tier: false, damage: 50, speed: 0, crit: 0, type: 'unit', name: 'Dryad (Rage)', merges: 10 },
+    'dryad_growth': { level: false, tier: false, damage: 0, speed: 0, crit: 0, name: 'Dryad (Growth)' },
+    'harly': { level: false, tier: false, damage: 0, speed: 0, crit: 0, name: "Harly", type: 'none' },
+    'sword': { level: true, tier: false, damage: 200, speed: 0, crit: 5, type: 'unit', name: 'Sword', merges: 10 },
     'trapper': {
-      levelTierMatters: true, 
+      level: true, tier: false,
       damage: 0, speed: 0, crit: 0, type: 'armor', name: 'Trapper', dmgLevels: [
         100,
         110, //level 8
@@ -282,11 +293,11 @@ export class ExploreContainerComponent implements OnInit {
         180
       ]
     },
-    'chemist': { levelTierMatters: true, damage: 103, speed: 0, crit: 0, type: 'armor', name: 'Chemist' },
-    'scrapper': { levelTierMatters: false, damage: 0, speed: 0, crit: 0, type: 'none', name: 'Scrapper' },
-    'knight_statue': { levelTierMatters: true, damage: 0, speed: 0, crit: 0, name: 'Knight Statue', critTiers: [5, 7.5, 10, 12.5, 15, 17.5, 20] },
-    'witch_statue': { levelTierMatters: true, damage: 204, speed: 0, crit: 0, type: 'unit', name: 'Witch', merges: 15 },
-    'grindstone': { levelTierMatters: true, damage: 93, speed: 0, crit: 0, mode: 'mt', type: 'flat', name: 'Grindstone' },
+    'chemist': { level: true, tier: true, damage: 103, speed: 0, crit: 0, type: 'armor', name: 'Chemist' },
+    'scrapper': { level: false, tier: false, damage: 0, speed: 0, crit: 0, type: 'none', name: 'Scrapper' },
+    'knight_statue': { level: true, tier: true, damage: 0, speed: 0, crit: 0, name: 'Knight Statue', critTiers: [5, 7.5, 10, 12.5, 15, 17.5, 20] },
+    'witch_statue': { level: true, tier: false, damage: 204, speed: 0, crit: 0, type: 'unit', name: 'Witch', merges: 15 },
+    'grindstone': { level: true, tier: true, damage: 93, speed: 0, crit: 0, mode: 'mt', type: 'flat', name: 'Grindstone' },
   }
 
   /* ks_speeds
@@ -358,6 +369,9 @@ export class ExploreContainerComponent implements OnInit {
     if (this.deck[index].name == 'dryad_rage') {
       this.deck[index].merges = 20;
     }
+    if (this.deck[index].name == 'sword') {
+      this.deck[index].merges = 10;
+    }
   }
 
   changeBaseCrit(ev: any) {
@@ -407,6 +421,45 @@ export class ExploreContainerComponent implements OnInit {
   changeGrindstoneMode(ev: any, card: Card) {
     card.mode = ev.target.value;
   }
+  async changeGrindstoneOptions() {
+    const alert = await this.alertController.create({
+      header: 'Select talents used',
+      buttons: ['Set Talents'],
+      inputs: [
+        {
+          type: 'checkbox',
+          value: 'multigrinder',
+          label: 'Lv11. Multigrinder',
+        },
+        {
+          label: 'Lv13. Unstable Overheat',
+          type: 'radio',
+          value: 'unstable_overheat',
+        },
+        {
+          label: 'Lv13. Triple Overheat',
+          type: 'radio',
+          value: 'triple_overheat',
+        },
+        {
+          type: 'checkbox',
+          value: 'tempered_steel',
+          label: 'Lv15. Tempered Steel',
+        },
+      ],
+    });
+
+    await alert.present();
+    const results = await alert.onDidDismiss();
+    let talentsSelected = results.data.values;
+    for (let card of this.deck){
+      if (card.name == 'grindstone'){
+        card.talents = talentsSelected;
+      }
+    }
+    console.log('results ', results );
+  }
+
   changeTalent(ev: any) {
     this.deckConfig.talent = ev.target.value;
   }
@@ -425,7 +478,7 @@ export class ExploreContainerComponent implements OnInit {
     } else {
       cardInfo = this.cards[card];
     }
-    return cardInfo.levelTierMatters;
+    return [cardInfo.level, cardInfo.tier];
   }
   getCardDisplayName(card: any) {
     let cardInfo;
@@ -587,6 +640,9 @@ export class ExploreContainerComponent implements OnInit {
       if (card.name == 'sword' && cardNames.indexOf('knight_statue') > -1) {
         cardBuff = cardBuff / 5;
       }
+      if (card.name == 'grindstone') {
+        cardBuff = this.getGrindstoneCrit(card);
+      }
       critBuffs.push(cardBuff);
       //critBuff = critBuff + cardBuff;
     }
@@ -638,7 +694,8 @@ export class ExploreContainerComponent implements OnInit {
     //10 = 30 + 1.5
     //11 = 30 + 3
     //12 = 30 + 4.5
-    let cardBuff = ((cardInfo.damage / 10) + ((card.level - 7) * 1.5)) * 10;
+    if (!card.merges) card.merges = 10;
+    let cardBuff = ((cardInfo.damage / 10) + ((card.level - 7) * 1.5)) * card.merges;
     //console.log('cardBuff', cardBuff);
     if (card.name == 'sword' && cardNames.indexOf('knight_statue') > -1) {
       cardBuff = cardBuff / 5;
@@ -660,6 +717,20 @@ export class ExploreContainerComponent implements OnInit {
     return cardBuff;
   }
 
+  getGrindstoneCrit(card: Card){
+    let talents = [];
+    for (let card of this.deck){
+      if (card.name == 'grindstone' && card.talents){
+        talents = card.talents;
+      }
+    }
+    let critBuff = 0;
+    if (talents.indexOf('tempered_steel') > -1){
+      critBuff = card.tier;
+    }
+    return critBuff;
+  }
+
   getSpeedBuff(card: Card) {
     let speedBuff = 0;
     if (card.name == 'banner') {
@@ -676,6 +747,8 @@ export class ExploreContainerComponent implements OnInit {
       critBuff = this.getSwordCrit(card);
     } else if (card.name == 'knight_statue') {
       critBuff = this.getKsCrit(card);
+    } else if (card.name == 'grind_stone') {
+      critBuff = this.getGrindstoneCrit(card);
     }
     return critBuff;
   }
@@ -700,11 +773,27 @@ export class ExploreContainerComponent implements OnInit {
 
   getGrindstoneDmg(card: Card) {
     //=C21+(C22*(C24-1))+(floor(C21 * ((B28-1)*0.5)))
-    let baseDamage = card.mode == 'st' ? 415 : 89;
-    let bonusDamage = card.mode == 'st' ? 50 : 10;
+    let talents = [];
+    for (let card of this.deck){
+      if (card.name == 'grindstone' && card.talents){
+        talents = card.talents;
+      }
+    }
+    let isMultigrinder = talents.indexOf('multigrinder') > -1;
+    let baseDamage = card.mode == 'st' || isMultigrinder ? 415 : 89;
+    let bonusDamage = card.mode == 'st' || isMultigrinder ? 50 : 10;
+    
     let cardMana = 5;
     let totalDamage = baseDamage + (bonusDamage * (cardMana - 1)) + (Math.floor(baseDamage * ((card.tier - 1) * 0.5)));
-    return totalDamage;
+
+    if (talents.indexOf('triple_overheat') > -1){
+      totalDamage = totalDamage * 1.3;
+    }
+    
+    if (talents.indexOf('unstable_overheat') > -1){
+      totalDamage = totalDamage * 1.1;
+    }
+    return Math.floor(totalDamage);
   }
 
   dmgWithGrindstone() {
@@ -822,22 +911,68 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   totalDamagePerSecond(includeTalent: boolean) {
+    if (this.deckConfig.mainDpsUnit == 'Boreas') {
+      let originalSpeed = this.deckConfig.mainDpsBaseSpeed;
+      let originalCrit = this.deckConfig.mainDpsBaseCrit;
+      let normalPhaseDPS = this.oldTotalDamagePerSecond(includeTalent);
+      let normalPhaseLength = parseFloat(this.deckConfig.mainDpsActivationInterval);
+      let normalPhaseTotal = normalPhaseDPS.total * normalPhaseLength;
+      //console.log('normalPhaseLength', normalPhaseLength, 'normalPhaseDamage', normalPhaseTotal);
+
+      // 600% speed increase for first phase
+      this.deckConfig.mainDpsBaseSpeed = this.deckConfig.mainDpsBaseSpeed / 7;
+      let firstPhaseDPS = this.oldTotalDamagePerSecond(includeTalent);
+      let firstPhaseLength = parseFloat(this.deckConfig.mainDpsFirstPhase);
+      let firstPhaseTotal = firstPhaseDPS.total * firstPhaseLength;
+      this.deckConfig.mainDpsBaseSpeed = originalSpeed;
+      //console.log('firstPhaseLength', firstPhaseLength, 'firstPhaseTotal', firstPhaseTotal);
+
+      // 600% speed increase and 100% crit for second phase
+      this.deckConfig.mainDpsBaseSpeed = this.deckConfig.mainDpsBaseSpeed / 7;
+      this.deckConfig.mainDpsBaseCrit = 100;
+      let secondPhaseDPS = this.oldTotalDamagePerSecond(includeTalent);
+      let secondPhaseLength = parseFloat(this.deckConfig.mainDpsSecondPhase);
+      let secondPhaseTotal = secondPhaseDPS.total * secondPhaseLength;
+      this.deckConfig.mainDpsBaseSpeed = originalSpeed;
+      this.deckConfig.mainDpsBaseCrit = originalCrit;
+      //console.log('secondPhaseLength', secondPhaseLength, 'secondPhaseTotal', secondPhaseTotal, secondPhaseDPS);
+
+      let total = Math.floor(( normalPhaseTotal + firstPhaseTotal + secondPhaseTotal ) / (normalPhaseLength + firstPhaseLength + secondPhaseLength));
+      let results = {
+        total,
+        newAttackDamage: this.sumOfArray([normalPhaseDPS.newAttackDamage,firstPhaseDPS.newAttackDamage,secondPhaseDPS.newAttackDamage]),
+        newAttackSpeed: this.sumOfArray([normalPhaseDPS.newAttackSpeed,firstPhaseDPS.newAttackSpeed,secondPhaseDPS.newAttackSpeed]),
+        dmgPerSecond: this.sumOfArray([normalPhaseDPS.dmgPerSecond,firstPhaseDPS.dmgPerSecond,secondPhaseDPS.dmgPerSecond]),
+        critDmgPerSecond: this.sumOfArray([normalPhaseDPS.critDmgPerSecond,firstPhaseDPS.critDmgPerSecond,secondPhaseDPS.critDmgPerSecond]),
+        hitsPerSecond: this.sumOfArray([normalPhaseDPS.hitsPerSecond,firstPhaseDPS.hitsPerSecond,secondPhaseDPS.hitsPerSecond]),
+        critHitsPerSecond: this.sumOfArray([normalPhaseDPS.critHitsPerSecond,firstPhaseDPS.critHitsPerSecond,secondPhaseDPS.critHitsPerSecond]),
+        criticalDamage: this.sumOfArray([normalPhaseDPS.criticalDamage,firstPhaseDPS.criticalDamage,secondPhaseDPS.criticalDamage]),
+      };
+      return results;
+    } else {
+      return this.oldTotalDamagePerSecond(includeTalent);
+    }
+  }
+
+  oldTotalDamagePerSecond(includeTalent: boolean) {
     let dmgPerSecond = 0;
     let critDmgPerSecond = 0;
 
     let totalCritBuffPercent = (this.sumOfArray(this.totalCritBuff(includeTalent)) / 100) + this.playerBaseCrit;
 
-    let totalSpeedBuffPercent = this.sumOfArray(this.totalSpeedBuff()) / 100;
+    let totalSpeedBuffs = this.totalSpeedBuff();
     let newAttackSpeed = 0;
     let newBaseDamage = 0;
     if (this.deckConfig.mainDpsUnit == 'Inquisitor') {
-      newAttackSpeed = (this.inquisBaseSpeed - this.inquisAttackSpeedTiers[this.deckConfig.inquisTierLevel]) / (totalSpeedBuffPercent + 1);
+      newAttackSpeed = (this.inquisBaseSpeed - this.inquisAttackSpeedTiers[this.deckConfig.inquisTierLevel]);
       newBaseDamage = this.dmgWithAbsorbs();
     } else {
-      newAttackSpeed = this.deckConfig.mainDpsBaseSpeed / (totalSpeedBuffPercent + 1);
+      newAttackSpeed = this.deckConfig.mainDpsBaseSpeed;
       newBaseDamage = this.deckConfig.mainDpsBaseDamage;
     }
-    //console.log('newAttackSpeed', newAttackSpeed, 'totalSpeedBuff', totalSpeedBuffPercent);
+    for (let buff of totalSpeedBuffs) {
+      newAttackSpeed = newAttackSpeed / (1 + (buff / 100));
+    }
 
     let flatBuffAmount = this.dmgWithGrindstone();
     let totalDamageBuffs = this.totalDmgBuff(includeTalent);
