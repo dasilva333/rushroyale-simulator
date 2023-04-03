@@ -9,7 +9,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class Tab1Page {
 
-  buildVersion: any = 112;
+  buildVersion: any = 113;
   decks = [
     {
       cards: [
@@ -33,7 +33,7 @@ export class Tab1Page {
     },
     {
       cards: [
-        { name: 'grindstone', mode: 'st', level: 9, tier: 1 },
+        { name: 'grindstone', damage: 415 },
         { name: 'dryad_rage', level: 9, tier: 1, merges: 10 },
         { name: 'knight_statue', level: 11, tier: 7 },
         { name: 'trapper', level: 9, tier: 7 }

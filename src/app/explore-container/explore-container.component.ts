@@ -40,7 +40,7 @@ export class ExploreContainerComponent implements OnInit {
   };
   inquisBaseDamage = 120;
 
-  constructor(private alertController: AlertController) {}
+  constructor(private alertController: AlertController) { }
 
 
   enchantmentPopoverOptions = {
@@ -58,21 +58,21 @@ export class ExploreContainerComponent implements OnInit {
 
   increaseBaseStat(ev: any, type: any) {
     this.mainDpsIncrease[type] = ev.detail.value;
-    
+
     //console.log('this.deckConfig.mainDpsBaseCrit', this.deckConfig.mainDpsBaseCrit);
-    if (type == 'crit'){
+    if (type == 'crit') {
       this.deckConfig.mainDpsBaseCrit = this.deckConfig.mainDpsBaseCrit * ((this.mainDpsIncrease[type] / 100) + 1);
-    } else if (type == 'speed'){
+    } else if (type == 'speed') {
       this.deckConfig.mainDpsBaseSpeed = this.deckConfig.mainDpsBaseSpeed / ((this.mainDpsIncrease[type] / 100) + 1);
-    } else if (type == 'damage'){
+    } else if (type == 'damage') {
       this.deckConfig.mainDpsBaseDamage = this.deckConfig.mainDpsBaseDamage * ((this.mainDpsIncrease[type] / 100) + 1);
     }
     //console.log('this.deckConfig.mainDpsBaseCrit', this.deckConfig.mainDpsBaseCrit);
   }
 
   addEnchantment(ev: any) {
-    if (ev.target.value != ''){
-      if (this.deckConfig.enchantments.length < 3){
+    if (ev.target.value != '') {
+      if (this.deckConfig.enchantments.length < 3) {
         this.deckConfig.enchantments.push(ev.target.value);
       }
       //console.log('ev.target.selectedIndex', ev.target);
@@ -83,7 +83,7 @@ export class ExploreContainerComponent implements OnInit {
     }
   }
 
-  removeEnchantment(enchantmentId: any){
+  removeEnchantment(enchantmentId: any) {
     this.deckConfig.enchantments.splice(this.deckConfig.enchantments.indexOf(enchantmentId), 1);
   }
 
@@ -105,8 +105,8 @@ export class ExploreContainerComponent implements OnInit {
     return this.inquisDamageLevels[this.deckConfig.inquisCardLevel] + this.inquisBaseDamage;
   }
 
-  changeDeckConfig(event: any, field: string) {
-    this.deckConfig[field] = event.target.value;
+  changeDeckConfig(event: any, field: string, isCheckbox?: boolean) {
+    this.deckConfig[field] = event.target[isCheckbox ? 'checked': 'value'];
   }
 
   changeSetBonus(event: any) {
@@ -167,6 +167,10 @@ export class ExploreContainerComponent implements OnInit {
       }
       if (this.deck[this.activeIndex].name == 'sword') {
         this.deck[this.activeIndex].merges = 10;
+      }
+      if (this.deck[this.activeIndex].name == 'grindstone') {
+        this.deck[this.activeIndex].damage = 415;
+        this.deck[this.activeIndex].merges = 0;
       }
     }
     this.isModalOpen = false;
@@ -233,7 +237,7 @@ export class ExploreContainerComponent implements OnInit {
 
   heroes: any = {
     trainer: { damage: 8, speed: 0, crit: 0, stat: 'damage' },
-    gadget: { damage: 22, speed: 20, crit: 3, baseDamage: 15, baseSpeed: 10, baseCrit:2, stat: 'damage', isGold: false },
+    gadget: { damage: 22, speed: 20, crit: 3, baseDamage: 15, baseSpeed: 10, baseCrit: 2, stat: 'damage', isGold: false },
     jay: { damage: 0, speed: 33, crit: 0, stat: 'speed' },
     trickster: { damage: 40, speed: 0, crit: 0, stat: 'damage' },
     snowflake: { damage: 50, speed: 0, crit: 0, stat: 'damage' },
@@ -243,19 +247,22 @@ export class ExploreContainerComponent implements OnInit {
     none: { damage: 0, speed: 0, crit: 0, stat: 'damage' }
   };
 
-  cardMerges(card: Card){
+  cardMerges(card: Card) {
     let maxMerges = 0;
-    if (card.name == 'dryad_rage'){
+    if (card.name == 'dryad_rage') {
       maxMerges = 20;
-    } else if (card.name == 'witch_statue'){
+    } else if (card.name == 'witch_statue') {
       maxMerges = 30;
-    } else if (card.name == 'sword'){
+    } else if (card.name == 'sword') {
       maxMerges = 10;
+    } else if (card.name == 'grindstone') {
+      maxMerges = 100;
     }
-    return Array(maxMerges).fill(0).map((x, i) => i + 1);
+    //changeWitchMerges
+    return Array(maxMerges + 1).fill(0).map((x, i) => i);
   }
 
-  enchantmentList(){
+  enchantmentList() {
     return Object.keys(this.enchantments);
   }
 
@@ -297,7 +304,7 @@ export class ExploreContainerComponent implements OnInit {
     'scrapper': { level: false, tier: false, damage: 0, speed: 0, crit: 0, type: 'none', name: 'Scrapper' },
     'knight_statue': { level: true, tier: true, damage: 0, speed: 0, crit: 0, name: 'Knight Statue', critTiers: [5, 7.5, 10, 12.5, 15, 17.5, 20] },
     'witch_statue': { level: true, tier: false, damage: 204, speed: 0, crit: 0, type: 'unit', name: 'Witch', merges: 15 },
-    'grindstone': { level: true, tier: true, damage: 93, speed: 0, crit: 0, mode: 'mt', type: 'flat', name: 'Grindstone' },
+    'grindstone': { level: false, tier: true, damage: 93, speed: 0, crit: 0, mode: 'mt', type: 'flat', name: 'Grindstone' },
   }
 
   /* ks_speeds
@@ -399,7 +406,34 @@ export class ExploreContainerComponent implements OnInit {
       this.deckConfig.mainDpsBaseDamage = 598;
       this.deckConfig.mainDpsBaseSpeed = 0.6;
       this.deckConfig.mainDpsBaseCrit = 0;
-      
+    } else if (this.deckConfig.mainDpsUnit == 'Boreas') {
+      this.deckConfig.mainDpsBaseDamage = 120;
+      this.deckConfig.mainDpsBaseSpeed = 0.09;
+      this.deckConfig.mainDpsBaseCrit = 0;
+      this.deckConfig.mainDpsFirstPhase = 4.6;
+      this.deckConfig.mainDpsSecondPhase = 1.7;
+      this.deckConfig.mainDpsActivationInterval = 4.7;
+    } else if (this.deckConfig.mainDpsUnit == 'Sentry') {
+      this.deckConfig.mainDpsBaseDamage = 456;
+      this.deckConfig.mainDpsBaseSpeed = 0.09;
+      this.deckConfig.mainDpsBaseCrit = 0;
+      this.deckConfig.mainDpsDamageIncrease = 244;
+      this.deckConfig.mainDpsActivationInterval = 0.95;
+
+    } else if (this.deckConfig.mainDpsUnit == 'CrystalMancer') {
+      this.deckConfig.mainDpsBaseDamage = 197;
+      this.deckConfig.mainDpsBaseSpeed = 0.07;
+      this.deckConfig.mainDpsBaseCrit = 0;
+      this.deckConfig.mainDpsDamageIncrease = 800;
+      this.deckConfig.mainDpsActivationInterval = 0.95;
+
+    } else if (this.deckConfig.mainDpsUnit == 'DemonHunter') {
+      this.deckConfig.mainDpsBaseDamage = 1136;
+      this.deckConfig.mainDpsBaseSpeed = 0.45;
+      this.deckConfig.mainDpsBaseCrit = 0;
+      this.deckConfig.mainDpsTierLevel = 7;
+      this.deckConfig.demonHunterEmpowered = true;
+
     }
   }
 
@@ -427,18 +461,13 @@ export class ExploreContainerComponent implements OnInit {
       buttons: ['Set Talents'],
       inputs: [
         {
-          type: 'checkbox',
-          value: 'multigrinder',
-          label: 'Lv11. Multigrinder',
-        },
-        {
           label: 'Lv13. Unstable Overheat',
-          type: 'radio',
+          type: 'checkbox',
           value: 'unstable_overheat',
         },
         {
           label: 'Lv13. Triple Overheat',
-          type: 'radio',
+          type: 'checkbox',
           value: 'triple_overheat',
         },
         {
@@ -446,22 +475,42 @@ export class ExploreContainerComponent implements OnInit {
           value: 'tempered_steel',
           label: 'Lv15. Tempered Steel',
         },
+        {
+          type: 'checkbox',
+          value: 'adjacent_ks',
+          label: 'Adjacent Knight Statue',
+        },
+        {
+          type: 'checkbox',
+          value: 'adjacent_witch',
+          label: 'Adjacent Witch',
+        },
       ],
     });
 
     await alert.present();
     const results = await alert.onDidDismiss();
     let talentsSelected = results.data.values;
-    for (let card of this.deck){
-      if (card.name == 'grindstone'){
+    for (let card of this.deck) {
+      if (card.name == 'grindstone') {
         card.talents = talentsSelected;
       }
     }
-    console.log('results ', results );
+    console.log('results ', results);
   }
 
   changeTalent(ev: any) {
     this.deckConfig.talent = ev.target.value;
+  }
+
+  getGrindstoneTalents() {
+    let talents = [];
+    for (let card of this.deck) {
+      if (card.name == 'grindstone' && card.talents) {
+        talents = card.talents;
+      }
+    }
+    return talents;
   }
   getActiveTalentStat(type: any) {
     if (this.deckConfig.talent) {
@@ -471,7 +520,7 @@ export class ExploreContainerComponent implements OnInit {
     }
   }
 
-  getCardTierMatters(card: any){
+  getCardTierMatters(card: any) {
     let cardInfo;
     if (card && card.name) {
       cardInfo = this.cards[card.name];
@@ -516,6 +565,9 @@ export class ExploreContainerComponent implements OnInit {
         if (card.name == 'trapper') {
           cardBuff = cardInfo.dmgLevels[card.level - 7];
         }
+        if (card.name == 'chemist') {
+          cardBuff = this.getChemistBuff(card);
+        }
         dmgBuffs.push(cardBuff);
       }
     }
@@ -526,9 +578,12 @@ export class ExploreContainerComponent implements OnInit {
     return dmgBuffs;
   }
 
-  totalDmgBuff(includeTalent: boolean) {
+  totalDmgBuff(includeTalent: boolean, isGrindstone?: boolean) {
     let cardNames = [];
     let dmgBuffs = [];
+    let isForGS = isGrindstone ? true : false;
+    //console.log('isForGS', isForGS);
+    let grindstoneTalents = this.getGrindstoneTalents();
     for (let card of this.deck) {
       cardNames.push(card.name);
     }
@@ -539,12 +594,19 @@ export class ExploreContainerComponent implements OnInit {
         if (card.name == 'sword' && cardNames.indexOf('knight_statue') > -1) {
           cardBuff = cardBuff / 5;
         }
-        if (card.name == 'witch_statue') {
+        if (card.name == 'witch_statue' 
+        && (cardNames.indexOf('grindstone') == -1 || !isForGS || (isForGS && grindstoneTalents.indexOf('adjacent_witch') == -1))
+        ) {
           cardBuff = this.getWitchBuff(card);
+        }
+        if (card.name == 'dryad_rage') {
+          cardBuff = this.getDryadBuff(card);
         }
         dmgBuffs.push(cardBuff);
       }
     }
+
+
 
     //heroes
     let activeHeroInfo = this.heroes[this.deckConfig.hero];
@@ -560,7 +622,7 @@ export class ExploreContainerComponent implements OnInit {
     dmgBuffs.push(this.deckConfig.hasSetBonus ? amuletFactionBuff * 1.1 : amuletFactionBuff);
 
     //weapon
-    if (this.weapons[this.deckConfig.weapon].stat == 'damage'){
+    if (this.weapons[this.deckConfig.weapon].stat == 'damage') {
       let weaponFactionBuff = this.weapons[this.deckConfig.weapon].faction;
       dmgBuffs.push(this.weapons[this.deckConfig.weapon].alliance);
       dmgBuffs.push(this.deckConfig.hasSetBonus ? weaponFactionBuff * 1.1 : weaponFactionBuff);
@@ -574,9 +636,9 @@ export class ExploreContainerComponent implements OnInit {
     }
 
     //enchantments
-    if (this.deckConfig.enchantments.length){
-      for (let enchantment of this.deckConfig.enchantments){
-        if (this.enchantments[enchantment].stat == 'damage'){
+    if (this.deckConfig.enchantments.length) {
+      for (let enchantment of this.deckConfig.enchantments) {
+        if (this.enchantments[enchantment].stat == 'damage') {
           dmgBuffs.push(this.enchantments[enchantment].buff);
         }
       }
@@ -604,12 +666,12 @@ export class ExploreContainerComponent implements OnInit {
       critDmgBuffs.push(this.deckConfig.hasSetBonus ? bowFactionBuff * 1.1 : bowFactionBuff);
     }
 
-        //armor
-        if (this.armor[this.deckConfig.armor].stat == 'crit') {
-          let armorFactionDebuff = this.armor[this.deckConfig.armor].faction;
-          critDmgBuffs.push(this.armor[this.deckConfig.armor].alliance * -1);
-          critDmgBuffs.push((this.deckConfig.hasSetBonus ? armorFactionDebuff * 1.1 : armorFactionDebuff) * -1);
-        }
+    //armor
+    if (this.armor[this.deckConfig.armor].stat == 'crit') {
+      let armorFactionDebuff = this.armor[this.deckConfig.armor].faction;
+      critDmgBuffs.push(this.armor[this.deckConfig.armor].alliance * -1);
+      critDmgBuffs.push((this.deckConfig.hasSetBonus ? armorFactionDebuff * 1.1 : armorFactionDebuff) * -1);
+    }
     //enchantments
     /*if (this.deckConfig.enchantments.length){
       for (let enchantment of this.deckConfig.enchantments){
@@ -640,9 +702,9 @@ export class ExploreContainerComponent implements OnInit {
       if (card.name == 'sword' && cardNames.indexOf('knight_statue') > -1) {
         cardBuff = cardBuff / 5;
       }
-      if (card.name == 'grindstone') {
+      /*if (card.name == 'grindstone') {
         cardBuff = this.getGrindstoneCrit(card);
-      }
+      }*/
       critBuffs.push(cardBuff);
       //critBuff = critBuff + cardBuff;
     }
@@ -656,20 +718,20 @@ export class ExploreContainerComponent implements OnInit {
     }
     critBuffs.push(heroBuff);
 
-/*    //enchantments
-    if (this.deckConfig.enchantments.length){
-      for (let enchantment of this.deckConfig.enchantments){
-        if (this.enchantments[enchantment].stat == 'crit'){
-          critBuffs.push(this.enchantments[enchantment].buff);
-        }
-      }
-    }*/
-    
+    /*    //enchantments
+        if (this.deckConfig.enchantments.length){
+          for (let enchantment of this.deckConfig.enchantments){
+            if (this.enchantments[enchantment].stat == 'crit'){
+              critBuffs.push(this.enchantments[enchantment].buff);
+            }
+          }
+        }*/
+
     if (includeTalent && this.deckConfig.talent == 'unity') {
       critBuffs.push(this.talents[this.deckConfig.talent].critChance);
     }
 
-    if (this.deckConfig.mainDpsUnit == 'Generic') {
+    if (this.deckConfig.mainDpsUnit == 'Generic' || this.deckConfig.mainDpsUnit == 'Boreas') {
       critBuffs.push(this.deckConfig.mainDpsBaseCrit);
     }
 
@@ -717,17 +779,27 @@ export class ExploreContainerComponent implements OnInit {
     return cardBuff;
   }
 
-  getGrindstoneCrit(card: Card){
+  getGrindstoneCrit() {
     let talents = [];
-    for (let card of this.deck){
-      if (card.name == 'grindstone' && card.talents){
+    let cardTier = 0;
+    let ksCard = null;
+    for (let card of this.deck) {
+      if (card.name == 'grindstone' && card.talents) {
         talents = card.talents;
+        cardTier = card.tier;
+      }
+      if (card.name == 'knight_statue') {
+        ksCard = card;
       }
     }
     let critBuff = 0;
-    if (talents.indexOf('tempered_steel') > -1){
-      critBuff = card.tier;
+    if (talents.indexOf('tempered_steel') > -1) {
+      critBuff = cardTier;
     }
+    if (talents.indexOf('adjacent_ks') > -1) {
+      critBuff = critBuff + this.getKsCrit(ksCard);
+    }
+    //console.log('getGrindstoneCrit', critBuff);
     return critBuff;
   }
 
@@ -747,8 +819,8 @@ export class ExploreContainerComponent implements OnInit {
       critBuff = this.getSwordCrit(card);
     } else if (card.name == 'knight_statue') {
       critBuff = this.getKsCrit(card);
-    } else if (card.name == 'grind_stone') {
-      critBuff = this.getGrindstoneCrit(card);
+    } else if (card.name == 'grindstone') {
+      critBuff = this.getGrindstoneCrit();
     }
     return critBuff;
   }
@@ -771,47 +843,60 @@ export class ExploreContainerComponent implements OnInit {
     return dmfBuff;
   }
 
-  getGrindstoneDmg(card: Card) {
+  setGrindstoneDmg(ev: any, card: any) {
+    card.damage = ev.target.value;
+  }
+
+  getGrindstoneDmg(card: any) {
     //=C21+(C22*(C24-1))+(floor(C21 * ((B28-1)*0.5)))
-    let talents = [];
-    for (let card of this.deck){
-      if (card.name == 'grindstone' && card.talents){
-        talents = card.talents;
-      }
-    }
+    let talents = this.getGrindstoneTalents();
+    let totalDamage = card.damage; // + (bonusDamage * (cardMana - 1)) + (Math.floor(baseDamage * ((card.tier - 1) * 0.5)));
+    /*
     let isMultigrinder = talents.indexOf('multigrinder') > -1;
     let baseDamage = card.mode == 'st' || isMultigrinder ? 415 : 89;
     let bonusDamage = card.mode == 'st' || isMultigrinder ? 50 : 10;
     
     let cardMana = 5;
     let totalDamage = baseDamage + (bonusDamage * (cardMana - 1)) + (Math.floor(baseDamage * ((card.tier - 1) * 0.5)));
+*/
 
-    if (talents.indexOf('triple_overheat') > -1){
+    if (talents.indexOf('triple_overheat') > -1) {
       totalDamage = totalDamage * 1.3;
     }
-    
-    if (talents.indexOf('unstable_overheat') > -1){
-      totalDamage = totalDamage * 1.1;
+
+    if (talents.indexOf('unstable_overheat') > -1) {
+      let buffPerStack = 1.5;
+      let baseBuff = 10;
+      if (!card.merges) card.merges = 0;
+      totalDamage = totalDamage * (1 + ((baseBuff = (buffPerStack * card.merges)) / 100));
     }
-    return Math.floor(totalDamage);
+
+    return Math.ceil(totalDamage);
   }
 
   dmgWithGrindstone() {
     let grindstoneBuff = 0;
-    let witchBuff = 0;
+    /*let witchBuff = 0;
+    let dryadBuff = 0;*/
     for (let card of this.deck) {
       if (card.name == 'grindstone') {
         grindstoneBuff = this.getGrindstoneDmg(card);
       }
-      if (card.name == 'witch_statue') {
+      /*if (card.name == 'witch_statue') {
         witchBuff = this.getWitchBuff(card);
       }
+      if (card.name == 'dryad_rage') {
+        dryadBuff = this.getDryadBuff(card);
+      }*/
     }
     //console.log('witchBuff', witchBuff);
-    if (witchBuff > 0) {
+    /*if (witchBuff > 0) {
       grindstoneBuff = grindstoneBuff * ((witchBuff / 100) + 1);
     }
-    return grindstoneBuff;
+    if (dryadBuff > 0) {
+      grindstoneBuff = grindstoneBuff * ((dryadBuff / 100) + 1);
+    }*/
+    return Math.round(grindstoneBuff);
   }
 
   getDryadBuff(card: Card) {
@@ -841,8 +926,18 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   getChemistBuff(card: Card) {
+    /*
     let cardInfo = this.cards[card.name];
     return cardInfo.damage;
+    */
+    let baseDmg = 40;
+    let multiplier = 0.5;
+    let bonus = 4.5;
+    let cardLevel = card.level;
+    let tierLevel = card.tier;
+
+    let totalDamage = baseDmg + (multiplier * (cardLevel - 6)) + ((multiplier * (cardLevel - 6)) + bonus) * (tierLevel - 1);
+    return totalDamage + bonus;
   }
 
   getTrapperBuff(card: Card) {
@@ -893,9 +988,9 @@ export class ExploreContainerComponent implements OnInit {
     }
 
     //enchantments
-    if (this.deckConfig.enchantments.length){
-      for (let enchantment of this.deckConfig.enchantments){
-        if (this.enchantments[enchantment].stat == 'speed'){
+    if (this.deckConfig.enchantments.length) {
+      for (let enchantment of this.deckConfig.enchantments) {
+        if (this.enchantments[enchantment].stat == 'speed') {
           speedBuffs.push(this.enchantments[enchantment].buff);
         }
       }
@@ -917,7 +1012,7 @@ export class ExploreContainerComponent implements OnInit {
       let normalPhaseDPS = this.oldTotalDamagePerSecond(includeTalent);
       let normalPhaseLength = parseFloat(this.deckConfig.mainDpsActivationInterval);
       let normalPhaseTotal = normalPhaseDPS.total * normalPhaseLength;
-      //console.log('normalPhaseLength', normalPhaseLength, 'normalPhaseDamage', normalPhaseTotal);
+      //console.log('normalPhaseLength', normalPhaseLength, 'normalPhaseDamage', normalPhaseTotal, normalPhaseDPS);
 
       // 600% speed increase for first phase
       this.deckConfig.mainDpsBaseSpeed = this.deckConfig.mainDpsBaseSpeed / 7;
@@ -925,7 +1020,7 @@ export class ExploreContainerComponent implements OnInit {
       let firstPhaseLength = parseFloat(this.deckConfig.mainDpsFirstPhase);
       let firstPhaseTotal = firstPhaseDPS.total * firstPhaseLength;
       this.deckConfig.mainDpsBaseSpeed = originalSpeed;
-      //console.log('firstPhaseLength', firstPhaseLength, 'firstPhaseTotal', firstPhaseTotal);
+      //console.log('firstPhaseLength', firstPhaseLength, 'firstPhaseTotal', firstPhaseTotal, firstPhaseDPS);
 
       // 600% speed increase and 100% crit for second phase
       this.deckConfig.mainDpsBaseSpeed = this.deckConfig.mainDpsBaseSpeed / 7;
@@ -935,23 +1030,176 @@ export class ExploreContainerComponent implements OnInit {
       let secondPhaseTotal = secondPhaseDPS.total * secondPhaseLength;
       this.deckConfig.mainDpsBaseSpeed = originalSpeed;
       this.deckConfig.mainDpsBaseCrit = originalCrit;
-      //console.log('secondPhaseLength', secondPhaseLength, 'secondPhaseTotal', secondPhaseTotal, secondPhaseDPS);
+      console.log('secondPhaseLength', secondPhaseLength, 'secondPhaseTotal', secondPhaseTotal, secondPhaseDPS);
 
-      let total = Math.floor(( normalPhaseTotal + firstPhaseTotal + secondPhaseTotal ) / (normalPhaseLength + firstPhaseLength + secondPhaseLength));
+      let total = Math.floor((normalPhaseTotal + firstPhaseTotal + secondPhaseTotal) / (normalPhaseLength + firstPhaseLength + secondPhaseLength));
       let results = {
         total,
-        newAttackDamage: this.sumOfArray([normalPhaseDPS.newAttackDamage,firstPhaseDPS.newAttackDamage,secondPhaseDPS.newAttackDamage]),
-        newAttackSpeed: this.sumOfArray([normalPhaseDPS.newAttackSpeed,firstPhaseDPS.newAttackSpeed,secondPhaseDPS.newAttackSpeed]),
-        dmgPerSecond: this.sumOfArray([normalPhaseDPS.dmgPerSecond,firstPhaseDPS.dmgPerSecond,secondPhaseDPS.dmgPerSecond]),
-        critDmgPerSecond: this.sumOfArray([normalPhaseDPS.critDmgPerSecond,firstPhaseDPS.critDmgPerSecond,secondPhaseDPS.critDmgPerSecond]),
-        hitsPerSecond: this.sumOfArray([normalPhaseDPS.hitsPerSecond,firstPhaseDPS.hitsPerSecond,secondPhaseDPS.hitsPerSecond]),
-        critHitsPerSecond: this.sumOfArray([normalPhaseDPS.critHitsPerSecond,firstPhaseDPS.critHitsPerSecond,secondPhaseDPS.critHitsPerSecond]),
-        criticalDamage: this.sumOfArray([normalPhaseDPS.criticalDamage,firstPhaseDPS.criticalDamage,secondPhaseDPS.criticalDamage]),
+        newAttackDamage: 0,
+        newAttackSpeed: 0,
+        dmgPerSecond: 0,
+        critDmgPerSecond: 0,
+        hitsPerSecond: 0,
+        critHitsPerSecond: 0,
+        criticalDamage: 0,
+        normalPhaseTotal,
+        firstPhaseTotal,
+        secondPhaseTotal,
+        totalPhaseLengthSeconds: 0
       };
       return results;
-    } else {
+    } else if (this.deckConfig.mainDpsUnit == 'Sentry') {
+      let totalPhaseParts = Math.ceil(this.deckConfig.mainDpsDamageIncrease / 10);
+      let totalPhaseLengthSeconds = totalPhaseParts * this.deckConfig.mainDpsActivationInterval;
+
+      let dpsPhases = [];
+      let total = 0;
+      let originalDamage = this.deckConfig.mainDpsBaseDamage;
+      for (let i = 0; i < totalPhaseParts; i++) {
+        //this.deckConfig.mainDpsBaseDamage = this.deckConfig.mainDpsBaseDamage * 1.1;
+        let step = (i / 10) + 1;
+        if (i == totalPhaseParts - 1) {
+          //console.log('last one here we go', step);
+          step = step + ((this.deckConfig.mainDpsDamageIncrease % 10) / 100);
+          //console.log('last now we got this', step);
+        }
+        console.log('step', step, i);
+        this.deckConfig.mainDpsBaseDamage = originalDamage * step;
+        console.log('this.deckConfig.mainDpsBaseDamage', this.deckConfig.mainDpsBaseDamage);
+        let dpsPhase = this.oldTotalDamagePerSecond(includeTalent);
+        dpsPhases.push(dpsPhase);
+        total = total + dpsPhase.total;
+      }
+      total = total / totalPhaseLengthSeconds;
+      this.deckConfig.mainDpsBaseDamage = originalDamage;
+
+      //console.log('dpsPhases', dpsPhases);
+      let results = {
+        total: Math.floor(total),
+        newAttackDamage: 0,
+        newAttackSpeed: 0,
+        dmgPerSecond: 0,
+        critDmgPerSecond: 0,
+        hitsPerSecond: 0,
+        critHitsPerSecond: 0,
+        criticalDamage: 0,
+        normalPhaseTotal: 0,
+        firstPhaseTotal: 0,
+        secondPhaseTotal: 0,
+        totalPhaseLengthSeconds
+      };
+      return results;
+    } else if (this.deckConfig.mainDpsUnit == 'CrystalMancer') {
+      this.deckConfig.mainDpsDamageIncrease = 800;
+      let totalPhaseParts = Math.ceil(this.deckConfig.mainDpsDamageIncrease / 10);
+      let totalPhaseLengthSeconds = totalPhaseParts * this.deckConfig.mainDpsBaseSpeed;
+      let total = 0;
+      let originalDamage = this.deckConfig.mainDpsBaseDamage;
+      for (let i = 0; i < totalPhaseParts; i++) {
+        let step = ((i + 1) / 10) + 1;
+        this.deckConfig.mainDpsBaseDamage = originalDamage * step;
+        total = total + this.deckConfig.mainDpsBaseDamage;
+      }
+      //console.log('total', total);
+      total = total / totalPhaseLengthSeconds;
+      this.deckConfig.mainDpsBaseDamage = originalDamage;
+
+      //console.log('dpsPhases', dpsPhases);
+      let results = {
+        total: Math.floor(total),
+        newAttackDamage: 0,
+        newAttackSpeed: 0,
+        dmgPerSecond: 0,
+        critDmgPerSecond: 0,
+        hitsPerSecond: 0,
+        critHitsPerSecond: 0,
+        criticalDamage: 0,
+        normalPhaseTotal: 0,
+        firstPhaseTotal: 0,
+        secondPhaseTotal: 0,
+        totalPhaseLengthSeconds
+      };
+      return results;
+    } else if (this.deckConfig.mainDpsUnit == 'DemonHunter') {
+      let originalDamage = this.deckConfig.mainDpsBaseDamage;
+      if (this.deckConfig.demonHunterEmpowered){
+        this.deckConfig.mainDpsBaseDamage = this.deckConfig.mainDpsBaseDamage * 1.75;
+      }
+      this.deckConfig.mainDpsBaseDamage = this.deckConfig.mainDpsBaseDamage * this.deckConfig.mainDpsTierLevel;
+      let results = this.oldTotalDamagePerSecond(includeTalent);
+      this.deckConfig.mainDpsBaseDamage = originalDamage;
+
+      return results;
+    }
+    else {
       return this.oldTotalDamagePerSecond(includeTalent);
     }
+  }
+
+  gsDamagePerSecond(includeTalent: boolean) {
+    let dmgPerSecond = 0;
+    let critDmgPerSecond = 0;
+
+    let grindstoneCrit = this.getGrindstoneCrit();
+    let totalCritBuffPercent = ((this.sumOfArray(this.totalCritBuff(includeTalent)) + grindstoneCrit) / 100) + this.playerBaseCrit;
+
+    //console.log('totalCritBuffPercent', totalCritBuffPercent, grindstoneCrit);
+
+    let totalSpeedBuffs = this.totalSpeedBuff();
+    let newAttackSpeed = 0;
+    let newBaseDamage = 0;
+    newAttackSpeed = this.deckConfig.mainDpsBaseSpeed;
+    newBaseDamage = this.dmgWithGrindstone();
+    for (let buff of totalSpeedBuffs) {
+      newAttackSpeed = newAttackSpeed / (1 + (buff / 100));
+    }
+
+    //let flatBuffAmount = this.dmgWithGrindstone();
+    //console.log('flatBuffAmount', flatBuffAmount);
+    let totalDamageBuffs = this.totalDmgBuff(includeTalent, true);
+    //let totalArmorBuffs = this.sumOfArray(this.totalArmorBuff());
+    let newAttackDamage = newBaseDamage; //;
+    console.log('gsDamageBuffs', newAttackDamage, totalDamageBuffs);
+    for (let buff of totalDamageBuffs) {
+      //console.log('newAttackDamage-0', newAttackDamage, buff);
+      newAttackDamage = Math.round(newAttackDamage * (1 + (buff / 100)));
+      //console.log('newAttackDamage-1', newAttackDamage, buff);
+    }
+    //newAttackDamage =  (newAttackDamage * (1 + (totalArmorBuffs/100))); // + flatBuffAmount;
+
+    dmgPerSecond = newAttackDamage / newAttackSpeed;
+
+    let hitsPerSecond = 1 / newAttackSpeed;
+    let critHitsPerSecond = hitsPerSecond * totalCritBuffPercent;
+
+    let totalCritDmgBuff = this.sumOfArray(this.totalCritDmgBuff(includeTalent));
+    let enchanmentCritDmgBuff = 0;
+    if (this.deckConfig.enchantments.length) {
+      for (let enchantment of this.deckConfig.enchantments) {
+        if (this.enchantments[enchantment].stat == 'crit') {
+          enchanmentCritDmgBuff = enchanmentCritDmgBuff + this.enchantments[enchantment].buff;
+        }
+      }
+    }
+    let criticalDamage = Math.floor(newAttackDamage * (((this.deckConfig.playerCrit * (1 + (enchanmentCritDmgBuff / 100))) + totalCritDmgBuff) / 100));
+    //console.log('criticalDamage', criticalDamage);
+    critDmgPerSecond = Math.floor(criticalDamage * critHitsPerSecond);
+    let results = {
+      total: Math.floor(dmgPerSecond + critDmgPerSecond),
+      newAttackDamage,
+      newAttackSpeed,
+      dmgPerSecond,
+      critDmgPerSecond,
+      hitsPerSecond,
+      critHitsPerSecond,
+      criticalDamage,
+      deckConfig: JSON.parse(JSON.stringify(this.deckConfig)),
+      normalPhaseTotal: 0,
+      firstPhaseTotal: 0,
+      secondPhaseTotal: 0,
+      totalPhaseLengthSeconds: 0
+    };
+    return results;
   }
 
   oldTotalDamagePerSecond(includeTalent: boolean) {
@@ -974,14 +1222,18 @@ export class ExploreContainerComponent implements OnInit {
       newAttackSpeed = newAttackSpeed / (1 + (buff / 100));
     }
 
-    let flatBuffAmount = this.dmgWithGrindstone();
+    //let flatBuffAmount = this.dmgWithGrindstone();
+    //console.log('flatBuffAmount', flatBuffAmount);
     let totalDamageBuffs = this.totalDmgBuff(includeTalent);
     let totalArmorBuffs = this.sumOfArray(this.totalArmorBuff());
-    let newAttackDamage = newBaseDamage;
+    let newAttackDamage = newBaseDamage; //;
+    //console.log('totalDamageBuffs', flatBuffAmount, totalDamageBuffs);
     for (let buff of totalDamageBuffs) {
-      newAttackDamage = newAttackDamage * (1 + (buff / 100));
+      //console.log('newAttackDamage-0', newAttackDamage, buff);
+      newAttackDamage = Math.round(newAttackDamage * (1 + (buff / 100)));
+      //console.log('newAttackDamage-1', newAttackDamage, buff);
     }
-    newAttackDamage = (newAttackDamage * (1 + (totalArmorBuffs/100))) + flatBuffAmount;
+    newAttackDamage = (newAttackDamage * (1 + (totalArmorBuffs / 100))); // + flatBuffAmount;
 
     dmgPerSecond = newAttackDamage / newAttackSpeed;
 
@@ -990,16 +1242,16 @@ export class ExploreContainerComponent implements OnInit {
 
     let totalCritDmgBuff = this.sumOfArray(this.totalCritDmgBuff(includeTalent));
     let enchanmentCritDmgBuff = 0;
-    if (this.deckConfig.enchantments.length){
-      for (let enchantment of this.deckConfig.enchantments){
-        if (this.enchantments[enchantment].stat == 'crit'){
+    if (this.deckConfig.enchantments.length) {
+      for (let enchantment of this.deckConfig.enchantments) {
+        if (this.enchantments[enchantment].stat == 'crit') {
           enchanmentCritDmgBuff = enchanmentCritDmgBuff + this.enchantments[enchantment].buff;
         }
       }
     }
-    let criticalDamage = newAttackDamage * (((this.deckConfig.playerCrit * (1 + (enchanmentCritDmgBuff/100))) + totalCritDmgBuff) / 100);
+    let criticalDamage = Math.floor(newAttackDamage * (((this.deckConfig.playerCrit * (1 + (enchanmentCritDmgBuff / 100))) + totalCritDmgBuff) / 100));
     //console.log('criticalDamage', criticalDamage);
-    critDmgPerSecond = criticalDamage * critHitsPerSecond;
+    critDmgPerSecond = Math.floor(criticalDamage * critHitsPerSecond);
     let results = {
       total: Math.floor(dmgPerSecond + critDmgPerSecond),
       newAttackDamage,
@@ -1008,7 +1260,12 @@ export class ExploreContainerComponent implements OnInit {
       critDmgPerSecond,
       hitsPerSecond,
       critHitsPerSecond,
-      criticalDamage
+      criticalDamage,
+      deckConfig: JSON.parse(JSON.stringify(this.deckConfig)),
+      normalPhaseTotal: 0,
+      firstPhaseTotal: 0,
+      secondPhaseTotal: 0,
+      totalPhaseLengthSeconds: 0
     }
     return results;
   }

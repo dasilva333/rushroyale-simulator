@@ -1,0 +1,425 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Layout Tool
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<style>
+  table.board {
+    border: 5px solid silver;
+    height: 240px;
+    width: 400px;
+    margin: 5px;
+  }
+
+  table.board td {
+    border: 3px solid #ccc;
+    height: 100px;
+    width: 100px;
+    position: relative;
+  }
+
+  table.board label {
+    font-size: 2em;
+
+    position: absolute;
+    top: 33%;
+    left: 45%;
+  }
+</style>
+
+
+<ion-modal [isOpen]="isCardPickerOpen" (willDismiss)="dismissedCardPicker($event)">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancel()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-buttons slot="start">
+          <ion-button (click)="clear()">Clear</ion-button>
+        </ion-buttons>
+        <ion-title>Pick Card</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-card>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col *ngFor="let card of getCardsList();" size="4"
+                style="text-align: center; vertical-align: middle;">
+                <table>
+                  <tr>
+                    <td>
+                      <img (click)="confirm(card)" src="/assets/icons/{{ card }}.png">
+                    </td>
+                  </tr>
+                </table>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal [isOpen]="isCardOptionsOpen" (willDismiss)="dismissedCardOptions($event)">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancel()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-buttons slot="start">
+          <ion-button (click)="dismissedCardOptions($event)">Confirm</ion-button>
+        </ion-buttons>
+        <ion-title>Pick Options</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-card>
+        <ion-card-content class="ion-no-margin ion-no-padding" style="padding:2px;">
+          <ion-grid>
+            <ion-row>
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'level')">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Level</ion-label>
+                  <ion-select placeholder="Level 9-12" [value]="deckConfig.level"
+                  (ionChange)="changeDeckConfig($event,'level')">
+                    <ion-select-option *ngFor="let level of levels;" [value]="level">{{ level }}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'tier')">
+                <ion-item lines="none" class="ion-no-margin ion-no-padding">
+                  <ion-label position="stacked">Tier</ion-label>
+
+                  <ion-select placeholder="Pick Tier" [value]="deckConfig.tier"
+                  (ionChange)="changeDeckConfig($event,'tier')">
+                    <ion-select-option *ngFor="let tier of tiers;" [value]="tier">{{ tier }}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'talent')">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Talent</ion-label>
+
+                  <ion-select placeholder="Pick Talent" [value]="deckConfig.talent"
+                  (ionChange)="changeDeckConfig($event,'talent')">
+                    <ion-select-option value="none">none</ion-select-option>
+                    <ion-select-option value="unity">Unity</ion-select-option>
+                    <ion-select-option value="ronin">Ronin</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'absorbs')">
+                <ion-item lines="none" class="ion-no-margin ion-no-padding">
+                  <ion-label position="stacked">Absorbs</ion-label>
+                  <ion-input [value]="deckConfig.absorbs"
+                  (ionChange)="changeDeckConfig($event,'absorbs')"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'merges')">
+                <ion-item lines="none">
+                  <ion-label position="stacked">Merges / Stacks</ion-label>
+                  <ion-select placeholder="Merges" [value]="deckConfig.merges"
+                  (ionChange)="changeDeckConfig($event,'merges')">
+                    <ion-select-option *ngFor="let merge of cardMerges(deckConfig);" [value]="merge">{{ merge
+                      }}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsBaseDamage')">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Base Damage</ion-label>
+                  <ion-input [value]="deckConfig.mainDpsBaseDamage"
+                    (ionChange)="changeDeckConfig($event,'mainDpsBaseDamage')"></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col *ngIf="deckConfig.name == 'Grindstone'">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Base Damage Buff</ion-label>
+                  <ion-input [value]="deckConfig.damage"
+                    (ionChange)="changeDeckConfig($event,'damage')"></ion-input>
+                </ion-item>
+              </ion-col>
+              
+              
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsBaseSpeed')">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Base Speed</ion-label>
+                  <ion-input [value]="deckConfig.mainDpsBaseSpeed"
+                    (ionChange)="changeDeckConfig($event,'mainDpsBaseSpeed')"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsBaseCrit')">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Base Crit Chance</ion-label>
+                  <ion-input [value]="deckConfig.mainDpsBaseCrit"
+                    (ionChange)="changeDeckConfig($event,'mainDpsBaseCrit')"></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsFirstPhase')">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">First Phase Duration</ion-label>
+                  <ion-input [value]="deckConfig.mainDpsFirstPhase"
+                    (ionChange)="changeDeckConfig($event,'mainDpsFirstPhase')"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsSecondPhase')">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Second Phase Duration</ion-label>
+                  <ion-input [value]="deckConfig.mainDpsSecondPhase"
+                    (ionChange)="changeDeckConfig($event,'mainDpsSecondPhase')"></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsDamageIncrease')">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Damage Increase</ion-label>
+                  <ion-input [value]="deckConfig.mainDpsDamageIncrease"
+                    (ionChange)="changeDeckConfig($event,'mainDpsDamageIncrease')"></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsActivationInterval')">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Activation Interval</ion-label>
+                  <ion-input [value]="deckConfig.mainDpsActivationInterval"
+                    (ionChange)="changeDeckConfig($event,'mainDpsActivationInterval')"></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'demonHunterEmpowered')">
+                <ion-item lines="none">
+                  <ion-label position="stacked">Demonic Empowered (40+)</ion-label>
+                  <ion-checkbox [checked]="deckConfig.demonHunterEmpowered"
+                  (ionChange)="changeDeckConfig($event,'demonHunterEmpowered', true)"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+
+            </ion-row>
+          </ion-grid>
+          <table class="ion-no-margin ion-no-padding" style="width: 100%; display:block; margin:0; padding: 0;">
+            <tr *ngIf="deckConfig.talent == 'ronin' || deckConfig.talent == 'unity'">
+              <td colspan="4">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size-sm="4" size-md="4" size-xs="8">
+                      <ion-item class="ion-no-padding">
+                        <ion-text color="primary" size="small"><i>Damage&nbsp;</i></ion-text>
+                        <ion-input [value]="getActiveTalentStat('damage')"
+                          (ionChange)="changeTalentStat($event, 'damage')"></ion-input>%
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="4" size-md="4" size-xs="8">
+                      <ion-item class="ion-no-padding">
+                        <ion-text color="success" size="small"><i>Chance&nbsp;</i></ion-text>
+                        <ion-input [value]="getActiveTalentStat('critChance')"
+                          (ionChange)="changeTalentStat($event, 'critChance')"></ion-input>%
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="4" size-md="4" size-xs="8">
+                      <ion-item class="ion-no-padding">
+                        <ion-text color="tertiary" size="small"><i>Crit-Dmg&nbsp;</i></ion-text>
+                        <ion-input [value]="getActiveTalentStat('critDamage')"
+                          (ionChange)="changeTalentStat($event, 'critDamage')"></ion-input>%
+                      </ion-item>
+                    </ion-col>
+
+                  </ion-row>
+                </ion-grid>
+              </td>
+            </tr>
+          </table>
+        </ion-card-content>
+      </ion-card>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-content>
+  <ion-fab slot="fixed" vertical="top" horizontal="end" [edge]="true" style="top: 5px;">
+    <ion-fab-button>
+      <ion-icon name="chevron-down-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button color="success" (click)="saveInfo()">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="24">
+        <ion-item class="ion-no-padding">
+          <ion-label>Player Crit %</ion-label>
+          &nbsp;
+          <ion-input [value]="boardConfig.playerCrit" (ionChange)="changeBoardConfig($event,'playerCrit')"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <table class="board">
+          <tr *ngFor="let row of gridRows; let rowIndex = index;">
+            <td *ngFor="let value of row; let columnIndex = index;" (click)="clickedTile($event, rowIndex, columnIndex)">
+              <img *ngIf="gridRows[rowIndex][columnIndex].id != ''"
+                src="/assets/icons/{{ gridRows[rowIndex][columnIndex].id }}.png">
+            </td>
+          </tr>
+        </table>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        
+       <ion-item lines="none">
+        <ion-button color="danger" (click)="resetBoard()">Reset Board</ion-button>
+       </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-card class="ion-no-margin ion-no-padding">
+    <ion-card-header style="text-align: left;" class="ion-no-margin ion-no-padding" style="padding: 5px;">
+      <ion-item lines="none" class="ion-no-margin ion-no-padding">
+        <ion-label class="ion-no-margin ion-no-padding">
+          <h1 class="ion-no-margin ion-no-padding"><strong>Cards</strong></h1>
+        </ion-label>
+      </ion-item>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid class="ion-no-margin ion-no-padding">
+        <ion-row>
+          <ion-col *ngFor="let card of getUniqueCardsOnBoard(); let index = index;">
+            <a href="#/tabs/tab5">
+              <ion-thumbnail style="--size: 65px;"><img src="/assets/icons/{{ getCardName(card) }}.png"></ion-thumbnail>
+            </a>
+          </ion-col>
+          <ion-col size="2"></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="ion-no-margin ion-no-padding">
+    <ion-card-header style="text-align: left;" class="ion-no-margin ion-no-padding" style="padding: 5px;">
+      <ion-item lines="none" class="ion-no-margin ion-no-padding">
+        <ion-label class="ion-no-margin ion-no-padding">
+          <h1 class="ion-no-margin ion-no-padding"><strong>Stats</strong></h1>
+        </ion-label>
+      </ion-item>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row *ngFor="let damageUnit of damageReport()">
+          <ion-col size="6">
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-item class="ion-no-padding" lines="none">
+                    <ion-label><strong>{{ damageUnit.main.name }}</strong> Row: {{ damageUnit.row+1 }} Column: {{ damageUnit.column+1 }}</ion-label>
+            
+                    <!-- <ion-text style="padding: 2px">{{ damageReport() | json }}</ion-text> -->
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="4" *ngIf="damageUnit.main.hasPhases == false">
+                  <ion-item class="ion-no-padding">
+                    <ion-label position="stacked"><strong>Base Damage</strong></ion-label>
+            
+                    <ion-text style="padding: 2px">{{ damageUnit.dpsInfo.newAttackDamage | number: '1.0-1' }} /
+                      hit</ion-text>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="4" *ngIf="damageUnit.main.hasPhases == false">
+                  <ion-item class="ion-no-padding">
+                    <ion-label position="stacked"><strong>Attack Speed</strong></ion-label>
+            
+                    <ion-text style="padding: 2px">{{ damageUnit.dpsInfo.newAttackSpeed | number }} / s</ion-text>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="4" *ngIf="damageUnit.main.hasPhases == false">
+                  <ion-item class="ion-no-padding">
+                    <ion-label position="stacked"><strong>DPS</strong></ion-label>
+            
+                    <ion-text style="padding: 2px">{{ damageUnit.dpsInfo.dmgPerSecond | number: '1.0-1' }} / s</ion-text>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="4" *ngIf="damageUnit.main.hasPhases == false">
+                  <ion-item class="ion-no-padding">
+                    <ion-label position="stacked"><strong>Crit. Damage</strong></ion-label>
+            
+                    <ion-text style="padding: 2px">{{ damageUnit.dpsInfo.criticalDamage | number: '1.0-1' }} /
+                      hit</ion-text>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="4" *ngIf="damageUnit.main.hasPhases == false">
+                  <ion-item class="ion-no-padding">
+                    <ion-label position="stacked"><strong>Crit. Hits</strong></ion-label>
+            
+                    <ion-text style="padding: 2px">{{ damageUnit.dpsInfo.critHitsPerSecond | number }} / s</ion-text>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="4" *ngIf="damageUnit.main.hasPhases == false">
+                  <ion-item class="ion-no-padding">
+                    <ion-label position="stacked"><strong>Crit. DPS</strong></ion-label>
+            
+                    <ion-text style="padding: 2px">{{ damageUnit.dpsInfo.critDmgPerSecond | number: '1.0-1' }} /
+                      s</ion-text>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col size="4" *ngIf="damageUnit.main.name == 'Boreas' || damageUnit.main.name == 'Sentry'">
+                  <ion-item class="ion-no-padding">
+                    <ion-label position="stacked"><strong>Phase Length (seconds)</strong></ion-label>
+            
+                    <ion-text style="padding: 2px">{{ damageUnit.dpsInfo.totalPhaseLengthSeconds | number: '1.0-1' }}</ion-text>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col size="4" *ngIf="damageUnit.main.name == 'Boreas'">
+                  <ion-item class="ion-no-padding">
+                    <ion-label position="stacked"><strong>Normal Phase DPS</strong></ion-label>
+            
+                    <ion-text style="padding: 2px">{{ damageUnit.dpsInfo.normalPhaseTotal / damageUnit.main.mainDpsActivationInterval | number: '1.0-1' }} for {{damageUnit.main.mainDpsActivationInterval}}s</ion-text>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="4" *ngIf="damageUnit.main.name == 'Boreas'">
+                  <ion-item class="ion-no-padding">
+                    <ion-label position="stacked"><strong>First Phase DPS</strong></ion-label>
+            
+                    <ion-text style="padding: 2px">{{ damageUnit.dpsInfo.firstPhaseTotal / damageUnit.main.mainDpsFirstPhase | number: '1.0-1' }} for {{damageUnit.main.mainDpsFirstPhase}}s</ion-text>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="4" *ngIf="damageUnit.main.name == 'Boreas'">
+                  <ion-item class="ion-no-padding">
+                    <ion-label position="stacked"><strong>Second Phase DPS</strong></ion-label>
+            
+                    <ion-text style="padding: 2px">{{ damageUnit.dpsInfo.secondPhaseTotal / damageUnit.main.mainDpsSecondPhase | number: '1.0-1' }} for {{damageUnit.main.mainDpsSecondPhase}}s</ion-text>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col size="6">
+                  <ion-item class="ion-no-padding" lines="none">
+                    <ion-label position="stacked"><strong>Total DPS</strong></ion-label>
+            
+                    <ion-text style="padding: 2px">{{ damageUnit.dpsInfo.total | number }}</ion-text>
+                  </ion-item>
+                </ion-col>
+            
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

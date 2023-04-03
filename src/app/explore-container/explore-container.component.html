@@ -58,7 +58,7 @@
     <ion-col size="2"></ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="8">
+    <ion-col size="8" *ngIf="deckConfig.mainDpsUnit == 'Inquisitor' || deckConfig.mainDpsUnit == 'Generic' || deckConfig.mainDpsUnit == 'DemonHunter'">
       <ion-item class="ion-no-padding">
         <ion-label position="stacked"><strong>Base Damage</strong></ion-label>
 
@@ -66,22 +66,21 @@
           hit</ion-text>
       </ion-item>
     </ion-col>
-    <ion-col size="8">
+    <ion-col size="8" *ngIf="deckConfig.mainDpsUnit == 'Inquisitor' || deckConfig.mainDpsUnit == 'Generic' || deckConfig.mainDpsUnit == 'DemonHunter'">
       <ion-item class="ion-no-padding">
         <ion-label position="stacked"><strong>Attack Speed</strong></ion-label>
 
         <ion-text style="padding: 2px">{{ totalDamagePerSecond(false).newAttackSpeed | number }} / s</ion-text>
       </ion-item>
     </ion-col>
-    <ion-col size="8">
+    <ion-col size="8" *ngIf="deckConfig.mainDpsUnit == 'Inquisitor' || deckConfig.mainDpsUnit == 'Generic' || deckConfig.mainDpsUnit == 'DemonHunter'">
       <ion-item class="ion-no-padding">
         <ion-label position="stacked"><strong>DPS</strong></ion-label>
 
         <ion-text style="padding: 2px">{{ totalDamagePerSecond(false).dmgPerSecond | number: '1.0-1' }} / s</ion-text>
       </ion-item>
     </ion-col>
-
-    <ion-col size="8">
+    <ion-col size="8" *ngIf="deckConfig.mainDpsUnit == 'Inquisitor' || deckConfig.mainDpsUnit == 'Generic' || deckConfig.mainDpsUnit == 'DemonHunter'">
       <ion-item class="ion-no-padding">
         <ion-label position="stacked"><strong>Crit. Damage</strong></ion-label>
 
@@ -89,14 +88,14 @@
           hit</ion-text>
       </ion-item>
     </ion-col>
-    <ion-col size="8">
+    <ion-col size="8" *ngIf="deckConfig.mainDpsUnit == 'Inquisitor' || deckConfig.mainDpsUnit == 'Generic' || deckConfig.mainDpsUnit == 'DemonHunter'">
       <ion-item class="ion-no-padding">
         <ion-label position="stacked"><strong>Crit. Hits</strong></ion-label>
 
         <ion-text style="padding: 2px">{{ totalDamagePerSecond(false).critHitsPerSecond | number }} / s</ion-text>
       </ion-item>
     </ion-col>
-    <ion-col size="8">
+    <ion-col size="8" *ngIf="deckConfig.mainDpsUnit == 'Inquisitor' || deckConfig.mainDpsUnit == 'Generic' || deckConfig.mainDpsUnit == 'DemonHunter'">
       <ion-item class="ion-no-padding">
         <ion-label position="stacked"><strong>Crit. DPS</strong></ion-label>
 
@@ -105,12 +104,104 @@
       </ion-item>
     </ion-col>
 
+    <ion-col size="8" *ngIf="(deckConfig.mainDpsUnit == 'Inquisitor' || deckConfig.mainDpsUnit == 'Generic') && dmgWithGrindstone() > 0">
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked"><strong>GS Base Damage</strong></ion-label>
 
+        <ion-text style="padding: 2px">{{ gsDamagePerSecond(false).newAttackDamage | number: '1.0-1' }} /
+          hit</ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="8" *ngIf="(deckConfig.mainDpsUnit == 'Inquisitor' || deckConfig.mainDpsUnit == 'Generic') && dmgWithGrindstone() > 0">
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked"><strong>Attack Speed</strong></ion-label>
+
+        <ion-text style="padding: 2px">{{ gsDamagePerSecond(false).newAttackSpeed | number }} / s</ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="8" *ngIf="(deckConfig.mainDpsUnit == 'Inquisitor' || deckConfig.mainDpsUnit == 'Generic') && dmgWithGrindstone() > 0">
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked"><strong>GS DPS</strong></ion-label>
+
+        <ion-text style="padding: 2px">{{ gsDamagePerSecond(false).dmgPerSecond | number: '1.0-1' }} / s</ion-text>
+      </ion-item>
+    </ion-col>
+
+    <ion-col size="8" *ngIf="(deckConfig.mainDpsUnit == 'Inquisitor' || deckConfig.mainDpsUnit == 'Generic') && dmgWithGrindstone() > 0">
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked"><strong>GS Crit. Damage</strong></ion-label>
+
+        <ion-text style="padding: 2px">{{ gsDamagePerSecond(false).criticalDamage | number: '1.0-1' }} /
+          hit</ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="8" *ngIf="(deckConfig.mainDpsUnit == 'Inquisitor' || deckConfig.mainDpsUnit == 'Generic') && dmgWithGrindstone() > 0">
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked"><strong>GS Crit. Hits</strong></ion-label>
+
+        <ion-text style="padding: 2px">{{ gsDamagePerSecond(false).critHitsPerSecond | number }} / s</ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="8" *ngIf="(deckConfig.mainDpsUnit == 'Inquisitor' || deckConfig.mainDpsUnit == 'Generic') && dmgWithGrindstone() > 0">
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked"><strong>GS Crit. DPS</strong></ion-label>
+
+        <ion-text style="padding: 2px">{{ gsDamagePerSecond(false).critDmgPerSecond | number: '1.0-1' }} /
+          s</ion-text>
+      </ion-item>
+    </ion-col>
+
+    <ion-col size="8" *ngIf="deckConfig.mainDpsUnit == 'Boreas'">
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked"><strong>Normal Phase DPS</strong></ion-label>
+
+        <ion-text style="padding: 2px">{{ totalDamagePerSecond(false).normalPhaseTotal / deckConfig.mainDpsActivationInterval | number: '1.0-1' }} for {{deckConfig.mainDpsActivationInterval}}s</ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="8" *ngIf="deckConfig.mainDpsUnit == 'Boreas'">
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked"><strong>First Phase DPS</strong></ion-label>
+
+        <ion-text style="padding: 2px">{{ totalDamagePerSecond(false).firstPhaseTotal / deckConfig.mainDpsFirstPhase | number: '1.0-1' }} for {{deckConfig.mainDpsFirstPhase}}s</ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="8" *ngIf="deckConfig.mainDpsUnit == 'Boreas'">
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked"><strong>Second Phase DPS</strong></ion-label>
+
+        <ion-text style="padding: 2px">{{ totalDamagePerSecond(false).secondPhaseTotal / deckConfig.mainDpsSecondPhase | number: '1.0-1' }} for {{deckConfig.mainDpsSecondPhase}}s</ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="8" *ngIf="deckConfig.mainDpsUnit == 'Sentry'">
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked"><strong>Phase Length (seconds)</strong></ion-label>
+
+        <ion-text style="padding: 2px">{{ totalDamagePerSecond(false).totalPhaseLengthSeconds | number: '1.0-1' }}</ion-text>
+      </ion-item>
+    </ion-col>
+
+    
     <ion-col size="6">
       <ion-item class="ion-no-padding" lines="none">
-        <ion-label position="stacked"><strong>Total DPS</strong></ion-label>
+        <ion-label position="stacked"><strong>Unit DPS</strong></ion-label>
 
         <ion-text style="padding: 2px">{{ totalDamagePerSecond(false).total | number }}</ion-text>
+      </ion-item>
+    </ion-col>
+
+    <ion-col size="6" *ngIf="dmgWithGrindstone() > 0">
+      <ion-item class="ion-no-padding" lines="none">
+        <ion-label position="stacked"><strong>GS DPS</strong></ion-label>
+
+        <ion-text style="padding: 2px">{{ gsDamagePerSecond(false).total | number }}</ion-text>
+      </ion-item>
+    </ion-col>
+    
+    <ion-col size="6" *ngIf="dmgWithGrindstone() > 0">
+      <ion-item class="ion-no-padding" lines="none">
+        <ion-label position="stacked"><strong>Combined DPS</strong></ion-label>
+
+        <ion-text style="padding: 2px">{{ gsDamagePerSecond(false).total + totalDamagePerSecond(false).total | number }}</ion-text>
       </ion-item>
     </ion-col>
 
@@ -177,8 +268,11 @@
                 src="/assets/icons/{{ deckConfig.mainDpsUnit | lowercase }}{{ deckConfig.mainDpsUnit == 'Inquisitor' && deckConfig.inquisCardLevel == 15 ? '_max' : '' }}.png"></ion-thumbnail>
             &nbsp;
             <ion-select [value]="deckConfig.mainDpsUnit" style="width: 100%;" (ionChange)="changeDpsUnit($event)">
-              <ion-select-option value="Inquisitor">Inquisitor</ion-select-option>
               <ion-select-option value="Boreas">Boreas</ion-select-option>
+              <ion-select-option value="CrystalMancer">Crystal Mancer</ion-select-option>
+              <ion-select-option value="DemonHunter">Demon Hunter</ion-select-option>
+              <ion-select-option value="Inquisitor">Inquisitor</ion-select-option>
+              <ion-select-option value="Sentry">Sentry</ion-select-option>
               <ion-select-option value="Generic">Generic</ion-select-option>
             </ion-select>
           </ion-item>
@@ -277,7 +371,7 @@
             </tr>
           </table>
           <table class="ion-no-margin ion-no-padding" style="width: 100%; display:block; margin:0; padding: 0;"
-            *ngIf="deckConfig.mainDpsUnit == 'Generic' || deckConfig.mainDpsUnit == 'Boreas'">
+            *ngIf="deckConfig.mainDpsUnit == 'Generic' || deckConfig.mainDpsUnit == 'Boreas' || deckConfig.mainDpsUnit == 'Sentry' || deckConfig.mainDpsUnit == 'CrystalMancer' || deckConfig.mainDpsUnit == 'DemonHunter'">
             <tr>
               <td>
                 <ion-item lines="none" class="ion-no-margin">
@@ -353,6 +447,45 @@
               </td>
 
             </tr>
+            <tr *ngIf="deckConfig.mainDpsUnit == 'Sentry'">
+              <td>
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Damage Increase</ion-label>
+                  <ion-input [value]="deckConfig.mainDpsDamageIncrease" (ionChange)="changeDeckConfig($event,'mainDpsDamageIncrease')"></ion-input>
+                </ion-item>
+              </td>
+
+              <td colspan="2">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Activation Interval</ion-label>
+                  <ion-input [value]="deckConfig.mainDpsActivationInterval" (ionChange)="changeDeckConfig($event,'mainDpsActivationInterval')"></ion-input>
+                </ion-item>
+              </td>
+
+
+            </tr>
+            <tr *ngIf="deckConfig.mainDpsUnit == 'DemonHunter'">
+              <td>
+                <ion-item lines="none">
+                  <ion-label position="stacked">Tier</ion-label>
+
+                  <ion-select placeholder="Pick Tier" [value]="deckConfig.mainDpsTierLevel"
+                  (ionChange)="changeDeckConfig($event,'mainDpsTierLevel')">
+                    <ion-select-option *ngFor="let tier of tiers;" [value]="tier">{{ tier }}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </td>
+
+              <td colspan="2">
+                <ion-item lines="none">
+                  <ion-label position="stacked">Demonic Empowered (40+)</ion-label>
+                  <ion-checkbox [checked]="deckConfig.demonHunterEmpowered"
+                  (ionChange)="changeDeckConfig($event,'demonHunterEmpowered', true)"></ion-checkbox>
+                </ion-item>
+              </td>
+
+
+            </tr>
           </table>
         </ion-card-content>
       </ion-card>
@@ -384,7 +517,7 @@
                 </ion-item>
               </td>
               <td *ngIf="getCardTierMatters(card)[1]">
-                <ion-item class="ion-no-margin ion-no-padding" lines="none">
+                <ion-item lines="none">
                   <ion-label position="stacked">Tier</ion-label>
                   <ion-select placeholder="Tier 4-7" [value]="card.tier" (ionChange)="changeTierLevel($event, card)">
                     <ion-select-option *ngFor="let tier of tiers;" [value]="tier">{{ tier }}</ion-select-option>
@@ -392,7 +525,7 @@
                 </ion-item>
               </td>
             </tr>
-            <tr *ngIf="card.name == 'witch_statue' || card.name == 'dryad_rage' || card.name == 'sword'">
+            <tr *ngIf="card.name == 'witch_statue' || card.name == 'dryad_rage' || card.name == 'sword' || (card.name == 'grindstone' && getGrindstoneTalents().indexOf('unstable_overheat') > -1)">
               <td colspan="2">
                 <ion-item lines="none">
                   <ion-label position="stacked">Merges / Stacks</ion-label>
@@ -403,7 +536,7 @@
                 </ion-item>
               </td>
             </tr>
-            <tr *ngIf="card.name == 'grindstone'">
+            <!-- <tr *ngIf="card.name == 'grindstone'">
               <td colspan="3">
                 <ion-item lines="none">
                   <ion-label position="stacked">Mode</ion-label>
@@ -413,6 +546,33 @@
                     <ion-select-option value="mt">Multi Target</ion-select-option>
                   </ion-select>
                   <ion-button (click)="changeGrindstoneOptions()">Talents</ion-button>
+                </ion-item>
+              </td>
+            </tr> -->
+            <tr *ngIf="card.name == 'grindstone'">
+              <td colspan="3">
+                <ion-item lines="none">
+                  <ion-label position="stacked">Base Damage</ion-label>
+                  <ion-input [value]="card.damage" (ionChange)="setGrindstoneDmg($event, card)"></ion-input>
+                  <ion-button (click)="changeGrindstoneOptions()">Options</ion-button>
+                </ion-item>
+              </td>
+            </tr>
+            <tr *ngIf="card.name == 'grindstone' && getGrindstoneTalents().indexOf('adjacent_ks') > -1">
+              <td colspan="3">
+                <ion-item lines="none">
+                  <ion-label position="stacked">KS Level</ion-label>
+                  <ion-select placeholder="Level 9-12" [value]="card.level" (ionChange)="changeCardLevel($event, card)">
+
+                    <ion-select-option *ngFor="let level of levels;" [value]="level">{{ level }}</ion-select-option>
+
+                  </ion-select>
+                </ion-item>
+                <ion-item lines="none">
+                  <ion-label position="stacked">KS Tier</ion-label>
+                  <ion-select placeholder="Tier 4-7" [value]="card.tier" (ionChange)="changeTierLevel($event, card)">
+                    <ion-select-option *ngFor="let tier of tiers;" [value]="tier">{{ tier }}</ion-select-option>
+                  </ion-select>
                 </ion-item>
               </td>
             </tr>
