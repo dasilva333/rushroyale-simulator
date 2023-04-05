@@ -868,7 +868,7 @@ export class ExploreContainerComponent implements OnInit {
       let buffPerStack = 1.5;
       let baseBuff = 10;
       if (!card.merges) card.merges = 0;
-      totalDamage = totalDamage * (1 + ((baseBuff = (buffPerStack * card.merges)) / 100));
+      totalDamage = totalDamage * (1 + ((baseBuff + (buffPerStack * card.merges)) / 100));
     }
 
     return Math.ceil(totalDamage);
