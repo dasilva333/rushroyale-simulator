@@ -645,9 +645,10 @@ export class Tab5Page implements OnInit {
     return speedBuffs;
   }
 
-  getGrindstoneBuffs(tileInfo: any) {
+  getGrindstoneBuffs(grindstoneUnit: any) {
     /* find buffs to grindstone (ks and witch) */
-    let buildingBuffs = tileInfo.adjacentUnits.filter((unit: any) => (unit.id == 'witch_statue' || unit.id == 'knight_statue'));
+    let neighborUnits = this.getAdjacentUnitsForTile(grindstoneUnit.row, grindstoneUnit.column);
+    let buildingBuffs = neighborUnits.filter((unit: any) => (unit.id == 'witch_statue' || unit.id == 'knight_statue'));
     //console.log('gs buildingBuffs', buildingBuffs);
     let critBuff = 0;
     let damageBuffs = [];
@@ -661,18 +662,19 @@ export class Tab5Page implements OnInit {
       }
     }
     // gs can have it's crit and damage buffed by talents
-    if (tileInfo.main.activeTalents.length) {
-      for (let talent of tileInfo.main.activeTalents) {
+    if (grindstoneUnit.activeTalents.length) {
+      for (let talent of grindstoneUnit.activeTalents) {
         if (talent == 'tempered_steel') {
           //console.log('tempered steel found', tileInfo.main.tier);
-          critBuff = critBuff + tileInfo.main.tier;
+          critBuff = critBuff + grindstoneUnit.tier;
         } else if (talent == 'triple_overheat') {
           //console.log('tempered steel found', tileInfo.main.tier);
           damageBuffs.push(30);
         } else if (talent == 'unstable_overheat') {
+          if (!('merges' in grindstoneUnit)) grindstoneUnit.merges = 0;
           let buffPerStack = 1.5;
           let baseBuff = 10;
-          damageBuffs.push(baseBuff + (buffPerStack * tileInfo.main.merges));
+          damageBuffs.push(baseBuff + (buffPerStack * grindstoneUnit.merges));
         }
       }
     }
@@ -684,65 +686,57 @@ export class Tab5Page implements OnInit {
 
   //provided the tileInfo for the damage dealer with a known grindstone connected
   getDamageForGrindstone(tileInfo: any) {
-    let results: any = [];
-    let gsBuffs = this.getGrindstoneBuffs(tileInfo);
-    //console.log('gs buffs', critBuff, damageBuff);
+    let ghostUnit: any = {
+      main: JSON.parse(JSON.stringify(tileInfo.main)),
+      adjacentUnits: this.getAdjacentUnitsForTile(tileInfo.row, tileInfo.column),
+      row: tileInfo.row,
+      column: tileInfo.column,
+    };
 
-    /* find dps units connected to grindstone */
-    let damageDealers = tileInfo.adjacentUnits
-      //find the damage dealers
-      .filter((unit: any) => (unit.type == 'dps'))
-      //figure out if the damage dealer is connected to a different grindstone
-      /*.filter((unit: any) => {
-        let otherGrindstonesConnected = this.getAdjacentUnitsForTile(unit.row, unit.column)
-          .filter((neighbor) => {
-            let isNotItself = !(neighbor.id == 'grindstone' && neighbor.row == tileInfo.main.row && neighbor.column == tileInfo.main.column);
-            //console.log('neighbor', neighbor, neighbor.row, neighbor.column, tileInfo.main.row, tileInfo.main.column, isNotItself);
-            return isNotItself;
-          });
-        console.log('otherGrindstonesConnected', otherGrindstonesConnected, tileInfo.main.row, tileInfo.main.column);
-        let thisIsTheBetterGrindstone = true;
-        let gsNeighborBuffs = [];
-        if (otherGrindstonesConnected.length) {
-          console.log('other grindstones review the other ', otherGrindstonesConnected.length);
-          for (let neighborGs of otherGrindstonesConnected) {
-            let neighboringGsBuffs = this.getGrindstoneBuffs({ main: neighborGs });
-            console.log('neighboringGsBuffs', neighboringGsBuffs);
-          }
-        }
-        return thisIsTheBetterGrindstone;
-      });*/
-    console.log('damageDealers', damageDealers);
-    let newGsDamage = tileInfo.main.damage;
-    for (let buff of gsBuffs.damageBuffs) {
-      newGsDamage = Math.round(newGsDamage * (1 + (buff / 100)));
+    ghostUnit.main.name = `${ghostUnit.main.name} & Grindstone`;
+
+    let combinedBuffs: any = { critBuff: 0, damageBuffs: [], baseDamage: 0 };
+    // find all the grindstones connected to the damage dealer
+    let otherGrindstonesConnected = ghostUnit.adjacentUnits
+      .filter((neighbor: any) => neighbor.id == 'grindstone');
+
+    // loop over all the connected grindstones
+    for (let gsNeighbors of otherGrindstonesConnected){
+      let gsBuffs = this.getGrindstoneBuffs(gsNeighbors);
+      //console.log('gsBuffs', gsBuffs);
+      //take the greater value of the base damage Math.max(combinedBuff.baseDamage, connectedGs.main.damage)
+      combinedBuffs.baseDamage = Math.max(combinedBuffs.baseDamage, gsNeighbors.damage);
+
+      //take the greater value of the crit buff Math.max(combinedBuff.critBuff, connectedGs.critBuff)
+      combinedBuffs.critBuff = Math.max(combinedBuffs.critBuff, gsBuffs.critBuff);
+      
+      //take the greater value of the dmg buff Math.max(this.sumArray(combinedBuff.damageBuff), this.sumArray(connectedGs.damageBuff));
+      let currentMax = this.sumOfArray(combinedBuffs.damageBuffs);
+      let newMax = Math.max(currentMax, this.sumOfArray(gsBuffs.damageBuffs));
+      if (newMax > currentMax){
+        combinedBuffs.damageBuffs = gsBuffs.damageBuffs;
+      }
     }
-    //* (1 + (damageBuff / 100))
-    //console.log('gs damageDealers', damageDealers);
-    for (let damageDealer of damageDealers) {
-      // clone the damage dealing unit
-      let ghostUnit: any = {
-        main: JSON.parse(JSON.stringify(damageDealer)),
-        // might have to filter grindstone from here
-        adjacentUnits: this.getAdjacentUnitsForTile(damageDealer.row, damageDealer.column),
-        row: tileInfo.row,
-        column: tileInfo.column,
-      };
 
-      ghostUnit.main.name = `${ghostUnit.main.name}@${ghostUnit.main.row + 1}x${ghostUnit.main.column + 1} to Grindstone`;
-      //console.log('gs0 ghostUnit.main.mainDpsBaseDamage', ghostUnit.main.mainDpsBaseDamage, damageBuff);
-      // set the base damage of this ghost unit to the grindstone's base damage plus buffs from witch
-      ghostUnit.main.mainDpsBaseDamage = newGsDamage;
-      //console.log('gs1 ghostUnit.main.mainDpsBaseDamage', ghostUnit.main.mainDpsBaseDamage, damageBuff);
-      // set the base crit to any adjacent knight statue stats
-      ghostUnit.main.mainDpsBaseCrit = gsBuffs.critBuff;
+    //console.log('combinedBuffs', combinedBuffs);
 
-      ghostUnit.dpsInfo = this.getDamageInfoForUnit(ghostUnit);
-      results.push(ghostUnit);
-      //console.log('gs ghostUnit', ghostUnit);
+    ghostUnit.main.mainDpsBaseDamage = combinedBuffs.baseDamage;
 
+    //apply the buffs from combinedBuffs to the ghostUnit object  
+    for (let buff of combinedBuffs.damageBuffs) {
+      ghostUnit.main.mainDpsBaseDamage = Math.round(ghostUnit.main.mainDpsBaseDamage * (1 + (buff / 100)));
     }
-    return results;
+
+    // set the base crit to any adjacent knight statue stats
+    ghostUnit.main.mainDpsBaseCrit = combinedBuffs.critBuff;
+    
+    //console.log('ghostUnit', ghostUnit);
+    
+    ghostUnit.dpsInfo = this.getDamageInfoForUnit(ghostUnit);
+
+    //console.log('ghostUnit', ghostUnit);
+
+    return ghostUnit;
   }
 
   getDamageInfoGeneric(tileInfo: any) {
@@ -787,7 +781,8 @@ export class Tab5Page implements OnInit {
       critDmgPerSecond,
       hitsPerSecond,
       critHitsPerSecond,
-      criticalDamage
+      criticalDamage,
+      totalCritChance
     }
     return results;
   }
@@ -839,18 +834,24 @@ export class Tab5Page implements OnInit {
     for (let row = 0; row < 3; row++) {
       for (let column = 0; column < 5; column++) {
         let cardInfo = this.gridRows[row][column];
+        cardInfo.dpsEntries = []; 
         if (cardInfo.type == 'dps') {
+          let damageDealer: any = { row, column, type: 'individual', dpsEntries: [] };
           let tileInfo: any = { main: cardInfo, row, column };
+
           tileInfo.adjacentUnits = this.getAdjacentUnitsForTile(row, column);
-          tileInfo.dpsEntries = [this.getDamageInfoForUnit(tileInfo)];
-          tileInfo.type = 'individual';
-          cardInfo.dpsEntries = tileInfo.dpsEntries;
+          tileInfo.dpsInfo = this.getDamageInfoForUnit(tileInfo);
+          damageDealer.dpsEntries.push(tileInfo);
+
           let hasGrindstones = tileInfo.adjacentUnits.filter((unit: any) => unit.id == 'grindstone').length > 0;
           if (hasGrindstones){
-            console.log('found unit attached to grindstone');
-            tileInfo.dpsEntries.push(this.getDamageForGrindstone(tileInfo));
+            //console.log('found unit attached to grindstone');
+            damageDealer.dpsEntries.push(this.getDamageForGrindstone(tileInfo));
           }
-          mainDamageUnits.push(tileInfo);
+
+          cardInfo.dpsEntries = JSON.parse(JSON.stringify(damageDealer.dpsEntries));
+
+          mainDamageUnits.push(damageDealer);
         } /*else if (cardInfo.type == 'flat') {
           let tileInfo: any = { main: cardInfo, row, column };
           tileInfo.adjacentUnits = this.getAdjacentUnitsForTile(row, column);
@@ -868,13 +869,15 @@ export class Tab5Page implements OnInit {
       type: 'total',
       totalDPS: mainDamageUnits.reduce((memo, value) => {
         for (let dpsEntry of value.dpsEntries){
-          memo = memo + dpsEntry.total;
+          memo = memo + dpsEntry.dpsInfo.total;
         }
         return memo;
       }, 0)
     };
     mainDamageUnits.unshift(grandTotal);
+    
     //console.log('mainDamageUnits', mainDamageUnits);
+    
     return mainDamageUnits;
   }
 }

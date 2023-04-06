@@ -55,7 +55,7 @@
         <ion-buttons slot="start">
           <ion-button (click)="dismissedCardOptions($event)">Confirm</ion-button>
         </ion-buttons>
-        <ion-title>Pick Options</ion-title>
+        <ion-title slot="end">Pick Options</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
@@ -291,36 +291,46 @@
                 <img *ngIf="gridRows[rowIndex][columnIndex].id != ''" id="tile_{{ rowIndex }}_{{ columnIndex }}"
                   src="/assets/icons/{{ gridRows[rowIndex][columnIndex].id }}.png">
 
-                <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
-                  *ngIf="gridRows[rowIndex][columnIndex].id == 'knight_statue'" color="primary">
+                  <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
+                  *ngIf="gridRows[rowIndex][columnIndex].id == 'knight_statue' || gridRows[rowIndex][columnIndex].id == 'banner'" color="primary">
                   Lv.{{ gridRows[rowIndex][columnIndex].level }}/T.{{ gridRows[rowIndex][columnIndex].tier }}
+                </ion-chip>
+                <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
+                  *ngIf="gridRows[rowIndex][columnIndex].id == 'trapper' || gridRows[rowIndex][columnIndex].id == 'sword'" color="primary">
+                  Lv.{{ gridRows[rowIndex][columnIndex].level }}
                 </ion-chip>
                 <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Stacks"
                   *ngIf="gridRows[rowIndex][columnIndex].id == 'witch_statue'" color="primary">
-                  Lv.{{ gridRows[rowIndex][columnIndex].level }} Stacks {{ gridRows[rowIndex][columnIndex].merges }}
+                  Lv.{{ gridRows[rowIndex][columnIndex].level }} St.{{ gridRows[rowIndex][columnIndex].merges }}
                 </ion-chip>
                 <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
                   *ngIf="gridRows[rowIndex][columnIndex].id == 'grindstone'" color="primary">
-                  T.{{ gridRows[rowIndex][columnIndex].tier }}
+                  {{ gridRows[rowIndex][columnIndex].damage }}/hit&nbsp;
                   <span *ngIf="gridRows[rowIndex][columnIndex].activeTalents.indexOf('unstable_overheat') > -1">
-                    /Stacks {{ gridRows[rowIndex][columnIndex].merges }}
+                    St.{{ gridRows[rowIndex][columnIndex].merges }}&nbsp;
                   </span>
                   <span *ngIf="gridRows[rowIndex][columnIndex].activeTalents.indexOf('triple_overheat') > -1">
-                    /3xOH
+                    3xt&nbsp;
+                  </span>
+                  <span *ngIf="gridRows[rowIndex][columnIndex].activeTalents.indexOf('tempered_steel') > -1">
+                    T.{{ gridRows[rowIndex][columnIndex].tier }}
                   </span>
                 </ion-chip>
                 <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Stacks"
                   *ngIf="gridRows[rowIndex][columnIndex].type == 'dps'" color="primary">
                   {{ getCardInfoById(gridRows[rowIndex][columnIndex].id).mainDpsBaseDamage }} / hit
                 </ion-chip>
-
+                <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Stacks"
+                  *ngIf="gridRows[rowIndex][columnIndex].id == 'dryad'" color="primary">
+                  St. {{ getCardInfoById(gridRows[rowIndex][columnIndex].id).merges }} 
+                </ion-chip>
 
                 <ion-popover *ngIf="infoMode" trigger="tile_{{ rowIndex }}_{{ columnIndex }}" triggerAction="click">
                   <ng-template>
                     <ion-content class="ion-padding">
-                      {{ gridRows[rowIndex][columnIndex].name }}<br>
-                      <div *ngFor="let dpsInfo of gridRows[rowIndex][columnIndex].dpsEntries">
-                        <strong>DPS</strong> {{ dpsInfo.total | number }}
+                      <strong>{{ gridRows[rowIndex][columnIndex].name }} DPS</strong><br>
+                      <div *ngFor="let dpsEntry of gridRows[rowIndex][columnIndex].dpsEntries" size="small">
+                        <em>{{ dpsEntry.main.name }}</em> {{ dpsEntry.dpsInfo.total | number }}
                       </div>
                     </ion-content>
                   </ng-template>
@@ -360,8 +370,8 @@
                     *ngIf="card == 'inquisitor' || card == 'boreas' || card == 'sentry' || card == 'generic'"
                     color="primary">{{ getCardInfoById(card).mainDpsBaseDamage }} / hit</ion-chip>
 
-                  <ion-chip size="xsmall" class="ion-no-margin" title="Damage Buff" *ngIf="card == 'grindstone'"
-                    color="primary">Dmg {{ getCardInfoById('grindstone').damage }} pts</ion-chip>
+                  <!-- <ion-chip size="xsmall" class="ion-no-margin" title="Damage Buff" *ngIf="card == 'grindstone'"
+                    color="primary">{{ getCardInfoById('grindstone').damage }} / hit </ion-chip> -->
 
                   <ion-chip size="xsmall" class="ion-no-margin" title="Damage Buff" *ngIf="card == 'witch_statue'"
                     color="primary">Dmg {{ getWitchBuff() }}%</ion-chip>
@@ -380,16 +390,19 @@
 
                   <!-- Speed Buffs -->
                   <ion-chip size="xsmall" class="ion-no-margin" title="Speed Buff" *ngIf="card == 'banner'"
-                    color="warning">Speed {{ getBannerBuff() }}%</ion-chip>
+                    color="warning">Spd {{ getBannerBuff() }}%</ion-chip>
                   <ion-chip size="xsmall" class="ion-no-margin" title="Speed Buff" *ngIf="card == 'knight_statue'"
-                    color="warning">Speed {{ getKsSpeed() }}%</ion-chip>
+                    color="warning">Spd {{ getKsSpeed() }}%</ion-chip>
 
                   <!-- Crit Buffs -->
                   <ion-chip size="xsmall" class="ion-no-margin" title="Crit Buff" *ngIf="card == 'knight_statue'"
                     color="success">Crit {{ getKsCrit() }}%</ion-chip>
 
-                  <ion-chip size="xsmall" class="ion-no-margin" title="Speed Buff" *ngIf="card == 'sword'"
+                    <ion-chip size="xsmall" class="ion-no-margin" title="Speed Buff" *ngIf="card == 'sword'"
                     color="success">Crit {{ getSwordCrit(10) }}%</ion-chip>
+
+                    <!-- <ion-chip size="xsmall" class="ion-no-margin" title="Speed Buff" *ngIf="card == 'grindstone'"
+                    color="success">Crit {{ get(10) }}%</ion-chip> -->
 
 
 
@@ -423,95 +436,95 @@
                     <ion-row>
                       <ion-col>
                         <ion-item class="ion-no-padding">
-                          <ion-label><strong>{{ damageUnit.main.name }}</strong> Row: {{ damageUnit.row+1 }} Column: {{
-                            damageUnit.column+1 }}</ion-label>
+                          <ion-label><strong>{{ dpsEntry.main.name }}</strong> Row: {{ dpsEntry.row+1 }} Column: {{
+                            dpsEntry.column+1 }}</ion-label>
                         </ion-item>
                       </ion-col>
                     </ion-row>
                     <ion-row>
-                      <ion-col size="4" *ngIf="damageUnit.main.hasPhases == false">
+                      <ion-col size="4" *ngIf="dpsEntry.main.hasPhases == false">
                         <ion-item class="ion-no-padding">
                           <ion-label position="stacked"><strong>Base Damage</strong></ion-label>
 
-                          <ion-text style="padding: 2px">{{ dpsEntry.newAttackDamage | number: '1.0-1' }} /
+                          <ion-text style="padding: 2px">{{ dpsEntry.dpsInfo.newAttackDamage | number: '1.0-1' }} /
                             hit</ion-text>
                         </ion-item>
                       </ion-col>
-                      <ion-col size="4" *ngIf="damageUnit.main.hasPhases == false">
+                      <ion-col size="4" *ngIf="dpsEntry.main.hasPhases == false">
                         <ion-item class="ion-no-padding">
                           <ion-label position="stacked"><strong>Attack Speed</strong></ion-label>
 
-                          <ion-text style="padding: 2px">{{ dpsEntry.newAttackSpeed | number }} / s</ion-text>
+                          <ion-text style="padding: 2px">{{ dpsEntry.dpsInfo.newAttackSpeed | number }} / s</ion-text>
                         </ion-item>
                       </ion-col>
-                      <ion-col size="4" *ngIf="damageUnit.main.hasPhases == false">
+                      <ion-col size="4" *ngIf="dpsEntry.main.hasPhases == false">
                         <ion-item class="ion-no-padding">
                           <ion-label position="stacked"><strong>DPS</strong></ion-label>
 
-                          <ion-text style="padding: 2px">{{ dpsEntry.dmgPerSecond | number: '1.0-1' }} /
+                          <ion-text style="padding: 2px">{{ dpsEntry.dpsInfo.dmgPerSecond | number: '1.0-1' }} /
                             s</ion-text>
                         </ion-item>
                       </ion-col>
-                      <ion-col size="4" *ngIf="damageUnit.main.hasPhases == false">
+                      <ion-col size="4" *ngIf="dpsEntry.main.hasPhases == false">
                         <ion-item class="ion-no-padding">
                           <ion-label position="stacked"><strong>Crit. Damage</strong></ion-label>
 
-                          <ion-text style="padding: 2px">{{ dpsEntry.criticalDamage | number: '1.0-1' }} /
+                          <ion-text style="padding: 2px">{{ dpsEntry.dpsInfo.criticalDamage | number: '1.0-1' }} /
                             hit</ion-text>
                         </ion-item>
                       </ion-col>
-                      <ion-col size="4" *ngIf="damageUnit.main.hasPhases == false">
+                      <ion-col size="4" *ngIf="dpsEntry.main.hasPhases == false">
                         <ion-item class="ion-no-padding">
-                          <ion-label position="stacked"><strong>Crit. Hits</strong></ion-label>
+                          <ion-label position="stacked"><strong>Crit. Hits</strong> <em>({{ dpsEntry.dpsInfo.totalCritChance * 100 }}%)</em></ion-label>
 
-                          <ion-text style="padding: 2px">{{ dpsEntry.critHitsPerSecond | number }} /
+                          <ion-text style="padding: 2px">{{ dpsEntry.dpsInfo.critHitsPerSecond | number }} /
                             s</ion-text>
                         </ion-item>
                       </ion-col>
-                      <ion-col size="4" *ngIf="damageUnit.main.hasPhases == false">
+                      <ion-col size="4" *ngIf="dpsEntry.main.hasPhases == false">
                         <ion-item class="ion-no-padding">
                           <ion-label position="stacked"><strong>Crit. DPS</strong></ion-label>
 
-                          <ion-text style="padding: 2px">{{ dpsEntry.critDmgPerSecond | number: '1.0-1' }} /
+                          <ion-text style="padding: 2px">{{ dpsEntry.dpsInfo.critDmgPerSecond | number: '1.0-1' }} /
                             s</ion-text>
                         </ion-item>
                       </ion-col>
 
                       <ion-col size="4"
-                        *ngIf="dpsEntry.totalPhaseLengthSeconds && dpsEntry.totalPhaseLengthSeconds > 0">
+                        *ngIf="dpsEntry.dpsInfo.totalPhaseLengthSeconds && dpsEntry.dpsInfo.totalPhaseLengthSeconds > 0">
                         <ion-item class="ion-no-padding" lines="none">
                           <ion-label position="stacked"><strong>Phase Length</strong></ion-label>
 
-                          <ion-text style="padding: 2px">{{ dpsEntry.totalPhaseLengthSeconds | number: '1.0-1'
+                          <ion-text style="padding: 2px">{{ dpsEntry.dpsInfo.totalPhaseLengthSeconds | number: '1.0-1'
                             }}s</ion-text>
                         </ion-item>
                       </ion-col>
 
-                      <ion-col size="4" *ngIf="damageUnit.main.name == 'Boreas'">
+                      <ion-col size="4" *ngIf="dpsEntry.main.name == 'Boreas'">
                         <ion-item class="ion-no-padding" lines="none">
                           <ion-label position="stacked"><strong>Normal Phase DPS</strong></ion-label>
 
-                          <ion-text style="padding: 2px">{{ dpsEntry.normalPhaseTotal /
-                            damageUnit.main.mainDpsActivationInterval | number: '1.0-1' }} for
-                            {{damageUnit.main.mainDpsActivationInterval}}s</ion-text>
+                          <ion-text style="padding: 2px">{{ dpsEntry.dpsInfo.normalPhaseTotal /
+                            dpsEntry.main.mainDpsActivationInterval | number: '1.0-1' }} for
+                            {{dpsEntry.main.mainDpsActivationInterval}}s</ion-text>
                         </ion-item>
                       </ion-col>
-                      <ion-col size="4" *ngIf="damageUnit.main.name == 'Boreas'">
+                      <ion-col size="4" *ngIf="dpsEntry.main.name == 'Boreas'">
                         <ion-item class="ion-no-padding" lines="none">
                           <ion-label position="stacked"><strong>First Phase DPS</strong></ion-label>
 
-                          <ion-text style="padding: 2px">{{ dpsEntry.firstPhaseTotal /
-                            damageUnit.main.mainDpsFirstPhase | number: '1.0-1' }} for
-                            {{damageUnit.main.mainDpsFirstPhase}}s</ion-text>
+                          <ion-text style="padding: 2px">{{ dpsEntry.dpsInfo.firstPhaseTotal /
+                            dpsEntry.main.mainDpsFirstPhase | number: '1.0-1' }} for
+                            {{dpsEntry.main.mainDpsFirstPhase}}s</ion-text>
                         </ion-item>
                       </ion-col>
-                      <ion-col size="4" *ngIf="damageUnit.main.name == 'Boreas'">
+                      <ion-col size="4" *ngIf="dpsEntry.main.name == 'Boreas'">
                         <ion-item class="ion-no-padding" lines="none">
                           <ion-label position="stacked"><strong>Second Phase DPS</strong></ion-label>
 
-                          <ion-text style="padding: 2px">{{ dpsEntry.secondPhaseTotal /
-                            damageUnit.main.mainDpsSecondPhase | number: '1.0-1' }} for
-                            {{damageUnit.main.mainDpsSecondPhase}}s</ion-text>
+                          <ion-text style="padding: 2px">{{ dpsEntry.dpsInfo.secondPhaseTotal /
+                            dpsEntry.main.mainDpsSecondPhase | number: '1.0-1' }} for
+                            {{dpsEntry.main.mainDpsSecondPhase}}s</ion-text>
                         </ion-item>
                       </ion-col>
 
@@ -519,7 +532,7 @@
                         <ion-item class="ion-no-padding" lines="none">
                           <ion-label position="stacked"><strong>Total DPS</strong></ion-label>
 
-                          <ion-text style="padding: 2px">{{ dpsEntry.total | number }}</ion-text>
+                          <ion-text style="padding: 2px">{{ dpsEntry.dpsInfo.total | number }}</ion-text>
                         </ion-item>
                       </ion-col>
 
