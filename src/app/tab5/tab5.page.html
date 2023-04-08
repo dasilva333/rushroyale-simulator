@@ -93,13 +93,15 @@
                   </ion-buttons>
                 </ion-item>
               </ion-col>
-              <ion-col *ngIf="getFieldMatters(activeTile.id, 'talent')">
+              <ion-col *ngIf="activeTile.id == 'inquisitor'">
                 <ion-item lines="none" class="ion-no-margin">
                   <ion-label position="stacked">Talent</ion-label>
 
                   <ion-select placeholder="Pick Talent" [value]="deckConfig.talent"
                     (ionChange)="changeDeckConfig($event,'talent')">
-                    <ion-select-option value="none">none</ion-select-option>
+                    
+                    <ion-select-option value="">First Hits</ion-select-option>
+                    <ion-select-option value="none">None</ion-select-option>
                     <ion-select-option value="unity">Unity</ion-select-option>
                     <ion-select-option value="ronin">Ronin</ion-select-option>
                   </ion-select>

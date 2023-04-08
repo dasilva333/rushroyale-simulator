@@ -36,8 +36,8 @@ export class Tab5Page implements OnInit {
   cards: any = {
     'inquisitor': {
       name: 'Inquisitor', type: 'dps', hasPhases: false, mainDpsBaseDamage: 120, mainDpsBaseSpeed: 0.6, 
-      mainDpsBaseCrit: 0, tier: true, level: true, talent: 'none', absorbs: 1, mainDpsDamageIncrease: 0,
-      mainDpsDamageIncreaseSteps: 15,
+      mainDpsBaseCrit: 0, tier: true, level: true, talent: 'none', absorbs: 1, mainDpsDamageIncrease: 600,
+      mainDpsDamageIncreaseSteps: 15, mainDpsBaseCritDmg: 0, 
       baseDamage: 120, baseSpeed: 0.6, speedTiers: {
         1: 0,
         2: 0.3,
@@ -247,9 +247,11 @@ export class Tab5Page implements OnInit {
       } else if (field == 'level' || field == 'absorbs') {
         activeUnit.mainDpsBaseDamage = this.dmgWithAbsorbs(activeUnit);
       } else if (field == 'talent'){
-        activeUnit.mainDpsDamageIncrease = this.talents[value].damage;
-        activeUnit.mainDpsBaseCrit = this.talents[value].critChance;
-        activeUnit.mainDpsBaseCritDmg = this.talents[value].critDamage;
+        if (value != ''){
+          activeUnit.mainDpsDamageIncrease = this.talents[value].damage;
+          activeUnit.mainDpsBaseCrit = this.talents[value].critChance;
+          activeUnit.mainDpsBaseCritDmg = this.talents[value].critDamage;
+        }
       }
     }
   }
