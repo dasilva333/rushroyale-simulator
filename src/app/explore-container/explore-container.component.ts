@@ -1063,9 +1063,9 @@ export class ExploreContainerComponent implements OnInit {
           step = step + ((this.deckConfig.mainDpsDamageIncrease % 10) / 100);
           //console.log('last now we got this', step);
         }
-        console.log('step', step, i);
+        //console.log('step', step, i);
         this.deckConfig.mainDpsBaseDamage = originalDamage * step;
-        console.log('this.deckConfig.mainDpsBaseDamage', this.deckConfig.mainDpsBaseDamage);
+        //console.log('this.deckConfig.mainDpsBaseDamage', this.deckConfig.mainDpsBaseDamage);
         let dpsPhase = this.oldTotalDamagePerSecond(includeTalent);
         dpsPhases.push(dpsPhase);
         total = total + dpsPhase.total;
@@ -1159,7 +1159,7 @@ export class ExploreContainerComponent implements OnInit {
     let totalDamageBuffs = this.totalDmgBuff(includeTalent, true);
     //let totalArmorBuffs = this.sumOfArray(this.totalArmorBuff());
     let newAttackDamage = newBaseDamage; //;
-    console.log('gsDamageBuffs', newAttackDamage, totalDamageBuffs);
+    //console.log('gsDamageBuffs', newAttackDamage, totalDamageBuffs);
     for (let buff of totalDamageBuffs) {
       //console.log('newAttackDamage-0', newAttackDamage, buff);
       newAttackDamage = Math.round(newAttackDamage * (1 + (buff / 100)));
