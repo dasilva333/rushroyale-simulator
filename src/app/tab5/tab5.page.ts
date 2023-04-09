@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AlertController, IonModal, ToastController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { Observable, Observer } from 'rxjs';
 declare var jQuery: any;
 @Component({
   selector: 'app-tab5',
@@ -123,7 +124,7 @@ export class Tab5Page implements OnInit {
     } else {
       this.resetBoard();
     }
-
+    this.calculateDamaeReport();
   }
 
   // dragMode() {
@@ -151,16 +152,13 @@ export class Tab5Page implements OnInit {
     let cardTemplate = JSON.stringify({ id: '' });
     this.gridRows = [
     ];
-    this.damageReport = {
-      damageDealers: [],
-      total: 0
-    };
     for (let row = 0; row < 3; row++) {
       this.gridRows[row] = [];
       for (let column = 0; column < 5; column++) {
         this.gridRows[row][column] = JSON.parse(cardTemplate);
       }
     }
+    this.calculateDamaeReport();
   }
 
   getUniqueCardsOnBoard() {
@@ -199,6 +197,7 @@ export class Tab5Page implements OnInit {
     this.isCardPickerOpen = false;
     this.isCardOptionsOpen = false;
     this.gridRows[this.activeTile.row][this.activeTile.column] = { id: '' };
+    this.calculateDamaeReport();
   }
 
   confirm(cardPicked: any) {
@@ -270,6 +269,8 @@ export class Tab5Page implements OnInit {
       this.gridRows[this.activeTile.row][this.activeTile.column].swordStacks = 0;
 
       this.activeTile.id = cardId;
+      
+      this.calculateDamaeReport();
 
       if (cardTemplate && ('hasOptions' in cardTemplate && cardTemplate.hasOptions !== false) || !('hasOptions' in cardTemplate)) {
         setTimeout(() => {
@@ -293,6 +294,7 @@ export class Tab5Page implements OnInit {
         }
       }
     }
+    this.calculateDamaeReport();
   }
 
   getCardDisplayName(card: any) {
@@ -307,7 +309,7 @@ export class Tab5Page implements OnInit {
 
   getFieldMatters(cardId: any, field: string) {
     let cardTemplate = this.getCardInfoById(cardId) || this.cards[cardId];
-    let hasKey = field in cardTemplate && (cardTemplate[field] > 0 || cardTemplate[field] != '');
+    let hasKey = field in cardTemplate && (cardTemplate[field] > -1 || cardTemplate[field] != '');
     return hasKey;
   }
 
@@ -874,13 +876,12 @@ export class Tab5Page implements OnInit {
 
   }
 
-  getDamageReport() {
+  calculateDamaeReport() {
     this.damageReport.damageDealers = [];
 
     for (let row = 0; row < 3; row++) {
       for (let column = 0; column < 5; column++) {
         let cardInfo = this.gridRows[row][column];
-        cardInfo.dpsEntries = [];
         if (cardInfo.type == 'dps') {
           let damageDealer: any = { row, column, type: 'individual', dpsEntries: [] };
           let tileInfo: any = { main: cardInfo, row, column };
@@ -891,27 +892,15 @@ export class Tab5Page implements OnInit {
 
           let hasGrindstones = tileInfo.adjacentUnits.filter((unit: any) => unit.id == 'grindstone').length > 0;
           if (hasGrindstones) {
-            //console.log('found unit attached to grindstone');
             damageDealer.dpsEntries.push(this.getDamageForGrindstone(tileInfo));
           }
 
-          //cardInfo.dpsEntries = JSON.parse(JSON.stringify(damageDealer.dpsEntries));
-
           this.damageReport.damageDealers.push(damageDealer);
-        } /*else if (cardInfo.type == 'flat') {
-          let tileInfo: any = { main: cardInfo, row, column };
-          tileInfo.adjacentUnits = this.getAdjacentUnitsForTile(row, column);
-          tileInfo.dpsInfo = this.getDamageForGrindstone(tileInfo);
-          //console.log('grindstone found', tileInfo);
-          for (let dpsInfo of tileInfo.dpsInfo) {
-            dpsInfo.type = 'individual';
-            mainDamageUnits.push(dpsInfo);
-          }
-          cardInfo.dpsEntries = tileInfo.dpsInfo.map((t: any) => t.dpsInfo);
-        } */
+        }
       }
     }
-    this.damageReport.total = this.damageReport.damageDealers.reduce((memo: any, value: any) => {
+
+    this.damageReport.totalDPS = this.damageReport.damageDealers.reduce((memo: any, value: any) => {
       for (let dpsEntry of value.dpsEntries) {
         memo = memo + dpsEntry.dpsInfo.total;
       }
@@ -920,6 +909,6 @@ export class Tab5Page implements OnInit {
 
     //console.log('mainDamageUnits', mainDamageUnits);
 
-    return this.damageReport.damageDealers;
+    return this.damageReport;
   }
 }

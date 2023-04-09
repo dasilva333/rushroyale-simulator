@@ -326,6 +326,7 @@
                   </ion-chip>
                   <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Stacks"
                     *ngIf="gridRows[rowIndex][columnIndex].type == 'dps'" color="primary">
+                    <span *ngIf="gridRows[rowIndex][columnIndex].tier && gridRows[rowIndex][columnIndex].tier > 0">T.{{gridRows[rowIndex][columnIndex].tier}}&nbsp;</span>
                     {{ getCardInfoById(gridRows[rowIndex][columnIndex].id).mainDpsBaseDamage }} / hit
                   </ion-chip>
                   <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Stacks"
@@ -350,7 +351,7 @@
         </ion-item>
         <ion-item lines="none" class="ion-no-margin">
           <ion-label><strong>Combined Total DPS</strong></ion-label>
-          <ion-label>{{ damageReport.total | number }}</ion-label>
+          <ion-label>{{ damageReport.totalDPS | number }}</ion-label>
         </ion-item>
         <ion-item lines="none" class="ion-no-margin ion-no-padding">
           <ion-button color="danger" (click)="resetBoard()">Reset Board</ion-button>
@@ -373,7 +374,7 @@
           </ion-card-header>
           <ion-card-content class="ion-no-margin ion-no-padding">
             <ion-grid class="ion-no-margin ion-no-padding">
-              <ion-row *ngFor="let damageUnit of getDamageReport()">
+              <ion-row *ngFor="let damageUnit of damageReport.damageDealers">
                 <ion-col size="12" *ngIf="damageUnit.type == 'individual'">
                   <ion-grid *ngFor="let dpsEntry of damageUnit.dpsEntries">
                     <ion-row>
