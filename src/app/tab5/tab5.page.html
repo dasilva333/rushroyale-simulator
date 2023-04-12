@@ -6,6 +6,12 @@
   </ion-toolbar>
 </ion-header>
 
+<!-- <style>
+    .board ion-chip {
+        font-size: 3vw;
+    }
+</style> -->
+
 <ion-modal [isOpen]="isCardPickerOpen" (willDismiss)="dismissedCardPicker($event)">
   <ng-template>
     <ion-header>
@@ -99,7 +105,7 @@
 
                   <ion-select placeholder="Pick Talent" [value]="deckConfig.talent"
                     (ionChange)="changeDeckConfig($event,'talent')">
-                    
+
                     <ion-select-option value="">First Hits</ion-select-option>
                     <ion-select-option value="none">None</ion-select-option>
                     <ion-select-option value="unity">Unity</ion-select-option>
@@ -110,7 +116,7 @@
               <ion-col *ngIf="getFieldMatters(activeTile.id, 'absorbs')">
                 <ion-item lines="none" class="ion-no-margin">
                   <ion-label position="stacked">Absorbs</ion-label>
-                  <ion-input [value]="deckConfig.absorbs" (ionChange)="changeDeckConfig($event,'absorbs')"></ion-input>
+                  <ion-input [value]="deckConfig.absorbs" (ionChange)="changeDeckConfig($event,'absorbs')" type="number"></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col
@@ -152,7 +158,7 @@
               <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsBaseDamage')">
                 <ion-item lines="none" class="ion-no-margin">
                   <ion-label position="stacked">Base Damage</ion-label>
-                  <ion-input [value]="deckConfig.mainDpsBaseDamage"
+                  <ion-input [value]="deckConfig.mainDpsBaseDamage" type="number"
                     (ionChange)="changeDeckConfig($event,'mainDpsBaseDamage')"></ion-input>
                 </ion-item>
               </ion-col>
@@ -160,7 +166,7 @@
               <ion-col *ngIf="deckConfig.name == 'Grindstone'">
                 <ion-item lines="none" class="ion-no-margin">
                   <ion-label position="stacked">Base Damage Buff</ion-label>
-                  <ion-input [value]="deckConfig.damage" (ionChange)="changeDeckConfig($event,'damage')"></ion-input>
+                  <ion-input [value]="deckConfig.damage" type="number" (ionChange)="changeDeckConfig($event,'damage')"></ion-input>
                 </ion-item>
               </ion-col>
 
@@ -176,14 +182,14 @@
               <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsBaseSpeed')">
                 <ion-item lines="none" class="ion-no-margin">
                   <ion-label position="stacked">Base Speed</ion-label>
-                  <ion-input [value]="deckConfig.mainDpsBaseSpeed"
+                  <ion-input [value]="deckConfig.mainDpsBaseSpeed" type="number"
                     (ionChange)="changeDeckConfig($event,'mainDpsBaseSpeed')"></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsBaseCrit')">
                 <ion-item lines="none" class="ion-no-margin">
                   <ion-label position="stacked">Base Crit Chance</ion-label>
-                  <ion-input [value]="deckConfig.mainDpsBaseCrit"
+                  <ion-input [value]="deckConfig.mainDpsBaseCrit" type="number"
                     (ionChange)="changeDeckConfig($event,'mainDpsBaseCrit')"></ion-input>
                 </ion-item>
               </ion-col>
@@ -191,31 +197,31 @@
               <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsFirstPhase')">
                 <ion-item lines="none" class="ion-no-margin">
                   <ion-label position="stacked">First Phase Duration</ion-label>
-                  <ion-input [value]="deckConfig.mainDpsFirstPhase"
+                  <ion-input [value]="deckConfig.mainDpsFirstPhase" type="number"
                     (ionChange)="changeDeckConfig($event,'mainDpsFirstPhase')"></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsSecondPhase')">
                 <ion-item lines="none" class="ion-no-margin">
                   <ion-label position="stacked">Second Phase Duration</ion-label>
-                  <ion-input [value]="deckConfig.mainDpsSecondPhase"
+                  <ion-input [value]="deckConfig.mainDpsSecondPhase" type="number"
                     (ionChange)="changeDeckConfig($event,'mainDpsSecondPhase')"></ion-input>
-                </ion-item>
-              </ion-col>
-
-              <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsDamageIncrease')">
-                <ion-item lines="none" class="ion-no-margin">
-                  <ion-label position="stacked">Damage Increase</ion-label>
-                  <ion-input [value]="deckConfig.mainDpsDamageIncrease"
-                    (ionChange)="changeDeckConfig($event,'mainDpsDamageIncrease')"></ion-input>
                 </ion-item>
               </ion-col>
 
               <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsActivationInterval')">
                 <ion-item lines="none" class="ion-no-margin">
                   <ion-label position="stacked">Activation Interval</ion-label>
-                  <ion-input [value]="deckConfig.mainDpsActivationInterval"
+                  <ion-input [value]="deckConfig.mainDpsActivationInterval" type="number"
                     (ionChange)="changeDeckConfig($event,'mainDpsActivationInterval')"></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'mainDpsDamageIncrease')">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked">Damage Increase</ion-label>
+                  <ion-input [value]="deckConfig.mainDpsDamageIncrease" type="number"
+                    (ionChange)="changeDeckConfig($event,'mainDpsDamageIncrease')"></ion-input>
                 </ion-item>
               </ion-col>
 
@@ -227,6 +233,37 @@
                 </ion-item>
               </ion-col>
 
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'sacrifices')">
+                <ion-item lines="none">
+                  <ion-label position="stacked">Sacrifices</ion-label>
+                  <ion-input [value]="deckConfig.sacrifices" type="number"
+                  (ionChange)="changeDeckConfig($event,'sacrifices')"></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col *ngIf="activeTile.id == 'boreas'" size="12">
+                <ion-item lines="none" class="ion-no-margin ion-no-padding">
+                  <ion-grid class="ion-no-margin ion-no-padding" style="width: 100%;">
+                    <ion-row>
+                      <ion-col>
+                        <ion-label position="stacked">Second Breath</ion-label>
+                        <ion-checkbox [checked]="deckConfig.activeTalents.indexOf('second_breath') > -1" value="second_breath"
+                        (ionChange)="changeDeckConfig($event,'activeTalents', true)"></ion-checkbox>
+                      </ion-col>
+                      <ion-col>
+                        <ion-label position="stacked">Doublet</ion-label>
+                        <ion-checkbox [checked]="deckConfig.activeTalents.indexOf('doublet') > -1" value="doublet"
+                          (ionChange)="changeDeckConfig($event,'activeTalents', true)"></ion-checkbox>
+                      </ion-col>
+                      <ion-col>
+                        <ion-label position="stacked">Precise Shooting</ion-label>
+                        <ion-checkbox [checked]="deckConfig.activeTalents.indexOf('precise_shooting') > -1" value="precise_shooting"
+                          (ionChange)="changeDeckConfig($event,'activeTalents', true)"></ion-checkbox>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
+              </ion-col>
             </ion-row>
           </ion-grid>
           <table class="ion-no-margin ion-no-padding" style="width: 100%; display:block; margin:0; padding: 0;">
@@ -237,21 +274,21 @@
                     <ion-col size-sm="4" size-md="4" size-xs="8">
                       <ion-item class="ion-no-padding">
                         <ion-text color="primary" size="small"><i>Damage&nbsp;</i></ion-text>
-                        <ion-input [value]="getActiveTalentStat('damage')"
+                        <ion-input [value]="getActiveTalentStat('damage')" type="number"
                           (ionChange)="changeTalentStat($event, 'damage')"></ion-input>%
                       </ion-item>
                     </ion-col>
                     <ion-col size-sm="4" size-md="4" size-xs="8">
                       <ion-item class="ion-no-padding">
                         <ion-text color="success" size="small"><i>Chance&nbsp;</i></ion-text>
-                        <ion-input [value]="getActiveTalentStat('critChance')"
+                        <ion-input [value]="getActiveTalentStat('critChance')" type="number"
                           (ionChange)="changeTalentStat($event, 'critChance')"></ion-input>%
                       </ion-item>
                     </ion-col>
                     <ion-col size-sm="4" size-md="4" size-xs="8">
                       <ion-item class="ion-no-padding">
                         <ion-text color="tertiary" size="small"><i>Crit-Dmg&nbsp;</i></ion-text>
-                        <ion-input [value]="getActiveTalentStat('critDamage')"
+                        <ion-input [value]="getActiveTalentStat('critDamage')" type="number"
                           (ionChange)="changeTalentStat($event, 'critDamage')"></ion-input>%
                       </ion-item>
                     </ion-col>
@@ -284,55 +321,64 @@
         <ion-item class="ion-no-padding">
           <ion-label>Player Crit %</ion-label>
           &nbsp;
-          <ion-input [value]="boardConfig.playerCrit" (ionChange)="changeBoardConfig($event,'playerCrit')"></ion-input>
+          <ion-input [value]="boardConfig.playerCrit" (ionChange)="changeBoardConfig($event,'playerCrit')" type="number"></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col size-sm="12" size-md="4" size-xs="12">
+      <ion-col size-sm="12" size-md="12" size-lg="4" size-xs="12" class="ion-no-margin ion-no-padding">
         <ion-item class="ion-no-margin ion-no-padding">
-          <ion-grid class="board">
+          <ion-grid class="board ion-no-margin ion-no-padding">
             <ion-row *ngFor="let row of gridRows; let rowIndex = index;">
-              <ion-col *ngFor="let value of row; let columnIndex = index;" (click)="clickedTile($event, rowIndex, columnIndex)" style="text-align:center;">
+              <ion-col *ngFor="let value of row; let columnIndex = index;" class="ion-no-margin ion-no-padding"
+                (click)="clickedTile($event, rowIndex, columnIndex)" style="text-align:center;">
                 <div>
 
                   <img *ngIf="gridRows[rowIndex][columnIndex].id != ''" id="tile_{{ rowIndex }}_{{ columnIndex }}"
                     src="/assets/icons/{{ gridRows[rowIndex][columnIndex].id }}.png">
 
-                  <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
-                    *ngIf="gridRows[rowIndex][columnIndex].id == 'knight_statue' || gridRows[rowIndex][columnIndex].id == 'banner'"
-                    color="primary">
-                    Lv.{{ gridRows[rowIndex][columnIndex].level }}/T.{{ gridRows[rowIndex][columnIndex].tier }}
-                  </ion-chip>
-                  <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
-                    *ngIf="gridRows[rowIndex][columnIndex].id == 'trapper' || gridRows[rowIndex][columnIndex].id == 'sword'"
-                    color="primary">
-                    Lv.{{ gridRows[rowIndex][columnIndex].level }}
-                  </ion-chip>
-                  <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Stacks"
-                    *ngIf="gridRows[rowIndex][columnIndex].id == 'witch_statue'" color="primary">
-                    Lv.{{ gridRows[rowIndex][columnIndex].level }} St.{{ gridRows[rowIndex][columnIndex].merges }}
-                  </ion-chip>
-                  <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
-                    *ngIf="gridRows[rowIndex][columnIndex].id == 'grindstone'" color="primary">
-                    {{ gridRows[rowIndex][columnIndex].damage }}/hit&nbsp;
-                    <span *ngIf="gridRows[rowIndex][columnIndex].activeTalents.indexOf('unstable_overheat') > -1">
-                      St.{{ gridRows[rowIndex][columnIndex].merges }}&nbsp;
-                    </span>
-                    <span *ngIf="gridRows[rowIndex][columnIndex].activeTalents.indexOf('triple_overheat') > -1">
-                      3xt&nbsp;
-                    </span>
-                    <span *ngIf="gridRows[rowIndex][columnIndex].activeTalents.indexOf('tempered_steel') > -1">
-                      T.{{ gridRows[rowIndex][columnIndex].tier }}
-                    </span>
-                  </ion-chip>
-                  <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Stacks"
-                    *ngIf="gridRows[rowIndex][columnIndex].type == 'dps'" color="primary">
-                    <span *ngIf="gridRows[rowIndex][columnIndex].tier && gridRows[rowIndex][columnIndex].tier > 0">T.{{gridRows[rowIndex][columnIndex].tier}}&nbsp;</span>
-                    {{ getCardInfoById(gridRows[rowIndex][columnIndex].id).mainDpsBaseDamage }} / hit
-                  </ion-chip>
-                  <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Stacks"
-                    *ngIf="gridRows[rowIndex][columnIndex].id == 'dryad'" color="primary">
-                    St. {{ getCardInfoById(gridRows[rowIndex][columnIndex].id).merges }}
-                  </ion-chip>
+                  <!-- <ion-thumbnail style="--size: 65px;" *ngIf="gridRows[rowIndex][columnIndex].id != ''"><img
+                      src="/assets/icons/{{ gridRows[rowIndex][columnIndex].id }}.png"></ion-thumbnail> -->
+
+                  <div>
+                    <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
+                      *ngIf="gridRows[rowIndex][columnIndex].id == 'knight_statue' || gridRows[rowIndex][columnIndex].id == 'banner'"
+                      color="primary">
+                      Lv.{{ gridRows[rowIndex][columnIndex].level }}/T.{{ gridRows[rowIndex][columnIndex].tier }}
+                    </ion-chip>
+                    <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
+                      *ngIf="gridRows[rowIndex][columnIndex].id == 'trapper' || gridRows[rowIndex][columnIndex].id == 'sword'"
+                      color="primary">
+                      Lv.{{ gridRows[rowIndex][columnIndex].level }}
+                    </ion-chip>
+                    <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Stacks"
+                      *ngIf="gridRows[rowIndex][columnIndex].id == 'witch_statue'" color="primary">
+                      Lv.{{ gridRows[rowIndex][columnIndex].level }} St.{{ gridRows[rowIndex][columnIndex].merges }}
+                    </ion-chip>
+                    <!--  -->
+                    <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
+                      *ngIf="gridRows[rowIndex][columnIndex].id == 'grindstone'" color="primary">
+                      {{ gridRows[rowIndex][columnIndex].damage }}/hit&nbsp;
+                      <span *ngIf="gridRows[rowIndex][columnIndex].activeTalents.indexOf('unstable_overheat') > -1">
+                        St.{{ gridRows[rowIndex][columnIndex].merges }}&nbsp;
+                      </span>
+                      <span *ngIf="gridRows[rowIndex][columnIndex].activeTalents.indexOf('triple_overheat') > -1">
+                        3xt&nbsp;
+                      </span>
+                      <span *ngIf="gridRows[rowIndex][columnIndex].activeTalents.indexOf('tempered_steel') > -1">
+                        T.{{ gridRows[rowIndex][columnIndex].tier }}
+                      </span>
+                    </ion-chip>
+                    <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Stacks"
+                      *ngIf="gridRows[rowIndex][columnIndex].type == 'dps'" color="primary">
+                      <span
+                        *ngIf="gridRows[rowIndex][columnIndex].tier && gridRows[rowIndex][columnIndex].tier > 0">T.{{gridRows[rowIndex][columnIndex].tier}}&nbsp;</span>
+                      {{ getCardInfoById(gridRows[rowIndex][columnIndex].id).mainDpsBaseDamage }} / hit
+                    </ion-chip>
+                    <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Stacks"
+                      *ngIf="gridRows[rowIndex][columnIndex].id == 'dryad'" color="primary">
+                      St. {{ getCardInfoById(gridRows[rowIndex][columnIndex].id).merges }}
+                    </ion-chip>
+                  </div>
+
 
                   <ion-popover *ngIf="infoMode" trigger="tile_{{ rowIndex }}_{{ columnIndex }}" triggerAction="click">
                     <ng-template>
@@ -356,7 +402,7 @@
         <ion-item lines="none" class="ion-no-margin ion-no-padding">
           <ion-button color="danger" (click)="resetBoard()">Reset Board</ion-button>
           <!-- <ion-button [color]="infoMode? 'primary' : 'success'" (click)="infoMode = !infoMode;">Info Mode</ion-button> -->
-          
+
           <!-- <ion-button color="tertiary" (click)="dragMode()">Drag Board</ion-button> -->
 
           <ion-button color="tertiary" (click)="saveInfo()">Save Board</ion-button>
@@ -420,7 +466,7 @@
                       <ion-col size="4" *ngIf="dpsEntry.main.hasPhases == false">
                         <ion-item class="ion-no-padding">
                           <ion-label position="stacked"><strong>Crit. Hits</strong> <em>({{
-                              dpsEntry.dpsInfo.totalCritChance * 100 }}%)</em></ion-label>
+                              (dpsEntry.dpsInfo.totalCritChance * 100).toFixed(2) }}%)</em></ion-label>
 
                           <ion-text style="padding: 2px">{{ dpsEntry.dpsInfo.critHitsPerSecond | number }} /
                             s</ion-text>

@@ -36,9 +36,9 @@ export class Tab5Page implements OnInit {
 
   cards: any = {
     'inquisitor': {
-      name: 'Inquisitor', type: 'dps', hasPhases: false, mainDpsBaseDamage: 120, mainDpsBaseSpeed: 0.6, 
+      name: 'Inquisitor', type: 'dps', hasPhases: false, mainDpsBaseDamage: 120, mainDpsBaseSpeed: 0.6,
       mainDpsBaseCrit: 0, tier: true, level: true, talent: 'none', absorbs: 1, mainDpsDamageIncrease: 600,
-      mainDpsDamageIncreaseSteps: 15, mainDpsBaseCritDmg: 0, 
+      mainDpsDamageIncreaseSteps: 15, mainDpsBaseCritDmg: 0,
       baseDamage: 120, baseSpeed: 0.6, speedTiers: {
         1: 0,
         2: 0.3,
@@ -59,11 +59,112 @@ export class Tab5Page implements OnInit {
         15: 568
       }
     },
-    'boreas': { name: 'Boreas', type: 'dps', hasPhases: true, mainDpsBaseDamage: 120, mainDpsBaseSpeed: 0.09, mainDpsBaseCrit: 0, mainDpsFirstPhase: 4.6, mainDpsSecondPhase: 1.7, mainDpsActivationInterval: 4.7 },
-    'sentry': { name: 'Sentry', type: 'dps', hasPhases: true, mainDpsBaseDamage: 456, mainDpsBaseSpeed: 0.09, mainDpsBaseCrit: 0, mainDpsDamageIncrease: 244, mainDpsActivationInterval: 0.95 },
-    'crystalmancer': { name: 'Crystal Mancer', type: 'dps', hasPhases: false, mainDpsBaseDamage: 197, mainDpsBaseSpeed: 0.07, mainDpsBaseCrit: 0, 
-    mainDpsDamageIncreaseSteps: 10, mainDpsDamageIncrease: 800, mainDpsActivationInterval: 0.95 },
-    'demonhunter': { name: 'Demon Hunter', type: 'dps', hasPhases: false, mainDpsBaseDamage: 1136, mainDpsBaseSpeed: 0.45, mainDpsBaseCrit: 0, demonHunterEmpowered: true, tier: 7, mainDpsDamageIncrease: 75 },
+    'boreas': {
+      name: 'Boreas', type: 'dps', hasPhases: true, mainDpsBaseDamage: 120, mainDpsBaseSpeed: 0.09,
+      activeTalents: [], mainDpsBaseCrit: 0, mainDpsFirstPhase: 4.6, mainDpsSecondPhase: 1.7, mainDpsActivationInterval: 4.7, 
+      level: true, tier: true, baseSpeed: 0.6, baseDamage: 20, speedTiers: {
+        1: 0,
+        2: 0.3,
+        3: 0.4,
+        4: 0.45,
+        5: 0.48,
+        6: 0.5,
+        7: 0.51
+      }, damageLevels: {
+        7: 100,
+        8: 103,
+        9: 107,
+        10: 111,
+        11: 116,
+        12: 122,
+        13: 128,
+        14: 136,
+        15: 145
+      }
+    },
+    'sentry': {
+      name: 'Sentry', type: 'dps', hasPhases: true, mainDpsBaseDamage: 456, mainDpsBaseSpeed: 0.09, mainDpsBaseCrit: 0,
+      mainDpsDamageIncrease: 244, mainDpsActivationInterval: 0.95
+    },
+    'cultists': {
+      name: 'Cultist', type: 'dps', hasPhases: false, mainDpsBaseDamage: 1021, mainDpsBaseSpeed: 0.11, mainDpsBaseCrit: 17,
+      mainDpsDamageIncrease: 300, sacrifices: 0, damagePerSacrifice: 0.05, level: true, tier: true, baseSpeed: 0.8, baseDamage: 333, speedTiers: {
+        1: 0,
+        2: 0.4,
+        3: 0.53,
+        4: 0.6,
+        5: 0.64,
+        6: 0.67,
+        7: 0.69
+      }, damageLevels: {
+        7: 0,
+        8: 50,
+        9: 108,
+        10: 174,
+        11: 250,
+        12: 338,
+        13: 439,
+        14: 555,
+        15: 688
+      }
+    },
+    'bladedancer': {
+      name: 'Blade Dancer', type: 'dps', hasPhases: false, mainDpsBaseDamage: 1301, mainDpsBaseSpeed: 0.14, mainDpsBaseCrit: 0,
+      mainDpsDamageIncrease: 0, dmgIncrease: [
+        0,
+        0,
+        200,
+        250,
+        291,
+        332,
+        375,
+        416,
+        450
+      ], level: true, tier: true, baseSpeed: 1, baseDamage: 215, speedTiers: {
+        1: 0,
+        2: 0.5,
+        3: 0.67,
+        4: 0.75,
+        5: 0.8,
+        6: 0.83,
+        7: 0.86
+      }, damageLevels: {
+        7: 300,
+        8: 345,
+        9: 401,
+        10: 468,
+        11: 549,
+        12: 647,
+        13: 766,
+        14: 911,
+        15: 1086
+      }
+    },
+    'crystalmancer': {
+      name: 'Crystal Mancer', type: 'dps', hasPhases: false, mainDpsBaseDamage: 197, mainDpsBaseSpeed: 0.07, mainDpsBaseCrit: 0,
+      mainDpsDamageIncreaseSteps: 10, mainDpsDamageIncrease: 800, mainDpsActivationInterval: 0.95
+    },
+    'demonhunter': { name: 'Demon Hunter', type: 'dps', hasPhases: false, mainDpsBaseDamage: 1136, mainDpsBaseSpeed: 0.45, 
+      mainDpsBaseCrit: 0, demonHunterEmpowered: true, mainDpsDamageIncrease: 75, 
+      level: true, tier: true, baseSpeed: 0.45, baseDamage: 201, speedTiers: {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+        6: 0,
+        7: 0
+      }, damageLevels: {
+        7: 200,
+        8: 242,
+        9: 294,
+        10: 357,
+        11: 433,
+        12: 525,
+        13: 636,
+        14: 772,
+        15: 935
+      } },
     'generic': { name: 'Generic', type: 'dps', hasPhases: false, mainDpsBaseDamage: 64, mainDpsBaseSpeed: 0.6, mainDpsBaseCrit: 0 },
     'banner': { building: true, level: true, tier: true, damage: 0, speed: 116, crit: 0, name: "Banner" },
     'dryad': { level: false, tier: false, damage: 50, speed: 0, crit: 0, type: 'unit', name: 'Dryad', merges: 10, maxMerges: 20 },
@@ -174,6 +275,19 @@ export class Tab5Page implements OnInit {
     return uniqueCards;
   }
 
+  getUnitsOnBoardById(searchCardId: any) {
+    let unitsOnBoard = [];
+    for (let row = 0; row < 3; row++) {
+      for (let column = 0; column < 5; column++) {
+        let cardId = this.gridRows[row][column].id;
+        if (searchCardId == cardId) {
+          unitsOnBoard.push(cardId);
+        }
+      }
+    }
+    return unitsOnBoard;
+  }
+
 
   clickedTile(event: any, row: any, column: any) {
     //event.target.style.backgroundColor = 'lightgreen';
@@ -240,18 +354,55 @@ export class Tab5Page implements OnInit {
       activeUnit[field] = value;
     }
 
+    if (field == 'tier' && activeUnit.speedTiers) {
+      activeUnit.mainDpsBaseSpeed = parseFloat((activeUnit.baseSpeed - activeUnit.speedTiers[value]).toFixed(4));
+    }
+
     if (activeUnit.id == 'inquisitor') {
-      if (field == 'tier') {
-        activeUnit.mainDpsBaseSpeed = parseFloat((activeUnit.baseSpeed - activeUnit.speedTiers[value]).toFixed(4));
-      } else if (field == 'level' || field == 'absorbs') {
+      if (field == 'level' || field == 'absorbs') {
         activeUnit.mainDpsBaseDamage = this.dmgWithAbsorbs(activeUnit);
-      } else if (field == 'talent'){
-        if (value != ''){
+      } else if (field == 'talent') {
+        if (value != '') {
           activeUnit.mainDpsDamageIncrease = this.talents[value].damage;
           activeUnit.mainDpsBaseCrit = this.talents[value].critChance;
           activeUnit.mainDpsBaseCritDmg = this.talents[value].critDamage;
         }
       }
+    } else {
+      if (field == 'level' && activeUnit.damageLevels) {
+        activeUnit.mainDpsBaseDamage = activeUnit.damageLevels[activeUnit.level] + activeUnit.baseDamage;
+      }
+    }
+
+    if (activeUnit.id == 'boreas') {
+      let talent = event.target.value;
+      // if the talent is enabled
+      if (value) {
+        if (!activeUnit._mainDpsActivationInterval) {
+          activeUnit._mainDpsActivationInterval = activeUnit.mainDpsActivationInterval;
+          activeUnit._mainDpsSecondPhase = activeUnit.mainDpsSecondPhase;
+          activeUnit._mainDpsFirstPhase = activeUnit.mainDpsFirstPhase;
+        }
+
+        if (talent == 'second_breath') {
+          activeUnit.mainDpsFirstPhase = (activeUnit.mainDpsFirstPhase * 3).toFixed(1);
+          activeUnit.mainDpsSecondPhase = (activeUnit.mainDpsSecondPhase * 4).toFixed(1);
+          activeUnit.mainDpsActivationInterval = (activeUnit.mainDpsActivationInterval * 3).toFixed(1);
+        } else if (talent == 'doublet' || talent == 'precise_shooting') {
+          activeUnit.mainDpsFirstPhase = (activeUnit.mainDpsFirstPhase * 3).toFixed(1);
+          activeUnit.mainDpsSecondPhase = (activeUnit.mainDpsSecondPhase * 3).toFixed(1);
+          activeUnit.mainDpsActivationInterval = (activeUnit.mainDpsActivationInterval * 3).toFixed(1);
+        }
+      }
+      // if the talent is disabled
+      else {
+        activeUnit.mainDpsFirstPhase = activeUnit._mainDpsFirstPhase;
+
+        activeUnit.mainDpsSecondPhase = activeUnit._mainDpsSecondPhase;
+
+        activeUnit.mainDpsActivationInterval = activeUnit._mainDpsActivationInterval;
+      }
+      console.log('field', field, 'value', value);
     }
   }
 
@@ -269,7 +420,7 @@ export class Tab5Page implements OnInit {
       this.gridRows[this.activeTile.row][this.activeTile.column].swordStacks = 0;
 
       this.activeTile.id = cardId;
-      
+
       this.calculateDamaeReport();
 
       if (cardTemplate && ('hasOptions' in cardTemplate && cardTemplate.hasOptions !== false) || !('hasOptions' in cardTemplate)) {
@@ -376,6 +527,7 @@ export class Tab5Page implements OnInit {
     if (tileInfo.main.id == 'boreas') {
       let originalSpeed = tileInfo.main.mainDpsBaseSpeed;
       let originalCrit = tileInfo.main.mainDpsBaseCrit;
+      let originalDamage = tileInfo.main.mainDpsBaseDamage;
       let normalPhaseDPS = this.getDamageInfoGeneric(tileInfo);
       let normalPhaseLength = parseFloat(tileInfo.main.mainDpsActivationInterval);
       let normalPhaseTotal = normalPhaseDPS.total * normalPhaseLength;
@@ -395,6 +547,21 @@ export class Tab5Page implements OnInit {
       let secondPhaseDPS = this.getDamageInfoGeneric(tileInfo);
       let secondPhaseLength = parseFloat(tileInfo.main.mainDpsSecondPhase);
       let secondPhaseTotal = secondPhaseDPS.total * secondPhaseLength;
+
+      if (tileInfo.main.activeTalents.indexOf('precise_shooting') > -1 || tileInfo.main.activeTalents.indexOf('doublet') > -1) {
+        // 100% speed increase
+        if (tileInfo.main.activeTalents.indexOf('doublet') > -1) {
+          tileInfo.main.mainDpsBaseSpeed = tileInfo.main.mainDpsBaseSpeed / 2;
+        }
+        // 100% dmg increase
+        if (tileInfo.main.activeTalents.indexOf('precise_shooting') > -1) {
+          tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * 2;
+        }
+        let buffedThird2ndPhase = this.getDamageInfoGeneric(tileInfo);
+        //take the DPS info and take 2/3 from it (to simulate 2 out of 3 phases)
+        secondPhaseTotal = (secondPhaseTotal * 0.66) + buffedThird2ndPhase.total;
+      }
+      tileInfo.main.mainDpsBaseDamage = originalDamage;
       tileInfo.main.mainDpsBaseSpeed = originalSpeed;
       tileInfo.main.mainDpsBaseCrit = originalCrit;
       //console.log('secondPhaseLength', secondPhaseLength, 'secondPhaseTotal', secondPhaseTotal, secondPhaseDPS);
@@ -474,7 +641,7 @@ export class Tab5Page implements OnInit {
       let originalDamage = tileInfo.main.mainDpsBaseDamage;
       for (let i = 0; i < totalPhaseParts; i++) {
         let dmgIncrease = Math.min(tileInfo.main.mainDpsDamageIncrease, damageIncrease * (i + 1));
-        let actualDamage = Math.floor(originalDamage * (1 + (dmgIncrease/100)));
+        let actualDamage = Math.floor(originalDamage * (1 + (dmgIncrease / 100)));
         totalHitDamage = totalHitDamage + actualDamage;
       }
       // the number of crits done within the phase parts (aka the 54 hits required to get to 800%)
@@ -484,10 +651,80 @@ export class Tab5Page implements OnInit {
       // dmg per second is the total damage done divided by the time it took to do that damage
       baseDps.dmgPerSecond = Math.floor(totalHitDamage / baseDps.totalPhaseLengthSeconds);
       // total is the sum of both regular hits per second and crits per second
-      baseDps.total = baseDps.dmgPerSecond + baseDps.critDmgPerSecond; 
+      baseDps.total = baseDps.dmgPerSecond + baseDps.critDmgPerSecond;
       //console.log('totalHitDamage', totalHitDamage, 'totalPhaseLength', baseDps.totalPhaseLengthSeconds);
 
       return baseDps;
+    } else if (tileInfo.main.id == 'bladedancer') {
+      let originalDamage = tileInfo.main.mainDpsBaseDamage;
+      let originalSpeed = tileInfo.main.mainDpsBaseSpeed;
+
+      let numberOfUnits = this.getUnitsOnBoardById(tileInfo.main.id).length;
+      //console.log('numberOfUnits', numberOfUnits, numberOfUnits >= tileInfo.main.dmgIncrease.length - 1, tileInfo.main.dmgIncrease.length);
+      if (numberOfUnits >= tileInfo.main.dmgIncrease.length - 1) {
+        tileInfo.main.mainDpsDamageIncrease = tileInfo.main.dmgIncrease[tileInfo.main.dmgIncrease.length - 1];
+      } else {
+        tileInfo.main.mainDpsDamageIncrease = tileInfo.main.dmgIncrease[numberOfUnits];
+      }
+
+      tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + (tileInfo.main.mainDpsDamageIncrease / 100));
+      let adjacentBDs = tileInfo.adjacentUnits.filter((unit: any) => unit.id == 'bladedancer').length;
+      //console.log('adjacentBDs', adjacentBDs);
+      if (adjacentBDs == 0) {
+        tileInfo.main.mainDpsBaseSpeed = tileInfo.main.mainDpsBaseSpeed / 2.5;
+      }
+      //console.log('tileInfo.main.mainDpsBaseSpeed', tileInfo.main.mainDpsBaseSpeed, adjacentBDs);
+      let baseDps: any = this.getDamageInfoGeneric(tileInfo);
+
+      tileInfo.main.mainDpsBaseSpeed = originalSpeed;
+      tileInfo.main.mainDpsBaseDamage = originalDamage;
+      return baseDps;
+      //console.log('blade dancers on board', cardInfo, numberOfUnits, cardInfo.mainDpsDamageIncrease );
+    } else if (tileInfo.main.id == 'cultists') {
+      let originalSpeed = tileInfo.main.mainDpsBaseSpeed;
+      let originalDamage = tileInfo.main.mainDpsBaseDamage;
+      let originalCrit = tileInfo.main.mainDpsBaseCrit;
+
+      let adjacentCultists = tileInfo.adjacentUnits.filter((unit: any) => unit.id == 'cultists').length;
+      let attackSpeedIncrease = adjacentCultists + 1;
+      tileInfo.main.mainDpsBaseSpeed = tileInfo.main.mainDpsBaseSpeed / attackSpeedIncrease;
+      let isConnectedToEmpowered = false;
+      for (let neighbor of tileInfo.adjacentUnits) {
+        if (neighbor.id == 'cultists') {
+          // check if this neighbor is empowered by seeing if this neighbor is connected to 3 other cultists
+          //console.log('neighbor', neighbor);
+          let neighbors = this.getAdjacentUnitsForTile(neighbor.row, neighbor.column);
+          let cultistNeighbors = neighbors.filter((unit: any) => unit.id == 'cultists').length;
+          if (cultistNeighbors == 4) {
+            isConnectedToEmpowered = true;
+          }
+        }
+      }
+
+      //console.log('adjacentCultists', adjacentCultists, tileInfo.main.mainDpsBaseSpeed, attackSpeedIncrease, 'isConnectedToEmpowered', isConnectedToEmpowered);
+
+      if (isConnectedToEmpowered) {
+        //take the crit chance from the user's input
+        //tileInfo.main.mainDpsBaseCrit = 17;
+      } else {
+        tileInfo.main.mainDpsBaseCrit = 0;
+      }
+
+      if (adjacentCultists == 4) {
+        tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + (tileInfo.main.mainDpsDamageIncrease / 100));
+        //console.log('center cultist dmg', tileInfo.main.mainDpsBaseDamage);
+      }
+      if (tileInfo.main.sacrifices > 0) {
+        tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + (tileInfo.main.sacrifices * tileInfo.main.damagePerSacrifice));
+      }
+
+      let dpsInfo = this.getDamageInfoGeneric(tileInfo);
+
+      tileInfo.main.mainDpsBaseCrit = originalCrit;
+      tileInfo.main.mainDpsBaseSpeed = originalSpeed;
+      tileInfo.main.mainDpsBaseDamage = originalDamage;
+
+      return dpsInfo;
     } else {
       return this.getDamageInfoGeneric(tileInfo);
     }
@@ -684,7 +921,10 @@ export class Tab5Page implements OnInit {
         speedBuffs.push(this.getKsSpeed(neighbor));
       }
     }
-
+    if (speedBuffs.length > 1) {
+      speedBuffs = [Math.max.apply(null, speedBuffs)];
+    }
+    //console.log('speedBuffs', speedBuffs);
     //heroes, weapons, amulets, enchantments go here
 
     return speedBuffs;
@@ -797,7 +1037,7 @@ export class Tab5Page implements OnInit {
 
     let newAttackSpeed = tileInfo.main.mainDpsBaseSpeed;
     let newAttackDamage = tileInfo.main.mainDpsBaseDamage;
-    if (tileInfo.main.mainDpsBaseCritDmg && tileInfo.main.mainDpsBaseCritDmg > 0){
+    if (tileInfo.main.mainDpsBaseCritDmg && tileInfo.main.mainDpsBaseCritDmg > 0) {
       totalCritDmgBuff = tileInfo.main.mainDpsBaseCritDmg;
     }
     //crit chance can never exceed 100%
@@ -885,6 +1125,7 @@ export class Tab5Page implements OnInit {
         if (cardInfo.type == 'dps') {
           let damageDealer: any = { row, column, type: 'individual', dpsEntries: [] };
           let tileInfo: any = { main: cardInfo, row, column };
+
 
           tileInfo.adjacentUnits = this.getAdjacentUnitsForTile(row, column);
           tileInfo.dpsInfo = this.getDamageInfoForUnit(tileInfo);
