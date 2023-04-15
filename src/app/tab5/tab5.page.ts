@@ -2,6 +2,8 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AlertController, IonModal, ToastController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Observable, Observer } from 'rxjs';
+import { BoardService } from '../api/board.service';
+import { UnitsService } from '../api/units.service';
 declare var jQuery: any;
 @Component({
   selector: 'app-tab5',
@@ -13,199 +15,11 @@ export class Tab5Page implements OnInit {
   modal!: IonModal;
 
   infoMode: boolean = false;
-  gridRows: any = [
-  ];
 
   damageReport: any = {
     damageDealers: [],
     total: 0
   };
-
-  tiers = [
-    1, 2, 3, 4, 5, 6, 7
-  ];
-  levels = [
-    7, 8, 9, 10, 11, 12, 13, 14, 15
-  ];
-
-  talents: any = {
-    none: { damage: 600, critChance: 0, critDamage: 0 },
-    unity: { damage: 615, critChance: 8, critDamage: 35 },
-    ronin: { damage: 800, critChance: 0, critDamage: 0 },
-  };
-
-  cards: any = {
-    'inquisitor': {
-      name: 'Inquisitor', type: 'dps', hasPhases: false, mainDpsBaseDamage: 120, mainDpsBaseSpeed: 0.6,
-      mainDpsBaseCrit: 0, tier: true, level: true, talent: 'none', absorbs: 1, mainDpsDamageIncrease: 600,
-      mainDpsDamageIncreaseSteps: 15, mainDpsBaseCritDmg: 0,
-      baseDamage: 120, baseSpeed: 0.6, speedTiers: {
-        1: 0,
-        2: 0.3,
-        3: 0.4,
-        4: 0.45,
-        5: 0.48,
-        6: 0.5,
-        7: 0.51
-      }, damageLevels: {
-        7: 320,
-        8: 338,
-        9: 359,
-        10: 383,
-        11: 410,
-        12: 442,
-        13: 478,
-        14: 520,
-        15: 568
-      }
-    },
-    'boreas': {
-      name: 'Boreas', type: 'dps', hasPhases: true, mainDpsBaseDamage: 120, mainDpsBaseSpeed: 0.09,
-      activeTalents: [], mainDpsBaseCrit: 0, mainDpsFirstPhase: 4.6, mainDpsSecondPhase: 1.7, mainDpsActivationInterval: 4.7, 
-      level: true, tier: true, baseSpeed: 0.6, baseDamage: 20, speedTiers: {
-        1: 0,
-        2: 0.3,
-        3: 0.4,
-        4: 0.45,
-        5: 0.48,
-        6: 0.5,
-        7: 0.51
-      }, damageLevels: {
-        7: 100,
-        8: 103,
-        9: 107,
-        10: 111,
-        11: 116,
-        12: 122,
-        13: 128,
-        14: 136,
-        15: 145
-      }
-    },
-    'sentry': {
-      name: 'Sentry', type: 'dps', hasPhases: true, mainDpsBaseDamage: 456, mainDpsBaseSpeed: 0.09, mainDpsBaseCrit: 0,
-      mainDpsDamageIncrease: 244, mainDpsActivationInterval: 0.95
-    },
-    'cultists': {
-      name: 'Cultist', type: 'dps', hasPhases: false, mainDpsBaseDamage: 1021, mainDpsBaseSpeed: 0.11, mainDpsBaseCrit: 17,
-      mainDpsDamageIncrease: 300, sacrifices: 0, damagePerSacrifice: 0.05, level: true, tier: true, baseSpeed: 0.8, baseDamage: 333, speedTiers: {
-        1: 0,
-        2: 0.4,
-        3: 0.53,
-        4: 0.6,
-        5: 0.64,
-        6: 0.67,
-        7: 0.69
-      }, damageLevels: {
-        7: 0,
-        8: 50,
-        9: 108,
-        10: 174,
-        11: 250,
-        12: 338,
-        13: 439,
-        14: 555,
-        15: 688
-      }
-    },
-    'bladedancer': {
-      name: 'Blade Dancer', type: 'dps', hasPhases: false, mainDpsBaseDamage: 1301, mainDpsBaseSpeed: 0.14, mainDpsBaseCrit: 0,
-      mainDpsDamageIncrease: 0, dmgIncrease: [
-        0,
-        0,
-        200,
-        250,
-        291,
-        332,
-        375,
-        416,
-        450
-      ], level: true, tier: true, baseSpeed: 1, baseDamage: 215, speedTiers: {
-        1: 0,
-        2: 0.5,
-        3: 0.67,
-        4: 0.75,
-        5: 0.8,
-        6: 0.83,
-        7: 0.86
-      }, damageLevels: {
-        7: 300,
-        8: 345,
-        9: 401,
-        10: 468,
-        11: 549,
-        12: 647,
-        13: 766,
-        14: 911,
-        15: 1086
-      }
-    },
-    'crystalmancer': {
-      name: 'Crystal Mancer', type: 'dps', hasPhases: false, mainDpsBaseDamage: 197, mainDpsBaseSpeed: 0.07, mainDpsBaseCrit: 0,
-      mainDpsDamageIncreaseSteps: 10, mainDpsDamageIncrease: 800, mainDpsActivationInterval: 0.95
-    },
-    'demonhunter': { name: 'Demon Hunter', type: 'dps', hasPhases: false, mainDpsBaseDamage: 1136, mainDpsBaseSpeed: 0.45, 
-      mainDpsBaseCrit: 0, demonHunterEmpowered: true, mainDpsDamageIncrease: 75, 
-      level: true, tier: true, baseSpeed: 0.45, baseDamage: 201, speedTiers: {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-        6: 0,
-        7: 0
-      }, damageLevels: {
-        7: 200,
-        8: 242,
-        9: 294,
-        10: 357,
-        11: 433,
-        12: 525,
-        13: 636,
-        14: 772,
-        15: 935
-      } },
-    'generic': { name: 'Generic', type: 'dps', hasPhases: false, mainDpsBaseDamage: 64, mainDpsBaseSpeed: 0.6, mainDpsBaseCrit: 0 },
-    'banner': { building: true, level: true, tier: true, damage: 0, speed: 116, crit: 0, name: "Banner" },
-    'dryad': { level: false, tier: false, damage: 50, speed: 0, crit: 0, type: 'unit', name: 'Dryad', merges: 10, maxMerges: 20 },
-    'harly': { hasOptions: false, level: false, tier: false, damage: 0, speed: 0, crit: 0, name: "Harly", type: 'none' },
-    'sword': { level: true, tier: false, damage: 200, speed: 0, crit: 5, type: 'unit', name: 'Sword', maxMerges: 10 },
-    'trapper': {
-      level: true, tier: false,
-      damage: 0, speed: 0, crit: 0, type: 'armor', name: 'Trapper', dmgLevels: [
-        100,
-        110, //level 8
-        120,
-        130,
-        140,
-        150,
-        160,
-        170,
-        180
-      ]
-    },
-    'chemist': { level: true, tier: true, damage: 103, speed: 0, crit: 0, type: 'armor', name: 'Chemist' },
-    'scrapper': { hasOptions: false, level: false, tier: false, damage: 0, speed: 0, crit: 0, type: 'none', name: 'Scrapper' },
-    'knight_statue': { building: true, level: true, tier: true, damage: 0, speed: 0, crit: 0, name: 'Knight Statue', critTiers: [5, 7.5, 10, 12.5, 15, 17.5, 20] },
-    'witch_statue': { building: true, level: true, tier: false, damage: 204, speed: 0, crit: 0, type: 'unit', name: 'Witch', merges: 15, maxMerges: 30 },
-    'grindstone': {
-      building: true, level: false, tier: true, damage: 415, speed: 0, crit: 0, talents: [{
-        label: 'Lv13. Unstable Overheat',
-        type: 'checkbox',
-        value: 'unstable_overheat',
-      },
-      {
-        label: 'Lv13. Triple Overheat',
-        type: 'checkbox',
-        value: 'triple_overheat',
-      },
-      {
-        type: 'checkbox',
-        value: 'tempered_steel',
-        label: 'Lv15. Tempered Steel',
-      }], activeTalents: [], type: 'flat', name: 'Grindstone', maxMerges: 100
-    },
-  }
 
   isCardOptionsOpen = false;
   isCardPickerOpen = false;
@@ -214,78 +28,16 @@ export class Tab5Page implements OnInit {
     playerCrit: 2923
   };
 
-  constructor(private toastController: ToastController) {
+
+  constructor(
+    public unitsService: UnitsService,
+    public boardService: BoardService) {
     console.log('tab5', this);
   }
 
   ngOnInit() {
-    let savedBoard: any = localStorage.getItem('board');
-    if (savedBoard) {
-      this.gridRows = JSON.parse(savedBoard);
-    } else {
-      this.resetBoard();
-    }
-    this.calculateDamaeReport();
-  }
-
-  // dragMode() {
-  //   jQuery(".column").sortable({
-  //     connectWith: ".column",
-  //     handle: "img",
-
-  //     placeholder: "portlet-placeholder ui-corner-all"
-  //   });
-  // }
-
-  async saveInfo() {
-    localStorage.setItem('board', JSON.stringify(this.gridRows));
-
-    const toast = await this.toastController.create({
-      message: 'Configuration Saved',
-      duration: 1500,
-      position: 'top'
-    });
-
-    await toast.present();
-  }
-
-  resetBoard() {
-    let cardTemplate = JSON.stringify({ id: '' });
-    this.gridRows = [
-    ];
-    for (let row = 0; row < 3; row++) {
-      this.gridRows[row] = [];
-      for (let column = 0; column < 5; column++) {
-        this.gridRows[row][column] = JSON.parse(cardTemplate);
-      }
-    }
-    this.calculateDamaeReport();
-  }
-
-  getUniqueCardsOnBoard() {
-    let uniqueCards = [];
-    for (let row = 0; row < 3; row++) {
-      for (let column = 0; column < 5; column++) {
-        let cardId = this.gridRows[row][column].id;
-        if (uniqueCards.indexOf(cardId) == -1 && cardId != '') {
-          uniqueCards.push(cardId);
-        }
-      }
-    }
-    return uniqueCards;
-  }
-
-  getUnitsOnBoardById(searchCardId: any) {
-    let unitsOnBoard = [];
-    for (let row = 0; row < 3; row++) {
-      for (let column = 0; column < 5; column++) {
-        let cardId = this.gridRows[row][column].id;
-        if (searchCardId == cardId) {
-          unitsOnBoard.push(cardId);
-        }
-      }
-    }
-    return unitsOnBoard;
+    this.boardService.init(this.calculateDamageReport.bind(this));
+    this.calculateDamageReport();
   }
 
 
@@ -310,8 +62,8 @@ export class Tab5Page implements OnInit {
   clear() {
     this.isCardPickerOpen = false;
     this.isCardOptionsOpen = false;
-    this.gridRows[this.activeTile.row][this.activeTile.column] = { id: '' };
-    this.calculateDamaeReport();
+    this.boardService.gridRows[this.activeTile.row][this.activeTile.column] = { id: '' };
+    this.calculateDamageReport();
   }
 
   confirm(cardPicked: any) {
@@ -319,7 +71,7 @@ export class Tab5Page implements OnInit {
   }
 
   get deckConfig() {
-    return this.gridRows[this.activeTile.row][this.activeTile.column];
+    return this.boardService.gridRows[this.activeTile.row][this.activeTile.column];
   }
 
   dmgWithAbsorbs(activeUnit: any) {
@@ -342,7 +94,7 @@ export class Tab5Page implements OnInit {
 
   changeDeckConfig(event: any, field: string, isCheckbox?: boolean) {
     let value = event.target[isCheckbox ? 'checked' : 'value'];
-    let activeUnit = this.gridRows[this.activeTile.row][this.activeTile.column];
+    let activeUnit = this.boardService.gridRows[this.activeTile.row][this.activeTile.column];
     if (field == 'activeTalents') {
       let valueIndex = activeUnit[field].indexOf(event.target.value);
       if (value && valueIndex == -1) {
@@ -363,9 +115,9 @@ export class Tab5Page implements OnInit {
         activeUnit.mainDpsBaseDamage = this.dmgWithAbsorbs(activeUnit);
       } else if (field == 'talent') {
         if (value != '') {
-          activeUnit.mainDpsDamageIncrease = this.talents[value].damage;
-          activeUnit.mainDpsBaseCrit = this.talents[value].critChance;
-          activeUnit.mainDpsBaseCritDmg = this.talents[value].critDamage;
+          activeUnit.mainDpsDamageIncrease = this.unitsService.talents[value].damage;
+          activeUnit.mainDpsBaseCrit = this.unitsService.talents[value].critChance;
+          activeUnit.mainDpsBaseCritDmg = this.unitsService.talents[value].critDamage;
         }
       }
     } else {
@@ -414,14 +166,14 @@ export class Tab5Page implements OnInit {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
       let cardId: any = ev.detail.data;
-      let cardTemplate = this.getCardInfoById(cardId) || this.cards[cardId];
-      this.gridRows[this.activeTile.row][this.activeTile.column] = JSON.parse(JSON.stringify(cardTemplate))
-      this.gridRows[this.activeTile.row][this.activeTile.column].id = cardId;
-      this.gridRows[this.activeTile.row][this.activeTile.column].swordStacks = 0;
+      let cardTemplate = this.getCardInfoById(cardId) || this.unitsService.cards[cardId];
+      this.boardService.gridRows[this.activeTile.row][this.activeTile.column] = JSON.parse(JSON.stringify(cardTemplate))
+      this.boardService.gridRows[this.activeTile.row][this.activeTile.column].id = cardId;
+      this.boardService.gridRows[this.activeTile.row][this.activeTile.column].swordStacks = 0;
 
       this.activeTile.id = cardId;
 
-      this.calculateDamaeReport();
+      this.calculateDamageReport();
 
       if (cardTemplate && ('hasOptions' in cardTemplate && cardTemplate.hasOptions !== false) || !('hasOptions' in cardTemplate)) {
         setTimeout(() => {
@@ -438,41 +190,41 @@ export class Tab5Page implements OnInit {
     if (applyToAll) {
       for (let row = 0; row < 3; row++) {
         for (let column = 0; column < 5; column++) {
-          if (this.gridRows[row][column].id == this.activeTile.id) {
+          if (this.boardService.gridRows[row][column].id == this.activeTile.id) {
             let baseTemplate = JSON.parse(JSON.stringify(this.deckConfig));
-            this.gridRows[row][column] = baseTemplate;
+            this.boardService.gridRows[row][column] = baseTemplate;
           }
         }
       }
     }
-    this.calculateDamaeReport();
+    this.calculateDamageReport();
   }
 
   getCardDisplayName(card: any) {
     let cardInfo;
     if (card && card.name) {
-      cardInfo = this.cards[card.name];
+      cardInfo = this.unitsService.cards[card.name];
     } else {
-      cardInfo = this.cards[card];
+      cardInfo = this.unitsService.cards[card];
     }
     return cardInfo.name;
   };
 
   getFieldMatters(cardId: any, field: string) {
-    let cardTemplate = this.getCardInfoById(cardId) || this.cards[cardId];
+    let cardTemplate = this.getCardInfoById(cardId) || this.unitsService.cards[cardId];
     let hasKey = field in cardTemplate && (cardTemplate[field] > -1 || cardTemplate[field] != '');
     return hasKey;
   }
 
   getCardsList() {
     let cards = [];
-    let uniqueCards = this.getUniqueCardsOnBoard();
+    let uniqueCards = this.boardService.getUniqueCardsOnBoard();
     let mainDpsPicked = uniqueCards.length > 0;
     let deckIsFull = uniqueCards.length == 5;
     //console.log('deckIsFull', deckIsFull, this.deck.length);
-    let cardsList = Object.keys(this.cards);
+    let cardsList = Object.keys(this.unitsService.cards);
     for (let card of cardsList) {
-      let cardInfo = this.cards[card];
+      let cardInfo = this.unitsService.cards[card];
       if (mainDpsPicked == false) {
         if (cardInfo.type == 'dps') {
           cards.push(card);
@@ -493,26 +245,15 @@ export class Tab5Page implements OnInit {
 
   getCardName(cardName: any) {
     return cardName;
-    /*
-    if (card.level < 15) {
-      return card.name;
-    } else {
-      let specialIcons = ['witch_statue'];
-      if (specialIcons.indexOf(card.name) > -1) {
-        return `${card.name}_max`;
-      } else {
-        return card.name;
-      }
-    }*/
   }
 
   changeTalentStat(ev: any, type: any) {
-    this.talents[this.deckConfig.talent][type] = parseFloat(ev.target.value);
+    this.unitsService.talents[this.deckConfig.talent][type] = parseFloat(ev.target.value);
   }
 
   getActiveTalentStat(type: any) {
     if (this.deckConfig.talent) {
-      return this.talents[this.deckConfig.talent][type];
+      return this.unitsService.talents[this.deckConfig.talent][type];
     } else {
       return 0;
     }
@@ -659,7 +400,7 @@ export class Tab5Page implements OnInit {
       let originalDamage = tileInfo.main.mainDpsBaseDamage;
       let originalSpeed = tileInfo.main.mainDpsBaseSpeed;
 
-      let numberOfUnits = this.getUnitsOnBoardById(tileInfo.main.id).length;
+      let numberOfUnits = this.boardService.getUnitsOnBoardById(tileInfo.main.id).length;
       //console.log('numberOfUnits', numberOfUnits, numberOfUnits >= tileInfo.main.dmgIncrease.length - 1, tileInfo.main.dmgIncrease.length);
       if (numberOfUnits >= tileInfo.main.dmgIncrease.length - 1) {
         tileInfo.main.mainDpsDamageIncrease = tileInfo.main.dmgIncrease[tileInfo.main.dmgIncrease.length - 1];
@@ -701,11 +442,8 @@ export class Tab5Page implements OnInit {
         }
       }
 
-      //console.log('adjacentCultists', adjacentCultists, tileInfo.main.mainDpsBaseSpeed, attackSpeedIncrease, 'isConnectedToEmpowered', isConnectedToEmpowered);
-
       if (isConnectedToEmpowered) {
         //take the crit chance from the user's input
-        //tileInfo.main.mainDpsBaseCrit = 17;
       } else {
         tileInfo.main.mainDpsBaseCrit = 0;
       }
@@ -725,6 +463,26 @@ export class Tab5Page implements OnInit {
       tileInfo.main.mainDpsBaseDamage = originalDamage;
 
       return dpsInfo;
+    } else if (tileInfo.main.id == 'engineer') {
+
+      let originalDamage = tileInfo.main.mainDpsBaseDamage;
+      if (tileInfo.main.connections){
+        tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + ((tileInfo.main.mainDpsDamageIncrease*tileInfo.main.connections)/100));
+      }
+      
+      let dpsInfo = this.getDamageInfoGeneric(tileInfo);
+      tileInfo.main.mainDpsBaseDamage = originalDamage;
+      return dpsInfo;
+    }  else if (tileInfo.main.id == 'generic') {
+
+      let originalDamage = tileInfo.main.mainDpsBaseDamage;
+      if (tileInfo.main.mainDpsDamageIncrease){
+        tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + (tileInfo.main.mainDpsDamageIncrease/100));
+      }
+      
+      let dpsInfo = this.getDamageInfoGeneric(tileInfo);
+      tileInfo.main.mainDpsBaseDamage = originalDamage;
+      return dpsInfo;
     } else {
       return this.getDamageInfoGeneric(tileInfo);
     }
@@ -741,7 +499,7 @@ export class Tab5Page implements OnInit {
     let cardInfo;
     for (let row = 0; row < 3; row++) {
       for (let column = 0; column < 5; column++) {
-        let tmp = this.gridRows[row][column];
+        let tmp = this.boardService.gridRows[row][column];
         if (tmp.name == name) { cardInfo = tmp; }
       }
     }
@@ -752,7 +510,7 @@ export class Tab5Page implements OnInit {
     let cardInfo;
     for (let row = 0; row < 3; row++) {
       for (let column = 0; column < 5; column++) {
-        let tmp = this.gridRows[row][column];
+        let tmp = this.boardService.gridRows[row][column];
         if (tmp.id == name) { cardInfo = tmp; }
       }
     }
@@ -760,7 +518,7 @@ export class Tab5Page implements OnInit {
   }
 
   getSwordDmg(swordStacks: number) {
-    let cardNames = this.getUniqueCardsOnBoard();
+    let cardNames = this.boardService.getUniqueCardsOnBoard();
     let card = this.getCardInfoByName('Sword');
 
     let cardBuff = ((card.damage / 10) + ((card.level - 7) * 1.5)) * swordStacks;
@@ -813,7 +571,7 @@ export class Tab5Page implements OnInit {
   getBannerBuff(card?: any) {
     if (!card) card = this.getCardInfoByName('Banner');
     let currentCardLevel = card.level;
-    let minCardLevel = this.levels[0];
+    let minCardLevel = this.unitsService.levels[0];
     let baseAttackSpeed = 12;
     let tierMultiplier = 0.5;
     let newAttackSpeed = (baseAttackSpeed + ((currentCardLevel - minCardLevel) * tierMultiplier)) * card.tier;
@@ -826,7 +584,7 @@ export class Tab5Page implements OnInit {
     //console.log('sword card', card);
     //you only get the crit buff on the 10th stack
     let swordCrit = swordStacks == 10 ? card.crit : 0;
-    let uniqueCards = this.getUniqueCardsOnBoard();
+    let uniqueCards = this.boardService.getUniqueCardsOnBoard();
 
     // you only get 1% if there's a ks in the deck
     if (uniqueCards.indexOf('knight_statue') > -1) {
@@ -842,7 +600,7 @@ export class Tab5Page implements OnInit {
 
   getKsSpeed(card?: any) {
     if (!card) card = this.getCardInfoByName('Knight Statue');
-    let minLevel = this.levels[0];
+    let minLevel = this.unitsService.levels[0];
     let manaBonus = 10 + (card.level - minLevel);
     let speed = manaBonus + ((card.level + 3) * card.tier);
     return speed;
@@ -852,7 +610,7 @@ export class Tab5Page implements OnInit {
     let critBuffs = [];
 
     // look for global damage buffs (sword)
-    let uniqueCards = this.getUniqueCardsOnBoard();
+    let uniqueCards = this.boardService.getUniqueCardsOnBoard();
     for (let card of uniqueCards) {
       if (card == 'sword') {
         let swordCrit = this.getSwordCrit(tileInfo.main.swordStacks);
@@ -879,7 +637,7 @@ export class Tab5Page implements OnInit {
       }
     }
     // look for global damage buffs
-    let uniqueCards = this.getUniqueCardsOnBoard();
+    let uniqueCards = this.boardService.getUniqueCardsOnBoard();
     for (let card of uniqueCards) {
       if (card == 'dryad') {
         damageBuffs.push(this.getDryadBuff());
@@ -896,7 +654,7 @@ export class Tab5Page implements OnInit {
     let dmgBuffs = [];
 
     // look for global damage buffs
-    let uniqueCards = this.getUniqueCardsOnBoard();
+    let uniqueCards = this.boardService.getUniqueCardsOnBoard();
     for (let card of uniqueCards) {
       if (card == 'trapper') {
         dmgBuffs.push(this.getTrapperBuff());
@@ -937,10 +695,14 @@ export class Tab5Page implements OnInit {
     //console.log('gs buildingBuffs', buildingBuffs);
     let critBuff = 0;
     let damageBuffs = [];
+    let witchBuffAdded = false;
     // gs can have it's crit and damage buffed but not it's speed bc that's a result of the damage dealer
     for (let building of buildingBuffs) {
       if (building.id == 'witch_statue') {
-        damageBuffs.push(this.getWitchBuff());
+        if (!witchBuffAdded){
+          damageBuffs.push(this.getWitchBuff());
+          witchBuffAdded = true;
+        }
       } else if (building.id == 'knight_statue') {
         // if the user sets up two neighboring KS it'll pick the one with the highest stats
         critBuff = Math.max(critBuff, this.getKsCrit(building));
@@ -988,7 +750,7 @@ export class Tab5Page implements OnInit {
     // loop over all the connected grindstones
     for (let gsNeighbors of otherGrindstonesConnected) {
       let gsBuffs = this.getGrindstoneBuffs(gsNeighbors);
-      //console.log('gsBuffs', gsBuffs);
+      console.log('gsBuffs', gsBuffs);
       //take the greater value of the base damage Math.max(combinedBuff.baseDamage, connectedGs.main.damage)
       combinedBuffs.baseDamage = Math.max(combinedBuffs.baseDamage, gsNeighbors.damage);
 
@@ -998,12 +760,13 @@ export class Tab5Page implements OnInit {
       //take the greater value of the dmg buff Math.max(this.sumArray(combinedBuff.damageBuff), this.sumArray(connectedGs.damageBuff));
       let currentMax = this.sumOfArray(combinedBuffs.damageBuffs);
       let newMax = Math.max(currentMax, this.sumOfArray(gsBuffs.damageBuffs));
+      console.log('currentMax', currentMax, 'newMax', newMax);
       if (newMax > currentMax) {
         combinedBuffs.damageBuffs = gsBuffs.damageBuffs;
       }
     }
 
-    //console.log('combinedBuffs', combinedBuffs);
+    console.log('combinedBuffs', combinedBuffs);
 
     ghostUnit.main.mainDpsBaseDamage = combinedBuffs.baseDamage;
 
@@ -1078,7 +841,7 @@ export class Tab5Page implements OnInit {
     let adjacentUnits = [];
 
     if (row > 0) {
-      let adjacentTop: any = this.gridRows[row - 1][column];
+      let adjacentTop: any = this.boardService.gridRows[row - 1][column];
       if (adjacentTop) {
         adjacentTop.row = row - 1;
         adjacentTop.column = column;
@@ -1086,7 +849,7 @@ export class Tab5Page implements OnInit {
       }
     }
     if (row < 2) {
-      let adjacentBottom = this.gridRows[row + 1][column];
+      let adjacentBottom = this.boardService.gridRows[row + 1][column];
       if (adjacentBottom) {
         adjacentBottom.row = row + 1;
         adjacentBottom.column = column;
@@ -1095,7 +858,7 @@ export class Tab5Page implements OnInit {
     }
 
     if (column > 0) {
-      let adjacentLeft = this.gridRows[row][column - 1];
+      let adjacentLeft = this.boardService.gridRows[row][column - 1];
       if (adjacentLeft) {
         adjacentLeft.row = row;
         adjacentLeft.column = column - 1;
@@ -1104,7 +867,7 @@ export class Tab5Page implements OnInit {
     }
 
     if (column < 5) {
-      let adjacentRight = this.gridRows[row][column + 1];
+      let adjacentRight = this.boardService.gridRows[row][column + 1];
       if (adjacentRight) {
         adjacentRight.row = row;
         adjacentRight.column = column + 1;
@@ -1116,18 +879,29 @@ export class Tab5Page implements OnInit {
 
   }
 
-  calculateDamaeReport() {
+  calculateDamageReport() {
     this.damageReport.damageDealers = [];
+
+    
+    let connectedEngineers = null;
+    if (this.boardService.getUniqueCardsOnBoard().indexOf('engineer') > -1){
+      connectedEngineers = this.unitsService.engineer.countConnectedNodes(this.boardService.gridRows, 'engineer');
+      console.log('connectedEngineers', connectedEngineers);
+    }
 
     for (let row = 0; row < 3; row++) {
       for (let column = 0; column < 5; column++) {
-        let cardInfo = this.gridRows[row][column];
+        let cardInfo = this.boardService.gridRows[row][column];
         if (cardInfo.type == 'dps') {
           let damageDealer: any = { row, column, type: 'individual', dpsEntries: [] };
           let tileInfo: any = { main: cardInfo, row, column };
 
-
           tileInfo.adjacentUnits = this.getAdjacentUnitsForTile(row, column);
+
+          if (cardInfo.id == 'engineer'){
+            cardInfo.connections = connectedEngineers[row][column];
+          }
+
           tileInfo.dpsInfo = this.getDamageInfoForUnit(tileInfo);
           damageDealer.dpsEntries.push(tileInfo);
 
