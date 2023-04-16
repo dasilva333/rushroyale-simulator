@@ -373,6 +373,8 @@
                         *ngIf="boardService.gridRows[rowIndex][columnIndex].tier && boardService.gridRows[rowIndex][columnIndex].tier > 0">T.{{boardService.gridRows[rowIndex][columnIndex].tier}}&nbsp;</span>
                       {{ getCardInfoById(boardService.gridRows[rowIndex][columnIndex].id).mainDpsBaseDamage }} / hit
                       <span *ngIf="boardService.gridRows[rowIndex][columnIndex].id == 'engineer'">&nbsp;x{{boardService.gridRows[rowIndex][columnIndex].connections}}</span>
+
+                      <span *ngIf="boardService.gridRows[rowIndex][columnIndex].id == 'monk' && boardService.gridRows[rowIndex][columnIndex].isIntersection">&nbsp;(Int.)</span>
                     </ion-chip>
                     <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Stacks"
                       *ngIf="boardService.gridRows[rowIndex][columnIndex].id == 'dryad'" color="primary">

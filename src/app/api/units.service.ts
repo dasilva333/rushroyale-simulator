@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EngineerService } from '../api/engineer.service';
 import { GrindstoneService } from './grindstone.service';
+import { MonkService } from './monk.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ export class UnitsService {
 
   engineer: EngineerService;
   grindstone: GrindstoneService;
+  monk: MonkService;
   
   tiers = [
     1, 2, 3, 4, 5, 6, 7
@@ -22,7 +24,7 @@ export class UnitsService {
     unity: { damage: 615, critChance: 8, critDamage: 35 },
     ronin: { damage: 800, critChance: 0, critDamage: 0 },
   };
-  
+
   cards: any = {
     'inquisitor': {
       name: 'Inquisitor', type: 'dps', hasPhases: false, mainDpsBaseDamage: 120, mainDpsBaseSpeed: 0.6,
@@ -157,6 +159,7 @@ export class UnitsService {
       }
     },
     'engineer': { name: 'Engineer', type: 'dps', hasPhases: false, mainDpsBaseDamage: 971, mainDpsBaseSpeed: 0.07, mainDpsBaseCrit: 0, mainDpsDamageIncrease: 21, connections: 0 },
+    'monk': { name: 'Monk', type: 'dps', hasPhases: false, mainDpsBaseDamage: 971, mainDpsBaseSpeed: 0.07, mainDpsBaseCrit: 0, mainDpsDamageIncrease: 21 },
     'generic': { name: 'Generic', type: 'dps', hasPhases: false, mainDpsBaseDamage: 64, mainDpsBaseSpeed: 0.6, mainDpsBaseCrit: 0, mainDpsDamageIncrease: 0 },
     'banner': { building: true, level: true, tier: true, damage: 0, speed: 116, crit: 0, name: "Banner" },
     'dryad': { damage: 50, speed: 0, crit: 0, type: 'unit', name: 'Dryad', merges: 10, maxMerges: 20 },
@@ -221,9 +224,10 @@ export class UnitsService {
     },
   }
 
-  constructor(private engineerService: EngineerService, private grindstoneService: GrindstoneService) {
+  constructor(private engineerService: EngineerService, private grindstoneService: GrindstoneService, private monkService: MonkService) {
     this.engineer = this.engineerService;
     this.grindstone = this.grindstoneService;
+    this.monk = this.monkService;
    }
 
 

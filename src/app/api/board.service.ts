@@ -7,26 +7,25 @@ import { AlertController, IonModal, ToastController } from '@ionic/angular';
 })
 export class BoardService {
 
-  savedBoards: any = {};
-  activeSavedBoard: any = 0;
-  gridRows: any = [
-  ];
-  _calculateDamageReport: any; //ref
+  savedBoards: {[index: string]: string} = {};
+  activeSavedBoard = '0';
+  gridRows: any[][] = [];
+  _calculateDamageReport?: any;
 
-  constructor(private toastController: ToastController, 
+  constructor(private toastController: ToastController,
     private alertController: AlertController) { }
 
   init(calculateDamageReport: any) {
     this._calculateDamageReport = calculateDamageReport;
-    
+
     this.resetBoard();
 
     let savedBoards: any = localStorage.getItem('saved_boards');
     if (savedBoards) {
       this.savedBoards = JSON.parse(savedBoards);
-      if (this.getSavedBoardsKeys().length){
+      if (this.getSavedBoardsKeys().length) {
         let boardIndex: any = localStorage.getItem('saved_board_index');
-        if (boardIndex){
+        if (boardIndex) {
           this.activeSavedBoard = boardIndex;
           this.setSavedBoard(boardIndex);
         }
@@ -38,14 +37,14 @@ export class BoardService {
     return Object.keys(this.savedBoards);
   }
 
-  setSavedBoard(index: any) {
-    let savedBoard: any = localStorage.getItem(`saved_board_${index}`);
-    this.activeSavedBoard = index.toString();
-    localStorage.setItem('saved_board_index', index.toString());
-    this.gridRows.splice(0);
-    this.gridRows = [...JSON.parse(savedBoard)];
-    this._calculateDamageReport();
+  setSavedBoard(index: string) {
+    const savedBoard = localStorage.getItem(`saved_board_${index}`);
+    this.activeSavedBoard = index;
+    localStorage.setItem('saved_board_index', this.activeSavedBoard);
+    this.gridRows = JSON.parse(savedBoard!) ?? [];
+    this._calculateDamageReport?.();
   }
+  
 
   changeSavedBoard(event: any) {
     this.setSavedBoard(event.target.value);
@@ -56,10 +55,10 @@ export class BoardService {
     delete this.savedBoards[index];
     localStorage.removeItem(`saved_boards_${index}`);
     localStorage.setItem('saved_boards', JSON.stringify(this.savedBoards));
-    
-    if (this.getSavedBoardsKeys().length > 0){
-      this.setSavedBoard(0);
-    } 
+
+    if (this.getSavedBoardsKeys().length > 0) {
+      this.setSavedBoard('0');
+    }
 
     const toast = await this.toastController.create({
       message: 'Board Config Deleted',
@@ -70,7 +69,7 @@ export class BoardService {
     await toast.present();
   }
 
-  async updateSavedBoard(boardIndex: any){
+  async updateSavedBoard(boardIndex: any) {
     localStorage.setItem('saved_board_index', boardIndex.toString());
     localStorage.setItem('saved_board_' + boardIndex, JSON.stringify(this.gridRows));
     const toast = await this.toastController.create({
@@ -108,7 +107,7 @@ export class BoardService {
 
     let event = await alert.onWillDismiss();
     //console.log('event', event);
-    if (event.role == 'confirm'){
+    if (event.role == 'confirm') {
       let deckName = event.data.values[0];
       //console.log('deckName', deckName);
 
@@ -125,32 +124,37 @@ export class BoardService {
         duration: 1500,
         position: 'top'
       });
-  
+
       await toast.present();
     }
   }
 
-  resetBoard() {
-    let cardTemplate = JSON.stringify({ id: '' });
-    for (let row = 0; row < 3; row++) {
-      this.gridRows[row] = [];
-      for (let column = 0; column < 5; column++) {
-        this.gridRows[row][column] = JSON.parse(cardTemplate);
+  resetBoard(): void {
+    
+    const getCardTemplate = () => ({ id: '' });
+    this.gridRows = Array.from({ length: 3 }, () =>
+      Array.from({ length: 5 }, () => ({ ...getCardTemplate() }))
+    );
+    //console.log('gridRows', this.gridRows);
+    this._calculateDamageReport?.();
+  }
+
+  *iterateGrid<T>(grid: T[][]): Generator<[number, number, T]> {
+    for (let row = 0; row < grid.length; row++) {
+      for (let col = 0; col < grid[row].length; col++) {
+        yield [row, col, grid[row][col]];
       }
     }
-    console.log('gridRows', this.gridRows);
-    this._calculateDamageReport();
   }
 
   getUniqueCardsOnBoard() {
     let uniqueCards = [];
-    if (this.gridRows.length > 0){
-      for (let row = 0; row < 3; row++) {
-        for (let column = 0; column < 5; column++) {
-          let cardId = this.gridRows[row][column].id;
-          if (uniqueCards.indexOf(cardId) == -1 && cardId != '') {
-            uniqueCards.push(cardId);
-          }
+    if (this.gridRows.length > 0) {
+      for (const [row, column, value] of this.iterateGrid(this.gridRows)) {
+        let tmp: any = value;
+        let cardId = tmp.id;
+        if (uniqueCards.indexOf(cardId) == -1 && cardId != '') {
+          uniqueCards.push(cardId);
         }
       }
     }
@@ -158,16 +162,13 @@ export class BoardService {
   }
 
   getUnitsOnBoardById(searchCardId: any) {
-    let unitsOnBoard = [];
-    for (let row = 0; row < 3; row++) {
-      for (let column = 0; column < 5; column++) {
-        let cardId = this.gridRows[row][column].id;
-        if (searchCardId == cardId) {
-          unitsOnBoard.push(cardId);
-        }
+    const units: any = [];
+    for (const [row, column, unit] of this.iterateGrid(this.gridRows)) {
+      if (unit && unit.id === searchCardId) {
+        units.push(unit);
       }
-    }
-    return unitsOnBoard;
+    };
+    return units;
   }
 
 }

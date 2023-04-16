@@ -188,12 +188,10 @@ export class Tab5Page implements OnInit {
 
     this.isCardOptionsOpen = false;
     if (applyToAll) {
-      for (let row = 0; row < 3; row++) {
-        for (let column = 0; column < 5; column++) {
-          if (this.boardService.gridRows[row][column].id == this.activeTile.id) {
-            let baseTemplate = JSON.parse(JSON.stringify(this.deckConfig));
-            this.boardService.gridRows[row][column] = baseTemplate;
-          }
+      for (const [row, col, value] of this.boardService.iterateGrid(this.boardService.gridRows)) {
+        if (this.boardService.gridRows[row][col].id == this.activeTile.id) {
+          let baseTemplate = JSON.parse(JSON.stringify(this.deckConfig));
+          this.boardService.gridRows[row][col] = baseTemplate;
         }
       }
     }
@@ -466,20 +464,20 @@ export class Tab5Page implements OnInit {
     } else if (tileInfo.main.id == 'engineer') {
 
       let originalDamage = tileInfo.main.mainDpsBaseDamage;
-      if (tileInfo.main.connections){
-        tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + ((tileInfo.main.mainDpsDamageIncrease*tileInfo.main.connections)/100));
+      if (tileInfo.main.connections) {
+        tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + ((tileInfo.main.mainDpsDamageIncrease * tileInfo.main.connections) / 100));
       }
-      
+
       let dpsInfo = this.getDamageInfoGeneric(tileInfo);
       tileInfo.main.mainDpsBaseDamage = originalDamage;
       return dpsInfo;
-    }  else if (tileInfo.main.id == 'generic') {
+    } else if (tileInfo.main.id == 'generic') {
 
       let originalDamage = tileInfo.main.mainDpsBaseDamage;
-      if (tileInfo.main.mainDpsDamageIncrease){
-        tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + (tileInfo.main.mainDpsDamageIncrease/100));
+      if (tileInfo.main.mainDpsDamageIncrease) {
+        tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + (tileInfo.main.mainDpsDamageIncrease / 100));
       }
-      
+
       let dpsInfo = this.getDamageInfoGeneric(tileInfo);
       tileInfo.main.mainDpsBaseDamage = originalDamage;
       return dpsInfo;
@@ -488,31 +486,24 @@ export class Tab5Page implements OnInit {
     }
   }
 
-  sumOfArray(arrBuffs: any) {
-    return arrBuffs.reduce((memo: any, value: any) => {
-      memo = memo + value;
-      return memo;
-    }, 0)
+  sumOfArray(arr: number[]): number {
+    return arr.reduce((a, b) => a + b, 0);
   }
 
   getCardInfoByName(name: string) {
     let cardInfo;
-    for (let row = 0; row < 3; row++) {
-      for (let column = 0; column < 5; column++) {
-        let tmp = this.boardService.gridRows[row][column];
-        if (tmp.name == name) { cardInfo = tmp; }
-      }
+    for (const [row, column, value] of this.boardService.iterateGrid(this.boardService.gridRows)) {
+      let tmp: any = value;
+      if (tmp.name == name) { cardInfo = tmp; }
     }
     return cardInfo;
   }
 
   getCardInfoById(name: string) {
     let cardInfo;
-    for (let row = 0; row < 3; row++) {
-      for (let column = 0; column < 5; column++) {
-        let tmp = this.boardService.gridRows[row][column];
-        if (tmp.id == name) { cardInfo = tmp; }
-      }
+    for (const [row, column, value] of this.boardService.iterateGrid(this.boardService.gridRows)) {
+      let tmp: any = value;
+      if (tmp.id == name) { cardInfo = tmp; }
     }
     return cardInfo;
   }
@@ -699,7 +690,7 @@ export class Tab5Page implements OnInit {
     // gs can have it's crit and damage buffed but not it's speed bc that's a result of the damage dealer
     for (let building of buildingBuffs) {
       if (building.id == 'witch_statue') {
-        if (!witchBuffAdded){
+        if (!witchBuffAdded) {
           damageBuffs.push(this.getWitchBuff());
           witchBuffAdded = true;
         }
@@ -882,36 +873,42 @@ export class Tab5Page implements OnInit {
   calculateDamageReport() {
     this.damageReport.damageDealers = [];
 
-    
     let connectedEngineers = null;
-    if (this.boardService.getUniqueCardsOnBoard().indexOf('engineer') > -1){
+    let connectedMonks = null;
+    if (this.boardService.getUniqueCardsOnBoard().indexOf('engineer') > -1) {
       connectedEngineers = this.unitsService.engineer.countConnectedNodes(this.boardService.gridRows, 'engineer');
       console.log('connectedEngineers', connectedEngineers);
     }
 
-    for (let row = 0; row < 3; row++) {
-      for (let column = 0; column < 5; column++) {
-        let cardInfo = this.boardService.gridRows[row][column];
-        if (cardInfo.type == 'dps') {
-          let damageDealer: any = { row, column, type: 'individual', dpsEntries: [] };
-          let tileInfo: any = { main: cardInfo, row, column };
+    if (this.boardService.getUniqueCardsOnBoard().indexOf('monk') > -1) {
+      connectedMonks = this.unitsService.monk.getIntersectionsOptimized2(this.boardService.gridRows, 'monk');
+      console.log('connectedMonks', JSON.stringify(connectedMonks, null, 1));
+    }
 
-          tileInfo.adjacentUnits = this.getAdjacentUnitsForTile(row, column);
+    for (const [row, column, value] of this.boardService.iterateGrid(this.boardService.gridRows)) {
+      let cardInfo: any = value;
+      //let cardInfo = this.boardService.gridRows[row][column];
+      if (cardInfo.type == 'dps') {
+        let damageDealer: any = { row, column, type: 'individual', dpsEntries: [] };
+        let tileInfo: any = { main: cardInfo, row, column };
 
-          if (cardInfo.id == 'engineer'){
-            cardInfo.connections = connectedEngineers[row][column];
-          }
+        tileInfo.adjacentUnits = this.getAdjacentUnitsForTile(row, column);
 
-          tileInfo.dpsInfo = this.getDamageInfoForUnit(tileInfo);
-          damageDealer.dpsEntries.push(tileInfo);
-
-          let hasGrindstones = tileInfo.adjacentUnits.filter((unit: any) => unit.id == 'grindstone').length > 0;
-          if (hasGrindstones) {
-            damageDealer.dpsEntries.push(this.getDamageForGrindstone(tileInfo));
-          }
-
-          this.damageReport.damageDealers.push(damageDealer);
+        if (cardInfo.id == 'engineer') {
+          cardInfo.connections = connectedEngineers[row][column];
+        } else if (cardInfo.id == 'monk'){
+          cardInfo.isIntersection = connectedMonks[row][column];
         }
+
+        tileInfo.dpsInfo = this.getDamageInfoForUnit(tileInfo);
+        damageDealer.dpsEntries.push(tileInfo);
+
+        let hasGrindstones = tileInfo.adjacentUnits.filter((unit: any) => unit.id == 'grindstone').length > 0;
+        if (hasGrindstones) {
+          damageDealer.dpsEntries.push(this.getDamageForGrindstone(tileInfo));
+        }
+
+        this.damageReport.damageDealers.push(damageDealer);
       }
     }
 
