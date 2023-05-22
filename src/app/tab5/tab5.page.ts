@@ -40,6 +40,7 @@ export class Tab5Page implements OnInit {
   }
 
 
+  /*
   onItemEntered(event: CdkDragEnter<any>) {
     console.log('onItemEntered', event.item.element.nativeElement);
     event.item.element.nativeElement.classList.add('droppable');
@@ -78,10 +79,7 @@ export class Tab5Page implements OnInit {
         this.boardService.gridRows[srcRowIndex][srcColIndex],
       ];
     }
-  }
-  
-  
-  
+  }*/
   
 
   clickedTile(event: any, row: any, column: any) {
