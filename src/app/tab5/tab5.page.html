@@ -77,11 +77,13 @@
                   <ion-label position="stacked">Level</ion-label>
                   <ion-select placeholder="Level 9-12" [value]="deckConfig.level"
                     (ionChange)="changeDeckConfig($event,'level')">
-                    <ion-select-option *ngFor="let level of unitsService.levels;" [value]="level">{{ level }}</ion-select-option>
+                    <ion-select-option *ngFor="let level of unitsService.levels;" [value]="level">{{ level
+                      }}</ion-select-option>
                   </ion-select>
                   <ion-buttons slot="end">
                     <ion-button color="primary" (click)="deckConfig.level = unitsService.levels[0]">Min</ion-button>
-                    <ion-button color="primary" (click)="deckConfig.level = unitsService.levels[unitsService.levels.length-1]">Max</ion-button>
+                    <ion-button color="primary"
+                      (click)="deckConfig.level = unitsService.levels[unitsService.levels.length-1]">Max</ion-button>
                   </ion-buttons>
                 </ion-item>
               </ion-col>
@@ -91,11 +93,13 @@
 
                   <ion-select placeholder="Pick Tier" [value]="deckConfig.tier"
                     (ionChange)="changeDeckConfig($event,'tier')">
-                    <ion-select-option *ngFor="let tier of unitsService.tiers;" [value]="tier">{{ tier }}</ion-select-option>
+                    <ion-select-option *ngFor="let tier of unitsService.tiers;" [value]="tier">{{ tier
+                      }}</ion-select-option>
                   </ion-select>
                   <ion-buttons slot="end">
                     <ion-button color="primary" (click)="deckConfig.tier = unitsService.tiers[0]">Min</ion-button>
-                    <ion-button color="primary" (click)="deckConfig.tier = unitsService.tiers[unitsService.tiers.length-1]">Max</ion-button>
+                    <ion-button color="primary"
+                      (click)="deckConfig.tier = unitsService.tiers[unitsService.tiers.length-1]">Max</ion-button>
                   </ion-buttons>
                 </ion-item>
               </ion-col>
@@ -116,7 +120,8 @@
               <ion-col *ngIf="getFieldMatters(activeTile.id, 'absorbs')">
                 <ion-item lines="none" class="ion-no-margin">
                   <ion-label position="stacked">Absorbs</ion-label>
-                  <ion-input [value]="deckConfig.absorbs" (ionChange)="changeDeckConfig($event,'absorbs')" type="number"></ion-input>
+                  <ion-input [value]="deckConfig.absorbs" (ionChange)="changeDeckConfig($event,'absorbs')"
+                    type="number"></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col
@@ -142,7 +147,8 @@
                   <ion-label position="stacked">Sword Stacks</ion-label>
                   <ion-select placeholder="Stacks" [value]="deckConfig.swordStacks"
                     (ionChange)="changeDeckConfig($event,'swordStacks')">
-                    <ion-select-option *ngFor="let merge of cardMerges(unitsService.cards.sword);" [value]="merge">{{ merge
+                    <ion-select-option *ngFor="let merge of cardMerges(unitsService.cards.sword);" [value]="merge">{{
+                      merge
                       }}</ion-select-option>
                   </ion-select>
                   <ion-buttons slot="end">
@@ -166,7 +172,8 @@
               <ion-col *ngIf="deckConfig.name == 'Grindstone'">
                 <ion-item lines="none" class="ion-no-margin">
                   <ion-label position="stacked">Base Damage Buff</ion-label>
-                  <ion-input [value]="deckConfig.damage" type="number" (ionChange)="changeDeckConfig($event,'damage')"></ion-input>
+                  <ion-input [value]="deckConfig.damage" type="number"
+                    (ionChange)="changeDeckConfig($event,'damage')"></ion-input>
                 </ion-item>
               </ion-col>
 
@@ -233,11 +240,21 @@
                 </ion-item>
               </ion-col>
 
+              <ion-col *ngIf="getFieldMatters(activeTile.id, 'isActivated')">
+                <ion-item lines="none">
+                  <ion-label position="stacked">Activated</ion-label>
+                  <ion-checkbox [checked]="deckConfig.isActivated"
+                    (ionChange)="changeDeckConfig($event,'isActivated', true)"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+
+
+
               <ion-col *ngIf="getFieldMatters(activeTile.id, 'sacrifices')">
                 <ion-item lines="none">
                   <ion-label position="stacked">Sacrifices</ion-label>
                   <ion-input [value]="deckConfig.sacrifices" type="number"
-                  (ionChange)="changeDeckConfig($event,'sacrifices')"></ion-input>
+                    (ionChange)="changeDeckConfig($event,'sacrifices')"></ion-input>
                 </ion-item>
               </ion-col>
 
@@ -247,8 +264,9 @@
                     <ion-row>
                       <ion-col>
                         <ion-label position="stacked">Second Breath</ion-label>
-                        <ion-checkbox [checked]="deckConfig.activeTalents.indexOf('second_breath') > -1" value="second_breath"
-                        (ionChange)="changeDeckConfig($event,'activeTalents', true)"></ion-checkbox>
+                        <ion-checkbox [checked]="deckConfig.activeTalents.indexOf('second_breath') > -1"
+                          value="second_breath"
+                          (ionChange)="changeDeckConfig($event,'activeTalents', true)"></ion-checkbox>
                       </ion-col>
                       <ion-col>
                         <ion-label position="stacked">Doublet</ion-label>
@@ -257,7 +275,8 @@
                       </ion-col>
                       <ion-col>
                         <ion-label position="stacked">Precise Shooting</ion-label>
-                        <ion-checkbox [checked]="deckConfig.activeTalents.indexOf('precise_shooting') > -1" value="precise_shooting"
+                        <ion-checkbox [checked]="deckConfig.activeTalents.indexOf('precise_shooting') > -1"
+                          value="precise_shooting"
                           (ionChange)="changeDeckConfig($event,'activeTalents', true)"></ion-checkbox>
                       </ion-col>
                     </ion-row>
@@ -321,7 +340,8 @@
         <ion-item class="ion-no-padding">
           <ion-label>Player Crit %</ion-label>
           &nbsp;
-          <ion-input [value]="boardConfig.playerCrit" (ionChange)="changeBoardConfig($event,'playerCrit')" type="number"></ion-input>
+          <ion-input [value]="boardConfig.playerCrit" (ionChange)="changeBoardConfig($event,'playerCrit')"
+            type="number"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col size-sm="12" size-md="12" size-lg="4" size-xs="12" class="ion-no-margin ion-no-padding">
@@ -406,11 +426,15 @@
           <ion-button color="danger" (click)="boardService.resetBoard()">Reset Board</ion-button>
 
           <ion-button color="tertiary" (click)="boardService.saveInfo()">Save Board</ion-button>
-          <ion-select [value]="boardService.activeSavedBoard" *ngIf="boardService.getSavedBoardsKeys().length > 0" (ionChange)="boardService.changeSavedBoard($event)">
-            <ion-select-option *ngFor="let index of boardService.getSavedBoardsKeys();" value="{{ index }}">{{ boardService.savedBoards[index] }}</ion-select-option>
+          <ion-select [value]="boardService.activeSavedBoard" *ngIf="boardService.getSavedBoardsKeys().length > 0"
+            (ionChange)="boardService.changeSavedBoard($event)">
+            <ion-select-option *ngFor="let index of boardService.getSavedBoardsKeys();" value="{{ index }}">{{
+              boardService.savedBoards[index] }}</ion-select-option>
           </ion-select>
-          <ion-button color="danger" *ngIf="boardService.getSavedBoardsKeys().length > 0" (click)="boardService.deleteSavedBoard(boardService.activeSavedBoard)">Delete</ion-button>
-          <ion-button color="tertiary" *ngIf="boardService.getSavedBoardsKeys().length > 0" (click)="boardService.updateSavedBoard(boardService.activeSavedBoard)">Update</ion-button>
+          <ion-button color="danger" *ngIf="boardService.getSavedBoardsKeys().length > 0"
+            (click)="boardService.deleteSavedBoard(boardService.activeSavedBoard)">Delete</ion-button>
+          <ion-button color="tertiary" *ngIf="boardService.getSavedBoardsKeys().length > 0"
+            (click)="boardService.updateSavedBoard(boardService.activeSavedBoard)">Update</ion-button>
         </ion-item>
       </ion-col>
 
@@ -496,6 +520,16 @@
                         </ion-item>
                       </ion-col>
 
+                      <ion-col size="4"
+                        *ngIf="dpsEntry.dpsInfo.totalPhaseLengthSeconds && dpsEntry.dpsInfo.maxHitDamage > 0">
+                        <ion-item class="ion-no-padding" lines="none">
+                          <ion-label position="stacked"><strong>Max Hit Damage</strong></ion-label>
+
+                          <ion-text style="padding: 2px">{{ dpsEntry.dpsInfo.maxHitDamage | number: '1.0-1'
+                            }} / hit</ion-text>
+                        </ion-item>
+                      </ion-col>
+
                       <ion-col size="4" *ngIf="dpsEntry.main.name == 'Boreas'">
                         <ion-item class="ion-no-padding" lines="none">
                           <ion-label position="stacked"><strong>Normal Phase DPS</strong></ion-label>
@@ -561,8 +595,8 @@
                   <!-- Damage Chips -->
 
                   <ion-chip size="xsmall" class="ion-no-margin" title="Damage"
-                    *ngIf="getFieldMatters(card,'level') && getCardInfoById(card).type == 'dps'"
-                    color="primary">Lv.{{ getCardInfoById(card).level }}</ion-chip>
+                    *ngIf="getFieldMatters(card,'level') && getCardInfoById(card).type == 'dps'" color="primary">Lv.{{
+                    getCardInfoById(card).level }}</ion-chip>
 
                   <!-- <ion-chip size="xsmall" class="ion-no-margin" title="Damage Buff" *ngIf="card == 'grindstone'"
                     color="primary">{{ getCardInfoById('grindstone').damage }} / hit </ion-chip> -->

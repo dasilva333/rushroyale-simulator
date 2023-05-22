@@ -11,7 +11,7 @@ export class UnitsService {
   engineer: EngineerService;
   grindstone: GrindstoneService;
   monk: MonkService;
-  
+
   tiers = [
     1, 2, 3, 4, 5, 6, 7
   ];
@@ -159,7 +159,36 @@ export class UnitsService {
       }
     },
     'engineer': { name: 'Engineer', type: 'dps', hasPhases: false, mainDpsBaseDamage: 971, mainDpsBaseSpeed: 0.07, mainDpsBaseCrit: 0, mainDpsDamageIncrease: 21, connections: 0 },
-    'monk': { name: 'Monk', type: 'dps', hasPhases: false, mainDpsBaseDamage: 971, mainDpsBaseSpeed: 0.07, mainDpsBaseCrit: 0, mainDpsDamageIncrease: 21 },
+    'monk': {
+      name: 'Monk', type: 'dps', hasPhases: false, baseSpeed: 0.6, baseDamage: 350, mainDpsBaseDamage: 350, mainDpsBaseSpeed: 0.6, mainDpsBaseCrit: 0, baseHarmony: 150, isActivated: false,
+      level: true, tier: true, speedTiers: {
+        1: 0,
+        2: 0.3,
+        3: 0.4,
+        4: 0.45,
+        5: 0.48,
+        6: 0.5,
+        7: 0.51
+      }, harmonyTiers: {
+        1: 0,
+        2: 37.5,
+        3: 75,
+        4: 112.5,
+        5: 150,
+        6: 187.5,
+        7: 225
+      }, damageLevels: {
+        7: 0,
+        8: 63,
+        9: 137,
+        10: 225,
+        11: 328,
+        12: 450,
+        13: 594,
+        14: 764,
+        15: 965
+      }
+    },
     'generic': { name: 'Generic', type: 'dps', hasPhases: false, mainDpsBaseDamage: 64, mainDpsBaseSpeed: 0.6, mainDpsBaseCrit: 0, mainDpsDamageIncrease: 0 },
     'banner': { building: true, level: true, tier: true, damage: 0, speed: 116, crit: 0, name: "Banner" },
     'dryad': { damage: 50, speed: 0, crit: 0, type: 'unit', name: 'Dryad', merges: 10, maxMerges: 20 },
@@ -182,29 +211,30 @@ export class UnitsService {
     'chemist': { level: true, tier: true, damage: 103, speed: 0, crit: 0, type: 'armor', name: 'Chemist' },
     'scrapper': { hasOptions: false, damage: 0, speed: 0, crit: 0, type: 'none', name: 'Scrapper' },
     'knight_statue': { building: true, level: true, tier: true, damage: 0, speed: 0, crit: 0, name: 'Knight Statue', critTiers: [5, 7.5, 10, 12.5, 15, 17.5, 20] },
-    'witch_statue': { building: true, type: 'dps', damage: 204, speed: 0, crit: 0, name: 'Witch', merges: 15, maxMerges: 30,
+    'witch_statue': {
+      building: true, type: 'dps', damage: 204, speed: 0, crit: 0, name: 'Witch', merges: 15, maxMerges: 30,
       hasPhases: false, mainDpsBaseDamage: 100, mainDpsBaseSpeed: 1, mainDpsBaseCrit: 0,
       level: true, tier: true, baseSpeed: 1, baseDamage: 100, speedTiers: {
-      1: 0,
-      2: 0.5,
-      3: 0.67,
-      4: 0.75,
-      5: 0.8,
-      6: 0.83,
-      7: 0.86
-    }, damageLevels: {
-      7: 100,
-      8: 116,
-      9: 136,
-      10: 159,
-      11: 187,
-      12: 218,
-      13: 255,
-      14: 299,
-      15: 350
-    }
-  
-  },
+        1: 0,
+        2: 0.5,
+        3: 0.67,
+        4: 0.75,
+        5: 0.8,
+        6: 0.83,
+        7: 0.86
+      }, damageLevels: {
+        7: 100,
+        8: 116,
+        9: 136,
+        10: 159,
+        11: 187,
+        12: 218,
+        13: 255,
+        14: 299,
+        15: 350
+      }
+
+    },
     'grindstone': {
       building: true, level: false, tier: true, damage: 415, speed: 0, crit: 0, talents: [{
         label: 'Lv13. Unstable Overheat',
@@ -228,7 +258,7 @@ export class UnitsService {
     this.engineer = this.engineerService;
     this.grindstone = this.grindstoneService;
     this.monk = this.monkService;
-   }
+  }
 
 
 }

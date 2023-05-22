@@ -146,13 +146,14 @@ function getIntersectionsOptimized2(graph) {
   }
   
 
-  I want to refactor getIntersectionsOptimized3 here are the requirements for how it should work now:
+  I want to refactor getIntersectionsOptimized3 and call it getIntersectionsOptimized5 here are the requirements for how it should work now:
 
   - the return value should be a nested array in a similar format to what it is now except the boolean will become another array with 3 booleans
   - in other words the return value will change from boolean[][] to [][][]
   - the first element in the array will correspond to the existing functionality indicating an intersection
-  - the second element in the array will correspond to a node that has the horizontal row it's in completely filled with 'M's
-  - the third element in the array will correspond to a node that has the vertical column completely filled with 'M's
+  - the second element in the array will correspond to a node that has the horizontal row it's in completely filled with M from edge to edge, if so the value should be true and if it's not completely filled it should be false
+  - the third element in the array will correspond to a node that has the vertical column completely filled with M from edge to edge, if so the value should be true and if it's not completely filled it should be false
+  - Provide the response in javascript alongside test case 2 graph output results
 
   If a horizontal line is filled with Monks, each Monk in that line will be able to inflict higher damage, 
   and if a vertical line is filled with Monks,

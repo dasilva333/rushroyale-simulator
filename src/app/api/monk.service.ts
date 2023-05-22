@@ -9,33 +9,32 @@ export class MonkService {
   }
 
   public getIntersectionsOptimized2(gridRows: any[][], filter: string): any {
-    
-    
-    const rows = gridRows.length;
-    const cols = gridRows[0].length;
-  
-    const rowCounts = new Array<boolean>(rows).fill(true);
-    const colCounts = new Array<boolean>(cols).fill(true);
-  
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        if (gridRows[r][c].id !== filter) {
-          rowCounts[r] = false;
-          colCounts[c] = false;
-        }
-      }
-    }
-  
-    const result: boolean[][] = new Array<boolean[]>(rows);
-    for (let r = 0; r < rows; r++) {
-      result[r] = new Array<boolean>(cols);
-      for (let c = 0; c < cols; c++) {
-        result[r][c] = rowCounts[r] && colCounts[c];
-      }
-    }
-  
-    return result;
-    
+    let rc = gridRows.length;
+    let cc = gridRows[0].length;
+
+    let rowMemo = new Array(rc);
+    let colMemo = new Array(cc);
+
+    rowMemo.fill(true);
+    colMemo.fill(true);
+
+    for (let r = 0; r < rc; r++) {
+            for (let c = 0; c < cc; c++) {
+                    if (gridRows[r][c].id !== filter) {
+                            rowMemo[r] = false;
+                            colMemo[c] = false;
+                    }   
+            }   
+    }   
+
+    let og = new Array(rc).fill(0).map(_ => new Array(cc).fill(0));
+
+    for (let r = 0; r < rc; r++) {
+            for (let c = 0; c < cc; c++) {
+                    og[r][c] = [(rowMemo[r] === true && colMemo[c] === true), rowMemo[r] === true, colMemo[c] === true];
+            }   
+    }   
+
+    return og;  
   }
-  
 }

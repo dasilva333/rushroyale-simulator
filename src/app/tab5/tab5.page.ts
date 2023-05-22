@@ -1,10 +1,9 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AlertController, IonModal, ToastController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
-import { Observable, Observer } from 'rxjs';
 import { BoardService } from '../api/board.service';
 import { UnitsService } from '../api/units.service';
-declare var jQuery: any;
+
 @Component({
   selector: 'app-tab5',
   templateUrl: './tab5.page.html',
@@ -40,6 +39,50 @@ export class Tab5Page implements OnInit {
     this.calculateDamageReport();
   }
 
+
+  onItemEntered(event: CdkDragEnter<any>) {
+    console.log('onItemEntered', event.item.element.nativeElement);
+    event.item.element.nativeElement.classList.add('droppable');
+  }
+  
+  onItemExited(event: CdkDragExit<any>) {
+    console.log('onItemExited', event.item.element.nativeElement);
+    event.item.element.nativeElement.classList.remove('droppable');
+  }
+  
+
+  onListEntered(event: MouseEvent) {
+    const dropList = event.target as HTMLElement;
+    console.log('onListEntered', dropList);
+    dropList.classList.add('droppable');
+  }
+  
+  drop(event: CdkDragDrop<any>) {
+    const srcIndexes = event.item.data as { rowIndex: number; colIndex: number };
+    const targetIndexes = event.container.getSortedItems()[event.currentIndex]?.data as { rowIndex: number; colIndex: number } || null;
+  
+    console.log('srcIndexes:', srcIndexes);
+    console.log('targetIndexes:', targetIndexes);
+    console.log('boardService.gridRows:', this.boardService.gridRows);
+  
+    if (targetIndexes) {
+      const { rowIndex: srcRowIndex, colIndex: srcColIndex } = srcIndexes;
+      const { rowIndex: targetRowIndex, colIndex: targetColIndex } = targetIndexes;
+  
+      // Swap the TypeScript objects in the nested arrays
+      [
+        this.boardService.gridRows[srcRowIndex][srcColIndex],
+        this.boardService.gridRows[targetRowIndex][targetColIndex],
+      ] = [
+        this.boardService.gridRows[targetRowIndex][targetColIndex],
+        this.boardService.gridRows[srcRowIndex][srcColIndex],
+      ];
+    }
+  }
+  
+  
+  
+  
 
   clickedTile(event: any, row: any, column: any) {
     //event.target.style.backgroundColor = 'lightgreen';
@@ -377,11 +420,12 @@ export class Tab5Page implements OnInit {
       //console.log('baseDps', baseDps, 'totalPhaseParts', totalPhaseParts);
       let totalHitDamage = 0;
       //let totalPhaseLength = 0;
-      let originalDamage = tileInfo.main.mainDpsBaseDamage;
+      let originalDamage = baseDps.newAttackDamage;
       for (let i = 0; i < totalPhaseParts; i++) {
         let dmgIncrease = Math.min(tileInfo.main.mainDpsDamageIncrease, damageIncrease * (i + 1));
         let actualDamage = Math.floor(originalDamage * (1 + (dmgIncrease / 100)));
         totalHitDamage = totalHitDamage + actualDamage;
+        baseDps.maxHitDamage = actualDamage;
       }
       // the number of crits done within the phase parts (aka the 54 hits required to get to 800%)
       let numberOfCrits = baseDps.totalCritChance * totalPhaseParts;
@@ -471,6 +515,37 @@ export class Tab5Page implements OnInit {
       let dpsInfo = this.getDamageInfoGeneric(tileInfo);
       tileInfo.main.mainDpsBaseDamage = originalDamage;
       return dpsInfo;
+    } else if (tileInfo.main.id == 'monk') {
+
+      let originalSpeed = tileInfo.main.mainDpsBaseSpeed;
+      let originalDamage = tileInfo.main.mainDpsBaseDamage;
+
+      //is tileInfo.main.isIntersection provides an array where first value is for harmony, second is horizontal, third is vertical
+      if (tileInfo.main.isIntersection) {
+        if (tileInfo.main.isIntersection[0]) {
+          let harmonyBuff = tileInfo.main.harmonyTiers[tileInfo.main.tier];
+          tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + (harmonyBuff / 100));
+        }
+        if (tileInfo.main.isIntersection[1]) {
+          let horizontalBuff = 200;
+          tileInfo.main.mainDpsBaseSpeed = tileInfo.main.mainDpsBaseSpeed / (1 + (horizontalBuff / 100));
+        }
+        if (tileInfo.main.isIntersection[2]) {
+          let verticalBuff = 100;
+          tileInfo.main.mainDpsBaseSpeed = tileInfo.main.mainDpsBaseSpeed / (1 + (verticalBuff / 100));
+        }
+      }
+
+      if (tileInfo.main.isActivated) {
+        let activatedBuff = 100;
+        tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + (activatedBuff / 100));
+      }
+
+      let dpsInfo = this.getDamageInfoGeneric(tileInfo);
+      tileInfo.main.mainDpsBaseDamage = originalDamage;
+      tileInfo.main.mainDpsBaseSpeed = originalSpeed;
+
+      return dpsInfo;
     } else if (tileInfo.main.id == 'generic') {
 
       let originalDamage = tileInfo.main.mainDpsBaseDamage;
@@ -510,7 +585,7 @@ export class Tab5Page implements OnInit {
 
   getSwordDmg(swordStacks: number) {
     let cardNames = this.boardService.getUniqueCardsOnBoard();
-    let card = this.getCardInfoByName('Sword');
+    let card = this.getCardInfoByName('Sword') || this.unitsService.cards['sword'];
 
     let cardBuff = ((card.damage / 10) + ((card.level - 7) * 1.5)) * swordStacks;
 
@@ -571,6 +646,7 @@ export class Tab5Page implements OnInit {
 
   getSwordCrit(swordStacks: number, card?: any) {
     if (!card) card = this.getCardInfoByName('Sword');
+    if (!card) card = this.unitsService.cards['sword'];
 
     //console.log('sword card', card);
     //you only get the crit buff on the 10th stack
@@ -600,13 +676,10 @@ export class Tab5Page implements OnInit {
   getCritChanceBuffs(tileInfo: any) {
     let critBuffs = [];
 
-    // look for global damage buffs (sword)
-    let uniqueCards = this.boardService.getUniqueCardsOnBoard();
-    for (let card of uniqueCards) {
-      if (card == 'sword') {
-        let swordCrit = this.getSwordCrit(tileInfo.main.swordStacks);
-        critBuffs.push(swordCrit);
-      }
+    // refactor the code so there doesn't have to be a sword on the field to apply the buff
+    if (tileInfo.main.swordStacks) {
+      let swordCrit = this.getSwordCrit(tileInfo.main.swordStacks);
+      critBuffs.push(swordCrit);
     }
 
     // look for crit buffs in neighboring tiles (only ks)
@@ -627,13 +700,14 @@ export class Tab5Page implements OnInit {
         damageBuffs.push(this.getWitchBuff());
       }
     }
+    if (tileInfo.main.swordStacks) {
+      damageBuffs.push(this.getSwordDmg(tileInfo.main.swordStacks));
+    }
     // look for global damage buffs
     let uniqueCards = this.boardService.getUniqueCardsOnBoard();
     for (let card of uniqueCards) {
       if (card == 'dryad') {
         damageBuffs.push(this.getDryadBuff());
-      } else if (card == 'sword') {
-        damageBuffs.push(this.getSwordDmg(tileInfo.main.swordStacks));
       }
     }
     //heroes, weapons, amulets, enchantments go here
@@ -877,12 +951,12 @@ export class Tab5Page implements OnInit {
     let connectedMonks = null;
     if (this.boardService.getUniqueCardsOnBoard().indexOf('engineer') > -1) {
       connectedEngineers = this.unitsService.engineer.countConnectedNodes(this.boardService.gridRows, 'engineer');
-      console.log('connectedEngineers', connectedEngineers);
+      //console.log('connectedEngineers', connectedEngineers);
     }
 
     if (this.boardService.getUniqueCardsOnBoard().indexOf('monk') > -1) {
       connectedMonks = this.unitsService.monk.getIntersectionsOptimized2(this.boardService.gridRows, 'monk');
-      console.log('connectedMonks', JSON.stringify(connectedMonks, null, 1));
+      //console.log('connectedMonks', JSON.stringify(connectedMonks, null, 1));
     }
 
     for (const [row, column, value] of this.boardService.iterateGrid(this.boardService.gridRows)) {
@@ -896,7 +970,7 @@ export class Tab5Page implements OnInit {
 
         if (cardInfo.id == 'engineer') {
           cardInfo.connections = connectedEngineers[row][column];
-        } else if (cardInfo.id == 'monk'){
+        } else if (cardInfo.id == 'monk') {
           cardInfo.isIntersection = connectedMonks[row][column];
         }
 
