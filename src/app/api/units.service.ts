@@ -137,7 +137,7 @@ export class UnitsService {
     },
     'demonhunter': {
       name: 'Demon Hunter', type: 'dps', hasPhases: false, mainDpsBaseDamage: 1136, mainDpsBaseSpeed: 0.45,
-      mainDpsBaseCrit: 0, demonHunterEmpowered: true, mainDpsDamageIncrease: 75,
+      mainDpsBaseCrit: 0, demonHunterEmpowered: false, mainDpsDamageIncrease: 75,
       level: true, tier: true, baseSpeed: 0.45, baseDamage: 201, speedTiers: {
         1: 0,
         2: 0,
@@ -156,6 +156,52 @@ export class UnitsService {
         13: 636,
         14: 772,
         15: 935
+      }
+    },
+    'bruiser': {
+      name: 'Bruiser', type: 'dps', hasPhases: false, mainDpsBaseDamage: 112, mainDpsBaseSpeed: 1.2,
+      mainDpsBaseCrit: 0, mainDpsDamageIncrease: 350, enranged: true,
+      level: true, tier: true, baseSpeed: 1.2, baseDamage: 112, speedTiers: {
+        1: 0,
+        2: 0.6,
+        3: 0.8,
+        4: 0.9,
+        5: 0.96,
+        6: 1,
+        7: 1.03
+      }, damageLevels: {
+        7: 120,
+        8: 152,
+        9: 192,
+        10: 244,
+        11: 310,
+        12: 394,
+        13: 503,
+        14: 641,
+        15: 819
+      }
+    },
+    'robot': {
+      name: 'Robot', type: 'dps', hasPhases: false, mainDpsBaseDamage: 224, mainDpsBaseSpeed: 0.7,
+      mainDpsBaseCrit: 0, mainDpsDamageIncrease: 50, mainDpsSpeedIncrease: 50, merges: 0, maxMerges: 20,
+      level: true, tier: true, baseSpeed: 0.7, baseDamage: 224, speedTiers: {
+        1: 0,
+        2: 0.35,
+        3: 0.47,
+        4: 0.53,
+        5: 0.56,
+        6: 0.58,
+        7: 0.6
+      }, damageLevels: {
+        7: 300,
+        8: 347,
+        9: 404,
+        10: 472,
+        11: 556,
+        12: 657,
+        13: 779,
+        14: 926,
+        15: 1105
       }
     },
     'engineer': { name: 'Engineer', type: 'dps', hasPhases: false, mainDpsBaseDamage: 971, mainDpsBaseSpeed: 0.07, mainDpsBaseCrit: 0, mainDpsDamageIncrease: 21, connections: 0 },

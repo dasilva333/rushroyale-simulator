@@ -7,10 +7,52 @@ import { AlertController, IonModal, ToastController } from '@ionic/angular';
 })
 export class BoardService {
 
-  savedBoards: {[index: string]: string} = {};
+  savedBoards: { [index: string]: string } = {};
   activeSavedBoard = '0';
   gridRows: any[][] = [];
   _calculateDamageReport?: any;
+  heroes: any = {
+    bestie: {
+      hasTiles: true,
+      tiles: { damage: 55, speed: 0, crit: 0 },
+      passive: { damage: 0, speed: 0, crit: 0 }
+    },
+    gadget: {
+      hasTiles: true,
+      tiles: { damage: 22, speed: 20, crit: 3 },
+      passive: { damage: 22, speed: 20, crit: 3 }
+    },
+    jay: {
+      hasTiles: true,
+      tiles: { damage: 0, speed: 33, crit: 0 },
+      passive: { damage: 0, speed: 0, crit: 0 }
+    },
+    mermaid: {
+      hasTiles: true,
+      tiles: { damage: 50, speed: 0, crit: 7.5 },
+      passive: { damage: 0, speed: 0, crit: 0 }
+    },
+    snowflake: {
+      hasTiles: false,
+      tiles: { damage: 0, speed: 0, crit: 0 },
+      passive: { damage: 50, speed: 0, crit: 0 }
+    },
+    trainer: {
+      hasTiles: false,
+      tiles: { damage: 0, speed: 0, crit: 0 },
+      passive: { damage: 8, speed: 0, crit: 0 }
+    },
+    trickster: {
+      hasTiles: false,
+      tiles: { damage: 0, speed: 0, crit: 0 },
+      passive: { damage: 40, speed: 0, crit: 0 }
+    },
+    zeus: {
+      hasTiles: true,
+      tiles: { damage: 10, speed: 15, crit: 6 },
+      passive: { damage: 0, speed: 0, crit: 0 }
+    },
+  };
 
   constructor(private toastController: ToastController,
     private alertController: AlertController) { }
@@ -33,18 +75,45 @@ export class BoardService {
     }
   }
 
+  getHeroStat(stat: any) {
+    let activeHero = this.heroes[this.activeHero];
+    return this.heroes[this.activeHero][activeHero.hasTiles == true ? 'tiles' : 'passive'][stat];
+  }
+
+  get activeHero() {
+    return Object.keys(this.heroes).reduce((memo: any, heroName: any) => {
+      let hero = this.heroes[heroName];
+      if (hero.active) {
+        memo = heroName;
+      }
+      return memo;
+    }, 'trainer');
+  }
+
+  set activeHero(activeHero) {
+    let heroNames = Object.keys(this.heroes);
+    for (let heroName of heroNames) {
+      this.heroes[heroName].active = heroName == activeHero;
+    }
+  }
+
   getSavedBoardsKeys() {
     return Object.keys(this.savedBoards);
   }
 
   setSavedBoard(index: string) {
-    const savedBoard = localStorage.getItem(`saved_board_${index}`);
     this.activeSavedBoard = index;
     localStorage.setItem('saved_board_index', this.activeSavedBoard);
+
+    const savedBoard = localStorage.getItem(`saved_board_${index}`);
     this.gridRows = JSON.parse(savedBoard!) ?? [];
+
+    const savedHeroes = localStorage.getItem(`saved_heroes_${index}`);
+    this.heroes = JSON.parse(savedHeroes!) ?? this.heroes;
+
     this._calculateDamageReport?.();
   }
-  
+
 
   changeSavedBoard(event: any) {
     this.setSavedBoard(event.target.value);
@@ -72,6 +141,8 @@ export class BoardService {
   async updateSavedBoard(boardIndex: any) {
     localStorage.setItem('saved_board_index', boardIndex.toString());
     localStorage.setItem('saved_board_' + boardIndex, JSON.stringify(this.gridRows));
+    localStorage.setItem('saved_heroes_' + boardIndex, JSON.stringify(this.heroes));
+
     const toast = await this.toastController.create({
       message: 'Board Config Updated',
       duration: 1500,
@@ -130,7 +201,7 @@ export class BoardService {
   }
 
   resetBoard(): void {
-    
+
     const getCardTemplate = () => ({ id: '' });
     this.gridRows = Array.from({ length: 3 }, () =>
       Array.from({ length: 5 }, () => ({ ...getCardTemplate() }))

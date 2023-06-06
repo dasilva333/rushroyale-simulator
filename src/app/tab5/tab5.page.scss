@@ -1,3 +1,12 @@
+.heroTile {
+  background-color: #DDD;
+}
+
+.heroes ion-thumbnail {
+  --size: 140px;
+  --border-radius: 14px;
+}
+
 [size="small"] {
   height: 20px;
   font-size: 12px;

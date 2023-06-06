@@ -22,6 +22,8 @@ export class Tab5Page implements OnInit {
 
   isCardOptionsOpen = false;
   isCardPickerOpen = false;
+
+  isHeroOptionsOpen = false;
   activeTile: any = { row: 0, column: 0 };
   boardConfig: any = {
     playerCrit: 2923
@@ -82,6 +84,30 @@ export class Tab5Page implements OnInit {
   }*/
   
 
+
+  setHeroConfig(ev: Event) {
+    this.isHeroOptionsOpen = !this.isHeroOptionsOpen; 
+  }
+
+  changeHero(heroName: any) {
+    this.boardService.activeHero = heroName;
+  }
+
+  heroCancel() {
+    this.isHeroOptionsOpen = false;
+  }
+
+  heroClear() {
+    this.isHeroOptionsOpen = false;
+    this.calculateDamageReport();
+  }
+
+  heroConfirm() {
+    //this.modal.dismiss(heroPicked, 'confirm');
+    this.isHeroOptionsOpen = false;
+    this.calculateDamageReport();
+  }
+
   clickedTile(event: any, row: any, column: any) {
     //event.target.style.backgroundColor = 'lightgreen';
     //console.log('clickedTile');
@@ -95,19 +121,19 @@ export class Tab5Page implements OnInit {
     }
   }
 
-  cancel() {
+  cardCancel() {
     this.isCardPickerOpen = false;
     this.isCardOptionsOpen = false;
   }
 
-  clear() {
+  cardClear() {
     this.isCardPickerOpen = false;
     this.isCardOptionsOpen = false;
     this.boardService.gridRows[this.activeTile.row][this.activeTile.column] = { id: '' };
     this.calculateDamageReport();
   }
 
-  confirm(cardPicked: any) {
+  cardConfirm(cardPicked: any) {
     this.modal.dismiss(cardPicked, 'confirm');
   }
 
@@ -151,6 +177,13 @@ export class Tab5Page implements OnInit {
       activeUnit.mainDpsBaseSpeed = parseFloat((activeUnit.baseSpeed - activeUnit.speedTiers[value]).toFixed(4));
     }
 
+    if (activeUnit.id == 'demonhunter'){
+      let demonHunters: any = this.boardService.getUnitsOnBoardById('demonhunter');
+      let isEmpowered = this.getDemonHunterTiers() >= 40;
+      for (let unit of demonHunters){
+        unit.demonHunterEmpowered = isEmpowered;
+      }
+    }
     if (activeUnit.id == 'inquisitor') {
       if (field == 'level' || field == 'absorbs') {
         activeUnit.mainDpsBaseDamage = this.dmgWithAbsorbs(activeUnit);
@@ -225,6 +258,11 @@ export class Tab5Page implements OnInit {
     this.isCardPickerOpen = false;
   }
 
+  
+  dismissedHeroOptions(event: Event) {
+
+  }
+
   dismissedCardOptions(event: Event, applyToAll: boolean) {
 
     this.isCardOptionsOpen = false;
@@ -282,6 +320,27 @@ export class Tab5Page implements OnInit {
     return cards;
   }
 
+  getBoardName(card: any){
+    let filename = '';
+    if (card.id == 'demonhunter' && this.getDemonHunterTiers() >= 40){
+      filename = card.id + "_empowered";
+    }
+    else if (card.id == 'monk' && card.isIntersection[0]){
+      filename = card.id + "_empowered";  
+    }
+    else if (card.id == 'cultists' && card.isEmpowered){
+      filename = card.id + "_empowered";  
+    }
+    else if (card.id == 'bladedancer' && card.hasAdjacentBDs){
+      filename = card.id + "_empowered";  
+    }
+    
+    //tileInfo.main.isConnectedToEmpowered
+    else {
+      filename = card.id;
+    }
+    return filename;
+  }
   getCardName(cardName: any) {
     return cardName;
   }
@@ -454,6 +513,7 @@ export class Tab5Page implements OnInit {
       if (adjacentBDs == 0) {
         tileInfo.main.mainDpsBaseSpeed = tileInfo.main.mainDpsBaseSpeed / 2.5;
       }
+      tileInfo.main.hasAdjacentBDs = adjacentBDs == 0;
       //console.log('tileInfo.main.mainDpsBaseSpeed', tileInfo.main.mainDpsBaseSpeed, adjacentBDs);
       let baseDps: any = this.getDamageInfoGeneric(tileInfo);
 
@@ -481,13 +541,14 @@ export class Tab5Page implements OnInit {
           }
         }
       }
-
       if (isConnectedToEmpowered) {
         //take the crit chance from the user's input
       } else {
         tileInfo.main.mainDpsBaseCrit = 0;
       }
 
+      
+      tileInfo.main.isEmpowered = adjacentCultists == 4;
       if (adjacentCultists == 4) {
         tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + (tileInfo.main.mainDpsDamageIncrease / 100));
         //console.log('center cultist dmg', tileInfo.main.mainDpsBaseDamage);
@@ -544,6 +605,44 @@ export class Tab5Page implements OnInit {
       tileInfo.main.mainDpsBaseSpeed = originalSpeed;
 
       return dpsInfo;
+    } else if (tileInfo.main.id == 'bruiser') {
+
+      let originalDamage = tileInfo.main.mainDpsBaseDamage;
+      let originalSpeed = tileInfo.main.mainDpsBaseSpeed;
+
+      if (tileInfo.main.enranged) {
+        tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + (tileInfo.main.mainDpsDamageIncrease / 100));
+        tileInfo.main.mainDpsBaseSpeed = tileInfo.main.mainDpsBaseSpeed / 2;
+      }
+
+      let dpsInfo = this.getDamageInfoGeneric(tileInfo);
+      tileInfo.main.mainDpsBaseDamage = originalDamage;
+      tileInfo.main.mainDpsBaseSpeed = originalSpeed;
+      return dpsInfo;
+    }  else if (tileInfo.main.id == 'robot') {
+
+      let originalDamage = tileInfo.main.mainDpsBaseDamage;
+      let originalSpeed = tileInfo.main.mainDpsBaseSpeed;
+      let originalCritDamage = tileInfo.main.mainDpsBaseCritDmg;
+
+      if (tileInfo.main.merges >= 10) {
+        tileInfo.main.mainDpsBaseSpeed = tileInfo.main.mainDpsBaseSpeed / (1 + (tileInfo.main.mainDpsSpeedIncrease / 100));
+      }
+      
+      if (tileInfo.main.merges >= 15) {
+        tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + (tileInfo.main.mainDpsDamageIncrease / 100));
+      }
+      
+      if (tileInfo.main.merges >= 20) {
+        tileInfo.main.mainDpsBaseCritDmg = this.boardConfig.playerCrit * 1.05;
+      }
+
+      console.log('tileInfo', tileInfo);
+      let dpsInfo = this.getDamageInfoGeneric(tileInfo);
+      tileInfo.main.mainDpsBaseDamage = originalDamage;
+      tileInfo.main.mainDpsBaseSpeed = originalSpeed;
+      tileInfo.main.mainDpsBaseCritDmg = originalCritDamage;
+      return dpsInfo;
     } else if (tileInfo.main.id == 'generic') {
 
       let originalDamage = tileInfo.main.mainDpsBaseDamage;
@@ -584,6 +683,9 @@ export class Tab5Page implements OnInit {
   getSwordDmg(swordStacks: number) {
     let cardNames = this.boardService.getUniqueCardsOnBoard();
     let card = this.getCardInfoByName('Sword') || this.unitsService.cards['sword'];
+    if (this.deckConfig.swordLevel){
+      card.level = this.deckConfig.swordLevel;
+    }
 
     let cardBuff = ((card.damage / 10) + ((card.level - 7) * 1.5)) * swordStacks;
 
@@ -591,6 +693,10 @@ export class Tab5Page implements OnInit {
       cardBuff = cardBuff / 5;
     }
     return cardBuff;
+  }
+
+  getDemonHunterTiers() {
+    return this.sumOfArray(this.boardService.getUnitsOnBoardById('demonhunter').map((t: any) => t.tier));
   }
 
   getWitchBuff() {
@@ -687,6 +793,19 @@ export class Tab5Page implements OnInit {
       }
     }
 
+    let activeHeroInfo = this.boardService.heroes[this.boardService.activeHero];
+    let heroBuff = parseFloat(activeHeroInfo.passive.crit);
+    if (heroBuff > 0){
+      critBuffs.push(heroBuff);
+    }
+
+    if (activeHeroInfo.hasTiles && tileInfo.main.heroTile){
+      let heroBuff = parseFloat(activeHeroInfo.tiles.crit);
+      if (heroBuff > 0){
+        critBuffs.push(heroBuff);
+      }
+    }
+
     return critBuffs;
   }
 
@@ -709,6 +828,18 @@ export class Tab5Page implements OnInit {
       }
     }
     //heroes, weapons, amulets, enchantments go here
+    let activeHeroInfo = this.boardService.heroes[this.boardService.activeHero];
+    let heroBuff = parseFloat(activeHeroInfo.passive.damage);
+    if (heroBuff > 0){
+      damageBuffs.push(heroBuff);
+    }
+
+    if (activeHeroInfo.hasTiles && tileInfo.main.heroTile){
+      let heroBuff = parseFloat(activeHeroInfo.tiles.damage);
+      if (heroBuff > 0){
+        damageBuffs.push(heroBuff);
+      }
+    }
 
     return damageBuffs;
   }
@@ -747,6 +878,18 @@ export class Tab5Page implements OnInit {
     }
     //console.log('speedBuffs', speedBuffs);
     //heroes, weapons, amulets, enchantments go here
+    let activeHeroInfo = this.boardService.heroes[this.boardService.activeHero];
+    let heroBuff = parseFloat(activeHeroInfo.passive.speed);
+    if (heroBuff > 0){
+      speedBuffs.push(heroBuff);
+    }
+
+    if (activeHeroInfo.hasTiles && tileInfo.main.heroTile){
+      let heroBuff = parseFloat(activeHeroInfo.tiles.speed);
+      if (heroBuff > 0){
+        speedBuffs.push(heroBuff);
+      }
+    }
 
     return speedBuffs;
   }
@@ -883,7 +1026,7 @@ export class Tab5Page implements OnInit {
     let hitsPerSecond = 1 / newAttackSpeed;
     let critHitsPerSecond = hitsPerSecond * totalCritChance;
     let criticalDamage = Math.floor(newAttackDamage * (((this.boardConfig.playerCrit * (1 + (enchanmentCritDmgBuff / 100))) + totalCritDmgBuff) / 100));
-
+    console.log('criticalDamage', criticalDamage, totalCritDmgBuff);
     critDmgPerSecond = Math.floor(criticalDamage * critHitsPerSecond);
 
     let results = {
@@ -995,4 +1138,14 @@ export class Tab5Page implements OnInit {
 
     return this.damageReport;
   }
+
+  heroList() {
+    return Object.keys(this.boardService.heroes);
+  }
+
+  changeHeroStat(ev: any, type: any) {
+    let hero = this.boardService.heroes[this.boardService.activeHero];
+    hero[hero.hasTiles ? 'tiles' : 'passive'][type] = parseFloat(ev.target.value);
+  }
+  
 }
