@@ -49,7 +49,7 @@
 </ion-modal>
 
 
-<ion-modal [isOpen]="isHeroOptionsOpen" (willDismiss)="dismissedHeroOptions($event)">
+<ion-modal [isOpen]="isItemConfigOpen" (willDismiss)="dismissedHeroOptions($event)">
   <ng-template>
     <ion-header>
       <ion-toolbar>
@@ -59,19 +59,93 @@
         <ion-buttons slot="start">
           <ion-button (click)="heroConfirm()">Confirm</ion-button>
         </ion-buttons>
-        <ion-title slot="end">Hero Options</ion-title>
+        <ion-title slot="end"><span class="ion-text-capitalize">{{itemConfigType}}</span> Options</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
       <ion-card>
-        <ion-card-content class="ion-no-margin ion-no-padding" style="padding:2px;">
+        <ion-card-content class="ion-no-margin ion-no-padding" style="padding:2px;" *ngIf="itemConfigType == 'weapons'">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <ion-item lines="none" class="ion-no-margin" style="padding:0px;">
+                  <span *ngFor="let weapon of weaponList();" class="heroes">
+                    <ion-thumbnail style="--size: 65px; display: inline-block;" (click)="changeWeapon(weapon)">
+                      <img [src]="'/assets/weapon/' + weapon + '.jpg'"
+                        [ngStyle]="{'border': weapon == boardService.activeWeapon ? '3px solid gold' : ''}">
+                    </ion-thumbnail>
+                  </span>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+        <ion-card-content class="ion-no-margin ion-no-padding" style="padding:2px;" *ngIf="itemConfigType == 'armor'">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <ion-item lines="none" class="ion-no-margin" style="padding:0px;">
+                  <span *ngFor="let armor of armorList();" class="heroes">
+                    <ion-thumbnail style="--size: 65px; display: inline-block;" (click)="changeArmor(armor)">
+                      <img [src]="'/assets/armor/' + armor + '.jpg'" [style.border]="armor == boardService.activeArmor ? '3px solid gold' : ''">
+                    </ion-thumbnail>
+                  </span>
+                  
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+        <ion-card-content class="ion-no-margin ion-no-padding" style="padding:2px;" *ngIf="itemConfigType == 'amulets'">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <ion-item lines="none" class="ion-no-margin" style="padding:0px;">
+                  <span *ngFor="let amulet of amuletList();" class="heroes">
+                    <ion-thumbnail style="--size: 65px; display: inline-block;" (click)="changeAmulet(amulet)">
+                      <img [src]="'/assets/amulet/' + amulet + '.jpg'" [style.border]="amulet == boardService.activeAmulet ? '3px solid gold' : ''">
+                    </ion-thumbnail>
+                  </span>
+                  
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+        <ion-card-content class="ion-no-margin ion-no-padding" style="padding:2px;" *ngIf="itemConfigType == 'amulets' || itemConfigType == 'armor' || itemConfigType == 'weapons'">
+          <ion-grid>
+            <ion-row>
+              <ion-col *ngIf="boardService[itemConfigType][activeEditItem].stat != 'none'" size="12">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked" class="ion-text-capitalize">Alliance {{
+                    boardService[itemConfigType][activeEditItem].stat
+                    }}
+                    %</ion-label>
+                  <ion-input [value]="boardService.getItemStat(itemConfigType, activeEditItem, 'alliance')"
+                    (ionChange)="changeItemStat($event, itemConfigType, activeEditItem, 'alliance')"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="boardService[itemConfigType][activeEditItem].stat != 'none'" size="12">
+                <ion-item lines="none" class="ion-no-margin">
+                  <ion-label position="stacked" class="ion-text-capitalize">Faction {{
+                    boardService[itemConfigType][activeEditItem].stat
+                    }}
+                    %</ion-label>
+                  <ion-input [value]="boardService.getItemStat(itemConfigType, activeEditItem, 'faction')"
+                    (ionChange)="changeItemStat($event, itemConfigType, activeEditItem, 'faction')"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+        <ion-card-content class="ion-no-margin ion-no-padding" style="padding:2px;" *ngIf="itemConfigType == 'heroes'">
           <table class="ion-no-margin ion-no-padding" style="width: 100%; display:block; margin:0; padding: 0;">
             <tr>
-              <td style="width: 60%;">
-
+              <td>
                 <span *ngFor="let herot of heroList();" class="heroes">
                   <ion-thumbnail style="--size: 65px; display: inline-block;" (click)="changeHero(herot)">
-                    <img src="/assets/heroes/{{ herot }}.jpg" style=" {{ herot == boardService.activeHero ? 'border:3px solid gold' : '' }}">
+                    <img src="/assets/heroes/{{ herot }}.jpg"
+                      style=" {{ herot == boardService.activeHero ? 'border:3px solid gold' : '' }}">
                   </ion-thumbnail>
                 </span>
               </td>
@@ -90,8 +164,8 @@
                         <ion-item class="ion-no-padding">
                           <ion-label position="stacked">Damage</ion-label>
                           <ion-text>
-                            <ion-input [value]="boardService.getHeroStat('damage')"
-                              (ionChange)="changeHeroStat($event,'damage')"></ion-input>
+                            <ion-input [value]="boardService.getItemStat('heroes', boardService.activeHero, 'damage')"
+                              (ionChange)="changeItemStat($event, itemConfigType, activeEditItem, 'damage')"></ion-input>
                           </ion-text>
                         </ion-item>
                       </ion-col>
@@ -99,8 +173,8 @@
                         <ion-item class="ion-no-padding">
                           <ion-label position="stacked">Crit</ion-label>
                           <ion-text>
-                            <ion-input [value]="boardService.getHeroStat('crit')"
-                              (ionChange)="changeHeroStat($event,'crit')"></ion-input>
+                            <ion-input [value]="boardService.getItemStat('heroes', boardService.activeHero, 'crit')"
+                              (ionChange)="changeItemStat($event, itemConfigType, activeEditItem, 'crit')"></ion-input>
                           </ion-text>
                         </ion-item>
                       </ion-col>
@@ -108,15 +182,15 @@
                         <ion-item class="ion-no-padding">
                           <ion-label position="stacked">Speed</ion-label>
                           <ion-text>
-                            <ion-input [value]="boardService.getHeroStat('speed')"
-                              (ionChange)="changeHeroStat($event,'speed')"></ion-input>
+                            <ion-input [value]="boardService.getItemStat('heroes', boardService.activeHero, 'speed')"
+                              (ionChange)="changeItemStat($event, itemConfigType, activeEditItem, 'speed')"></ion-input>
                           </ion-text>
                         </ion-item>
                       </ion-col>
                     </ion-row>
                   </ion-grid>
                 </ion-item>
-              </td> 
+              </td>
             </tr>
             <!-- <tr *ngIf="boardService.activeHero == 'gadget'">
               <td style="width: 40%;">
@@ -251,10 +325,11 @@
                   <ion-select placeholder="Level" [value]="deckConfig.swordLevel"
                     (ionChange)="changeDeckConfig($event,'swordLevel')">
                     <ion-select-option *ngFor="let level of unitsService.levels;" [value]="level">{{ level
-                    }}</ion-select-option>
+                      }}</ion-select-option>
                   </ion-select>
                   <ion-buttons slot="end">
-                    <ion-button color="primary" (click)="deckConfig.swordLevel = unitsService.levels[0]">Min</ion-button>
+                    <ion-button color="primary"
+                      (click)="deckConfig.swordLevel = unitsService.levels[0]">Min</ion-button>
                     <ion-button color="primary"
                       (click)="deckConfig.swordLevel = unitsService.levels[unitsService.levels.length-1]">Max</ion-button>
                   </ion-buttons>
@@ -285,7 +360,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col *ngIf="deckConfig && deckConfig.talents && deckConfig.talents.length > 0">
+              <ion-col size="12" *ngIf="deckConfig && deckConfig.talents && deckConfig.talents.length > 0">
                 <ion-item class="ion-no-margin" *ngFor="let talent of deckConfig.talents">
                   <ion-label>{{ talent.label }}</ion-label>
                   <ion-checkbox [value]="talent.value" [checked]="deckConfig.activeTalents.indexOf(talent.value) > -1"
@@ -468,7 +543,8 @@
                 (click)="clickedTile($event, rowIndex, columnIndex)" style="text-align:center;">
                 <div [class.heroTile]="boardService.gridRows[rowIndex][columnIndex].heroTile">
 
-                  <img *ngIf="boardService.gridRows[rowIndex][columnIndex].id != ''" id="tile_{{ rowIndex }}_{{ columnIndex }}"
+                  <img *ngIf="boardService.gridRows[rowIndex][columnIndex].id != ''"
+                    id="tile_{{ rowIndex }}_{{ columnIndex }}"
                     src="/assets/board/{{ getBoardName(boardService.gridRows[rowIndex][columnIndex]) }}.png">
 
                   <!-- <ion-thumbnail style="--size: 65px;" *ngIf="boardService.gridRows[rowIndex][columnIndex].id != ''"><img
@@ -478,7 +554,8 @@
                     <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
                       *ngIf="boardService.gridRows[rowIndex][columnIndex].id == 'knight_statue' || boardService.gridRows[rowIndex][columnIndex].id == 'chemist' || boardService.gridRows[rowIndex][columnIndex].id == 'banner'"
                       color="primary">
-                      Lv.{{ boardService.gridRows[rowIndex][columnIndex].level }}/T.{{ boardService.gridRows[rowIndex][columnIndex].tier }}
+                      Lv.{{ boardService.gridRows[rowIndex][columnIndex].level }}/T.{{
+                      boardService.gridRows[rowIndex][columnIndex].tier }}
                     </ion-chip>
                     <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
                       *ngIf="boardService.gridRows[rowIndex][columnIndex].id == 'trapper' || boardService.gridRows[rowIndex][columnIndex].id == 'sword'"
@@ -487,19 +564,23 @@
                     </ion-chip>
                     <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Stacks"
                       *ngIf="boardService.gridRows[rowIndex][columnIndex].id == 'witch_statue'" color="primary">
-                      Lv.{{ boardService.gridRows[rowIndex][columnIndex].level }} St.{{ boardService.gridRows[rowIndex][columnIndex].merges }}
+                      Lv.{{ boardService.gridRows[rowIndex][columnIndex].level }} St.{{
+                      boardService.gridRows[rowIndex][columnIndex].merges }}
                     </ion-chip>
                     <!--  -->
                     <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
                       *ngIf="boardService.gridRows[rowIndex][columnIndex].id == 'grindstone'" color="primary">
                       {{ boardService.gridRows[rowIndex][columnIndex].damage }}/hit&nbsp;
-                      <span *ngIf="boardService.gridRows[rowIndex][columnIndex].activeTalents.indexOf('unstable_overheat') > -1">
+                      <span
+                        *ngIf="boardService.gridRows[rowIndex][columnIndex].activeTalents.indexOf('unstable_overheat') > -1">
                         St.{{ boardService.gridRows[rowIndex][columnIndex].merges }}&nbsp;
                       </span>
-                      <span *ngIf="boardService.gridRows[rowIndex][columnIndex].activeTalents.indexOf('triple_overheat') > -1">
+                      <span
+                        *ngIf="boardService.gridRows[rowIndex][columnIndex].activeTalents.indexOf('triple_overheat') > -1">
                         3xt&nbsp;
                       </span>
-                      <span *ngIf="boardService.gridRows[rowIndex][columnIndex].activeTalents.indexOf('tempered_steel') > -1">
+                      <span
+                        *ngIf="boardService.gridRows[rowIndex][columnIndex].activeTalents.indexOf('tempered_steel') > -1">
                         T.{{ boardService.gridRows[rowIndex][columnIndex].tier }}
                       </span>
                     </ion-chip>
@@ -508,9 +589,11 @@
                       <span
                         *ngIf="boardService.gridRows[rowIndex][columnIndex].tier && boardService.gridRows[rowIndex][columnIndex].tier > 0">T.{{boardService.gridRows[rowIndex][columnIndex].tier}}&nbsp;</span>
                       {{ getCardInfoById(boardService.gridRows[rowIndex][columnIndex].id).mainDpsBaseDamage }}/hit
-                      <span *ngIf="boardService.gridRows[rowIndex][columnIndex].id == 'engineer'">&nbsp;x{{boardService.gridRows[rowIndex][columnIndex].connections}}</span>
+                      <span
+                        *ngIf="boardService.gridRows[rowIndex][columnIndex].id == 'engineer'">&nbsp;x{{boardService.gridRows[rowIndex][columnIndex].connections}}</span>
 
-                      <span *ngIf="boardService.gridRows[rowIndex][columnIndex].id == 'monk' && boardService.gridRows[rowIndex][columnIndex].isIntersection[0]">&nbsp;(I)</span>
+                      <span
+                        *ngIf="boardService.gridRows[rowIndex][columnIndex].id == 'monk' && boardService.gridRows[rowIndex][columnIndex].isIntersection[0]">&nbsp;(I)</span>
                     </ion-chip>
                     <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Stacks"
                       *ngIf="boardService.gridRows[rowIndex][columnIndex].id == 'dryad'" color="primary">
@@ -523,7 +606,8 @@
                     <ng-template>
                       <ion-content class="ion-padding">
                         <strong>{{ boardService.gridRows[rowIndex][columnIndex].name }} DPS</strong><br>
-                        <div *ngFor="let dpsEntry of boardService.gridRows[rowIndex][columnIndex].dpsEntries" size="small">
+                        <div *ngFor="let dpsEntry of boardService.gridRows[rowIndex][columnIndex].dpsEntries"
+                          size="small">
                           <em>{{ dpsEntry.main.name }}</em> {{ dpsEntry.dpsInfo.total | number }}
                         </div>
                       </ion-content>
@@ -703,7 +787,7 @@
             <ion-grid class="ion-no-margin ion-no-padding">
               <ion-row>
                 <ion-col size="3">
-                  <a href="#/tabs/tab5" class="heroes" (click)="setHeroConfig($event)">
+                  <a href="#/tabs/tab5" class="heroes" (click)="setItemConfig('heroes',$event)">
                     <ion-thumbnail style="--size: 65px;"><img
                         src="/assets/heroes/{{ boardService.activeHero }}.jpg"></ion-thumbnail>
                   </a>
@@ -711,17 +795,44 @@
                     {{ boardService.activeHero }}
                   </ion-chip>
                 </ion-col>
+                <ion-col size="3">
+                  <a href="#/tabs/tab5" class="heroes" (click)="setItemConfig('armor', $event)">
+                    <ion-thumbnail style="--size: 65px;"><img
+                        src="/assets/armor/{{ boardService.activeArmor }}.jpg"></ion-thumbnail>
+                  </a>
+                  <ion-chip size="xsmall" class="ion-text-capitalize ion-no-margin" color="primary">
+                    {{ boardService.activeArmor }}
+                  </ion-chip>
+                </ion-col>
+                <ion-col size="3">
+                  <a href="#/tabs/tab5" class="heroes" (click)="setItemConfig('weapons',$event)">
+                    <ion-thumbnail style="--size: 65px;"><img
+                        src="/assets/weapon/{{ boardService.activeWeapon }}.jpg"></ion-thumbnail>
+                  </a>
+                  <ion-chip size="xsmall" class="ion-text-capitalize ion-no-margin" color="primary">
+                    {{ boardService.activeWeapon }}
+                  </ion-chip>
+                </ion-col>
+                <ion-col size="3">
+                  <a href="#/tabs/tab5" class="heroes" (click)="setItemConfig('amulets',$event)">
+                    <ion-thumbnail style="--size: 65px;"><img
+                        src="/assets/amulet/{{ boardService.activeAmulet }}.jpg"></ion-thumbnail>
+                  </a>
+                  <ion-chip size="xsmall" class="ion-text-capitalize ion-no-margin" color="primary">
+                    {{ boardService.activeAmulet }}
+                  </ion-chip>
+                </ion-col>
                 <ion-col size="3" *ngFor="let card of boardService.getUniqueCardsOnBoard(); let index = index;">
                   <!-- <a href="#/tabs/tab5"> -->
-                    <ion-thumbnail style="--size: 65px;"><img
-                        src="/assets/icons/{{ getCardName(card) }}.png"></ion-thumbnail>
+                  <ion-thumbnail style="--size: 65px;"><img
+                      src="/assets/icons/{{ getCardName(card) }}.png"></ion-thumbnail>
                   <!-- </a> -->
 
                   <ion-chip size="xsmall" class="ion-no-margin" title="Damage"
                     *ngIf="getFieldMatters(card,'level') && getCardInfoById(card).type == 'dps'" color="primary">Lv.{{
                     getCardInfoById(card).level }}</ion-chip>
 
-                    <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
+                  <ion-chip size="xsmall" class="ion-no-margin ion-no-padding" title="Damage"
                     *ngIf="card == 'demonhunter'" color="primary">
                     T. {{ getDemonHunterTiers() }}
                   </ion-chip>

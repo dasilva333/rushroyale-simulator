@@ -282,7 +282,23 @@ export class UnitsService {
 
     },
     'grindstone': {
-      building: true, level: false, tier: true, damage: 415, speed: 0, crit: 0, talents: [{
+      building: true, level: false, tier: true, damage: 415, speed: 0, crit: 0, talents: [
+        {
+          label: 'Lv9. Searing Sparks',
+          type: 'checkbox',
+          value: 'searing_sparks',
+        },
+        {
+          label: 'Lv9. Fiery Sparks',
+          type: 'checkbox',
+          value: 'fiery_sparks',
+        },
+        {
+          label: 'Lv11. Hellgrinder',
+          type: 'checkbox',
+          value: 'hellgrinder',
+        },
+        {
         label: 'Lv13. Unstable Overheat',
         type: 'checkbox',
         value: 'unstable_overheat',

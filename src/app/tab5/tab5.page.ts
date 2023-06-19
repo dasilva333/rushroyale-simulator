@@ -23,7 +23,8 @@ export class Tab5Page implements OnInit {
   isCardOptionsOpen = false;
   isCardPickerOpen = false;
 
-  isHeroOptionsOpen = false;
+  isItemConfigOpen = false;
+  itemConfigType: string = '';
   activeTile: any = { row: 0, column: 0 };
   boardConfig: any = {
     playerCrit: 2923
@@ -82,29 +83,28 @@ export class Tab5Page implements OnInit {
       ];
     }
   }*/
-  
 
 
-  setHeroConfig(ev: Event) {
-    this.isHeroOptionsOpen = !this.isHeroOptionsOpen; 
-  }
+  activeEditItem = '';
 
-  changeHero(heroName: any) {
-    this.boardService.activeHero = heroName;
+  setItemConfig(configType: any, ev: Event) {
+    this.itemConfigType = configType;
+    this.activeEditItem = this.boardService.getActiveItem(configType, '');
+    this.isItemConfigOpen = !this.isItemConfigOpen;
   }
 
   heroCancel() {
-    this.isHeroOptionsOpen = false;
+    this.isItemConfigOpen = false;
   }
 
   heroClear() {
-    this.isHeroOptionsOpen = false;
+    this.isItemConfigOpen = false;
     this.calculateDamageReport();
   }
 
   heroConfirm() {
     //this.modal.dismiss(heroPicked, 'confirm');
-    this.isHeroOptionsOpen = false;
+    this.isItemConfigOpen = false;
     this.calculateDamageReport();
   }
 
@@ -177,10 +177,10 @@ export class Tab5Page implements OnInit {
       activeUnit.mainDpsBaseSpeed = parseFloat((activeUnit.baseSpeed - activeUnit.speedTiers[value]).toFixed(4));
     }
 
-    if (activeUnit.id == 'demonhunter'){
+    if (activeUnit.id == 'demonhunter') {
       let demonHunters: any = this.boardService.getUnitsOnBoardById('demonhunter');
       let isEmpowered = this.getDemonHunterTiers() >= 40;
-      for (let unit of demonHunters){
+      for (let unit of demonHunters) {
         unit.demonHunterEmpowered = isEmpowered;
       }
     }
@@ -258,7 +258,7 @@ export class Tab5Page implements OnInit {
     this.isCardPickerOpen = false;
   }
 
-  
+
   dismissedHeroOptions(event: Event) {
 
   }
@@ -320,21 +320,21 @@ export class Tab5Page implements OnInit {
     return cards;
   }
 
-  getBoardName(card: any){
+  getBoardName(card: any) {
     let filename = '';
-    if (card.id == 'demonhunter' && this.getDemonHunterTiers() >= 40){
+    if (card.id == 'demonhunter' && this.getDemonHunterTiers() >= 40) {
       filename = card.id + "_empowered";
     }
-    else if (card.id == 'monk' && card.isIntersection[0]){
-      filename = card.id + "_empowered";  
+    else if (card.id == 'monk' && card.isIntersection[0]) {
+      filename = card.id + "_empowered";
     }
-    else if (card.id == 'cultists' && card.isEmpowered){
-      filename = card.id + "_empowered";  
+    else if (card.id == 'cultists' && card.isEmpowered) {
+      filename = card.id + "_empowered";
     }
-    else if (card.id == 'bladedancer' && card.hasAdjacentBDs){
-      filename = card.id + "_empowered";  
+    else if (card.id == 'bladedancer' && card.hasAdjacentBDs) {
+      filename = card.id + "_empowered";
     }
-    
+
     //tileInfo.main.isConnectedToEmpowered
     else {
       filename = card.id;
@@ -364,51 +364,55 @@ export class Tab5Page implements OnInit {
 
   getDamageInfoForUnit(tileInfo: any) {
     if (tileInfo.main.id == 'boreas') {
-      let originalSpeed = tileInfo.main.mainDpsBaseSpeed;
-      let originalCrit = tileInfo.main.mainDpsBaseCrit;
-      let originalDamage = tileInfo.main.mainDpsBaseDamage;
-      let normalPhaseDPS = this.getDamageInfoGeneric(tileInfo);
-      let normalPhaseLength = parseFloat(tileInfo.main.mainDpsActivationInterval);
-      let normalPhaseTotal = normalPhaseDPS.total * normalPhaseLength;
-      //console.log('normalPhaseLength', normalPhaseLength, 'normalPhaseDamage', normalPhaseTotal, normalPhaseDPS);
+      const originalSpeed = tileInfo.main.mainDpsBaseSpeed;
+      const originalCrit = tileInfo.main.mainDpsBaseCrit;
+      const originalDamage = tileInfo.main.mainDpsBaseDamage;
 
-      // 600% speed increase for first phase
-      tileInfo.main.mainDpsBaseSpeed = tileInfo.main.mainDpsBaseSpeed / 7;
-      let firstPhaseDPS = this.getDamageInfoGeneric(tileInfo);
-      let firstPhaseLength = parseFloat(tileInfo.main.mainDpsFirstPhase);
-      let firstPhaseTotal = firstPhaseDPS.total * firstPhaseLength;
+      // Calculate normal phase total damage
+      const normalPhaseDPS = this.getDamageInfoGeneric(tileInfo);
+      const normalPhaseLength = parseFloat(tileInfo.main.mainDpsActivationInterval);
+      const normalPhaseTotal = normalPhaseDPS.total * normalPhaseLength;
+
+      // Calculate first phase total damage
+      tileInfo.main.mainDpsBaseSpeed = originalSpeed / 7;
+      const firstPhaseDPS = this.getDamageInfoGeneric(tileInfo);
+      const firstPhaseLength = parseFloat(tileInfo.main.mainDpsFirstPhase);
+      const firstPhaseTotal = firstPhaseDPS.total * firstPhaseLength;
       tileInfo.main.mainDpsBaseSpeed = originalSpeed;
-      //console.log('firstPhaseLength', firstPhaseLength, 'firstPhaseTotal', firstPhaseTotal, firstPhaseDPS);
 
-      // 600% speed increase and 100% crit for second phase
-      tileInfo.main.mainDpsBaseSpeed = tileInfo.main.mainDpsBaseSpeed / 7;
+      // Calculate second phase total damage
+      tileInfo.main.mainDpsBaseSpeed = originalSpeed / 7;
       tileInfo.main.mainDpsBaseCrit = 100;
-      let secondPhaseDPS = this.getDamageInfoGeneric(tileInfo);
-      let secondPhaseLength = parseFloat(tileInfo.main.mainDpsSecondPhase);
+      const secondPhaseDPS = this.getDamageInfoGeneric(tileInfo);
+      const secondPhaseLength = parseFloat(tileInfo.main.mainDpsSecondPhase);
       let secondPhaseTotal = secondPhaseDPS.total * secondPhaseLength;
+      tileInfo.main.mainDpsBaseSpeed = originalSpeed;
+      tileInfo.main.mainDpsBaseCrit = originalCrit;
 
+      // Apply talent buffs if active
       if (tileInfo.main.activeTalents.indexOf('precise_shooting') > -1 || tileInfo.main.activeTalents.indexOf('doublet') > -1) {
+        let buffedDPS = secondPhaseDPS;
         // 100% speed increase
         if (tileInfo.main.activeTalents.indexOf('doublet') > -1) {
-          tileInfo.main.mainDpsBaseSpeed = tileInfo.main.mainDpsBaseSpeed / 2;
+          tileInfo.main.mainDpsBaseSpeed = originalSpeed / 3.5;
+          buffedDPS = this.getDamageInfoGeneric(tileInfo);
         }
         // 100% dmg increase
         if (tileInfo.main.activeTalents.indexOf('precise_shooting') > -1) {
-          tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * 2;
+          tileInfo.main.mainDpsBaseDamage = originalDamage * 2;
+          buffedDPS = this.getDamageInfoGeneric(tileInfo);
         }
-        let buffedThird2ndPhase = this.getDamageInfoGeneric(tileInfo);
-        //take the DPS info and take 2/3 from it (to simulate 2 out of 3 phases)
-        secondPhaseTotal = (secondPhaseTotal * 0.66) + buffedThird2ndPhase.total;
+        // Calculate second phase total damage with talent buffs
+        const buffedSecondPhaseTotal = buffedDPS.total * secondPhaseLength;
+        secondPhaseTotal = (secondPhaseTotal * 0.66) + buffedSecondPhaseTotal;
       }
       tileInfo.main.mainDpsBaseDamage = originalDamage;
-      tileInfo.main.mainDpsBaseSpeed = originalSpeed;
-      tileInfo.main.mainDpsBaseCrit = originalCrit;
-      //console.log('secondPhaseLength', secondPhaseLength, 'secondPhaseTotal', secondPhaseTotal, secondPhaseDPS);
 
-      let totalPhaseLengthSeconds = normalPhaseLength + firstPhaseLength + secondPhaseLength;
-      let total = Math.floor((normalPhaseTotal + firstPhaseTotal + secondPhaseTotal) / totalPhaseLengthSeconds);
-      let results = {
-        total,
+      // Calculate total damage and phase length
+      const totalPhaseLengthSeconds = normalPhaseLength + firstPhaseLength + secondPhaseLength;
+      const totalDamage = Math.floor((normalPhaseTotal + firstPhaseTotal + secondPhaseTotal) / totalPhaseLengthSeconds);
+      const results = {
+        total: totalDamage,
         normalPhaseTotal,
         firstPhaseTotal,
         secondPhaseTotal,
@@ -416,33 +420,24 @@ export class Tab5Page implements OnInit {
       };
       return results;
     } else if (tileInfo.main.id == 'sentry') {
-      let totalPhaseParts = Math.ceil(tileInfo.main.mainDpsDamageIncrease / 10);
-      let totalPhaseLengthSeconds = totalPhaseParts * tileInfo.main.mainDpsActivationInterval;
+      const totalPhaseParts = Math.ceil(tileInfo.main.mainDpsDamageIncrease / 10);
+      const totalPhaseLengthSeconds = totalPhaseParts * tileInfo.main.mainDpsActivationInterval;
+      const originalDamage = tileInfo.main.mainDpsBaseDamage;
 
-      //let dpsPhases = [];
-      let total = 0;
-      let originalDamage = tileInfo.main.mainDpsBaseDamage;
+      let totalDps = 0;
       for (let i = 0; i < totalPhaseParts; i++) {
-        //tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * 1.1;
-        let step = (i / 10) + 1;
+        let damageMultiplier = (i / 10) + 1;
         if (i == totalPhaseParts - 1) {
-          //console.log('last one here we go', step);
-          step = step + ((tileInfo.main.mainDpsDamageIncrease % 10) / 100);
-          //console.log('last now we got this', step);
+          damageMultiplier += ((tileInfo.main.mainDpsDamageIncrease % 10) / 100);
         }
-        //console.log('step', step, i);
-        tileInfo.main.mainDpsBaseDamage = originalDamage * step;
-        //console.log('tileInfo.main.mainDpsBaseDamage', tileInfo.main.mainDpsBaseDamage);
-        let dpsPhase = this.getDamageInfoGeneric(tileInfo);
-        //dpsPhases.push(dpsPhase);
-        total = total + dpsPhase.total;
+        tileInfo.main.mainDpsBaseDamage = originalDamage * damageMultiplier;
+        const dpsPhase = this.getDamageInfoGeneric(tileInfo);
+        totalDps += dpsPhase.total;
       }
-      total = total / totalPhaseLengthSeconds;
       tileInfo.main.mainDpsBaseDamage = originalDamage;
 
-      //console.log('dpsPhases', dpsPhases);
-      let results = {
-        total: Math.floor(total),
+      const results = {
+        total: Math.floor(totalDps / totalPhaseLengthSeconds),
         newAttackDamage: 0,
         newAttackSpeed: 0,
         dmgPerSecond: 0,
@@ -453,7 +448,7 @@ export class Tab5Page implements OnInit {
         normalPhaseTotal: 0,
         firstPhaseTotal: 0,
         secondPhaseTotal: 0,
-        totalPhaseLengthSeconds
+        totalPhaseLengthSeconds,
       };
       return results;
     } else if (tileInfo.main.id == 'demonhunter') {
@@ -467,34 +462,28 @@ export class Tab5Page implements OnInit {
 
       return results;
     } else if ((tileInfo.main.id == 'inquisitor' && tileInfo.main.talent != '') || tileInfo.main.id == 'crystalmancer') {
-      let damageIncrease = tileInfo.main.mainDpsDamageIncreaseSteps; //percent
-      //figure out the base dps to get the buffed speed
-      let baseDps: any = this.getDamageInfoGeneric(tileInfo);;
-      // figure out how many hits it takes to get to max dmg increase
-      let totalPhaseParts = Math.ceil(tileInfo.main.mainDpsDamageIncrease / damageIncrease);
-      // use the buffed speed to figure out how long it'll take to get to max speed
-      baseDps.totalPhaseLengthSeconds = totalPhaseParts * baseDps.newAttackSpeed;
-      //console.log('baseDps', baseDps, 'totalPhaseParts', totalPhaseParts);
-      let totalHitDamage = 0;
-      //let totalPhaseLength = 0;
-      let originalDamage = baseDps.newAttackDamage;
-      for (let i = 0; i < totalPhaseParts; i++) {
-        let dmgIncrease = Math.min(tileInfo.main.mainDpsDamageIncrease, damageIncrease * (i + 1));
-        let actualDamage = Math.floor(originalDamage * (1 + (dmgIncrease / 100)));
-        totalHitDamage = totalHitDamage + actualDamage;
-        baseDps.maxHitDamage = actualDamage;
-      }
-      // the number of crits done within the phase parts (aka the 54 hits required to get to 800%)
-      let numberOfCrits = baseDps.totalCritChance * totalPhaseParts;
-      // crit dmg per second is # of crits x crit hit dmg then divided by the phase length or how long it took to get those crits
-      baseDps.critDmgPerSecond = Math.floor((numberOfCrits * baseDps.criticalDamage) / baseDps.totalPhaseLengthSeconds);
-      // dmg per second is the total damage done divided by the time it took to do that damage
-      baseDps.dmgPerSecond = Math.floor(totalHitDamage / baseDps.totalPhaseLengthSeconds);
-      // total is the sum of both regular hits per second and crits per second
-      baseDps.total = baseDps.dmgPerSecond + baseDps.critDmgPerSecond;
-      //console.log('totalHitDamage', totalHitDamage, 'totalPhaseLength', baseDps.totalPhaseLengthSeconds);
+      const damageIncreasePercent = tileInfo.main.mainDpsDamageIncreaseSteps;
+      const damageInfo: any = this.getDamageInfoGeneric(tileInfo);
 
-      return baseDps;
+      const totalPhaseParts = Math.ceil(tileInfo.main.mainDpsDamageIncrease / damageIncreasePercent);
+      damageInfo.totalPhaseLengthSeconds = totalPhaseParts * damageInfo.newAttackSpeed;
+
+      let totalHitDamage = 0;
+      let originalDamage = damageInfo.newAttackDamage;
+      for (let i = 0; i < totalPhaseParts; i++) {
+        const currentDmgIncrease = Math.min(tileInfo.main.mainDpsDamageIncrease, damageIncreasePercent * (i + 1));
+        const currentDamage = Math.floor(originalDamage * (1 + (currentDmgIncrease / 100)));
+        totalHitDamage += currentDamage;
+        damageInfo.maxHitDamage = currentDamage;
+      }
+
+      const totalCritChance = damageInfo.totalCritChance;
+      const numberOfCrits = totalCritChance * totalPhaseParts;
+      damageInfo.critDmgPerSecond = Math.floor((numberOfCrits * damageInfo.criticalDamage) / damageInfo.totalPhaseLengthSeconds);
+      damageInfo.dmgPerSecond = Math.floor(totalHitDamage / damageInfo.totalPhaseLengthSeconds);
+      damageInfo.total = damageInfo.dmgPerSecond + damageInfo.critDmgPerSecond;
+
+      return damageInfo;
     } else if (tileInfo.main.id == 'bladedancer') {
       let originalDamage = tileInfo.main.mainDpsBaseDamage;
       let originalSpeed = tileInfo.main.mainDpsBaseSpeed;
@@ -547,7 +536,7 @@ export class Tab5Page implements OnInit {
         tileInfo.main.mainDpsBaseCrit = 0;
       }
 
-      
+
       tileInfo.main.isEmpowered = adjacentCultists == 4;
       if (adjacentCultists == 4) {
         tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + (tileInfo.main.mainDpsDamageIncrease / 100));
@@ -619,7 +608,7 @@ export class Tab5Page implements OnInit {
       tileInfo.main.mainDpsBaseDamage = originalDamage;
       tileInfo.main.mainDpsBaseSpeed = originalSpeed;
       return dpsInfo;
-    }  else if (tileInfo.main.id == 'robot') {
+    } else if (tileInfo.main.id == 'robot') {
 
       let originalDamage = tileInfo.main.mainDpsBaseDamage;
       let originalSpeed = tileInfo.main.mainDpsBaseSpeed;
@@ -628,11 +617,11 @@ export class Tab5Page implements OnInit {
       if (tileInfo.main.merges >= 10) {
         tileInfo.main.mainDpsBaseSpeed = tileInfo.main.mainDpsBaseSpeed / (1 + (tileInfo.main.mainDpsSpeedIncrease / 100));
       }
-      
+
       if (tileInfo.main.merges >= 15) {
         tileInfo.main.mainDpsBaseDamage = tileInfo.main.mainDpsBaseDamage * (1 + (tileInfo.main.mainDpsDamageIncrease / 100));
       }
-      
+
       if (tileInfo.main.merges >= 20) {
         tileInfo.main.mainDpsBaseCritDmg = this.boardConfig.playerCrit * 1.05;
       }
@@ -683,7 +672,7 @@ export class Tab5Page implements OnInit {
   getSwordDmg(swordStacks: number) {
     let cardNames = this.boardService.getUniqueCardsOnBoard();
     let card = this.getCardInfoByName('Sword') || this.unitsService.cards['sword'];
-    if (this.deckConfig.swordLevel){
+    if (this.deckConfig.swordLevel) {
       card.level = this.deckConfig.swordLevel;
     }
 
@@ -795,53 +784,99 @@ export class Tab5Page implements OnInit {
 
     let activeHeroInfo = this.boardService.heroes[this.boardService.activeHero];
     let heroBuff = parseFloat(activeHeroInfo.passive.crit);
-    if (heroBuff > 0){
-      critBuffs.push(heroBuff);
+
+    if (activeHeroInfo.hasTiles && tileInfo.main.heroTile) {
+      if (this.boardService.activeHero == 'gadget') {
+        heroBuff = heroBuff + parseFloat(activeHeroInfo.tiles.crit);
+      } else {
+        heroBuff = parseFloat(activeHeroInfo.tiles.crit);
+      }
     }
 
-    if (activeHeroInfo.hasTiles && tileInfo.main.heroTile){
-      let heroBuff = parseFloat(activeHeroInfo.tiles.crit);
-      if (heroBuff > 0){
-        critBuffs.push(heroBuff);
-      }
+    if (heroBuff > 0) {
+      critBuffs.push(heroBuff);
     }
 
     return critBuffs;
   }
 
   getTotalDamageBuffs(tileInfo: any) {
-    let damageBuffs: any = [];
-    // look for damage buffs in neighboring tiles
-    for (let neighbor of tileInfo.adjacentUnits) {
-      if (neighbor.name == 'Witch') {
+    const damageBuffs: any = [];
+
+    // damage buffs from neighboring tiles
+    this.getDamageBuffsFromNeighbors(tileInfo, damageBuffs);
+
+    // damage buffs from sword stacks
+    this.getDamageBuffsFromSwordStacks(tileInfo, damageBuffs);
+
+    // global damage buffs
+    this.getGlobalDamageBuffs(damageBuffs);
+
+    // hero damage buffs
+    this.getHeroDamageBuffs(tileInfo, damageBuffs);
+
+    // weapon damage buffs
+    this.getWeaponDamageBuffs(damageBuffs);
+
+    return damageBuffs;
+  }
+
+  getDamageBuffsFromNeighbors(tileInfo: any, damageBuffs: any) {
+    for (const neighbor of tileInfo.adjacentUnits) {
+      if (neighbor.name === 'Witch') {
         damageBuffs.push(this.getWitchBuff());
       }
+      if (neighbor.name == 'Grindstone' && neighbor.talents.indexOf('searing_sparks') > -1){
+        let buffAmount: any = this.getGrindstoneBuffs(neighbor);
+        let baseChance = 0.04;
+        if (neighbor.talents.indexOf('hellgrinder') > -1){
+          baseChance = 0.06;
+        }
+        //increaseing the damage buff from grindstone by 250% and then taking 4% of that damage to represent total DPS over time
+        damageBuffs.push((buffAmount.damageBuffs * 2.5) * baseChance);
+      }
     }
+  }
+
+  getDamageBuffsFromSwordStacks(tileInfo: any, damageBuffs: any) {
     if (tileInfo.main.swordStacks) {
       damageBuffs.push(this.getSwordDmg(tileInfo.main.swordStacks));
     }
-    // look for global damage buffs
-    let uniqueCards = this.boardService.getUniqueCardsOnBoard();
-    for (let card of uniqueCards) {
-      if (card == 'dryad') {
+  }
+
+  getGlobalDamageBuffs(damageBuffs: any) {
+    const uniqueCards = this.boardService.getUniqueCardsOnBoard();
+    for (const card of uniqueCards) {
+      if (card === 'dryad') {
         damageBuffs.push(this.getDryadBuff());
       }
     }
-    //heroes, weapons, amulets, enchantments go here
-    let activeHeroInfo = this.boardService.heroes[this.boardService.activeHero];
-    let heroBuff = parseFloat(activeHeroInfo.passive.damage);
-    if (heroBuff > 0){
-      damageBuffs.push(heroBuff);
-    }
+  }
 
-    if (activeHeroInfo.hasTiles && tileInfo.main.heroTile){
-      let heroBuff = parseFloat(activeHeroInfo.tiles.damage);
-      if (heroBuff > 0){
-        damageBuffs.push(heroBuff);
+  getHeroDamageBuffs(tileInfo: any, damageBuffs: any) {
+    const activeHeroInfo = this.boardService.heroes[this.boardService.activeHero];
+    let heroBuff = parseFloat(activeHeroInfo.passive.damage);
+
+    if (activeHeroInfo.hasTiles && tileInfo.main.heroTile) {
+      if (this.boardService.activeHero === 'gadget') {
+        heroBuff += parseFloat(activeHeroInfo.tiles.damage);
+      } else {
+        heroBuff = parseFloat(activeHeroInfo.tiles.damage);
       }
     }
 
-    return damageBuffs;
+    if (heroBuff > 0) {
+      damageBuffs.push(heroBuff);
+    }
+  }
+
+  getWeaponDamageBuffs(damageBuffs: any) {
+    const activeWeaponInfo = this.boardService.weapons[this.boardService.activeWeapon];
+    if (activeWeaponInfo.stat === 'damage') {
+      const weaponFactionBuff = this.boardService.weapons[this.boardService.activeWeapon].faction;
+      damageBuffs.push(this.boardService.weapons[this.boardService.activeWeapon].alliance);
+      damageBuffs.push(this.boardService.hasSetBonus ? weaponFactionBuff * 1.1 : weaponFactionBuff);
+    }
   }
 
   totalArmorBuff() {
@@ -862,8 +897,29 @@ export class Tab5Page implements OnInit {
     return dmgBuffs;
   }
 
-  totalSpeedBuff(tileInfo: any) {
+  totalCritDmgBuffs(tileInfo: any): any[] {
+    const critDmgBuffs: any[] = [];
 
+    const activeWeaponInfo = this.boardService.weapons[this.boardService.activeWeapon];
+
+    if (activeWeaponInfo.stat === 'crit') {
+      const weaponFactionBuff = activeWeaponInfo.faction;
+
+      critDmgBuffs.push(activeWeaponInfo.alliance);
+      critDmgBuffs.push(this.boardService.hasSetBonus ? weaponFactionBuff * 1.1 : weaponFactionBuff);
+    }
+
+    return critDmgBuffs;
+  }
+
+  /**
+ * Gets the total damage buffs for the given tile.
+ *
+ * @param {any} tileInfo - The information about the tile.
+ * @return {any[]} An array of all the damage buffs for the tile.
+ */
+  totalSpeedBuff(tileInfo: any) {
+    console.log('totalSpeedBuff', tileInfo);
     let speedBuffs: any = [];
     // look for damage buffs in neighboring tiles
     for (let neighbor of tileInfo.adjacentUnits) {
@@ -880,15 +936,31 @@ export class Tab5Page implements OnInit {
     //heroes, weapons, amulets, enchantments go here
     let activeHeroInfo = this.boardService.heroes[this.boardService.activeHero];
     let heroBuff = parseFloat(activeHeroInfo.passive.speed);
-    if (heroBuff > 0){
+
+    if (activeHeroInfo.hasTiles && tileInfo.main.heroTile) {
+      if (this.boardService.activeHero == 'gadget') {
+        heroBuff = heroBuff + parseFloat(activeHeroInfo.tiles.speed);
+      } else {
+        heroBuff = parseFloat(activeHeroInfo.tiles.speed);
+      }
+    }
+
+    if (heroBuff > 0) {
       speedBuffs.push(heroBuff);
     }
 
-    if (activeHeroInfo.hasTiles && tileInfo.main.heroTile){
-      let heroBuff = parseFloat(activeHeroInfo.tiles.speed);
-      if (heroBuff > 0){
-        speedBuffs.push(heroBuff);
-      }
+    let activeWeaponInfo = this.boardService.weapons[this.boardService.activeWeapon];
+    if (activeWeaponInfo.stat == 'speed') {
+      let weaponFactionBuff = this.boardService.weapons[this.boardService.activeWeapon].faction;
+      speedBuffs.push(this.boardService.weapons[this.boardService.activeWeapon].alliance);
+      speedBuffs.push(this.boardService.hasSetBonus ? weaponFactionBuff * 1.1 : weaponFactionBuff);
+    }
+
+    let activeArmorInfo = this.boardService.armor[this.boardService.activeArmor];
+    if (activeArmorInfo.stat == 'speed') {
+      let armorFactionDebuff = this.boardService.armor[this.boardService.activeArmor].faction;
+      speedBuffs.push(this.boardService.armor[this.boardService.activeArmor].alliance * -1);
+      speedBuffs.push((this.deckConfig.hasSetBonus ? armorFactionDebuff * 1.1 : armorFactionDebuff) * -1);
     }
 
     return speedBuffs;
@@ -917,17 +989,35 @@ export class Tab5Page implements OnInit {
     // gs can have it's crit and damage buffed by talents
     if (grindstoneUnit.activeTalents.length) {
       for (let talent of grindstoneUnit.activeTalents) {
+        //tempered steel - critical chance is increased by 1% for every merge rank
         if (talent == 'tempered_steel') {
-          //console.log('tempered steel found', tileInfo.main.tier);
           critBuff = critBuff + grindstoneUnit.tier;
-        } else if (talent == 'triple_overheat') {
-          //console.log('tempered steel found', tileInfo.main.tier);
+        } 
+        //triple overheat - when this talent is selected they increase damage they deal by 30%
+        else if (talent == 'triple_overheat') {
           damageBuffs.push(30);
-        } else if (talent == 'unstable_overheat') {
+        }
+        //unstable overheat - with each merge the damage bonus increases by 1.5%
+        else if (talent == 'unstable_overheat') {
           if (!('merges' in grindstoneUnit)) grindstoneUnit.merges = 0;
           let buffPerStack = 1.5;
           let baseBuff = 10;
           damageBuffs.push(baseBuff + (buffPerStack * grindstoneUnit.merges));
+        } 
+        //searing sparks - 4% chance that every unit adjacent of it will shoot one shot that has 250% of it's own damage
+        else if (talent == 'searing_sparks') {
+          //implemented in getDamageBuffsFromNeighbors
+        } 
+        //fiery sparks - flat 10% damage buff to all adjacent units
+        else if (talent == 'fiery_sparks') {
+          //add logic to increase the 10% by 25% for every merge or "sparks" property
+          if (!('sparks' in grindstoneUnit)) grindstoneUnit.sparks = 0;
+          let buffPerStack = 1.25;
+          let baseBuff = 10;
+          if (grindstoneUnit.activeTalents.indexOf('hellgrinder') > -1) {
+            baseBuff = 20;
+          } 
+          damageBuffs.push(baseBuff + (buffPerStack * grindstoneUnit.sparks));
         }
       }
     }
@@ -938,98 +1028,80 @@ export class Tab5Page implements OnInit {
   }
 
   //provided the tileInfo for the damage dealer with a known grindstone connected
-  getDamageForGrindstone(tileInfo: any) {
-    let ghostUnit: any = {
-      main: JSON.parse(JSON.stringify(tileInfo.main)),
-      adjacentUnits: this.getAdjacentUnitsForTile(tileInfo.row, tileInfo.column),
-      row: tileInfo.row,
-      column: tileInfo.column,
+  getDamageForGrindstone({ main, row, column }: any) {
+    const adjacentUnits = this.getAdjacentUnitsForTile(row, column);
+    const ghostUnit = {
+      main: {
+        ...main,
+        name: `${main.name} & Grindstone`,
+        mainDpsBaseDamage: 0,
+        mainDpsBaseCrit: 0,
+      },
+      adjacentUnits,
+      row,
+      column,
+      dpsInfo: {},
     };
 
-    ghostUnit.main.name = `${ghostUnit.main.name} & Grindstone`;
+    const grindstonesConnected = adjacentUnits.filter((neighbor: any) => neighbor.id === 'grindstone');
 
-    let combinedBuffs: any = { critBuff: 0, damageBuffs: [], baseDamage: 0 };
-    // find all the grindstones connected to the damage dealer
-    let otherGrindstonesConnected = ghostUnit.adjacentUnits
-      .filter((neighbor: any) => neighbor.id == 'grindstone');
+    const combinedBuffs = grindstonesConnected.reduce((acc: any, gs: any) => {
+      const gsBuffs = this.getGrindstoneBuffs(gs);
+      acc.baseDamage = Math.max(acc.baseDamage, gs.damage);
+      acc.critBuff = Math.max(acc.critBuff, gsBuffs.critBuff);
 
-    // loop over all the connected grindstones
-    for (let gsNeighbors of otherGrindstonesConnected) {
-      let gsBuffs = this.getGrindstoneBuffs(gsNeighbors);
-      console.log('gsBuffs', gsBuffs);
-      //take the greater value of the base damage Math.max(combinedBuff.baseDamage, connectedGs.main.damage)
-      combinedBuffs.baseDamage = Math.max(combinedBuffs.baseDamage, gsNeighbors.damage);
-
-      //take the greater value of the crit buff Math.max(combinedBuff.critBuff, connectedGs.critBuff)
-      combinedBuffs.critBuff = Math.max(combinedBuffs.critBuff, gsBuffs.critBuff);
-
-      //take the greater value of the dmg buff Math.max(this.sumArray(combinedBuff.damageBuff), this.sumArray(connectedGs.damageBuff));
-      let currentMax = this.sumOfArray(combinedBuffs.damageBuffs);
-      let newMax = Math.max(currentMax, this.sumOfArray(gsBuffs.damageBuffs));
-      console.log('currentMax', currentMax, 'newMax', newMax);
+      const currentMax = this.sumOfArray(acc.damageBuffs);
+      const newMax = Math.max(currentMax, this.sumOfArray(gsBuffs.damageBuffs));
       if (newMax > currentMax) {
-        combinedBuffs.damageBuffs = gsBuffs.damageBuffs;
+        acc.damageBuffs = gsBuffs.damageBuffs;
       }
-    }
 
-    console.log('combinedBuffs', combinedBuffs);
+      return acc;
+    }, { critBuff: 0, damageBuffs: [], baseDamage: 0 });
 
     ghostUnit.main.mainDpsBaseDamage = combinedBuffs.baseDamage;
 
-    //apply the buffs from combinedBuffs to the ghostUnit object  
-    for (let buff of combinedBuffs.damageBuffs) {
+    combinedBuffs.damageBuffs.forEach((buff: any) => {
       ghostUnit.main.mainDpsBaseDamage = Math.round(ghostUnit.main.mainDpsBaseDamage * (1 + (buff / 100)));
-    }
+    });
 
-    // set the base crit to any adjacent knight statue stats
     ghostUnit.main.mainDpsBaseCrit = combinedBuffs.critBuff;
 
-    //console.log('ghostUnit', ghostUnit);
-
     ghostUnit.dpsInfo = this.getDamageInfoForUnit(ghostUnit);
-
-    //console.log('ghostUnit', ghostUnit);
 
     return ghostUnit;
   }
 
   getDamageInfoGeneric(tileInfo: any) {
-    let dmgPerSecond = 0;
-    let critDmgPerSecond = 0;
-    let playerBaseCrit = 0.05;
-    let totalArmorBuffs = this.sumOfArray(this.totalArmorBuff());
-    let totalCritDmgBuff = 0;
-    let enchanmentCritDmgBuff = 0;
-    let totalSpeedBuffs = this.totalSpeedBuff(tileInfo);
-
-    let totalDamageBuffs = this.getTotalDamageBuffs(tileInfo);
+    const playerBaseCritChance = 0.05;
+    const totalArmorBuffs = this.sumOfArray(this.totalArmorBuff());
+    let totalCritDmgBuff = this.sumOfArray(this.totalCritDmgBuffs(tileInfo));
+    const totalSpeedBuffs = this.totalSpeedBuff(tileInfo);
+    const totalDamageBuffs = this.getTotalDamageBuffs(tileInfo);
 
     let newAttackSpeed = tileInfo.main.mainDpsBaseSpeed;
     let newAttackDamage = tileInfo.main.mainDpsBaseDamage;
+    let totalCritChance = Math.min(1, playerBaseCritChance + (tileInfo.main.mainDpsBaseCrit / 100) + ((this.sumOfArray(this.getCritChanceBuffs(tileInfo))) / 100));
     if (tileInfo.main.mainDpsBaseCritDmg && tileInfo.main.mainDpsBaseCritDmg > 0) {
-      totalCritDmgBuff = tileInfo.main.mainDpsBaseCritDmg;
+      totalCritDmgBuff += tileInfo.main.mainDpsBaseCritDmg;
     }
-    //crit chance can never exceed 100%
-    let totalCritChance = Math.min(1, playerBaseCrit + (tileInfo.main.mainDpsBaseCrit / 100) + ((this.sumOfArray(this.getCritChanceBuffs(tileInfo))) / 100));
 
-    //console.log('totalCritChance', playerBaseCrit, tileInfo.main.mainDpsBaseCrit, totalCritChance);
-    for (let buff of totalSpeedBuffs) {
+    for (const buff of totalSpeedBuffs) {
       newAttackSpeed = newAttackSpeed / (1 + (buff / 100));
     }
 
-    for (let buff of totalDamageBuffs) {
+    for (const buff of totalDamageBuffs) {
       newAttackDamage = Math.round(newAttackDamage * (1 + (buff / 100)));
     }
+
     newAttackDamage = (newAttackDamage * (1 + (totalArmorBuffs / 100)));
-    dmgPerSecond = newAttackDamage / newAttackSpeed;
+    const dmgPerSecond = newAttackDamage / newAttackSpeed;
+    const hitsPerSecond = 1 / newAttackSpeed;
+    const critHitsPerSecond = hitsPerSecond * totalCritChance;
+    const criticalDamage = Math.floor(newAttackDamage * (((this.boardConfig.playerCrit * (1 + (totalCritDmgBuff / 100))) + totalCritDmgBuff) / 100));
+    const critDmgPerSecond = Math.floor(criticalDamage * critHitsPerSecond);
 
-    let hitsPerSecond = 1 / newAttackSpeed;
-    let critHitsPerSecond = hitsPerSecond * totalCritChance;
-    let criticalDamage = Math.floor(newAttackDamage * (((this.boardConfig.playerCrit * (1 + (enchanmentCritDmgBuff / 100))) + totalCritDmgBuff) / 100));
-    console.log('criticalDamage', criticalDamage, totalCritDmgBuff);
-    critDmgPerSecond = Math.floor(criticalDamage * critHitsPerSecond);
-
-    let results = {
+    return {
       total: Math.floor(dmgPerSecond + critDmgPerSecond),
       newAttackDamage,
       newAttackSpeed,
@@ -1039,8 +1111,7 @@ export class Tab5Page implements OnInit {
       critHitsPerSecond,
       criticalDamage,
       totalCritChance
-    }
-    return results;
+    };
   }
 
   getAdjacentUnitsForTile(row: number, column: number) {
@@ -1088,38 +1159,39 @@ export class Tab5Page implements OnInit {
   calculateDamageReport() {
     this.damageReport.damageDealers = [];
 
-    let connectedEngineers = null;
-    let connectedMonks = null;
-    if (this.boardService.getUniqueCardsOnBoard().indexOf('engineer') > -1) {
-      connectedEngineers = this.unitsService.engineer.countConnectedNodes(this.boardService.gridRows, 'engineer');
-      //console.log('connectedEngineers', connectedEngineers);
-    }
+    const hasEngineers = this.boardService.getUniqueCardsOnBoard().includes('engineer');
+    const connectedEngineers = hasEngineers ? this.unitsService.engineer.countConnectedNodes(this.boardService.gridRows, 'engineer') : null;
 
-    if (this.boardService.getUniqueCardsOnBoard().indexOf('monk') > -1) {
-      connectedMonks = this.unitsService.monk.getIntersectionsOptimized2(this.boardService.gridRows, 'monk');
-      //console.log('connectedMonks', JSON.stringify(connectedMonks, null, 1));
-    }
+    const hasMonks = this.boardService.getUniqueCardsOnBoard().includes('monk');
+    const connectedMonks = hasMonks ? this.unitsService.monk.getIntersectionsOptimized2(this.boardService.gridRows, 'monk') : null;
 
     for (const [row, column, value] of this.boardService.iterateGrid(this.boardService.gridRows)) {
-      let cardInfo: any = value;
-      //let cardInfo = this.boardService.gridRows[row][column];
-      if (cardInfo.type == 'dps') {
-        let damageDealer: any = { row, column, type: 'individual', dpsEntries: [] };
-        let tileInfo: any = { main: cardInfo, row, column };
+      const cardInfo = value;
+      console.log('calculateDamageReport', cardInfo);
+      if (cardInfo.type === 'dps') {
+        const tileInfo: any = {
+          main: cardInfo,
+          row,
+          column,
+          adjacentUnits: this.getAdjacentUnitsForTile(row, column),
+        };
+        tileInfo.dpsInfo = this.getDamageInfoForUnit(tileInfo);
+        console.log('tileInfo', tileInfo);
 
-        tileInfo.adjacentUnits = this.getAdjacentUnitsForTile(row, column);
-
-        if (cardInfo.id == 'engineer') {
+        if (cardInfo.id === 'engineer') {
           cardInfo.connections = connectedEngineers[row][column];
-        } else if (cardInfo.id == 'monk') {
+        } else if (cardInfo.id === 'monk') {
           cardInfo.isIntersection = connectedMonks[row][column];
         }
 
-        tileInfo.dpsInfo = this.getDamageInfoForUnit(tileInfo);
-        damageDealer.dpsEntries.push(tileInfo);
+        const damageDealer = {
+          row,
+          column,
+          type: 'individual',
+          dpsEntries: [tileInfo],
+        };
 
-        let hasGrindstones = tileInfo.adjacentUnits.filter((unit: any) => unit.id == 'grindstone').length > 0;
-        if (hasGrindstones) {
+        if (tileInfo.adjacentUnits.some((unit: any) => unit.id === 'grindstone')) {
           damageDealer.dpsEntries.push(this.getDamageForGrindstone(tileInfo));
         }
 
@@ -1128,24 +1200,45 @@ export class Tab5Page implements OnInit {
     }
 
     this.damageReport.totalDPS = this.damageReport.damageDealers.reduce((memo: any, value: any) => {
-      for (let dpsEntry of value.dpsEntries) {
-        memo = memo + dpsEntry.dpsInfo.total;
-      }
-      return memo;
+      return memo + value.dpsEntries.reduce((sum: any, dpsEntry: any) => sum + dpsEntry.dpsInfo.total, 0);
     }, 0);
-
-    //console.log('mainDamageUnits', mainDamageUnits);
 
     return this.damageReport;
   }
 
+  amuletList() {
+    return Object.keys(this.boardService.amulets);
+  }
   heroList() {
     return Object.keys(this.boardService.heroes);
   }
-
-  changeHeroStat(ev: any, type: any) {
-    let hero = this.boardService.heroes[this.boardService.activeHero];
-    hero[hero.hasTiles ? 'tiles' : 'passive'][type] = parseFloat(ev.target.value);
+  armorList() {
+    return Object.keys(this.boardService.armor);
   }
-  
+  weaponList() {
+    return Object.keys(this.boardService.weapons);
+  }
+
+  changeHero(itemName: any) {
+    this.boardService.activeHero = itemName;
+    this.activeEditItem = itemName;
+  }
+  changeAmulet(itemName: any) {
+    this.boardService.activeAmulet = itemName;
+    this.activeEditItem = itemName;
+  }
+  changeWeapon(itemName: any) {
+    this.boardService.activeWeapon = itemName;
+    this.activeEditItem = itemName;
+  }
+  changeArmor(itemName: any) {
+    this.boardService.activeArmor = itemName;
+    this.activeEditItem = itemName;
+  }
+
+  //($event, itemConfigType, activeEditItem, 'crit'
+  changeItemStat(ev: any, itemType: any, itemName: any, fieldName: any) {
+    this.boardService.setItemStat(itemType, itemName, fieldName, ev.target.value);
+  }
+
 }
