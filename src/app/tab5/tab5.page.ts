@@ -826,14 +826,16 @@ export class Tab5Page implements OnInit {
       if (neighbor.name === 'Witch') {
         damageBuffs.push(this.getWitchBuff());
       }
-      if (neighbor.name == 'Grindstone' && neighbor.talents.indexOf('searing_sparks') > -1){
-        let buffAmount: any = this.getGrindstoneBuffs(neighbor);
+      console.log('neighbor', neighbor, neighbor.activeTalents);
+      if (neighbor.name == 'Grindstone' && neighbor.activeTalents.indexOf('searing_sparks') > -1){
+        let gsDamage: any = parseInt(neighbor.damage);
         let baseChance = 0.04;
         if (neighbor.talents.indexOf('hellgrinder') > -1){
           baseChance = 0.06;
         }
         //increaseing the damage buff from grindstone by 250% and then taking 4% of that damage to represent total DPS over time
-        damageBuffs.push((buffAmount.damageBuffs * 2.5) * baseChance);
+        damageBuffs.push({ buff: (gsDamage * 2.5), chance: baseChance });
+        //console.log('damageBuffs', gsDamage, baseChance, damageBuffs);
       }
     }
   }
@@ -1091,7 +1093,9 @@ export class Tab5Page implements OnInit {
     }
 
     for (const buff of totalDamageBuffs) {
-      newAttackDamage = Math.round(newAttackDamage * (1 + (buff / 100)));
+      if (typeof buff != 'object'){
+        newAttackDamage = Math.round(newAttackDamage * (1 + (buff / 100)));
+      }
     }
 
     newAttackDamage = (newAttackDamage * (1 + (totalArmorBuffs / 100)));
@@ -1167,7 +1171,7 @@ export class Tab5Page implements OnInit {
 
     for (const [row, column, value] of this.boardService.iterateGrid(this.boardService.gridRows)) {
       const cardInfo = value;
-      console.log('calculateDamageReport', cardInfo);
+      //console.log('calculateDamageReport', cardInfo);
       if (cardInfo.type === 'dps') {
         const tileInfo: any = {
           main: cardInfo,
@@ -1176,7 +1180,7 @@ export class Tab5Page implements OnInit {
           adjacentUnits: this.getAdjacentUnitsForTile(row, column),
         };
         tileInfo.dpsInfo = this.getDamageInfoForUnit(tileInfo);
-        console.log('tileInfo', tileInfo);
+        //console.log('tileInfo', tileInfo);
 
         if (cardInfo.id === 'engineer') {
           cardInfo.connections = connectedEngineers[row][column];
