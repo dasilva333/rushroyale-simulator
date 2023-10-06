@@ -1,0 +1,61 @@
+.board {
+    border: 1px solid lightgray;
+    display: grid; 
+    grid-template-columns: 1fr;
+
+    .board-row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .grid-cell {
+        background: white;
+        border: 1px solid lightgray;
+        height: 80px;  // Updated height
+        width: 80px;   // Updated width
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .unit-selection-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border: 1px solid gray;
+        padding: 10px;
+        z-index: 100;
+        width: 40%;  /* Make modal width 80% of the screen width */
+    
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex; /* Make list items flow in a row */
+            flex-wrap: wrap; /* Allow wrapping to next line for overflowing items */
+            justify-content: space-between; /* Distribute items with equal space in between */
+    
+            li {
+                cursor: pointer;
+                padding: 5px;
+                margin: 5px; /* Add margin to give space between each unit */
+                flex-basis: calc(20% - 10px); /* Make each item take up 20% of the width (subtracting margin) */
+                text-align: center; /* Center the unit names under their images */
+    
+                &:hover {
+                    background: lightgray;
+                }
+            }
+        }
+    }    
+
+    .board-stats {
+        margin-top: 10px;
+        p, ul {
+            margin: 0;
+            padding: 0;
+        }
+    }
+}
