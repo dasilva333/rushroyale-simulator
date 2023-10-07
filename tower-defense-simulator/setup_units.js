@@ -9,6 +9,8 @@ const unitsList = [
   'Sword', 'Trapper', 'Chemist', 'Scrapper', 'Knight_Statue', 'Witch', 'Grindstone'
 ];
 
+const supportUnits = ['banner', 'dryad', 'harly', 'sword', 'trapper', 'chemist', 'scrapper', 'knight_statue', 'grindstone'];
+
 // Ensure the UnitComponents folder exists or create it
 if (!fs.existsSync(UNIT_COMPONENTS_PATH)) {
   fs.mkdirSync(UNIT_COMPONENTS_PATH, { recursive: true });
@@ -21,16 +23,21 @@ unitsList.forEach(unitName => {
 function createUnitFile(unitName) {
   const fileName = `${unitName}.jsx`;
   const filePath = path.join(UNIT_COMPONENTS_PATH, fileName);
+  
+  const parentClass = supportUnits.includes(unitName.toLowerCase()) ? 'SupportUnit' : 'BaseUnit';
 
   const fileContent = `
 import React from 'react';
-import BaseUnit from '../../classes/BaseUnit';
+import ${parentClass} from '../../classes/${parentClass}';
 
-class ${unitName} extends BaseUnit {
+class ${unitName} extends ${parentClass} {
   static defaultImage = "${unitName.toLowerCase()}.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("${unitName}", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "${unitName}",
+      ...config
+    });
     this.component = ${unitName}Component;
   }
 

@@ -4,8 +4,11 @@ import BaseUnit from '../../classes/BaseUnit';
 class Monk extends BaseUnit {
   static defaultImage = "monk.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Monk", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Monk",
+      ...config
+    });
     this.component = MonkComponent;
   }
 

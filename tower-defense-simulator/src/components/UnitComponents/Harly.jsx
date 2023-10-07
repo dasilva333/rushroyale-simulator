@@ -1,11 +1,14 @@
 import React from 'react';
-import BaseUnit from '../../classes/BaseUnit';
+import SupportUnit from '../../classes/SupportUnit';
 
-class Harly extends BaseUnit {
+class Harly extends SupportUnit {
   static defaultImage = "harly.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Harly", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Harly",
+      ...config
+    });
     this.component = HarlyComponent;
   }
 

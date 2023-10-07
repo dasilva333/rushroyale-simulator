@@ -1,11 +1,14 @@
 import React from 'react';
-import BaseUnit from '../../classes/BaseUnit';
+import SupportUnit from '../../classes/SupportUnit';
 
-class Banner extends BaseUnit {
+class Banner extends SupportUnit {
   static defaultImage = "banner.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Banner", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Banner",
+      ...config
+    });
     this.component = BannerComponent;
   }
 

@@ -4,8 +4,11 @@ import BaseUnit from '../../classes/BaseUnit';
 class Robot extends BaseUnit {
   static defaultImage = "robot.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Robot", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Robot",
+      ...config
+    });
     this.component = RobotComponent;
   }
 

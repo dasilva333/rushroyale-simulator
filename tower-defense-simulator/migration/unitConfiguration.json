@@ -1,0 +1,302 @@
+{
+  "inquisitor": {
+    "fields": [
+      "mainDpsBaseDamage",
+      "mainDpsBaseSpeed",
+      "mainDpsBaseCrit",
+      "tier",
+      "level",
+      "absorbs",
+      "mainDpsDamageIncrease",
+      "talent"
+    ],
+    "defaults": {
+      "mainDpsBaseDamage": 120,
+      "mainDpsBaseSpeed": 0.6,
+      "mainDpsBaseCrit": 0,
+      "absorbs": 1,
+      "mainDpsDamageIncrease": 600,
+      "talent": "none"
+    }
+  },
+  "boreas": {
+    "fields": [
+      "mainDpsBaseDamage",
+      "mainDpsBaseSpeed",
+      "mainDpsBaseCrit",
+      "mainDpsFirstPhase",
+      "mainDpsSecondPhase",
+      "mainDpsActivationInterval",
+      "level",
+      "tier",
+      "activeTalents"
+    ],
+    "defaults": {
+      "mainDpsBaseDamage": 120,
+      "mainDpsBaseSpeed": 0.09,
+      "mainDpsBaseCrit": 0,
+      "mainDpsFirstPhase": 4.6,
+      "mainDpsSecondPhase": 1.7,
+      "mainDpsActivationInterval": 4.7,
+      "activeTalents": []
+    }
+  },
+  "sentry": {
+    "fields": [
+      "mainDpsBaseDamage",
+      "mainDpsBaseSpeed",
+      "mainDpsBaseCrit",
+      "mainDpsDamageIncrease",
+      "mainDpsActivationInterval"
+    ],
+    "defaults": {
+      "mainDpsBaseDamage": 456,
+      "mainDpsBaseSpeed": 0.09,
+      "mainDpsBaseCrit": 0,
+      "mainDpsDamageIncrease": 244,
+      "mainDpsActivationInterval": 0.95
+    }
+  },
+  "cultists": {
+    "fields": [
+      "mainDpsBaseDamage",
+      "mainDpsBaseSpeed",
+      "mainDpsBaseCrit",
+      "mainDpsDamageIncrease",
+      "sacrifices",
+      "level",
+      "tier"
+    ],
+    "defaults": {
+      "mainDpsBaseDamage": 1021,
+      "mainDpsBaseSpeed": 0.11,
+      "mainDpsBaseCrit": 17,
+      "mainDpsDamageIncrease": 300,
+      "sacrifices": 0
+    }
+  },
+  "bladedancer": {
+    "fields": [
+      "mainDpsBaseDamage",
+      "mainDpsBaseSpeed",
+      "mainDpsBaseCrit",
+      "mainDpsDamageIncrease",
+      "level",
+      "tier"
+    ],
+    "defaults": {
+      "mainDpsBaseDamage": 1301,
+      "mainDpsBaseSpeed": 0.14,
+      "mainDpsBaseCrit": 0,
+      "mainDpsDamageIncrease": 0
+    }
+  },
+  "crystalmancer": {
+    "fields": [
+      "mainDpsBaseDamage",
+      "mainDpsBaseSpeed",
+      "mainDpsBaseCrit",
+      "mainDpsDamageIncrease",
+      "mainDpsActivationInterval"
+    ],
+    "defaults": {
+      "mainDpsBaseDamage": 197,
+      "mainDpsBaseSpeed": 0.07,
+      "mainDpsBaseCrit": 0,
+      "mainDpsDamageIncrease": 800,
+      "mainDpsActivationInterval": 0.95
+    }
+  },
+  "demonhunter": {
+    "fields": [
+      "mainDpsBaseDamage",
+      "mainDpsBaseSpeed",
+      "mainDpsBaseCrit",
+      "demonHunterEmpowered",
+      "mainDpsDamageIncrease",
+      "level",
+      "tier"
+    ],
+    "defaults": {
+      "mainDpsBaseDamage": 1136,
+      "mainDpsBaseSpeed": 0.45,
+      "mainDpsBaseCrit": 0,
+      "mainDpsDamageIncrease": 75,
+      "demonHunterEmpowered": false
+    }
+  },
+  "bruiser": {
+    "fields": [
+      "mainDpsBaseDamage",
+      "mainDpsBaseSpeed",
+      "mainDpsBaseCrit",
+      "mainDpsDamageIncrease",
+      "enraged",
+      "level",
+      "tier"
+    ],
+    "defaults": {
+      "mainDpsBaseDamage": 112,
+      "mainDpsBaseSpeed": 1.2,
+      "mainDpsBaseCrit": 0,
+      "mainDpsDamageIncrease": 350
+    }
+  },
+  "robot": {
+    "fields": [
+      "mainDpsBaseDamage",
+      "mainDpsBaseSpeed",
+      "mainDpsBaseCrit",
+      "mainDpsDamageIncrease",
+      "merges",
+      "level",
+      "tier"
+    ],
+    "defaults": {
+      "mainDpsBaseDamage": 224,
+      "mainDpsBaseSpeed": 0.7,
+      "mainDpsBaseCrit": 0,
+      "mainDpsDamageIncrease": 50,
+      "merges": 0
+    }
+  },
+  "engineer": {
+    "fields": [
+      "mainDpsBaseDamage",
+      "mainDpsBaseSpeed",
+      "mainDpsBaseCrit",
+      "mainDpsDamageIncrease"
+    ],
+    "defaults": {
+      "mainDpsBaseDamage": 971,
+      "mainDpsBaseSpeed": 0.07,
+      "mainDpsBaseCrit": 0,
+      "mainDpsDamageIncrease": 21
+    }
+  },
+  "monk": {
+    "fields": [
+      "mainDpsBaseDamage",
+      "mainDpsBaseSpeed",
+      "mainDpsBaseCrit",
+      "isActivated",
+      "level",
+      "tier"
+    ],
+    "defaults": {
+      "mainDpsBaseDamage": 350,
+      "mainDpsBaseSpeed": 0.6,
+      "mainDpsBaseCrit": 0,
+      "isActivated": false
+    }
+  },
+  "generic": {
+    "fields": [
+      "mainDpsBaseDamage",
+      "mainDpsBaseSpeed",
+      "mainDpsBaseCrit",
+      "mainDpsDamageIncrease"
+    ],
+    "defaults": {
+      "mainDpsBaseDamage": 64,
+      "mainDpsBaseSpeed": 0.6,
+      "mainDpsBaseCrit": 0,
+      "mainDpsDamageIncrease": 0
+    }
+  },
+  "banner": {
+    "fields": [
+      "level",
+      "tier"
+    ],
+    "defaults": {
+      "damage": 0
+    }
+  },
+  "dryad": {
+    "fields": [
+      "merges"
+    ],
+    "defaults": {
+      "merges": 10,
+      "damage": 50
+    }
+  },
+  "sword": {
+    "fields": [
+      "level",
+      "tier"
+    ],
+    "defaults": {
+      "damage": 200
+    }
+  },
+  "trapper": {
+    "fields": [
+      "level"
+    ],
+    "defaults": {
+      "damage": 0
+    }
+  },
+  "chemist": {
+    "fields": [
+      "level",
+      "tier"
+    ],
+    "defaults": {
+      "damage": 103
+    }
+  },
+  "knight_statue": {
+    "fields": [
+      "level",
+      "tier"
+    ],
+    "defaults": {
+      "damage": 0
+    }
+  },
+  "witch_statue": {
+    "fields": [
+      "merges",
+      "mainDpsBaseDamage",
+      "mainDpsBaseSpeed",
+      "mainDpsBaseCrit",
+      "level",
+      "tier"
+    ],
+    "defaults": {
+      "mainDpsBaseDamage": 100,
+      "mainDpsBaseSpeed": 1,
+      "mainDpsBaseCrit": 0,
+      "merges": 15,
+      "damage": 204
+    }
+  },
+  "grindstone": {
+    "fields": [
+      "level",
+      "tier"
+    ],
+    "defaults": {
+      "activeTalents": [],
+      "damage": 415
+    }
+  },
+  "Grindstone": {
+    "fields": [
+      "damage",
+      "merges",
+      "activeTalents"
+    ],
+    "defaults": {}
+  },
+  "dps": {
+    "fields": [
+      "swordStacks",
+      "swordLevel"
+    ],
+    "defaults": {}
+  }
+}

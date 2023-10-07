@@ -1,11 +1,14 @@
 import React from 'react';
-import BaseUnit from '../../classes/BaseUnit';
+import SupportUnit from '../../classes/SupportUnit';
 
-class Scrapper extends BaseUnit {
+class Scrapper extends SupportUnit {
   static defaultImage = "scrapper.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Scrapper", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Scrapper",
+      ...config
+    });
     this.component = ScrapperComponent;
   }
 

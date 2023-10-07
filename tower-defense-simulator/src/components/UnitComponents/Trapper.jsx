@@ -1,11 +1,14 @@
 import React from 'react';
-import BaseUnit from '../../classes/BaseUnit';
+import SupportUnit from '../../classes/SupportUnit';
 
-class Trapper extends BaseUnit {
+class Trapper extends SupportUnit {
   static defaultImage = "trapper.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Trapper", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Trapper",
+      ...config
+    });
     this.component = TrapperComponent;
   }
 

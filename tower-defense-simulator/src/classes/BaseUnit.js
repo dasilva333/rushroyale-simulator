@@ -1,13 +1,16 @@
+import DamageValues from './DamageValues';
 let unitCounter = 0;
-
 class BaseUnit {
-    static defaultImage = "";  // Default empty image path
+    static defaultImage = "";
+    static playerBaseCritChance = 0.05; // Assuming it's global across all units
 
-    constructor(name, rateOfFire, damagePerHit) {
-        this.id = unitCounter++;     // Automatically generate a unique ID
-        this.name = name;             
-        this.rateOfFire = rateOfFire;
-        this.damagePerHit = damagePerHit;
+    constructor(config) {
+        this.id = unitCounter++;
+        this.name = config.name;
+        this.baseSpeed = config.baseSpeed || 0;
+        this.baseDamage = config.baseDamage || 0;
+        this.baseCritChance = config.baseCritChance || 0;
+        this.baseCritDamage = config.baseCritDamage || 0;
     }
 
     // Getter to construct the complete image path
@@ -15,9 +18,21 @@ class BaseUnit {
         return `board/${this.defaultImage}`;
     }
 
-    // Calculating DPS (Damage Per Second)
+    // By default, units don't do any damage
     calculateDPS() {
-        return this.rateOfFire * this.damagePerHit;
+        return new DamageValues(); // returns the default 0-filled damage report
+    }
+
+    toObject() {
+        return {
+            id: this.id,
+            name: this.name,
+            baseSpeed: this.baseSpeed,
+            baseDamage: this.baseDamage,
+            baseCritChance: this.baseCritChance,
+            baseCritDamage: this.baseCritDamage
+            // ... other properties you want to serialize
+        };
     }
 }
 

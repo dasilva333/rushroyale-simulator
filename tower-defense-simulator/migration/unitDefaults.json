@@ -1,0 +1,120 @@
+{
+  "inquisitor": {
+    "mainDpsBaseDamage": 120,
+    "mainDpsBaseSpeed": 0.6,
+    "mainDpsBaseCrit": 0,
+    "absorbs": 1,
+    "mainDpsDamageIncrease": 600,
+    "talent": "none"
+  },
+  "boreas": {
+    "mainDpsBaseDamage": 120,
+    "mainDpsBaseSpeed": 0.09,
+    "mainDpsBaseCrit": 0,
+    "mainDpsFirstPhase": 4.6,
+    "mainDpsSecondPhase": 1.7,
+    "mainDpsActivationInterval": 4.7,
+    "activeTalents": []
+  },
+  "sentry": {
+    "mainDpsBaseDamage": 456,
+    "mainDpsBaseSpeed": 0.09,
+    "mainDpsBaseCrit": 0,
+    "mainDpsDamageIncrease": 244,
+    "mainDpsActivationInterval": 0.95
+  },
+  "cultists": {
+    "mainDpsBaseDamage": 1021,
+    "mainDpsBaseSpeed": 0.11,
+    "mainDpsBaseCrit": 17,
+    "mainDpsDamageIncrease": 300,
+    "sacrifices": 0
+  },
+  "bladedancer": {
+    "mainDpsBaseDamage": 1301,
+    "mainDpsBaseSpeed": 0.14,
+    "mainDpsBaseCrit": 0,
+    "mainDpsDamageIncrease": 0
+  },
+  "crystalmancer": {
+    "mainDpsBaseDamage": 197,
+    "mainDpsBaseSpeed": 0.07,
+    "mainDpsBaseCrit": 0,
+    "mainDpsDamageIncrease": 800,
+    "mainDpsActivationInterval": 0.95
+  },
+  "demonhunter": {
+    "mainDpsBaseDamage": 1136,
+    "mainDpsBaseSpeed": 0.45,
+    "mainDpsBaseCrit": 0,
+    "mainDpsDamageIncrease": 75,
+    "demonHunterEmpowered": false
+  },
+  "bruiser": {
+    "mainDpsBaseDamage": 112,
+    "mainDpsBaseSpeed": 1.2,
+    "mainDpsBaseCrit": 0,
+    "mainDpsDamageIncrease": 350
+  },
+  "robot": {
+    "mainDpsBaseDamage": 224,
+    "mainDpsBaseSpeed": 0.7,
+    "mainDpsBaseCrit": 0,
+    "mainDpsDamageIncrease": 50,
+    "merges": 0
+  },
+  "engineer": {
+    "mainDpsBaseDamage": 971,
+    "mainDpsBaseSpeed": 0.07,
+    "mainDpsBaseCrit": 0,
+    "mainDpsDamageIncrease": 21
+  },
+  "monk": {
+    "mainDpsBaseDamage": 350,
+    "mainDpsBaseSpeed": 0.6,
+    "mainDpsBaseCrit": 0,
+    "isActivated": false
+  },
+  "generic": {
+    "mainDpsBaseDamage": 64,
+    "mainDpsBaseSpeed": 0.6,
+    "mainDpsBaseCrit": 0,
+    "mainDpsDamageIncrease": 0
+  },
+  "banner": {
+    "damage": 0
+  },
+  "dryad": {
+    "merges": 10,
+    "damage": 50
+  },
+  "harly": {
+    "damage": 0
+  },
+  "sword": {
+    "damage": 200
+  },
+  "trapper": {
+    "damage": 0
+  },
+  "chemist": {
+    "damage": 103
+  },
+  "scrapper": {
+    "damage": 0
+  },
+  "knight_statue": {
+    "damage": 0
+  },
+  "witch_statue": {
+    "mainDpsBaseDamage": 100,
+    "mainDpsBaseSpeed": 1,
+    "mainDpsBaseCrit": 0,
+    "merges": 15,
+    "damage": 204
+  },
+  "grindstone": {
+    "activeTalents": [],
+    "damage": 415
+  }
+}

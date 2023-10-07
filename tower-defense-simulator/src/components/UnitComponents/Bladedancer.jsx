@@ -4,8 +4,11 @@ import BaseUnit from '../../classes/BaseUnit';
 class Bladedancer extends BaseUnit {
   static defaultImage = "bladedancer.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Bladedancer", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Bladedancer",
+      ...config
+    });
     this.component = BladedancerComponent;
   }
 

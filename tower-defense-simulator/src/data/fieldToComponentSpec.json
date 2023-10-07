@@ -1,0 +1,105 @@
+{
+    "baseDamage": {
+        "componentType": "input",
+        "inputType": "number",
+        "isNullable": false
+    },
+    "baseSpeed": {
+        "componentType": "input",
+        "inputType": "number",
+        "isNullable": false
+    },
+    "baseCrit": {
+        "componentType": "input",
+        "inputType": "number",
+        "isNullable": false
+    },
+    "tier": {
+        "componentType": "input",
+        "inputType": "number",
+        "defaultValue": 7
+    },
+    "level": {
+        "componentType": "select",
+        "options": "levels",
+        "defaultValue": "15"
+    },
+    "absorbs": {
+        "componentType": "input",
+        "inputType": "number",
+        "defaultValue": 0
+    },
+    "mainDpsDamageIncrease": {
+        "componentType": "input",
+        "inputType": "number",
+        "isNullable": false
+    },
+    "talent": {
+        "componentType": "select",
+        "options": "talents"
+    },
+    "mainDpsFirstPhase": {
+        "componentType": "input",
+        "inputType": "number",
+        "label": "Duration",
+        "isNullable": false
+    },
+    "mainDpsSecondPhase": {
+        "componentType": "input",
+        "inputType": "number",
+        "label": "Duration",
+        "isNullable": false
+    },
+    "mainDpsActivationInterval": {
+        "componentType": "input",
+        "inputType": "number",
+        "label": "Duration",
+        "isNullable": false
+    },
+    "activeTalents": {
+        "componentType": "select",
+        "options": "talents"
+    },
+    "sacrifices": {
+        "componentType": "input",
+        "inputType": "number",
+        "label": "Sacrifices",
+        "defaultValue": 0
+    },
+    "demonHunterEmpowered": {
+        "componentType": "checkbox",
+        "defaultValue": false
+    },
+    "enraged": {
+        "componentType": "checkbox",
+        "defaultValue": false
+    },
+    "merges": {
+        "componentType": "input",
+        "inputType": "number",
+        "min": 0,
+        "defaultValue": 0
+    },
+    "isActivated": {
+        "componentType": "checkbox",
+        "defaultValue": false
+    },
+    "damage": {
+        "componentType": "input",
+        "inputType": "number",
+        "label": "Base Damage Buff",
+        "isNullable": false
+    },
+    "swordStacks": {
+        "componentType": "select",
+        "options": "cardMerges(unitsService.cards.sword)",
+        "label": "Sword Stacks",
+        "defaultValue": 0
+    },
+    "swordLevel": {
+        "componentType": "select",
+        "options": "levels",
+        "label": "Sword Level",
+        "defaultValue": 15
+    }
+}

@@ -4,8 +4,11 @@ import BaseUnit from '../../classes/BaseUnit';
 class Cultist extends BaseUnit {
   static defaultImage = "cultist.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Cultist", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Cultist",
+      ...config
+    });
     this.component = CultistComponent;
   }
 

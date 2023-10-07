@@ -4,8 +4,11 @@ import BaseUnit from '../../classes/BaseUnit';
 class Engineer extends BaseUnit {
   static defaultImage = "engineer.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Engineer", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Engineer",
+      ...config
+    });
     this.component = EngineerComponent;
   }
 
@@ -15,7 +18,7 @@ class Engineer extends BaseUnit {
 function EngineerComponent(props) {
   return (
     <div className="unit Engineer">
-      <img src="board/engineer.png" title={"hello " + Engineer.constructor.baseImage} width="70" alt="Engineer Unit" />
+      <img src={Engineer.baseImage} width="70" alt="Engineer Unit" />
     </div>
   );
 }

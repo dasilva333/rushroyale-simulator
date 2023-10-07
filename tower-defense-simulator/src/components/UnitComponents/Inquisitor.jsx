@@ -4,8 +4,11 @@ import BaseUnit from '../../classes/BaseUnit';
 class Inquisitor extends BaseUnit {
   static defaultImage = "inquisitor.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Inquisitor", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Inquisitor",
+      ...config
+    });
     this.component = InquisitorComponent;
   }
 

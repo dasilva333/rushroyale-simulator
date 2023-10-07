@@ -1,11 +1,14 @@
 import React from 'react';
-import BaseUnit from '../../classes/BaseUnit';
+import SupportUnit from '../../classes/SupportUnit';
 
-class Dryad extends BaseUnit {
+class Dryad extends SupportUnit {
   static defaultImage = "dryad.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Dryad", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Dryad",
+      ...config
+    });
     this.component = DryadComponent;
   }
 

@@ -4,8 +4,11 @@ import BaseUnit from '../../classes/BaseUnit';
 class Crystalmancer extends BaseUnit {
   static defaultImage = "crystalmancer.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Crystalmancer", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Crystalmancer",
+      ...config
+    });
     this.component = CrystalmancerComponent;
   }
 

@@ -1,0 +1,26 @@
+{
+  "unitSpecific": {
+    "inquisitor": ["talent"],
+    "boreas": ["activeTalents"],
+    "Grindstone": ["damage", "merges", "activeTalents"],
+    "dps": ["swordStacks", "swordLevel"]
+  },
+  "fieldSpecific": {
+    "level": { "property": "level" },
+    "tier": { "property": "tier" },
+    "absorbs": { "property": "absorbs" },
+    "merges": { "property": "merges" },
+    "mainDpsBaseDamage": { "property": "mainDpsBaseDamage" },
+    "heroTile": { "property": "heroTile" },
+    "mainDpsBaseSpeed": { "property": "mainDpsBaseSpeed" },
+    "mainDpsBaseCrit": { "property": "mainDpsBaseCrit" },
+    "mainDpsFirstPhase": { "property": "mainDpsFirstPhase" },
+    "mainDpsSecondPhase": { "property": "mainDpsSecondPhase" },
+    "mainDpsActivationInterval": { "property": "mainDpsActivationInterval" },
+    "mainDpsDamageIncrease": { "property": "mainDpsDamageIncrease" },
+    "demonHunterEmpowered": { "property": "demonHunterEmpowered" },
+    "enranged": { "property": "enraged" },
+    "isActivated": { "property": "isActivated" },
+    "sacrifices": { "property": "sacrifices" }
+  }
+}

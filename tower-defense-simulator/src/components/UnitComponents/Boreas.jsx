@@ -4,8 +4,11 @@ import BaseUnit from '../../classes/BaseUnit';
 class Boreas extends BaseUnit {
   static defaultImage = "boreas.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Boreas", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Boreas",
+      ...config
+    });
     this.component = BoreasComponent;
   }
 

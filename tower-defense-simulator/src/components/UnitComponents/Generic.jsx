@@ -4,12 +4,15 @@ import BaseUnit from '../../classes/BaseUnit';
 class Generic extends BaseUnit {
   static defaultImage = "generic.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Generic", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Generic",
+      ...config
+    });
     this.component = GenericComponent;
   }
 
-  // Additional methods specific to the Witch unit here
+  // Additional methods specific to the Generic unit here
 }
 
 function GenericComponent(props) {

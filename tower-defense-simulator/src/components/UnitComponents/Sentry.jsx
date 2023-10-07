@@ -4,8 +4,11 @@ import BaseUnit from '../../classes/BaseUnit';
 class Sentry extends BaseUnit {
   static defaultImage = "sentry.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Sentry", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Sentry",
+      ...config
+    });
     this.component = SentryComponent;
   }
 

@@ -4,8 +4,11 @@ import BaseUnit from '../../classes/BaseUnit';
 class Bruiser extends BaseUnit {
   static defaultImage = "bruiser.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Bruiser", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Bruiser",
+      ...config
+    });
     this.component = BruiserComponent;
   }
 

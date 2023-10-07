@@ -51,6 +51,19 @@
         }
     }    
 
+    .unit-configuration-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border: 1px solid gray;
+        padding: 10px;
+        z-index: 101; // One level higher than .unit-selection-modal
+        width: 40%;
+    }
+
+    
     .board-stats {
         margin-top: 10px;
         p, ul {

@@ -1,11 +1,14 @@
 import React from 'react';
-import BaseUnit from '../../classes/BaseUnit';
+import SupportUnit from '../../classes/SupportUnit';
 
-class Chemist extends BaseUnit {
+class Chemist extends SupportUnit {
   static defaultImage = "chemist.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Chemist", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Chemist",
+      ...config
+    });
     this.component = ChemistComponent;
   }
 

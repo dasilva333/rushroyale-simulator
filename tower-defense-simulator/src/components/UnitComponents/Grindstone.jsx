@@ -1,11 +1,14 @@
 import React from 'react';
-import BaseUnit from '../../classes/BaseUnit';
+import SupportUnit from '../../classes/SupportUnit';
 
-class Grindstone extends BaseUnit {
+class Grindstone extends SupportUnit {
   static defaultImage = "grindstone.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Grindstone", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Grindstone",
+      ...config
+    });
     this.component = GrindstoneComponent;
   }
 

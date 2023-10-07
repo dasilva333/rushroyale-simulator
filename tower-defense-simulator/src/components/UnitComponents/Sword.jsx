@@ -1,11 +1,14 @@
 import React from 'react';
-import BaseUnit from '../../classes/BaseUnit';
+import SupportUnit from '../../classes/SupportUnit';
 
-class Sword extends BaseUnit {
+class Sword extends SupportUnit {
   static defaultImage = "sword.png";
 
-  constructor(rateOfFire, damagePerHit) {
-    super("Sword", rateOfFire, damagePerHit);
+  constructor(config) {
+    super({
+      name: "Sword",
+      ...config
+    });
     this.component = SwordComponent;
   }
 
