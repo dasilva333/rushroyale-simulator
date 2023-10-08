@@ -20,7 +20,7 @@ class Engineer extends DPSUnit {
     let damage = this.baseDamage;
     
     damage *= (1 + (damageIncreasePerConnection * this.connections));
-    
+
     return super.baseCalculateDPS(boardConfig, undefined, damage, undefined, undefined);
   }
 
@@ -36,6 +36,7 @@ class Engineer extends DPSUnit {
 function EngineerComponent(props) {
   return (
     <div className="unit Engineer">
+      <div className="unit-tooltip top-left">{props.unit.connections}</div>
       <img src={Engineer.baseImage} width="70" alt="Engineer Unit" />
     </div>
   );

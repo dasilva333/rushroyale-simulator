@@ -2,7 +2,7 @@ import { Inquisitor, InquisitorComponent } from '../components/UnitComponents/In
 import { Boreas, BoreasComponent } from '../components/UnitComponents/Boreas.jsx';
 import { Sentry, SentryComponent } from '../components/UnitComponents/Sentry.jsx';
 import { Cultist, CultistComponent } from '../components/UnitComponents/Cultist.jsx';
-import { Bladedancer, BladedancerComponent } from '../components/UnitComponents/Bladedancer.jsx';
+import { BladeDancer, BladeDancerComponent } from '../components/UnitComponents/BladeDancer.jsx';
 import { Crystalmancer, CrystalmancerComponent } from '../components/UnitComponents/Crystalmancer.jsx';
 import { DemonHunter, DemonHunterComponent } from '../components/UnitComponents/DemonHunter.jsx';
 import { Bruiser, BruiserComponent } from '../components/UnitComponents/Bruiser.jsx';
@@ -43,9 +43,9 @@ export const availableUnits = [
       class: Cultist
     },
 {
-      name: 'Bladedancer',
-      component: BladedancerComponent,
-      class: Bladedancer
+      name: 'BladeDancer',
+      component: BladeDancerComponent,
+      class: BladeDancer
     },
 {
       name: 'Crystalmancer',

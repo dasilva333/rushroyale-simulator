@@ -4,7 +4,7 @@ const path = require('path');
 const UNIT_COMPONENTS_PATH = path.join(__dirname, 'src', 'components', 'UnitComponents');
 
 const unitsList = [
-  'Inquisitor', 'Boreas', 'Sentry', 'Cultist', 'Bladedancer', 'Crystalmancer', 'DemonHunter', 
+  'Inquisitor', 'Boreas', 'Sentry', 'Cultist', 'BladeDancer', 'Crystalmancer', 'DemonHunter', 
   'Bruiser', 'Robot', 'Engineer', 'Monk', 'Generic', 'Banner', 'Dryad', 'Harly', 
   'Sword', 'Trapper', 'Chemist', 'Scrapper', 'Knight_Statue', 'Witch', 'Grindstone'
 ];

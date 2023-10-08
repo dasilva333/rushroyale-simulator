@@ -3,11 +3,18 @@ class BoardManager {
         this.boardState = boardState;
     }
 
+    getUnitsByName(unitName) {
+      const flattenedBoard = this.boardState.flatMap(row => row);
+      return flattenedBoard.filter(unit => unit && unit.name === unitName);
+    }
+  
+    getUnitCounts(unitName) {
+      return this.getUnitsByName(unitName).length;
+    }
+  
     getTotalTiersForUnit(unitName) {
-        const flattenedBoard = this.boardState.flatMap(row => row);
-        const units = flattenedBoard.filter(unit => unit && unit.name === unitName);
-        const totalTiers = units.reduce((total, unit) => total + unit.tier, 0);
-        return totalTiers;
+      const units = this.getUnitsByName(unitName);
+      return units.reduce((total, unit) => total + unit.tier, 0);
     }
 
     checkAndSetEmpowermentForUnit(unitClass) {
@@ -61,12 +68,12 @@ class BoardManager {
 
             // Check for out-of-bound conditions
             if (newX >= 0 && newX < this.boardState.length &&
-                newY >= 0 && newY < this.boardState[0].length) {
+                newY >= 0 && newY < this.boardState[newX].length) {
                 const unit = this.boardState[newX][newY];
                 if (unit) {
-                    adjacentUnits.push(unit);
+                    adjacentUnits.push({...unit, x: newX, y: newY}); // added x and y to the object
                 }
-            }
+            }            
         }
 
         return adjacentUnits;
@@ -107,9 +114,9 @@ class BoardManager {
       
       const neighbors = this.getAdjacentUnitsForTile(i, j);
       for (let neighbor of neighbors) {
-        if (neighbor.name === value && !neighbor.visited) {
-          count += this.countAdjacent(neighbor.x, neighbor.y, value);
-        }
+        if (neighbor && !neighbor.visited && neighbor.name === value) {
+            count += this.countAdjacent(neighbor.x, neighbor.y, value);
+        }        
       }
     }
     return count;

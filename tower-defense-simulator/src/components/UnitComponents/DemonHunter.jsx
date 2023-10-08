@@ -15,16 +15,16 @@ class DemonHunter extends DPSUnit {
     this.component = DemonHunterComponent;
   }
 
-
   static getEmpowermentCondition(boardManager) {
-    const totalTiers = boardManager.getTotalTiersForUnit(DemonHunter.name);
-    return totalTiers >= DemonHunter.empowermentThreshold;
+    // Directly return the total tiers.
+    return boardManager.getTotalTiersForUnit(DemonHunter.name);
   }
 
   calculateDPS(boardConfig) {
     let damage = this.baseDamage;
 
-    if (this.empowered) {
+    // Instead of just checking for empowerment, we check against the threshold
+    if (this.empowered >= DemonHunter.empowermentThreshold) {
       damage *= (1 + (this.damageIncrease / 100));
     }
 
@@ -56,14 +56,13 @@ class DemonHunter extends DPSUnit {
 }
 
 function DemonHunterComponent(props) {
-  const backgroundColor = props.unit.empowered ? 'yellow' : 'transparent';
   return (
-      <div className="unit DemonHunter" style={{ backgroundColor }}>
-          <img src={DemonHunter.baseImage} width="70" alt="DemonHunter Unit" />
-      </div>
+    <div className="unit DemonHunter">
+      {/* Tooltip to display total tiers */}
+      <div className="unit-tooltip top-left">{props.unit.empowered}</div>
+      <img src={DemonHunter.baseImage} width="70" alt="DemonHunter Unit" />
+    </div>
   );
 }
-
-
 
 export { DemonHunter, DemonHunterComponent };

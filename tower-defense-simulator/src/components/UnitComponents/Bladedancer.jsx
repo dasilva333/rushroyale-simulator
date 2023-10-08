@@ -1,26 +1,70 @@
-import React from 'react';
-import BaseUnit from '../../classes/BaseUnit';
+import DPSUnit from '../../classes/DPSUnit';
 
-class Bladedancer extends BaseUnit {
+class BladeDancer extends DPSUnit {
   static defaultImage = "bladedancer.png";
+  static name = "BladeDancer";
+  static dmgIncreaseLevels = [
+    0,
+    0,
+    200,
+    250,
+    291,
+    332,
+    375,
+    416,
+    450
+  ];
 
   constructor(config) {
-    super({
-      name: "Bladedancer",
-      ...config
-    });
-    this.component = BladedancerComponent;
+    super(config);
+    this.empowered = config.empowered || 0;
+    this.damageIncrease = config.damageIncrease || 0;
+    this.component = BladeDancerComponent;
   }
 
-  // Additional methods specific to the Bladedancer unit here
+  static getEmpowermentCondition(boardManager) {
+    // Return the total number of BladeDancers
+    const total = boardManager.getUnitCounts(BladeDancer.name);
+    console.log(`total: ${total}`);
+    return total;
+  }
+
+  calculateDPS(boardConfig) {
+    let damage = this.baseDamage;
+    let speed = this.baseSpeed;
+
+    if (this.empowered >= BladeDancer.dmgIncreaseLevels.length) {
+      this.damageIncrease = BladeDancer.dmgIncreaseLevels[BladeDancer.dmgIncreaseLevels.length - 1];
+    } else {
+      this.damageIncrease = BladeDancer.dmgIncreaseLevels[this.empowered];
+    }
+
+    damage *= (1 + (this.damageIncrease / 100));
+
+    // Adjusting speed if no adjacent BladeDancers
+    if (this.neighbors === 0) {
+      speed = speed / 2.5;
+    }
+
+    return super.baseCalculateDPS(boardConfig, speed, damage, undefined, undefined);
+  }
+
+  toObject() {
+    const baseObject = super.toObject();
+    return {
+      ...baseObject,
+      empowered: this.empowered
+    };
+  }
 }
 
-function BladedancerComponent(props) {
+function BladeDancerComponent(props) {
   return (
-    <div className="unit Bladedancer">
-      <img src={Bladedancer.baseImage} width="70" alt="Bladedancer Unit" />
+    <div className="unit BladeDancer">
+      <div className="unit-tooltip top-left">{props.unit.empowered}</div>
+      <img src={BladeDancer.baseImage} width="70" alt="BladeDancer Unit" />
     </div>
   );
 }
 
-export { Bladedancer, BladedancerComponent };
+export { BladeDancer, BladeDancerComponent };

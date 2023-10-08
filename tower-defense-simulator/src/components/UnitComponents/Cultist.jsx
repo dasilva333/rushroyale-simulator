@@ -72,25 +72,10 @@ class Cultist extends DPSUnit {
 }
 
 function CultistComponent(props) {
-  const { empowered } = props.unit;
-
-  let backgroundColor;
-  switch (empowered) {
-    case 0:
-      backgroundColor = 'red';
-      break;
-    case 1:
-      backgroundColor = 'green';
-      break;
-    case 2:
-      backgroundColor = 'orange';
-      break;
-    default:
-      backgroundColor = 'transparent';
-  }
-
+  console.log('props', props);
   return (
-    <div className="unit Cultist" style={{ backgroundColor }}>
+    <div className="unit Cultist">
+      {props.unit.empowered === 1 ? <div className="unit-tooltip top-left">E</div> : null}
       <img src={Cultist.baseImage} width="70" alt="Cultist Unit" />
     </div>
   );
