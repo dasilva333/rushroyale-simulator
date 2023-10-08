@@ -48,7 +48,7 @@ class BoardManager {
     return boardWithLikeNeighbors;
   }
 
-  getAdjacentUnitsForTile(x, y) {
+  static getAdjacentUnitsForTile(boardState, x, y) {
     // Logic to retrieve and return adjacent units for the given tile (x,y) 
     // from this.boardState.
     // This assumes a 2D grid system for the board.
@@ -67,10 +67,11 @@ class BoardManager {
       const newY = y + coord.dy;
 
       // Check for out-of-bound conditions
-      if (newX >= 0 && newX < this.boardState.length &&
-        newY >= 0 && newY < this.boardState[newX].length) {
-        const unit = this.boardState[newX][newY];
+      if (newX >= 0 && newX < boardState.length &&
+        newY >= 0 && newY < boardState[newX].length) {
+        const unit = boardState[newX][newY];
         if (unit) {
+          console.log('unit', unit);
           adjacentUnits.push({ ...unit, x: newX, y: newY }); // added x and y to the object
         }
       }
@@ -79,6 +80,9 @@ class BoardManager {
     return adjacentUnits;
   }
 
+  getAdjacentUnitsForTile(x, y) {
+    return BoardManager.getAdjacentUnitsForTile(this.boardState, x, y);
+}
   // This function will return a 2D array where each Unit's position 
   // corresponds to its rowColumnRelationship value (0, 1, or 2).
   getUnitRowColumnRelationship(unitName) {

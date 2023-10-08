@@ -7,5 +7,5 @@ export function rehydrateUnit(unitObject, x, y) {
     const unitRef = availableUnits.find(unit => unit.name === unitObject.name);
     const UnitClass = unitRef.class;
     const UnitComponent = unitRef.component;
-    return {component: UnitComponent, class: new UnitClass(unitObject, x, y)};
+    return {unitClass: UnitClass, component: UnitComponent, class: new UnitClass(unitObject, x, y)};
 }

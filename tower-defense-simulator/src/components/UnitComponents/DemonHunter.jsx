@@ -31,13 +31,15 @@ class DemonHunter extends DPSUnit {
     damage *= this.tier;
 
     // Using super to call the baseCalculateDPS method of the parent class (DPSUnit)
-    return super.baseCalculateDPS(
+    const dpsInfo = super.baseCalculateDPS(
       boardConfig,
       this.baseSpeed, // Use default speed value
       damage,
       undefined, // Default crit chance will be used
       undefined  // Default crit damage will be used
     );
+    console.log(dpsInfo);
+    return dpsInfo;
   }
 
   toObject() {

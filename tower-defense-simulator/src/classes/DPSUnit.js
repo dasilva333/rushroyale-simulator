@@ -7,11 +7,25 @@ class DPSUnit extends BaseUnit {
         return arr.reduce((acc, curr) => acc + curr, 0);
     }
     
-    totalSpeedBuff() { return []; }
-    totalDmgBuff() { return []; }
-    totalArmorBuff() { return []; }
-    totalCritBuff() { return []; }
-    totalCritDmgBuff() { return []; }
+    totalSpeedBuff() {
+        return this.buffs.filter(buff => buff.type === "speed").map(buff => buff.value);
+    }
+
+    totalDamageBuff() {
+        return this.buffs.filter(buff => buff.type === "damage").map(buff => buff.value);
+    }
+    
+    totalArmorBuff() {
+        return this.buffs.filter(buff => buff.type === "armor-damage").map(buff => buff.value);
+    }
+
+    totalCritBuff() {
+        return this.buffs.filter(buff => buff.type === "crit-chance").map(buff => buff.value);
+    }
+
+    totalCritDmgBuff() {
+        return this.buffs.filter(buff => buff.type === "crit-damage").map(buff => buff.value);
+    }
     
     computeAttackSpeed(baseSpeed) {
         let speed = baseSpeed;
@@ -23,16 +37,17 @@ class DPSUnit extends BaseUnit {
     
     computeAttackDamage(baseDamage) {
         let damage = baseDamage;
-        for (let buff of this.totalDmgBuff()) {
+        for (let buff of this.totalDamageBuff()) {
             damage = Math.round(damage * (1 + (buff / 100)));
         }
         damage = (damage * (1 + (DPSUnit.sumOfArray(this.totalArmorBuff()) / 100)));
         return damage;
     }
+
     baseCalculateDPS(boardConfig, baseSpeed = this.baseSpeed, baseDamage = this.baseDamage, baseCritChance = this.baseCritChance, baseCritDamage = this.baseCritDamage) {
         const newAttackSpeed = this.computeAttackSpeed(baseSpeed);
         const newAttackDamage = this.computeAttackDamage(baseDamage);
-        
+        console.log(`baseCalculateDPS ${newAttackSpeed} ${baseSpeed}`);
         const totalCritChance = Math.min(1, DPSUnit.playerBaseCritChance + (baseCritChance / 100) + (DPSUnit.sumOfArray(this.totalCritBuff()) / 100));
         
         const hitsPerSecond = 1 / newAttackSpeed;
@@ -59,7 +74,8 @@ class DPSUnit extends BaseUnit {
     }    
     
     calculateDPS(boardConfig) {
-        return this.baseCalculateDPS(boardConfig);
+        const dpsInfo = this.baseCalculateDPS(boardConfig);
+        return dpsInfo;
     }
 }
 

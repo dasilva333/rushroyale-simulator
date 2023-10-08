@@ -11,9 +11,12 @@ class BaseUnit {
         this.baseDamage = config.baseDamage || 0;
         this.baseCritChance = config.baseCritChance || 0;
         this.baseCritDamage = config.baseCritDamage || 0;
+        this.tier = config.tier || 7;
+        this.level = config.level || 15;
         this.x = x || -1;
         this.y = y || -1;
         this.neighbors = config.neighbors || 0;
+        this.buffs = config.buffs || [];
     }
 
     // Getter to construct the complete image path
@@ -26,6 +29,10 @@ class BaseUnit {
         return new DamageValues(); // returns the default 0-filled damage report
     }
 
+    calculateAltDPS() {
+        return new DamageValues(); // returns the default 0-filled damage report
+    }
+
     toObject() {
         return {
             id: this.id,
@@ -34,7 +41,8 @@ class BaseUnit {
             baseDamage: this.baseDamage,
             baseCritChance: this.baseCritChance,
             baseCritDamage: this.baseCritDamage,
-            neighbors: this.neighbors
+            neighbors: this.neighbors,
+            buffs: this.buffs
         };
     }
 }

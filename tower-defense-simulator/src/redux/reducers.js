@@ -1,5 +1,5 @@
 // Redux Reducers 
-import { ADD_UNIT, REMOVE_UNIT, UPDATE_UNIT, SET_BOARD, UNDO_ACTION, REDO_ACTION, SET_LIKE_NEIGHBORS } from './actions';
+import { ADD_UNIT, REMOVE_UNIT, UPDATE_UNIT, SET_BOARD, UNDO_ACTION, REDO_ACTION, SET_LIKE_NEIGHBORS, UPDATE_BUFFS } from './actions';
 import { rehydrateUnit } from '../utils/unitUtilities';
 
 const initialState = {
@@ -64,6 +64,13 @@ function rootReducer(state = initialState, action) {
                 }
             };
 
+        case UPDATE_BUFFS:
+            return {
+                past: [...state.past, state.present],
+                present: { board: action.payload },
+                future: []
+            };
+            
         case UNDO_ACTION:
             if (state.past.length === 0) return state; // Can't undo
             const previous = state.past[state.past.length - 1];

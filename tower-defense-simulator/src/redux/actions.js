@@ -6,6 +6,7 @@ export const SET_BOARD = 'SET_BOARD';
 export const UNDO_ACTION = 'UNDO_ACTION';
 export const REDO_ACTION = 'REDO_ACTION';
 export const SET_LIKE_NEIGHBORS = "SET_LIKE_NEIGHBORS";
+export const UPDATE_BUFFS = 'UPDATE_BUFFS';
 
 // Feel free to add more action types as needed.
 
@@ -67,6 +68,13 @@ export function setBoard(board) {
         payload: {
             board
         }
+    };
+}
+
+export function updateBuffs(newBoardState) {
+    return {
+        type: UPDATE_BUFFS,
+        payload: newBoardState
     };
 }
 
