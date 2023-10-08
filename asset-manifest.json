@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/rushroyale-simulator/static/css/main.cfa3e6e8.css",
-    "main.js": "/rushroyale-simulator/static/js/main.19863184.js",
+    "main.js": "/rushroyale-simulator/static/js/main.e30d8bbd.js",
     "static/js/787.d77385c8.chunk.js": "/rushroyale-simulator/static/js/787.d77385c8.chunk.js",
     "index.html": "/rushroyale-simulator/index.html",
     "main.cfa3e6e8.css.map": "/rushroyale-simulator/static/css/main.cfa3e6e8.css.map",
-    "main.19863184.js.map": "/rushroyale-simulator/static/js/main.19863184.js.map",
+    "main.e30d8bbd.js.map": "/rushroyale-simulator/static/js/main.e30d8bbd.js.map",
     "787.d77385c8.chunk.js.map": "/rushroyale-simulator/static/js/787.d77385c8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cfa3e6e8.css",
-    "static/js/main.19863184.js"
+    "static/js/main.e30d8bbd.js"
   ]
 }
