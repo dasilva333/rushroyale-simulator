@@ -10,7 +10,7 @@ import { rehydrateUnit } from '../utils/unitUtilities';
 import '../styles/board.scss';
 
 function GridCell({ x, y, unit, onSelect }) {
-    const UnitComponent = unit?.component;
+    const UnitComponent = unit && rehydrateUnit(unit).component;
     return (
         <div className="grid-cell" onClick={() => onSelect(x, y)}>
             {UnitComponent && <UnitComponent unit={unit} />}
@@ -26,7 +26,7 @@ function BoardStats({ boardConfig }) {
             if (!unit) return null;
 
             // Rehydrate the unit
-            const UnitInstance = rehydrateUnit(unit);
+            const UnitInstance = rehydrateUnit(unit).class;
             const dps = UnitInstance.calculateDPS(boardConfig).total;
 
             return { unit: UnitInstance, dps, x, y };
@@ -74,9 +74,16 @@ function Board() {
     } = useModalSequence();
 
     const handleCellClick = (x, y) => {
-        showSelectionModal();
+        const unit = board[x][y];
         setSelectedCell({ x, y });
-    };
+      
+        if (unit) {
+          setSelectedUnit(unit);
+          showConfigurationModal();
+        } else {
+          showSelectionModal();
+        }
+      };      
 
     const handleUnitSelect = (unitInfo) => {
         setSelectedUnit(unitInfo); // Just set the unitInfo

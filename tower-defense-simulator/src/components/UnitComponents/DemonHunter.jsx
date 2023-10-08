@@ -7,9 +7,9 @@ class DemonHunter extends DPSUnit {
 
   constructor(config) {
       super(config);
-      this.demonHunterEmpowered = config.demonHunterEmpowered || false;
-      this.mainDpsDamageIncrease = config.mainDpsDamageIncrease || 75;
-      this.mainDpsTierLevel = config.level || 7;
+      this.demonHunterEmpowered = false;
+      this.damageIncrease = config.damageIncrease || 75;
+      this.tier = config.level || 7;
       this.component = DemonHunterComponent;
   }
 
@@ -17,10 +17,10 @@ class DemonHunter extends DPSUnit {
     let damage = this.baseDamage;
 
     if (this.demonHunterEmpowered) {
-        damage *= (1 + (this.mainDpsDamageIncrease / 100));
+        damage *= (1 + (this.damageIncrease / 100));
     }
 
-    damage *= this.mainDpsTierLevel;
+    damage *= this.tier;
 
     // Using super to call the baseCalculateDPS method of the parent class (DPSUnit)
     return super.baseCalculateDPS(
@@ -40,8 +40,8 @@ class DemonHunter extends DPSUnit {
     return {
         ...baseObject,
         demonHunterEmpowered: this.demonHunterEmpowered,
-        mainDpsDamageIncrease: this.mainDpsDamageIncrease,
-        mainDpsTierLevel: this.mainDpsTierLevel
+        damageIncrease: this.damageIncrease,
+        tier: this.tier
         // ... other DemonHunter specific properties
     };
 }

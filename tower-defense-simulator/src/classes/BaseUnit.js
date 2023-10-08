@@ -15,7 +15,7 @@ class BaseUnit {
 
     // Getter to construct the complete image path
     static get baseImage() {
-        return `board/${this.defaultImage}`;
+        return `/rushroyale-simulator/board/${this.defaultImage}`;
     }
 
     // By default, units don't do any damage

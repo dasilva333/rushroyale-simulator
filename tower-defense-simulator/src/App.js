@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import store from './redux/store';  // adjust the path if needed
 import './App.css';
 import Board from './components/Board.jsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
     return (

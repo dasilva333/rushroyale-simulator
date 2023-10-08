@@ -2,63 +2,72 @@
     "baseDamage": {
         "componentType": "input",
         "inputType": "number",
-        "isNullable": false
+        "isNullable": false,
+        "label": "Damage"
     },
     "baseSpeed": {
         "componentType": "input",
         "inputType": "number",
-        "isNullable": false
+        "isNullable": false,
+        "label": "Speed"
     },
     "baseCrit": {
         "componentType": "input",
         "inputType": "number",
-        "isNullable": false
+        "isNullable": false,
+        "label": "Crit"
     },
     "tier": {
         "componentType": "input",
         "inputType": "number",
-        "defaultValue": 7
+        "defaultValue": 7,
+        "label": "Tier"
     },
     "level": {
         "componentType": "select",
         "options": "levels",
-        "defaultValue": "15"
+        "defaultValue": "15",
+        "label": "Level"
     },
     "absorbs": {
         "componentType": "input",
         "inputType": "number",
-        "defaultValue": 0
+        "defaultValue": 0,
+        "label": "Absorbs"
     },
-    "mainDpsDamageIncrease": {
+    "damageIncrease": {
         "componentType": "input",
         "inputType": "number",
-        "isNullable": false
+        "isNullable": false,
+        "label": "Damage Increase"
     },
     "talent": {
         "componentType": "select",
-        "options": "talents"
+        "options": "talents",
+        "label": "Talent"
     },
-    "mainDpsFirstPhase": {
+    "firstPhase": {
         "componentType": "input",
         "inputType": "number",
-        "label": "Duration",
+        "label": "First Phase Duration",
         "isNullable": false
     },
-    "mainDpsSecondPhase": {
+    "secondPhase": {
         "componentType": "input",
         "inputType": "number",
-        "label": "Duration",
+        "label": "Second Phase Duration",
         "isNullable": false
     },
-    "mainDpsActivationInterval": {
+    "activationInterval": {
         "componentType": "input",
         "inputType": "number",
-        "label": "Duration",
+        "label": "Activation Interval Duration",
         "isNullable": false
     },
     "activeTalents": {
         "componentType": "select",
-        "options": "talents"
+        "options": "talents",
+        "label": "Active Talents"
     },
     "sacrifices": {
         "componentType": "input",
@@ -66,28 +75,27 @@
         "label": "Sacrifices",
         "defaultValue": 0
     },
-    "demonHunterEmpowered": {
-        "componentType": "checkbox",
-        "defaultValue": false
-    },
     "enraged": {
         "componentType": "checkbox",
-        "defaultValue": false
+        "defaultValue": false,
+        "label": "Enraged"
     },
     "merges": {
         "componentType": "input",
         "inputType": "number",
         "min": 0,
-        "defaultValue": 0
+        "defaultValue": 0,
+        "label": "Merges"
     },
     "isActivated": {
         "componentType": "checkbox",
-        "defaultValue": false
+        "defaultValue": false,
+        "label": "Is Activated"
     },
     "damage": {
         "componentType": "input",
         "inputType": "number",
-        "label": "Base Damage Buff",
+        "label": "Damage Buff",
         "isNullable": false
     },
     "swordStacks": {

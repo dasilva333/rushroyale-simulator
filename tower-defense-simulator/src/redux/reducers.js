@@ -10,7 +10,7 @@ function rootReducer(state = initialState, action) {
     switch (action.type) {
         case ADD_UNIT:
             const unitConfig = action.payload.unit;
-            const unitInstance = rehydrateUnit(unitConfig);
+            const unitInstance = rehydrateUnit(unitConfig).class;
             const unitObject = unitInstance.toObject();
             const boardAfterAdd = [...state.board];
             const rowToUpdate = [...boardAfterAdd[action.payload.position.x]];

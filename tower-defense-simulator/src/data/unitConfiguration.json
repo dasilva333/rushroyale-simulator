@@ -7,7 +7,7 @@
       "tier",
       "level",
       "absorbs",
-      "mainDpsDamageIncrease",
+      "damageIncrease",
       "talent"
     ],
     "defaults": {
@@ -15,8 +15,8 @@
       "baseSpeed": 0.6,
       "baseCrit": 0,
       "absorbs": 1,
-      "mainDpsDamageIncrease": 600,
-      "talent": "none"
+      "talent": "none",
+      "damageIncrease": 600
     }
   },
   "boreas": {
@@ -24,9 +24,9 @@
       "baseDamage",
       "baseSpeed",
       "baseCrit",
-      "mainDpsFirstPhase",
-      "mainDpsSecondPhase",
-      "mainDpsActivationInterval",
+      "firstPhase",
+      "secondPhase",
+      "activationInterval",
       "level",
       "tier",
       "activeTalents"
@@ -35,10 +35,10 @@
       "baseDamage": 120,
       "baseSpeed": 0.09,
       "baseCrit": 0,
-      "mainDpsFirstPhase": 4.6,
-      "mainDpsSecondPhase": 1.7,
-      "mainDpsActivationInterval": 4.7,
-      "activeTalents": []
+      "activeTalents": [],
+      "firstPhase": 4.6,
+      "secondPhase": 1.7,
+      "activationInterval": 4.7
     }
   },
   "sentry": {
@@ -46,15 +46,15 @@
       "baseDamage",
       "baseSpeed",
       "baseCrit",
-      "mainDpsDamageIncrease",
-      "mainDpsActivationInterval"
+      "damageIncrease",
+      "activationInterval"
     ],
     "defaults": {
       "baseDamage": 456,
       "baseSpeed": 0.09,
       "baseCrit": 0,
-      "mainDpsDamageIncrease": 244,
-      "mainDpsActivationInterval": 0.95
+      "damageIncrease": 244,
+      "activationInterval": 0.95
     }
   },
   "cultists": {
@@ -62,7 +62,7 @@
       "baseDamage",
       "baseSpeed",
       "baseCrit",
-      "mainDpsDamageIncrease",
+      "damageIncrease",
       "sacrifices",
       "level",
       "tier"
@@ -71,8 +71,8 @@
       "baseDamage": 1021,
       "baseSpeed": 0.11,
       "baseCrit": 17,
-      "mainDpsDamageIncrease": 300,
-      "sacrifices": 0
+      "sacrifices": 0,
+      "damageIncrease": 300
     }
   },
   "bladedancer": {
@@ -80,7 +80,7 @@
       "baseDamage",
       "baseSpeed",
       "baseCrit",
-      "mainDpsDamageIncrease",
+      "damageIncrease",
       "level",
       "tier"
     ],
@@ -88,7 +88,7 @@
       "baseDamage": 1301,
       "baseSpeed": 0.14,
       "baseCrit": 0,
-      "mainDpsDamageIncrease": 0
+      "damageIncrease": 0
     }
   },
   "crystalmancer": {
@@ -96,15 +96,15 @@
       "baseDamage",
       "baseSpeed",
       "baseCrit",
-      "mainDpsDamageIncrease",
-      "mainDpsActivationInterval"
+      "damageIncrease",
+      "activationInterval"
     ],
     "defaults": {
       "baseDamage": 197,
       "baseSpeed": 0.07,
       "baseCrit": 0,
-      "mainDpsDamageIncrease": 800,
-      "mainDpsActivationInterval": 0.95
+      "damageIncrease": 800,
+      "activationInterval": 0.95
     }
   },
   "demonhunter": {
@@ -112,8 +112,7 @@
       "baseDamage",
       "baseSpeed",
       "baseCrit",
-      "demonHunterEmpowered",
-      "mainDpsDamageIncrease",
+      "damageIncrease",
       "level",
       "tier"
     ],
@@ -121,8 +120,7 @@
       "baseDamage": 1136,
       "baseSpeed": 0.45,
       "baseCrit": 0,
-      "mainDpsDamageIncrease": 75,
-      "demonHunterEmpowered": false
+      "damageIncrease": 75
     }
   },
   "bruiser": {
@@ -130,7 +128,7 @@
       "baseDamage",
       "baseSpeed",
       "baseCrit",
-      "mainDpsDamageIncrease",
+      "damageIncrease",
       "enraged",
       "level",
       "tier"
@@ -139,7 +137,7 @@
       "baseDamage": 112,
       "baseSpeed": 1.2,
       "baseCrit": 0,
-      "mainDpsDamageIncrease": 350
+      "damageIncrease": 350
     }
   },
   "robot": {
@@ -147,7 +145,7 @@
       "baseDamage",
       "baseSpeed",
       "baseCrit",
-      "mainDpsDamageIncrease",
+      "damageIncrease",
       "merges",
       "level",
       "tier"
@@ -156,8 +154,8 @@
       "baseDamage": 224,
       "baseSpeed": 0.7,
       "baseCrit": 0,
-      "mainDpsDamageIncrease": 50,
-      "merges": 0
+      "merges": 0,
+      "damageIncrease": 50
     }
   },
   "engineer": {
@@ -165,13 +163,13 @@
       "baseDamage",
       "baseSpeed",
       "baseCrit",
-      "mainDpsDamageIncrease"
+      "damageIncrease"
     ],
     "defaults": {
       "baseDamage": 971,
       "baseSpeed": 0.07,
       "baseCrit": 0,
-      "mainDpsDamageIncrease": 21
+      "damageIncrease": 21
     }
   },
   "monk": {
@@ -195,13 +193,13 @@
       "baseDamage",
       "baseSpeed",
       "baseCrit",
-      "mainDpsDamageIncrease"
+      "damageIncrease"
     ],
     "defaults": {
       "baseDamage": 64,
       "baseSpeed": 0.6,
       "baseCrit": 0,
-      "mainDpsDamageIncrease": 0
+      "damageIncrease": 0
     }
   },
   "banner": {
@@ -257,7 +255,7 @@
       "damage": 0
     }
   },
-  "witch_statue": {
+  "witch": {
     "fields": [
       "merges",
       "baseDamage",
@@ -277,26 +275,14 @@
   "grindstone": {
     "fields": [
       "level",
-      "tier"
+      "tier",
+      "damage",
+      "merges",
+      "activeTalents"
     ],
     "defaults": {
       "activeTalents": [],
       "damage": 415
     }
-  },
-  "Grindstone": {
-    "fields": [
-      "damage",
-      "merges",
-      "activeTalents"
-    ],
-    "defaults": {}
-  },
-  "dps": {
-    "fields": [
-      "swordStacks",
-      "swordLevel"
-    ],
-    "defaults": {}
   }
 }

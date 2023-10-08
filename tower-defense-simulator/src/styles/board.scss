@@ -1,6 +1,7 @@
 .board {
     border: 1px solid lightgray;
     display: grid; 
+    color: #BBB;
     grid-template-columns: 1fr;
 
     .board-row {
