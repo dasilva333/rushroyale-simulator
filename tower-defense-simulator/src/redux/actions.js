@@ -3,6 +3,9 @@ export const ADD_UNIT = 'ADD_UNIT';
 export const REMOVE_UNIT = 'REMOVE_UNIT';
 export const UPDATE_UNIT = 'UPDATE_UNIT';
 export const SET_BOARD = 'SET_BOARD';
+export const UNDO_ACTION = 'UNDO_ACTION';
+export const REDO_ACTION = 'REDO_ACTION';
+
 // Feel free to add more action types as needed.
 
 // Action Creators
@@ -66,4 +69,5 @@ export function setBoard(board) {
     };
 }
 
-// You can add more action creators as needed, for instance, for handling game mechanics, saving/loading states, etc.
+export const undoAction = () => ({ type: 'UNDO_ACTION' });
+export const redoAction = () => ({ type: 'REDO_ACTION' });

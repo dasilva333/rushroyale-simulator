@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import UnitSelectionModal from './UnitSelectionModal';
 import UnitConfigurationModal from './UnitConfigurationModal';
 import useModalSequence from '../hooks/useModalSequence';
 import { useSelector, useDispatch } from 'react-redux';
-import { addUnit, setBoard } from '../redux/actions';
+import { addUnit, undoAction, redoAction } from '../redux/actions';
 import BoardConfigurationModal from './BoardConfigurationModal';
 import { rehydrateUnit } from '../utils/unitUtilities';
+import BoardStats from './BoardStats';
 
 import '../styles/board.scss';
 
@@ -18,53 +19,19 @@ function GridCell({ x, y, unit, onSelect }) {
     );
 }
 
-function BoardStats({ boardConfig }) {
-    const board = useSelector(state => state.board);
-
-    const dpsDetails = board.flatMap((row, x) =>
-        row.map((unit, y) => {
-            if (!unit) return null;
-
-            // Rehydrate the unit
-            const UnitInstance = rehydrateUnit(unit).class;
-            const dps = UnitInstance.calculateDPS(boardConfig).total;
-
-            return { unit: UnitInstance, dps, x, y };
-        })
-    ).filter(item => item);
-
-    const totalDPS = dpsDetails.reduce((acc, unit) => acc + unit.dps, 0);
-
-    return (
-        <div className="board-stats">
-            <p>Total DPS: {totalDPS}</p>
-            <ul>
-                {dpsDetails.map((item, index) => (
-                    <li key={index}>
-                        {item.unit.name} at ({item.x}, {item.y}): {item.dps} DPS
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-}
-
 function Board() {
     const dispatch = useDispatch();
-    const board = useSelector(state => state.board);
+    const past = useSelector(state => state.past);
+    const future = useSelector(state => state.future);
+    const board = useSelector(state => state.present.board);
     const [selectedCell, setSelectedCell] = useState(null);
     const [selectedUnit, setSelectedUnit] = useState(null); // Holds the unitInfo or name for now
     const [unitConfig, setUnitConfig] = useState({}); // Configuration for the unit instance
     const [boardConfig, setBoardConfig] = useState({
-        playerCrit: 3000, // default value, adjust as needed
+        playerCrit: 2923, // default value, adjust as needed
         // ... other settings
     });
     const [showConfigModal, setShowConfigModal] = useState(false);
-
-    useEffect(() => {
-        const initialBoardState = [...Array(3)].map(() => Array(5).fill(null));
-        dispatch(setBoard(initialBoardState));
-    }, [dispatch]);
 
     const {
         activeModal,
@@ -76,14 +43,14 @@ function Board() {
     const handleCellClick = (x, y) => {
         const unit = board[x][y];
         setSelectedCell({ x, y });
-      
+
         if (unit) {
-          setSelectedUnit(unit);
-          showConfigurationModal();
+            setSelectedUnit(unit);
+            showConfigurationModal();
         } else {
-          showSelectionModal();
+            showSelectionModal();
         }
-      };      
+    };
 
     const handleUnitSelect = (unitInfo) => {
         setSelectedUnit(unitInfo); // Just set the unitInfo
@@ -113,6 +80,9 @@ function Board() {
                     ))}
                 </div>
             ))}
+            <button onClick={() => dispatch(undoAction())} disabled={past.length === 0}>Undo</button>
+            <button onClick={() => dispatch(redoAction())} disabled={future.length === 0}>Redo</button>
+
             <button onClick={() => setShowConfigModal(true)}>Configure Board</button>
             {showConfigModal && (
                 <BoardConfigurationModal

@@ -33,17 +33,18 @@ class DPSUnit extends BaseUnit {
         const newAttackSpeed = this.computeAttackSpeed(baseSpeed);
         const newAttackDamage = this.computeAttackDamage(baseDamage);
         
-        const totalCritBuffPercent = Math.min(1, DPSUnit.playerBaseCritChance + (baseCritChance / 100) + (DPSUnit.sumOfArray(this.totalCritBuff()) / 100));
+        const totalCritChance = Math.min(1, DPSUnit.playerBaseCritChance + (baseCritChance / 100) + (DPSUnit.sumOfArray(this.totalCritBuff()) / 100));
         
         const hitsPerSecond = 1 / newAttackSpeed;
-        const critHitsPerSecond = hitsPerSecond * totalCritBuffPercent;
+        const critHitsPerSecond = hitsPerSecond * totalCritChance;
         
         let totalCritDmgBuff = DPSUnit.sumOfArray(this.totalCritDmgBuff()) + baseCritDamage;
         const criticalDamage = Math.floor(newAttackDamage * ((boardConfig.playerCrit * (1 + (totalCritDmgBuff / 100))) + totalCritDmgBuff) / 100);
         
         const critDmgPerSecond = Math.floor(criticalDamage * critHitsPerSecond);
         const dmgPerSecond = newAttackDamage / newAttackSpeed;
-    
+        
+        // Added totalCritChance to DamageValues
         return new DamageValues(
             Math.floor(dmgPerSecond + critDmgPerSecond),
             newAttackDamage,
@@ -52,9 +53,10 @@ class DPSUnit extends BaseUnit {
             critDmgPerSecond,
             hitsPerSecond,
             critHitsPerSecond,
-            criticalDamage
+            criticalDamage,
+            totalCritChance
         );
-    }
+    }    
     
     calculateDPS(boardConfig) {
         return this.baseCalculateDPS(boardConfig);

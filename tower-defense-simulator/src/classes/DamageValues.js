@@ -7,7 +7,8 @@ class DamageValues {
         critDmgPerSecond = 0,
         hitsPerSecond = 0,
         critHitsPerSecond = 0,
-        criticalDamage = 0
+        criticalDamage = 0,
+        totalCritChance = 0
     ) {
         this.total = total;
         this.newAttackDamage = newAttackDamage;
@@ -17,6 +18,7 @@ class DamageValues {
         this.hitsPerSecond = hitsPerSecond;
         this.critHitsPerSecond = critHitsPerSecond;
         this.criticalDamage = criticalDamage;
+        this.totalCritChance = totalCritChance;
     }
 }
 
