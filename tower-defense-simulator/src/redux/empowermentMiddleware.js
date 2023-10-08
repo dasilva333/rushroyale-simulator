@@ -3,6 +3,7 @@ import BoardManager from '../components/BoardManager';
 import { DemonHunter } from '../components/UnitComponents/DemonHunter';
 import { Cultist } from '../components/UnitComponents/Cultist';
 import { BladeDancer } from '../components/UnitComponents/BladeDancer';
+// import { Monk } from '../components/UnitComponents/Monk';
 
 export const empowermentMiddleware = store => next => action => {
     const result = next(action); // let the action pass through
