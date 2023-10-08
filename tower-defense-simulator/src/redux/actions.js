@@ -5,6 +5,7 @@ export const UPDATE_UNIT = 'UPDATE_UNIT';
 export const SET_BOARD = 'SET_BOARD';
 export const UNDO_ACTION = 'UNDO_ACTION';
 export const REDO_ACTION = 'REDO_ACTION';
+export const SET_LIKE_NEIGHBORS = "SET_LIKE_NEIGHBORS";
 
 // Feel free to add more action types as needed.
 

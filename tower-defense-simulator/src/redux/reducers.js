@@ -1,5 +1,5 @@
 // Redux Reducers 
-import { ADD_UNIT, REMOVE_UNIT, UPDATE_UNIT, SET_BOARD, UNDO_ACTION, REDO_ACTION } from './actions';
+import { ADD_UNIT, REMOVE_UNIT, UPDATE_UNIT, SET_BOARD, UNDO_ACTION, REDO_ACTION, SET_LIKE_NEIGHBORS } from './actions';
 import { rehydrateUnit } from '../utils/unitUtilities';
 
 const initialState = {
@@ -25,13 +25,13 @@ function rootReducer(state = initialState, action) {
             let updatedBoard;
             // console.log('state', state);
             if (action.type === ADD_UNIT) {
-                const unitConfig = action.payload.unit;
-                const unitInstance = rehydrateUnit(unitConfig).class;
+                const { unit, position } = action.payload;
+                const unitInstance = rehydrateUnit(unit, position.x, position.y).class;
                 const unitObject = unitInstance.toObject();
                 const boardAfterAdd = [...state.present.board];
-                const rowToUpdate = [...boardAfterAdd[action.payload.position.x]];
-                rowToUpdate[action.payload.position.y] = unitObject;
-                boardAfterAdd[action.payload.position.x] = rowToUpdate;
+                const rowToUpdate = [...boardAfterAdd[position.x]];
+                rowToUpdate[position.y] = unitObject;
+                boardAfterAdd[position.x] = rowToUpdate;
                 updatedBoard = boardAfterAdd;
             } else if (action.type === REMOVE_UNIT) {
                 const boardAfterRemove = [...state.present.board];
@@ -53,6 +53,15 @@ function rootReducer(state = initialState, action) {
                 past: [...state.past, state.present],
                 present: { board: updatedBoard },
                 future: []
+            };
+
+        case SET_LIKE_NEIGHBORS:
+            return {
+                ...state,
+                present: {
+                    ...state.present,
+                    board: action.payload
+                }
             };
 
         case UNDO_ACTION:

@@ -4,13 +4,16 @@ class BaseUnit {
     static defaultImage = "";
     static playerBaseCritChance = 0.05; // Assuming it's global across all units
 
-    constructor(config) {
+    constructor(config, x, y) {
         this.id = unitCounter++;
         this.name = config.name;
         this.baseSpeed = config.baseSpeed || 0;
         this.baseDamage = config.baseDamage || 0;
         this.baseCritChance = config.baseCritChance || 0;
         this.baseCritDamage = config.baseCritDamage || 0;
+        this.x = x || -1;
+        this.y = y || -1;
+        this.neighbors = config.neighbors || 0;
     }
 
     // Getter to construct the complete image path
@@ -30,8 +33,8 @@ class BaseUnit {
             baseSpeed: this.baseSpeed,
             baseDamage: this.baseDamage,
             baseCritChance: this.baseCritChance,
-            baseCritDamage: this.baseCritDamage
-            // ... other properties you want to serialize
+            baseCritDamage: this.baseCritDamage,
+            neighbors: this.neighbors
         };
     }
 }

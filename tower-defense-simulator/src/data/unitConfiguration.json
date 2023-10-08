@@ -57,7 +57,7 @@
       "activationInterval": 0.95
     }
   },
-  "cultists": {
+  "cultist": {
     "fields": [
       "baseDamage",
       "baseSpeed",

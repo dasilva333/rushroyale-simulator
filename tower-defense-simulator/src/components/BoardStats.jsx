@@ -10,7 +10,7 @@ function BoardStats({ boardConfig }) {
             if (!unit) return null;
 
             // Rehydrate the unit
-            const UnitInstance = rehydrateUnit(unit).class;
+            const UnitInstance = rehydrateUnit(unit, x, y).class;
             const dpsInfo = UnitInstance.calculateDPS(boardConfig); // assuming calculateDPS returns an object now
 
             return { unit: UnitInstance, dpsInfo, x, y };

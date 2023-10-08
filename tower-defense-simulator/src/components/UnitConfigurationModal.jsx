@@ -8,7 +8,6 @@ import unitConfiguration from '../data/unitConfiguration.json';
 
 function UnitConfigurationModal({ unit, onConfirm, onConfigChange }) {
   const { fields, defaults } = unitConfiguration[unit ? unit.name.toLowerCase() : ''] || {};
-
   useEffect(() => {
     if (unit) {
       onConfigChange(defaults);
