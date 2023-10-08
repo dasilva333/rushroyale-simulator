@@ -71,5 +71,48 @@ class BoardManager {
 
         return adjacentUnits;
     }
+
+     // Returns a 2D array representing the number of connected nodes for each unit on the board.
+  countConnectedNodes(value) {
+    const counts = [];
+    for (let i = 0; i < this.boardState.length; i++) {
+      counts[i] = [];
+      for (let j = 0; j < this.boardState[i].length; j++) {
+        if (this.boardState[i][j] && this.boardState[i][j].name === value) {
+          counts[i][j] = this.countAdjacent(i, j, value);
+          this.clearVisited();
+        } else {
+            counts[i][j] = 0;
+        }
+      }
+    }
+    return counts;
+  }
+  
+  clearVisited() {
+    for (let i = 0; i < this.boardState.length; i++) {
+      for (let j = 0; j < this.boardState[i].length; j++) {
+        if (this.boardState[i][j]) {
+          this.boardState[i][j].visited = false;
+        }
+      }
+    }
+  }
+  
+  countAdjacent(i, j, value) {
+    let count = 0;
+    if (!this.boardState[i][j].visited && this.boardState[i][j].name === value) {
+      this.boardState[i][j].visited = true;
+      count++;
+      
+      const neighbors = this.getAdjacentUnitsForTile(i, j);
+      for (let neighbor of neighbors) {
+        if (neighbor.name === value && !neighbor.visited) {
+          count += this.countAdjacent(neighbor.x, neighbor.y, value);
+        }
+      }
+    }
+    return count;
+  }
 }
 export default BoardManager;
