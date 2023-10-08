@@ -7,59 +7,53 @@ class DPSUnit extends BaseUnit {
         return arr.reduce((acc, curr) => acc + curr, 0);
     }
     
+    getTotalBuffByType(type) {
+        return DPSUnit.sumOfArray(this.buffs.filter(buff => buff.type === type).map(buff => buff.value));
+    }
+
     totalSpeedBuff() {
-        return this.buffs.filter(buff => buff.type === "speed").map(buff => buff.value);
+        return this.getTotalBuffByType("speed");
     }
 
     totalDamageBuff() {
-        return this.buffs.filter(buff => buff.type === "damage").map(buff => buff.value);
+        return this.getTotalBuffByType("damage");
     }
     
     totalArmorBuff() {
-        return this.buffs.filter(buff => buff.type === "armor-damage").map(buff => buff.value);
+        return this.getTotalBuffByType("armor-damage");
     }
 
     totalCritBuff() {
-        return this.buffs.filter(buff => buff.type === "crit-chance").map(buff => buff.value);
+        return this.getTotalBuffByType("crit-chance");
     }
 
     totalCritDmgBuff() {
-        return this.buffs.filter(buff => buff.type === "crit-damage").map(buff => buff.value);
+        return this.getTotalBuffByType("crit-damage");
     }
     
     computeAttackSpeed(baseSpeed) {
-        let speed = baseSpeed;
-        for (let buff of this.totalSpeedBuff()) {
-            speed = speed / (1 + (buff / 100));
-        }
+        const speed = baseSpeed / (1 + (this.totalSpeedBuff() / 100));
         return speed;
     }
     
     computeAttackDamage(baseDamage) {
-        let damage = baseDamage;
-        for (let buff of this.totalDamageBuff()) {
-            damage = Math.round(damage * (1 + (buff / 100)));
-        }
-        damage = (damage * (1 + (DPSUnit.sumOfArray(this.totalArmorBuff()) / 100)));
+        const damage = Math.round(baseDamage * (1 + (this.totalDamageBuff() / 100))) * (1 + (this.totalArmorBuff() / 100));
         return damage;
     }
 
     baseCalculateDPS(boardConfig, baseSpeed = this.baseSpeed, baseDamage = this.baseDamage, baseCritChance = this.baseCritChance, baseCritDamage = this.baseCritDamage) {
         const newAttackSpeed = this.computeAttackSpeed(baseSpeed);
         const newAttackDamage = this.computeAttackDamage(baseDamage);
-        console.log(`baseCalculateDPS ${newAttackSpeed} ${baseSpeed}`);
-        const totalCritChance = Math.min(1, DPSUnit.playerBaseCritChance + (baseCritChance / 100) + (DPSUnit.sumOfArray(this.totalCritBuff()) / 100));
-        
+        const totalCritChance = Math.min(1, DPSUnit.playerBaseCritChance + (baseCritChance / 100) + (this.totalCritBuff() / 100));
+        const totalCritDmgBuff = this.totalCritDmgBuff() + baseCritDamage;
+
         const hitsPerSecond = 1 / newAttackSpeed;
         const critHitsPerSecond = hitsPerSecond * totalCritChance;
-        
-        let totalCritDmgBuff = DPSUnit.sumOfArray(this.totalCritDmgBuff()) + baseCritDamage;
         const criticalDamage = Math.floor(newAttackDamage * ((boardConfig.playerCrit * (1 + (totalCritDmgBuff / 100))) + totalCritDmgBuff) / 100);
         
         const critDmgPerSecond = Math.floor(criticalDamage * critHitsPerSecond);
         const dmgPerSecond = newAttackDamage / newAttackSpeed;
-        
-        // Added totalCritChance to DamageValues
+
         return new DamageValues(
             Math.floor(dmgPerSecond + critDmgPerSecond),
             newAttackDamage,
@@ -71,13 +65,11 @@ class DPSUnit extends BaseUnit {
             criticalDamage,
             totalCritChance
         );
-    }    
-    
+    }
+
     calculateDPS(boardConfig) {
-        const dpsInfo = this.baseCalculateDPS(boardConfig);
-        return dpsInfo;
+        return this.baseCalculateDPS(boardConfig);
     }
 }
 
 export default DPSUnit;
-

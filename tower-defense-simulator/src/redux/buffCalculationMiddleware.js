@@ -12,6 +12,7 @@ function calculateBuffs(boardState) {
             return null;
         })
     );
+    const buffKeys = ["speed", "damage", "armor-damage", "crit-chance", "crit-damage"];
 
     for (let i = 0; i < hydratedBoard.length; i++) {
         for (let j = 0; j < hydratedBoard[i].length; j++) {
@@ -20,10 +21,12 @@ function calculateBuffs(boardState) {
                 const neighbors = BoardManager.getAdjacentUnitsForTile(hydratedBoard, i, j);
                 unit.class.buffs = []; // Reset buffs
                 for (const neighbor of neighbors) {
-                    if (neighbor.class.name === "Banner") {
-                        unit.class.buffs.push({ type: "speed", value: neighbor.unitClass.getSpeedBuff(neighbor.class) });
+                    for (const buffType of buffKeys) {
+                        const buffValue = neighbor.unitClass.getUnitBuffs(buffType, neighbor.class);
+                        if (buffValue !== 0) {
+                            unit.class.buffs.push({ type: buffType, value: buffValue });
+                        }
                     }
-                    // Handle other buff types here...
                 }
             }
         }

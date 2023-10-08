@@ -15,18 +15,13 @@ class Banner extends SupportUnit {
     this.component = BannerComponent;
   }
 
-  static getSpeedBuff({ tier, level }) {
-    const minCardLevel = unitsService.levels[0];
-    const newAttackSpeed = (Banner.baseAttackSpeed + ((level - minCardLevel) * Banner.tierMultiplier)) * tier;
-    return newAttackSpeed;
-  }
-
-  // The method to return the buff to its neighbors
-  getBuffForNeighbor() {
-    return {
-      type: 'speed',
-      value: this.getSpeedBuff()
-    };
+  static getUnitBuffs(key, { tier, level }) {
+    let buffValue = 0;
+    if (key == "speed"){
+      const minCardLevel = unitsService.levels[0];
+      buffValue = (Banner.baseAttackSpeed + ((level - minCardLevel) * Banner.tierMultiplier)) * tier;
+    }
+    return buffValue;
   }
 
   // Additional methods specific to the Banner unit here
