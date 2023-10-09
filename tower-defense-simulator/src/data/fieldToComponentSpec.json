@@ -11,7 +11,7 @@
         "isNullable": false,
         "label": "Speed"
     },
-    "baseCrit": {
+    "baseCritChance": {
         "componentType": "input",
         "inputType": "number",
         "isNullable": false,

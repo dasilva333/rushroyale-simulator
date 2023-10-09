@@ -39,6 +39,7 @@ function rootReducer(state = initialState, action) {
                 const { unit, position } = action.payload;
                 const unitInstance = rehydrateUnit(unit, position.x, position.y).class;
                 const unitObject = unitInstance.toObject();
+                // console.log('adding unit', unit, unitObject);
                 const boardAfterAdd = [...state.present.board];
                 const rowToUpdate = [...boardAfterAdd[position.x]];
                 rowToUpdate[position.y] = unitObject;
@@ -54,6 +55,7 @@ function rootReducer(state = initialState, action) {
                 const boardAfterUpdate = [...state.present.board];
                 const rowToUpdateUnit = [...boardAfterUpdate[action.payload.position.x]];
                 rowToUpdateUnit[action.payload.position.y] = action.payload.unit;
+                // console.log('updating unit', action.payload.unit);
                 boardAfterUpdate[action.payload.position.x] = rowToUpdateUnit;
                 updatedBoard = boardAfterUpdate;
             } else if (action.type === SET_BOARD) {

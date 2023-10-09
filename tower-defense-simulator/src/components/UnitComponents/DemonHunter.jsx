@@ -50,9 +50,7 @@ class DemonHunter extends DPSUnit {
     return {
       ...baseObject,
       empowered: this.empowered,
-      damageIncrease: this.damageIncrease,
-      tier: this.tier,
-      level: this.level
+      damageIncrease: this.damageIncrease
     };
   }
 }

@@ -1,4 +1,4 @@
-function NumberInput({ inputType, value, label, onChange }) {
+function NumberInput({ inputType, value, defaultValue, label, onChange }) {
     const fieldId = `input-${label}`;
 
     return (
@@ -8,7 +8,7 @@ function NumberInput({ inputType, value, label, onChange }) {
                 type={inputType || 'number'}
                 className="form-control"
                 id={fieldId}
-                value={value} 
+                value={value || defaultValue || ''}  // Use an empty string as default if value is undefined
                 onChange={onChange}
             />
         </div>

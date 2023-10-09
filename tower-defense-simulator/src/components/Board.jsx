@@ -78,7 +78,7 @@ function Board() {
         };
         // console.log('cellContext', cellContext, selectedCell, fullUnitConfig);
         if (cellContext === "BoardCell") {
-            if (selectedUnit) {
+            if (board[selectedCell.x][selectedCell.y]) {
                 dispatch(updateUnit(fullUnitConfig, selectedCell.x, selectedCell.y));
             } else {
                 dispatch(addUnit(fullUnitConfig, selectedCell.x, selectedCell.y));

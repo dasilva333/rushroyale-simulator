@@ -34,7 +34,7 @@ class BaseUnit {
     }
 
     calculateAltDPS() {
-        return new DamageValues(); // returns the default 0-filled damage report
+        return null;
     }
 
     getUnitBuffs() {
@@ -49,6 +49,10 @@ class BaseUnit {
             baseDamage: this.baseDamage,
             baseCritChance: this.baseCritChance,
             baseCritDamage: this.baseCritDamage,
+            tier: this.tier,
+            level: this.level,
+            x: this.x,
+            y: this.y,
             neighbors: this.neighbors,
             buffs: this.buffs
         };

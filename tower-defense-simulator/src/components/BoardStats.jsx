@@ -27,7 +27,13 @@ function BoardStats({ boardConfig }) {
             {dpsDetails.map((item, index) => (
                 <div key={index}>
                     <strong>{item.unit.name}</strong> at ({item.x}, {item.y}):
-                    {/* Remaining stats here, similar to your provided code */}
+                    <div>Base Damage: {item.dpsInfo.newAttackDamage.toLocaleString()}</div>
+                    <div>Attack Speed: {item.dpsInfo.newAttackSpeed} / s</div>
+                    <div>DPS: {item.dpsInfo.dmgPerSecond.toLocaleString()} / s</div>
+                    <div>Crit. Damage: {item.dpsInfo.criticalDamage.toLocaleString()} / hit</div>
+                    <div>Crit. Hits: {item.dpsInfo.critHitsPerSecond.toLocaleString()} / s ({item.dpsInfo.totalCritChance * 100}%)</div>
+                    <div>Crit. DPS: {item.dpsInfo.critDmgPerSecond.toLocaleString()} / s</div>
+                    {item.unit.statsComponent && React.createElement(item.unit.statsComponent, { dpsInfo: item.dpsInfo })}
                 </div>
             ))}
         </div>

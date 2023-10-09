@@ -32,7 +32,7 @@ class Cultist extends DPSUnit {
   calculateDPS(boardConfig) {
     let damage = this.baseDamage;
     let speed = this.baseSpeed;
-    let crit = this.baseCrit;
+    let crit = this.baseCritChance;
 
     // Use instance properties directly
     const empowermentStatus = this.empowered;

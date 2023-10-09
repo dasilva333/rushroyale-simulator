@@ -32,7 +32,7 @@ function calculateBuffs(boardState, globalUnits = []) {
         }
     }
 
-    console.log('globalBuffs', globalBuffs);
+    // console.log('globalBuffs', globalBuffs);
 
     for (let i = 0; i < hydratedBoard.length; i++) {
         for (let j = 0; j < hydratedBoard[i].length; j++) {
@@ -74,7 +74,7 @@ export const buffCalculationMiddleware = store => next => action => {
         const currentBoardState = store.getState().present.board;
         const globalUnits = store.getState().present.globalUnits;
         const newBoardState = calculateBuffs(currentBoardState, globalUnits);
-        console.log(newBoardState);
+        // console.log(newBoardState);
         store.dispatch(updateBuffs(newBoardState));
     }
     return result;

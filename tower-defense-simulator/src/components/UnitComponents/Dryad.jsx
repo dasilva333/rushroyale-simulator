@@ -10,6 +10,7 @@ class Dryad extends SupportUnit {
       name: "Dryad",
       ...config
     });
+    this.merges = config.merges;
     this.component = DryadComponent;
   }
 
@@ -22,7 +23,17 @@ class Dryad extends SupportUnit {
     return 0; // Return 0 if the buffType doesn't match any known buffs
   }
 
-  // Additional methods specific to the Dryad unit here
+    // Additional methods specific to the Witch unit here
+    toObject() {
+      // Grab the serialized properties from the parent class
+      const baseObject = super.toObject();
+  
+      // Return the merged object
+      return {
+        ...baseObject,
+        merges: this.merges
+      };
+    }
 }
 
 function DryadComponent(props) {

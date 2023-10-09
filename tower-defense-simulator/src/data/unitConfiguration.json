@@ -3,7 +3,7 @@
     "fields": [
       "baseDamage",
       "baseSpeed",
-      "baseCrit",
+      "baseCritChance",
       "tier",
       "level",
       "absorbs",
@@ -13,7 +13,7 @@
     "defaults": {
       "baseDamage": 120,
       "baseSpeed": 0.6,
-      "baseCrit": 0,
+      "baseCritChance": 0,
       "absorbs": 1,
       "talent": "none",
       "damageIncrease": 600
@@ -23,7 +23,7 @@
     "fields": [
       "baseDamage",
       "baseSpeed",
-      "baseCrit",
+      "baseCritChance",
       "firstPhase",
       "secondPhase",
       "activationInterval",
@@ -34,7 +34,7 @@
     "defaults": {
       "baseDamage": 120,
       "baseSpeed": 0.09,
-      "baseCrit": 0,
+      "baseCritChance": 0,
       "activeTalents": [],
       "firstPhase": 4.6,
       "secondPhase": 1.7,
@@ -45,14 +45,14 @@
     "fields": [
       "baseDamage",
       "baseSpeed",
-      "baseCrit",
+      "baseCritChance",
       "damageIncrease",
       "activationInterval"
     ],
     "defaults": {
       "baseDamage": 456,
       "baseSpeed": 0.09,
-      "baseCrit": 0,
+      "baseCritChance": 0,
       "damageIncrease": 244,
       "activationInterval": 0.95
     }
@@ -61,7 +61,7 @@
     "fields": [
       "baseDamage",
       "baseSpeed",
-      "baseCrit",
+      "baseCritChance",
       "damageIncrease",
       "sacrifices",
       "level",
@@ -70,7 +70,7 @@
     "defaults": {
       "baseDamage": 1021,
       "baseSpeed": 0.11,
-      "baseCrit": 17,
+      "baseCritChance": 17,
       "sacrifices": 0,
       "damageIncrease": 300
     }
@@ -79,7 +79,7 @@
     "fields": [
       "baseDamage",
       "baseSpeed",
-      "baseCrit",
+      "baseCritChance",
       "damageIncrease",
       "level",
       "tier"
@@ -87,7 +87,7 @@
     "defaults": {
       "baseDamage": 1301,
       "baseSpeed": 0.14,
-      "baseCrit": 0,
+      "baseCritChance": 0,
       "damageIncrease": 0
     }
   },
@@ -95,14 +95,14 @@
     "fields": [
       "baseDamage",
       "baseSpeed",
-      "baseCrit",
+      "baseCritChance",
       "damageIncrease",
       "activationInterval"
     ],
     "defaults": {
       "baseDamage": 197,
       "baseSpeed": 0.07,
-      "baseCrit": 0,
+      "baseCritChance": 0,
       "damageIncrease": 800,
       "activationInterval": 0.95
     }
@@ -111,7 +111,7 @@
     "fields": [
       "baseDamage",
       "baseSpeed",
-      "baseCrit",
+      "baseCritChance",
       "damageIncrease",
       "level",
       "tier"
@@ -119,7 +119,7 @@
     "defaults": {
       "baseDamage": 1136,
       "baseSpeed": 0.45,
-      "baseCrit": 0,
+      "baseCritChance": 0,
       "damageIncrease": 75
     }
   },
@@ -127,7 +127,7 @@
     "fields": [
       "baseDamage",
       "baseSpeed",
-      "baseCrit",
+      "baseCritChance",
       "damageIncrease",
       "enraged",
       "level",
@@ -136,7 +136,7 @@
     "defaults": {
       "baseDamage": 112,
       "baseSpeed": 1.2,
-      "baseCrit": 0,
+      "baseCritChance": 0,
       "damageIncrease": 350
     }
   },
@@ -144,7 +144,7 @@
     "fields": [
       "baseDamage",
       "baseSpeed",
-      "baseCrit",
+      "baseCritChance",
       "damageIncrease",
       "merges",
       "level",
@@ -153,7 +153,7 @@
     "defaults": {
       "baseDamage": 224,
       "baseSpeed": 0.7,
-      "baseCrit": 0,
+      "baseCritChance": 0,
       "merges": 0,
       "damageIncrease": 50
     }
@@ -162,13 +162,13 @@
     "fields": [
       "baseDamage",
       "baseSpeed",
-      "baseCrit",
+      "baseCritChance",
       "damageIncrease"
     ],
     "defaults": {
       "baseDamage": 971,
       "baseSpeed": 0.07,
-      "baseCrit": 0,
+      "baseCritChance": 0,
       "damageIncrease": 21
     }
   },
@@ -176,7 +176,7 @@
     "fields": [
       "baseDamage",
       "baseSpeed",
-      "baseCrit",
+      "baseCritChance",
       "isActivated",
       "level",
       "tier"
@@ -184,7 +184,7 @@
     "defaults": {
       "baseDamage": 350,
       "baseSpeed": 0.6,
-      "baseCrit": 0,
+      "baseCritChance": 0,
       "isActivated": false
     }
   },
@@ -192,13 +192,13 @@
     "fields": [
       "baseDamage",
       "baseSpeed",
-      "baseCrit",
+      "baseCritChance",
       "damageIncrease"
     ],
     "defaults": {
       "baseDamage": 64,
       "baseSpeed": 0.6,
-      "baseCrit": 0,
+      "baseCritChance": 0,
       "damageIncrease": 0
     }
   },
@@ -260,14 +260,14 @@
       "merges",
       "baseDamage",
       "baseSpeed",
-      "baseCrit",
+      "baseCritChance",
       "level",
       "tier"
     ],
     "defaults": {
-      "baseDamage": 100,
-      "baseSpeed": 1,
-      "baseCrit": 0,
+      "baseDamage": 450,
+      "baseSpeed": 0.14,
+      "baseCritChance": 0,
       "merges": 15,
       "damage": 204
     }
