@@ -1,14 +1,15 @@
 import React from 'react';
 import { availableUnits } from '../utils/unitUtilities';
 
-function UnitSelectionModal({ onSelect, onClose, globalUnits }) {
-    let unitsToShow;
+function UnitSelectionModal({ onSelect, onClose, globalUnits, cellContext }) {
+    let unitsToShow = availableUnits;
 
-    if (globalUnits.length === 5) {
+    if (cellContext === "DeckCell") {
+        const namesInGlobalUnits = globalUnits.filter(Boolean).map(unit => unit.name);
+        unitsToShow = availableUnits.filter(unit => !namesInGlobalUnits.includes(unit.name));
+    } else if (cellContext === "BoardCell" && globalUnits.length === 5) {
         const namesInGlobalUnits = globalUnits.filter(Boolean).map(unit => unit.name);
         unitsToShow = availableUnits.filter(unit => namesInGlobalUnits.includes(unit.name));
-    } else {
-        unitsToShow = availableUnits;
     }
 
     return (

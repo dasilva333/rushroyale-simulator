@@ -5,6 +5,7 @@
     grid-template-columns: 1fr;
 
     .deck {
+        width: 400px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -12,25 +13,28 @@
         margin-top: 15px;
         border-top: 2px solid #ccc;
     }
-
     
     .board-row {
         display: flex;
         justify-content: space-between;
     }
 
+    .board-grid {
+        width: 400px;
+    }
+    
     .grid-cell {
         background: white;
         border: 1px solid lightgray;
-        height: 80px; // Updated height
-        width: 80px; // Updated width
+        height: 80px;
+        width: 80px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
     }
 
-    .unit-selection-modal {
+    .unit-selection-modal, .unit-configuration-modal {
         position: fixed;
         top: 50%;
         left: 50%;
@@ -39,48 +43,56 @@
         border: 1px solid gray;
         padding: 10px;
         z-index: 100;
-        width: 40%;
-        /* Make modal width 80% of the screen width */
-
+        width: 90%; /* Default width for mobile */
+    
+        /* Adjust modal width for larger screens */
+        @media (min-width: 576px) { /* Bootstrap's breakpoint for SM screens */
+            width: 70%;
+        }
+    
+        @media (min-width: 768px) { /* Bootstrap's breakpoint for MD screens */
+            width: 50%;
+        }
+    
+        @media (min-width: 992px) { /* Bootstrap's breakpoint for LG screens */
+            width: 40%;
+        }
+    }
+    
+    .unit-selection-modal {
         ul {
             list-style-type: none;
             padding: 0;
             display: flex;
-            /* Make list items flow in a row */
             flex-wrap: wrap;
-            /* Allow wrapping to next line for overflowing items */
             justify-content: space-between;
-            /* Distribute items with equal space in between */
-
+    
             li {
                 cursor: pointer;
                 padding: 5px;
                 margin: 5px;
-                /* Add margin to give space between each unit */
-                flex-basis: calc(20% - 10px);
-                /* Make each item take up 20% of the width (subtracting margin) */
+                flex-basis: calc(50% - 10px); /* Default for mobile */
+    
+                @media (min-width: 576px) { /* Bootstrap's breakpoint for SM screens */
+                    flex-basis: calc(33% - 10px);
+                }
+    
+                @media (min-width: 768px) { /* Bootstrap's breakpoint for MD screens */
+                    flex-basis: calc(25% - 10px);
+                }
+    
                 text-align: center;
-                /* Center the unit names under their images */
-
+    
                 &:hover {
                     background: lightgray;
                 }
             }
         }
     }
-
+    
     .unit-configuration-modal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        border: 1px solid gray;
-        padding: 10px;
-        z-index: 101; // One level higher than .unit-selection-modal
-        width: 40%;
-    }
-
+        z-index: 101; /* One level higher than .unit-selection-modal */
+    }    
 
     .board-stats {
         margin-top: 10px;
@@ -132,6 +144,14 @@
 
         &.BladeDancer .unit-tooltip {
             color: yellow;
+        }
+
+        &.Dryad .unit-tooltip {
+            color: green;
+        }
+
+        &.Monk .unit-tooltip {
+            color: orange;
         }
     }    
 

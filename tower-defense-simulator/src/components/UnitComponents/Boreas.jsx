@@ -20,7 +20,7 @@ class Boreas extends BaseUnit {
 function BoreasComponent(props) {
   return (
     <div className="unit Boreas">
-      <img src={Boreas.defaultImage} width="70" alt="Boreas Unit" />
+      <img src={Boreas.baseImage} width="70" alt="Boreas Unit" />
     </div>
   );
 }

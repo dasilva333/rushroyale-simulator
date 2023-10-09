@@ -10,9 +10,16 @@ function UnitConfigurationModal({ unit, unitConfig, onConfirm, onConfigChange })
   const config = unitConfiguration[unit ? unit.name.toLowerCase() : ''];
   const { fields, defaults } = config || {};
 
+  const combinedFields = [...(fields || []), ...(Object.keys(defaults || {}))];
+
+  // Set merged default values
   useEffect(() => {
     if (unit && !Object.keys(unitConfig).length) {
-      onConfigChange(defaults); // Only set default values when unitConfig is empty
+      const mergedDefaults = combinedFields.reduce((acc, key) => {
+        acc[key] = unitConfig[key] || defaults[key] || fieldToComponentSpec[key]?.defaultValue;
+        return acc;
+      }, {});
+      onConfigChange(mergedDefaults);
     }
   }, [unit, onConfigChange, defaults, unitConfig]);
 
@@ -31,13 +38,13 @@ function UnitConfigurationModal({ unit, unitConfig, onConfirm, onConfigChange })
             <h5 className="modal-title">Configure {unit.name}</h5>
           </div>
           <div className="modal-body">
-            {fields && fields.map(fieldName => {
+          {combinedFields && combinedFields.map(fieldName => {
               const fieldSpec = fieldToComponentSpec[fieldName];
               const fieldProps = {
                 ...fieldSpec,
-                value: unitConfig[fieldName] || defaults[fieldName] || fieldSpec.defaultValue,
+                value: unitConfig[fieldName] || fieldSpec.defaultValue,
                 onChange: event => handleChange(fieldName, event)
-              };            
+              };          
 
               switch (fieldSpec.componentType) {
                 case 'input':

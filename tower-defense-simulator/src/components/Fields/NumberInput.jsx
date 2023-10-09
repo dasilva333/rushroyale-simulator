@@ -1,18 +1,18 @@
-function CheckboxField({ value, label, onChange }) {
-    const fieldId = `checkbox-${label}`;
+function NumberInput({ inputType, value, label, onChange }) {
+    const fieldId = `input-${label}`;
 
     return (
-        <div className="form-check">
+        <div className="mb-3">
+            {label && <label className="form-label" htmlFor={fieldId}>{label}</label>}
             <input 
-                type="checkbox"
-                className="form-check-input" 
+                type={inputType || 'number'}
+                className="form-control"
                 id={fieldId}
-                checked={value} 
+                value={value} 
                 onChange={onChange}
             />
-            {label && <label className="form-check-label" htmlFor={fieldId}>{label}</label>}
         </div>
     );
 }
 
-export default CheckboxField;
+export default NumberInput;

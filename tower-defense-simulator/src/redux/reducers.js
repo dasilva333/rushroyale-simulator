@@ -127,7 +127,6 @@ function rootReducer(state = initialState, action) {
             
                 // Remove the unit from globalUnits
                 updatedGlobalUnits.splice(action.payload, 1);
-                updatedGlobalUnits.push(null);  // To maintain the length of the globalUnits array after removal
             
                 return {
                     ...state,

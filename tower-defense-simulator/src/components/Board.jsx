@@ -49,7 +49,7 @@ function Board() {
             showSelectionModal();
         }
     };
-    
+
     const handleDeckCellClick = (index) => {
         setCellContext("DeckCell", index);
         setSelectedCell({ x: index });
@@ -85,38 +85,50 @@ function Board() {
             }
         } else if (cellContext === "DeckCell") {
             // Handle the global units here.
-            // Assuming an index or identifier for the selected slot in the deck
-            if (selectedUnit) {
+            if (globalUnits[selectedCell.x]) {
                 dispatch(updateGlobalUnit(fullUnitConfig, selectedCell.x));
             } else {
                 dispatch(addGlobalUnit(fullUnitConfig, selectedCell.x));
             }
         }
-    
+
         closeModal();
-    };     
+    };
 
     const handleConfigChange = (newConfig) => {
         setUnitConfig(prevConfig => ({ ...prevConfig, ...newConfig }));
     };
 
-    // console.log(board);
     return (
-        <div className="board">
-            {board.map((row, x) => (
-                <div key={x} className="board-row">
-                    {row.map((unit, y) => (
-                        <GridCell key={y} x={x} y={y} unit={unit} onSelect={handleBoardCellClick} />
-                    ))}
+        <div className="container board">
+            <div className="row">
+                {/* First column */}
+                <div className="col-md-6 d-flex flex-column align-items-center mt-2">
+                    <div className="board-grid">
+                        {board.map((row, x) => (
+                            <div key={x} className="board-row">
+                                {row.map((unit, y) => (
+                                    <GridCell key={y} x={x} y={y} unit={unit} onSelect={handleBoardCellClick} />
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                    
+                    <Deck globalUnits={globalUnits} onSelect={handleDeckCellClick} />
+
+                    <div className="btn-group mt-2 mb-2" role="group" aria-label="Board actions">
+                        <button className="btn btn-primary" onClick={() => dispatch(undoAction())} disabled={past.length === 0}>Undo</button>
+                        <button className="btn btn-primary" onClick={() => dispatch(redoAction())} disabled={future.length === 0}>Redo</button>
+                        <button className="btn btn-secondary" onClick={() => setShowConfigModal(true)}>Configure Board</button>
+                    </div>
                 </div>
-            ))}
 
-<Deck globalUnits={globalUnits} onSelect={handleDeckCellClick} />
+                {/* Second column */}
+                <div className="col-md-6">
+                    <BoardStats boardConfig={boardConfig} />
+                </div>
+            </div>
 
-            <button onClick={() => dispatch(undoAction())} disabled={past.length === 0}>Undo</button>
-            <button onClick={() => dispatch(redoAction())} disabled={future.length === 0}>Redo</button>
-
-            <button onClick={() => setShowConfigModal(true)}>Configure Board</button>
             {showConfigModal && (
                 <BoardConfigurationModal
                     boardConfig={boardConfig}
@@ -124,9 +136,7 @@ function Board() {
                     onClose={() => setShowConfigModal(false)}
                 />
             )}
-
-            <BoardStats boardConfig={boardConfig} />
-            {activeModal === 'selection' && <UnitSelectionModal onSelect={handleUnitSelect} onClose={closeModal} globalUnits={globalUnits} />}
+            {activeModal === 'selection' && <UnitSelectionModal cellContext={cellContext} onSelect={handleUnitSelect} onClose={closeModal} globalUnits={globalUnits} />}
             {activeModal === 'configuration' && (
                 <UnitConfigurationModal
                     unit={selectedUnit}
