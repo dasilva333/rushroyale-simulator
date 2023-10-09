@@ -1,17 +1,18 @@
-import React from 'react';
+function CheckboxField({ value, label, onChange }) {
+    const fieldId = `checkbox-${label}`;
 
-function NumberInput({ inputType, defaultValue, label, onChange }) {
     return (
-        <div className="mb-3">
-            {label && <label className="form-label">{label}</label>}
+        <div className="form-check">
             <input 
-                type={inputType || 'number'}
-                className="form-control" 
-                defaultValue={defaultValue} 
+                type="checkbox"
+                className="form-check-input" 
+                id={fieldId}
+                checked={value} 
                 onChange={onChange}
             />
+            {label && <label className="form-check-label" htmlFor={fieldId}>{label}</label>}
         </div>
     );
 }
 
-export default NumberInput;
+export default CheckboxField;

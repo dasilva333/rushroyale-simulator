@@ -1,8 +1,12 @@
 import DamageValues from './DamageValues';
+import { tiers, levels } from '../data/unitsService';
+
 let unitCounter = 0;
 class BaseUnit {
     static defaultImage = "";
     static playerBaseCritChance = 0.05; // Assuming it's global across all units
+    static tiers = tiers;
+    static levels = levels;
 
     constructor(config, x, y) {
         this.id = unitCounter++;
@@ -31,6 +35,10 @@ class BaseUnit {
 
     calculateAltDPS() {
         return new DamageValues(); // returns the default 0-filled damage report
+    }
+
+    getUnitBuffs() {
+        return 0;    
     }
 
     toObject() {

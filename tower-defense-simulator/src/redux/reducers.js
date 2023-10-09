@@ -1,16 +1,26 @@
 // Redux Reducers 
-import { ADD_UNIT, REMOVE_UNIT, UPDATE_UNIT, SET_BOARD, UNDO_ACTION, REDO_ACTION, SET_LIKE_NEIGHBORS, UPDATE_BUFFS } from './actions';
+import {
+    ADD_UNIT, REMOVE_UNIT, UPDATE_UNIT, SET_BOARD,
+    UNDO_ACTION, REDO_ACTION,
+    SET_LIKE_NEIGHBORS, UPDATE_BUFFS,
+    ADD_GLOBAL_UNIT, REMOVE_GLOBAL_UNIT, UPDATE_GLOBAL_UNIT
+} from './actions';
+
 import { rehydrateUnit } from '../utils/unitUtilities';
 
 const initialState = {
     past: [],
     present: {
-        board: [...Array(3)].map(() => Array(5).fill(null))
+        board: [...Array(3)].map(() => Array(5).fill(null)),
+        globalUnits: []
     },
     future: []
 };
 
 function rootReducer(state = initialState, action) {
+    let updatedGlobalUnits = [...state.present.globalUnits];
+    let updatedBoard;
+
     switch (action.type) {
         case ADD_UNIT:
         case REMOVE_UNIT:
@@ -22,7 +32,8 @@ function rootReducer(state = initialState, action) {
             // 3. Clear the future.
 
             // Get updated board first
-            let updatedBoard;
+            // 1. Declare updatedBoard and updatedGlobalUnits
+            
             // console.log('state', state);
             if (action.type === ADD_UNIT) {
                 const { unit, position } = action.payload;
@@ -49,9 +60,31 @@ function rootReducer(state = initialState, action) {
                 updatedBoard = action.payload.board;
             }
 
+            // 2. Flatten the board and dedupe the names
+            const uniqueNamesOnBoard = Array.from(
+                new Set(updatedBoard.flat().filter(Boolean).map(unit => unit.name))
+            );
+
+            // 3. Extract names from the globalUnits for easier comparison
+            const namesInGlobalUnits = updatedGlobalUnits.filter(Boolean).map(unit => unit.name);
+
+            // console.log(`namesInGlobalUnits: ${namesInGlobalUnits} uniqueNamesOnBoard: ${uniqueNamesOnBoard}`);
+            // 4. Check for units in the board that aren't in globalUnits
+            for (const name of uniqueNamesOnBoard) {
+                if (!namesInGlobalUnits.includes(name)) {
+                    // console.log(`found a missing unit ${name}`, updatedBoard.flat());
+                    // Get the full unit details from the board
+                    const correspondingUnit = updatedBoard.flat().find(unit => unit && unit.name === name);
+                    // console.log(correspondingUnit)
+                    if (correspondingUnit) {
+                        updatedGlobalUnits.push(correspondingUnit);
+                    }
+                }
+            }
+
             return {
                 past: [...state.past, state.present],
-                present: { board: updatedBoard },
+                present: { board: updatedBoard, globalUnits: updatedGlobalUnits },
                 future: []
             };
 
@@ -63,14 +96,58 @@ function rootReducer(state = initialState, action) {
                     board: action.payload
                 }
             };
+        // Inside the rootReducer function:
+        case ADD_GLOBAL_UNIT:
+            return {
+                ...state,
+                present: {
+                    ...state.present,
+                    globalUnits: [...state.present.globalUnits, action.payload]
+                }
+            };
+
+        case UPDATE_GLOBAL_UNIT:
+            const newGlobalUnits = [...state.present.globalUnits];
+            newGlobalUnits[action.payload.index] = action.payload.unit;
+            return {
+                ...state,
+                present: {
+                    ...state.present,
+                    globalUnits: newGlobalUnits
+                }
+            };
+
+            case REMOVE_GLOBAL_UNIT:
+                const unitToRemoveName = updatedGlobalUnits[action.payload].name;
+            
+                // Remove all instances of the unit from the board
+                updatedBoard = state.present.board.map(row => 
+                    row.map(unit => (unit && unit.name === unitToRemoveName) ? null : unit)
+                );
+            
+                // Remove the unit from globalUnits
+                updatedGlobalUnits.splice(action.payload, 1);
+                updatedGlobalUnits.push(null);  // To maintain the length of the globalUnits array after removal
+            
+                return {
+                    ...state,
+                    present: {
+                        board: updatedBoard,
+                        globalUnits: updatedGlobalUnits
+                    }
+                };
+            
 
         case UPDATE_BUFFS:
             return {
                 past: [...state.past, state.present],
-                present: { board: action.payload },
+                present: {
+                    board: action.payload,
+                    globalUnits: state.present.globalUnits // Preserve the globalUnits
+                },
                 future: []
             };
-            
+
         case UNDO_ACTION:
             if (state.past.length === 0) return state; // Can't undo
             const previous = state.past[state.past.length - 1];

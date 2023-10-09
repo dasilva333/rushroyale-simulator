@@ -18,15 +18,15 @@
         "label": "Crit"
     },
     "tier": {
-        "componentType": "input",
-        "inputType": "number",
+        "componentType": "select",
+        "options": "tiers",
         "defaultValue": 7,
         "label": "Tier"
     },
     "level": {
         "componentType": "select",
         "options": "levels",
-        "defaultValue": "15",
+        "defaultValue": 15,
         "label": "Level"
     },
     "absorbs": {

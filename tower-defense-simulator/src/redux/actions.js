@@ -80,3 +80,12 @@ export function updateBuffs(newBoardState) {
 
 export const undoAction = () => ({ type: 'UNDO_ACTION' });
 export const redoAction = () => ({ type: 'REDO_ACTION' });
+
+
+export const ADD_GLOBAL_UNIT = 'ADD_GLOBAL_UNIT';
+export const REMOVE_GLOBAL_UNIT = 'REMOVE_GLOBAL_UNIT';
+export const UPDATE_GLOBAL_UNIT = 'UPDATE_GLOBAL_UNIT';
+
+export const addGlobalUnit = (unit) => ({ type: ADD_GLOBAL_UNIT, payload: unit });
+export const removeGlobalUnit = (index) => ({ type: REMOVE_GLOBAL_UNIT, payload: index });
+export const updateGlobalUnit = (unit, index) => ({ type: UPDATE_GLOBAL_UNIT, payload: { unit, index } });

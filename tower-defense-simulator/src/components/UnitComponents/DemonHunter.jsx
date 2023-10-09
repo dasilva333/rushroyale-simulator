@@ -38,7 +38,7 @@ class DemonHunter extends DPSUnit {
       undefined, // Default crit chance will be used
       undefined  // Default crit damage will be used
     );
-    console.log(dpsInfo);
+    // console.log(dpsInfo);
     return dpsInfo;
   }
 

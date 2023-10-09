@@ -1,16 +1,16 @@
-import React from 'react';
+function CheckboxField({ value, label, onChange }) {
+    const fieldId = `checkbox-${label}`;
 
-function CheckboxField({ defaultValue, label, onChange }) {
     return (
         <div className="form-check">
             <input 
                 type="checkbox"
                 className="form-check-input" 
-                id="checkboxField"
-                defaultChecked={defaultValue} 
+                id={fieldId}
+                checked={value} 
                 onChange={onChange}
             />
-            {label && <label className="form-check-label" htmlFor="checkboxField">{label}</label>}
+            {label && <label className="form-check-label" htmlFor={fieldId}>{label}</label>}
         </div>
     );
 }

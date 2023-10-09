@@ -71,7 +71,7 @@ class BoardManager {
         newY >= 0 && newY < boardState[newX].length) {
         const unit = boardState[newX][newY];
         if (unit) {
-          console.log('unit', unit);
+          // console.log('unit', unit);
           adjacentUnits.push({ ...unit, x: newX, y: newY }); // added x and y to the object
         }
       }

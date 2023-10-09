@@ -13,7 +13,7 @@ function BoardStats({ boardConfig }) {
             const primaryDPS = UnitInstance.calculateDPS(boardConfig);
             const altDPS = UnitInstance.calculateAltDPS(boardConfig);
             const dpsInfos = [primaryDPS].concat(altDPS ? [altDPS] : []);
-            console.log(dpsInfos);
+            // console.log(dpsInfos);
             return dpsInfos.map(dpsInfo => ({ unit: UnitInstance, dpsInfo, x, y }));
         })
     ).flat().filter(item => item);

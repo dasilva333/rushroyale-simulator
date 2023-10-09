@@ -4,6 +4,16 @@
     color: #BBB;
     grid-template-columns: 1fr;
 
+    .deck {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        margin-top: 15px;
+        border-top: 2px solid #ccc;
+    }
+
+    
     .board-row {
         display: flex;
         justify-content: space-between;

@@ -6,18 +6,21 @@ import SelectWithMinMax from './Fields/SelectWithMinMax';
 import fieldToComponentSpec from '../data/fieldToComponentSpec.json';
 import unitConfiguration from '../data/unitConfiguration.json';
 
-function UnitConfigurationModal({ unit, onConfirm, onConfigChange }) {
-  const { fields, defaults } = unitConfiguration[unit ? unit.name.toLowerCase() : ''] || {};
+function UnitConfigurationModal({ unit, unitConfig, onConfirm, onConfigChange }) {
+  const config = unitConfiguration[unit ? unit.name.toLowerCase() : ''];
+  const { fields, defaults } = config || {};
+
   useEffect(() => {
-    if (unit) {
-      onConfigChange(defaults);
+    if (unit && !Object.keys(unitConfig).length) {
+      onConfigChange(defaults); // Only set default values when unitConfig is empty
     }
-  }, [unit]);
+  }, [unit, onConfigChange, defaults, unitConfig]);
 
   if (!unit) return null;
 
   const handleChange = (fieldName, event) => {
-    onConfigChange({ [fieldName]: event.target.value });
+    let changeObj = { [fieldName]: event.target.type === 'checkbox' ? event.target.checked : event.target.value };
+    onConfigChange(changeObj);
   };
 
   return (
@@ -28,13 +31,13 @@ function UnitConfigurationModal({ unit, onConfirm, onConfigChange }) {
             <h5 className="modal-title">Configure {unit.name}</h5>
           </div>
           <div className="modal-body">
-            {fields.map(fieldName => {
+            {fields && fields.map(fieldName => {
               const fieldSpec = fieldToComponentSpec[fieldName];
               const fieldProps = {
                 ...fieldSpec,
-                defaultValue: defaults[fieldName] || (fieldSpec.defaultValue || undefined),
+                value: unitConfig[fieldName] || defaults[fieldName] || fieldSpec.defaultValue,
                 onChange: event => handleChange(fieldName, event)
-              };
+              };            
 
               switch (fieldSpec.componentType) {
                 case 'input':
@@ -44,6 +47,8 @@ function UnitConfigurationModal({ unit, onConfirm, onConfigChange }) {
                 case 'checkbox':
                   return <CheckboxField {...fieldProps} key={fieldName} />;
                 // ... other cases
+                default:
+                  return null;
               }
             })}
           </div>
