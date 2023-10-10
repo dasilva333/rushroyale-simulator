@@ -3,10 +3,17 @@ import DamageValues from './DamageValues';
 
 class DPSUnit extends BaseUnit {
 
+    constructor(config) {
+        super(config);
+        this.baseSpeed = config.baseSpeed || this.constructor.baseSpeed || 0;
+        this.baseDamage = config.baseDamage || this.constructor.baseDamage || 0;
+        this.baseCritChance = config.baseCritChance || this.constructor.baseCritChance || 0;
+        this.baseCritDamage = config.baseCritDamage || this.constructor.baseCritDamage || 0;
+    }
     static sumOfArray(arr) {
         return arr.reduce((acc, curr) => acc + curr, 0);
     }
-    
+
     getTotalBuffByType(type) {
         return DPSUnit.sumOfArray(this.buffs.filter(buff => buff.type === type).map(buff => buff.value));
     }
@@ -18,7 +25,7 @@ class DPSUnit extends BaseUnit {
     totalDamageBuff() {
         return this.getTotalBuffByType("damage");
     }
-    
+
     totalArmorBuff() {
         return this.getTotalBuffByType("armor-damage");
     }
@@ -30,12 +37,12 @@ class DPSUnit extends BaseUnit {
     totalCritDmgBuff() {
         return this.getTotalBuffByType("crit-damage");
     }
-    
+
     computeAttackSpeed(baseSpeed) {
         const speed = baseSpeed / (1 + (this.totalSpeedBuff() / 100));
         return speed;
     }
-    
+
     computeAttackDamage(baseDamage) {
         const damage = Math.round(baseDamage * (1 + (this.totalDamageBuff() / 100))) * (1 + (this.totalArmorBuff() / 100));
         return damage;
@@ -50,7 +57,7 @@ class DPSUnit extends BaseUnit {
         const hitsPerSecond = 1 / newAttackSpeed;
         const critHitsPerSecond = hitsPerSecond * totalCritChance;
         const criticalDamage = Math.floor(newAttackDamage * ((boardConfig.playerCrit * (1 + (totalCritDmgBuff / 100))) + totalCritDmgBuff) / 100);
-        
+
         const critDmgPerSecond = Math.floor(criticalDamage * critHitsPerSecond);
         const dmgPerSecond = newAttackDamage / newAttackSpeed;
 
@@ -69,6 +76,17 @@ class DPSUnit extends BaseUnit {
 
     calculateDPS(boardConfig) {
         return this.baseCalculateDPS(boardConfig);
+    }
+
+    toObject() {
+        const baseObject = super.toObject();
+        return {
+            ...baseObject,
+            baseSpeed: this.baseSpeed,
+            baseDamage: this.baseDamage,
+            baseCritChance: this.baseCritChance,
+            baseCritDamage: this.baseCritDamage,
+        };
     }
 }
 

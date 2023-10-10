@@ -17,21 +17,24 @@ class BoardManager {
     return units.reduce((total, unit) => total + unit.tier, 0);
   }
 
-  checkAndSetEmpowermentForUnit(unitClass) {
-    this.boardState.forEach((row, rowIndex) => {
-      row.forEach((unit, colIndex) => {
+  checkAndSetEmpowermentForUnit(unitClass, boardStateToProcess) {
+    return boardStateToProcess.map((row, rowIndex) => {
+      return row.map((unit, colIndex) => {
         if (unit && unit.name === unitClass.name) {
           const isEmpowered = unitClass.getEmpowermentCondition(this, unit);
-          unit.empowered = isEmpowered;
+          return { ...unit, empowered: isEmpowered };
         }
+        return unit;
       });
     });
   }
 
   updateAllEmpowermentStatus(unitClasses) {
+    let currentBoardState = this.boardState;
     unitClasses.forEach(unitClass => {
-      this.checkAndSetEmpowermentForUnit(unitClass);
+      currentBoardState = this.checkAndSetEmpowermentForUnit(unitClass, currentBoardState);
     });
+    return currentBoardState;
   }
 
   getLikeNeighborsForAllTiles() {
@@ -82,7 +85,7 @@ class BoardManager {
 
   getAdjacentUnitsForTile(x, y) {
     return BoardManager.getAdjacentUnitsForTile(this.boardState, x, y);
-}
+  }
   // This function will return a 2D array where each Unit's position 
   // corresponds to its rowColumnRelationship value (0, 1, or 2).
   getUnitRowColumnRelationship(unitName) {
@@ -153,18 +156,37 @@ class BoardManager {
 
   countAdjacent(i, j, value) {
     let count = 0;
-    if (!this.boardState[i][j].visited && this.boardState[i][j].name === value) {
-      this.boardState[i][j].visited = true;
-      count++;
 
-      const neighbors = this.getAdjacentUnitsForTile(i, j);
-      for (let neighbor of neighbors) {
-        if (neighbor && !neighbor.visited && neighbor.name === value) {
-          count += this.countAdjacent(neighbor.x, neighbor.y, value);
+    // Define a queue for BFS
+    let queue = [];
+
+    // Push the initial coordinates to the queue
+    queue.push({ x: i, y: j });
+
+    // Loop until the queue is empty
+    while (queue.length > 0) {
+      const current = queue.shift();
+      const x = current.x;
+      const y = current.y;
+
+      if (this.boardState[x][y] && !this.boardState[x][y].visited && this.boardState[x][y].name === value) {
+        this.boardState[x][y].visited = true;
+        count++;
+
+        // Get neighbors
+        const neighbors = this.getAdjacentUnitsForTile(x, y);
+
+        // Loop through neighbors and add them to the queue if they match the conditions
+        for (let neighbor of neighbors) {
+          if (neighbor && !neighbor.visited && neighbor.name === value) {
+            queue.push(neighbor);
+          }
         }
       }
     }
+
     return count;
   }
+
 }
 export default BoardManager;

@@ -1,6 +1,6 @@
 // Redux Reducers 
 import {
-    ADD_UNIT, REMOVE_UNIT, UPDATE_UNIT, SET_BOARD,
+    ADD_UNIT, REMOVE_UNIT, UPDATE_UNIT, SET_BOARD, UPDATE_BOARD,
     UNDO_ACTION, REDO_ACTION,
     SET_LIKE_NEIGHBORS, UPDATE_BUFFS,
     ADD_GLOBAL_UNIT, REMOVE_GLOBAL_UNIT, UPDATE_GLOBAL_UNIT
@@ -33,7 +33,7 @@ function rootReducer(state = initialState, action) {
 
             // Get updated board first
             // 1. Declare updatedBoard and updatedGlobalUnits
-            
+
             // console.log('state', state);
             if (action.type === ADD_UNIT) {
                 const { unit, position } = action.payload;
@@ -108,6 +108,16 @@ function rootReducer(state = initialState, action) {
                 }
             };
 
+        case UPDATE_BOARD:
+            return {
+                past: [...state.past, state.present], // keep track of history for undo purposes
+                present: {
+                    ...state.present,
+                    board: action.payload.board // This is the key change
+                },
+                future: []
+            };
+
         case UPDATE_GLOBAL_UNIT:
             const newGlobalUnits = [...state.present.globalUnits];
             newGlobalUnits[action.payload.index] = action.payload.unit;
@@ -119,25 +129,25 @@ function rootReducer(state = initialState, action) {
                 }
             };
 
-            case REMOVE_GLOBAL_UNIT:
-                const unitToRemoveName = updatedGlobalUnits[action.payload].name;
-            
-                // Remove all instances of the unit from the board
-                updatedBoard = state.present.board.map(row => 
-                    row.map(unit => (unit && unit.name === unitToRemoveName) ? null : unit)
-                );
-            
-                // Remove the unit from globalUnits
-                updatedGlobalUnits.splice(action.payload, 1);
-            
-                return {
-                    ...state,
-                    present: {
-                        board: updatedBoard,
-                        globalUnits: updatedGlobalUnits
-                    }
-                };
-            
+        case REMOVE_GLOBAL_UNIT:
+            const unitToRemoveName = updatedGlobalUnits[action.payload].name;
+
+            // Remove all instances of the unit from the board
+            updatedBoard = state.present.board.map(row =>
+                row.map(unit => (unit && unit.name === unitToRemoveName) ? null : unit)
+            );
+
+            // Remove the unit from globalUnits
+            updatedGlobalUnits.splice(action.payload, 1);
+
+            return {
+                ...state,
+                present: {
+                    board: updatedBoard,
+                    globalUnits: updatedGlobalUnits
+                }
+            };
+
 
         case UPDATE_BUFFS:
             return {

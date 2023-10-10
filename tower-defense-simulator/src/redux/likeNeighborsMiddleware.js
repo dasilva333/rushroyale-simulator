@@ -1,4 +1,4 @@
-import { ADD_UNIT, REMOVE_UNIT, UPDATE_UNIT, SET_BOARD } from './actions';
+import { ADD_UNIT, REMOVE_UNIT, UPDATE_UNIT, SET_BOARD, SET_LIKE_NEIGHBORS } from './actions';
 import BoardManager from '../components/BoardManager';
 import { Engineer } from '../components/UnitComponents/Engineer'; // Import Engineer
 import { Monk } from '../components/UnitComponents/Monk'; // Import Monk
@@ -45,7 +45,7 @@ export const likeNeighborsMiddleware = store => next => action => {
 
         // Dispatch the SET_LIKE_NEIGHBORS action to update the board state.
         store.dispatch({
-            type: "SET_LIKE_NEIGHBORS",
+            type: SET_LIKE_NEIGHBORS,
             payload: likeNeighborsBoard
         });
     }

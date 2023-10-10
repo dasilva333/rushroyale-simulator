@@ -3,6 +3,7 @@ export const ADD_UNIT = 'ADD_UNIT';
 export const REMOVE_UNIT = 'REMOVE_UNIT';
 export const UPDATE_UNIT = 'UPDATE_UNIT';
 export const SET_BOARD = 'SET_BOARD';
+export const UPDATE_BOARD = 'UPDATE_BOARD';
 export const UNDO_ACTION = 'UNDO_ACTION';
 export const REDO_ACTION = 'REDO_ACTION';
 export const SET_LIKE_NEIGHBORS = "SET_LIKE_NEIGHBORS";
@@ -65,6 +66,19 @@ export function updateUnit(unit, x, y) {
 export function setBoard(board) {
     return {
         type: SET_BOARD,
+        payload: {
+            board
+        }
+    };
+}
+
+/**
+ * Updates the entire board state.
+ * @param {array} board - The new board state.
+ */
+export function updateBoard(board) {
+    return {
+        type: UPDATE_BOARD,
         payload: {
             board
         }

@@ -46,6 +46,16 @@
         }
     }
 
+    [size="small"] {
+        height: 20px;
+        font-size: 12px;
+      }
+      
+      [size="xsmall"] {
+        height: 18px;
+        font-size: 11px;
+      }
+      
     .unit {
         position: relative;
     
@@ -85,7 +95,7 @@
         }
 
         &.BladeDancer .unit-tooltip {
-            color: yellow;
+            color: #C99700;
         }
 
         &.Dryad .unit-tooltip {

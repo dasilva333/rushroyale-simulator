@@ -9,7 +9,6 @@ import BoardStats from './BoardStats';
 import Deck from './Deck';
 import GridCell from './GridCell';
 
-
 import '../styles/board.scss';
 
 function Board() {

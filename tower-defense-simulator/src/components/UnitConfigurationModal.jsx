@@ -15,7 +15,6 @@ function UnitConfigurationModal({ unit, unitConfig, onConfirm, onConfigChange })
 
   const config = unitConfiguration[unit ? unit.name.toLowerCase() : ''];
   const { fields, defaults } = config || {};
-
   const combinedFieldsSet = new Set(['swordStacks', ...(fields || []), ...(Object.keys(defaults || {}))]);
   const combinedFields = [...combinedFieldsSet].sort((a, b) => {
     const priorityA = fieldToComponentSpec[a]?.priority || 0;
@@ -25,16 +24,35 @@ function UnitConfigurationModal({ unit, unitConfig, onConfirm, onConfigChange })
 
   useEffect(() => {
     if (unit && !Object.keys(unitConfig).length) {
-      const mergedDefaults = combinedFields.reduce((acc, key) => {
+      let mergedDefaults = combinedFields.reduce((acc, key) => {
         acc[key] = unitConfig[key] || defaults[key] || fieldToComponentSpec[key]?.defaultValue;
         return acc;
       }, {});
+
+      mergedDefaults = adjustValuesForTierAndLevel({ ...unit.class, ...mergedDefaults });
+      console.log('mergedDefaults', mergedDefaults);
       onConfigChange(mergedDefaults);
     }
   }, [unit, onConfigChange, defaults, unitConfig]);
 
+  const adjustValuesForTierAndLevel = (changeObj) => {
+    if (changeObj.hasOwnProperty('tier') && unit.class.speedTiers) {
+        changeObj.baseSpeed = unit.class.baseSpeed - unit.class.speedTiers[changeObj.tier];
+    }
+
+    if (changeObj.hasOwnProperty('level') && unit.class.damageLevels) {
+        changeObj.baseDamage = unit.class.damageLevels[changeObj.level] + unit.class.baseDamage;
+    }
+    return changeObj;
+}
+
+
   const handleChange = (fieldName, event) => {
-    let changeObj = { [fieldName]: event.target.type === 'checkbox' ? event.target.checked : event.target.value };
+    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+    let changeObj = { [fieldName]: value };
+
+    changeObj = adjustValuesForTierAndLevel(changeObj);
+
     onConfigChange(changeObj);
   };
 
@@ -81,6 +99,7 @@ function UnitConfigurationModal({ unit, unitConfig, onConfirm, onConfigChange })
             <UnitTalentConfigurationModal
               unit={unit}
               unitConfig={unitConfig}
+              setUnitConfig={onConfigChange}
               onTalentConfigChange={(newConfig) => {
                 onConfigChange(newConfig);
                 setShowTalentModal(false); // close the talent modal after change

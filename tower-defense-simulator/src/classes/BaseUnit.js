@@ -11,10 +11,6 @@ class BaseUnit {
     constructor(config, x, y) {
         this.id = unitCounter++;
         this.name = config.name;
-        this.baseSpeed = config.baseSpeed || 0;
-        this.baseDamage = config.baseDamage || 0;
-        this.baseCritChance = config.baseCritChance || 0;
-        this.baseCritDamage = config.baseCritDamage || 0;
         this.tier = config.tier || 7;
         this.level = config.level || 15;
         this.x = x || -1;
@@ -46,10 +42,6 @@ class BaseUnit {
         return {
             id: this.id,
             name: this.name,
-            baseSpeed: this.baseSpeed,
-            baseDamage: this.baseDamage,
-            baseCritChance: this.baseCritChance,
-            baseCritDamage: this.baseCritDamage,
             tier: this.tier,
             level: this.level,
             x: this.x,

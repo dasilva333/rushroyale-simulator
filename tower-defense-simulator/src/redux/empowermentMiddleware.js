@@ -1,8 +1,9 @@
-import { SET_LIKE_NEIGHBORS } from './actions';
+import { SET_LIKE_NEIGHBORS, SET_BOARD, UPDATE_BOARD } from './actions';
 import BoardManager from '../components/BoardManager';
 import { DemonHunter } from '../components/UnitComponents/DemonHunter';
 import { Cultist } from '../components/UnitComponents/Cultist';
 import { BladeDancer } from '../components/UnitComponents/BladeDancer';
+import { Inquisitor } from '../components/UnitComponents/Inquisitor';
 // import { Monk } from '../components/UnitComponents/Monk';
 
 export const empowermentMiddleware = store => next => action => {
@@ -16,7 +17,10 @@ export const empowermentMiddleware = store => next => action => {
         const boardManager = new BoardManager(boardState);
 
         // Check and set empowerment for units you care about
-        boardManager.updateAllEmpowermentStatus([DemonHunter, Cultist, BladeDancer]);
+        const newBoardState = boardManager.updateAllEmpowermentStatus([DemonHunter, Cultist, BladeDancer, Inquisitor]);
+
+        store.dispatch({ type: UPDATE_BOARD, payload: { board: newBoardState } });
+
     }
 
     return result;

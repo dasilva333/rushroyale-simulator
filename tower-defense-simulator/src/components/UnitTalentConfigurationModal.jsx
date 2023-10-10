@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import availableTalents from '../data/UnitTalentsStore';
-import staticUnitConfig from '../data/staticUnitConfig.json';
+// import staticUnitConfig from '../data/staticUnitConfig.json';
 import { Modal, Button, Row, Col } from 'react-bootstrap';
 
 function RadioSwitch({ talent, unitConfig, tierIndex, handleTalentChange }) {
@@ -50,9 +50,8 @@ function CheckboxSwitch({ talent, unitConfig, tierIndex, handleTalentChange }) {
     );
 }
 
-function UnitTalentConfigurationModal({ unit, onTalentConfigChange }) {
+function UnitTalentConfigurationModal({ unit, unitConfig, setUnitConfig, onTalentConfigChange }) {
     const unitTalents = availableTalents.find(t => t.name === unit.name)?.talents || [];
-    const [unitConfig, setUnitConfig] = useState({ talents: staticUnitConfig[unit.name] });
     console.log('UnitTalentConfigurationModal', unitConfig);
     const handleTalentChange = (talentName, tierIndex, isChecked) => {
         // Create a shallow copy of the unitConfig state
