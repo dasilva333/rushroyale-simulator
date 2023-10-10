@@ -1,0 +1,76 @@
+{
+    "name": "Inquisitor",
+    "talents": [
+        [
+            {
+                "name": "KnightOfLight",
+                "label": "Knight of Light",
+                "description": "Receive a 2.5% damage increase for each boss killed",
+                "extraFields": [
+                    {
+                        "name": "bossesKilled",
+                        "type": "number",
+                        "default": 0
+                    }
+                ]
+            },
+            {
+                "name": "KnightOfDarkness",
+                "label": "Knight of Darkness",
+                "description": "Receive a 6% damage increase for each rank absorbed. The bonus is reduced by 2.5% after you achieve 20 rank absorptions.",
+                "extraFields": [
+                    {
+                        "name": "absorbs",
+                        "type": "number",
+                        "default": 0
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "name": "Purification",
+                "label": "Purification",
+                "description": "Activating them also increases their speed by 10% for 10 sec.",
+                "extraFields": [
+                    {
+                        "name": "IsActive",
+                        "type": "checkbox",
+                        "default": false
+                    }
+                ]
+            },
+            {
+                "name": "ShieldOfFaith",
+                "label": "Shield of Faith",
+                "description": "Doesn’t affect performance..."
+            }
+        ],
+        [
+            {
+                "name": "Ronin",
+                "label": "Ronin",
+                "description": "Maximum damage limit increases to 800%"
+            },
+            {
+                "name": "Unity",
+                "label": "Unity",
+                "description": "If there is 4+ on the field their damage increases by 15%. if there are 7+ their critical damage also increases by 35%. If there are 10+ their critical chance also increases by 8%."
+            }
+        ],
+        [
+            {
+                "name": "HammerOfFaith",
+                "label": "Hammer of Faith",
+                "description": "Increased damage by 777%",
+                "extraFields": [
+                    {
+                        "name": "HammerStunActive",
+                        "type": "checkbox",
+                        "default": false
+                    }
+                ]
+            }
+        ]
+    ]
+}

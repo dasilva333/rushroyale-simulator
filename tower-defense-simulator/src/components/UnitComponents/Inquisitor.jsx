@@ -29,8 +29,8 @@ class Inquisitor extends DPSUnit {
 
     const damageInfo = super.baseCalculateDPS(boardConfig);
     console.log('Base Damage Info:', damageInfo);
-
-    const totalPhaseParts = Math.ceil(this.damageIncrease / this.damageIncrease);
+    console.log('Damage Increase:', this.damageIncrease, 'Damage Increase Steps:', Inquisitor.damageIncreaseSteps);
+    const totalPhaseParts = Math.ceil(this.damageIncrease / Inquisitor.damageIncreaseSteps);
     console.log('Total Phase Parts:', totalPhaseParts);
 
     damageInfo.totalPhaseLengthSeconds = totalPhaseParts * damageInfo.newAttackSpeed;
@@ -41,7 +41,7 @@ class Inquisitor extends DPSUnit {
     console.log('Original Damage:', originalDamage);
 
     for (let i = 0; i < totalPhaseParts; i++) {
-      const currentDmgIncrease = Math.min(this.damageIncrease, this.damageIncrease * (i + 1));
+      const currentDmgIncrease = Math.min(this.damageIncrease, Inquisitor.damageIncreaseSteps * (i + 1));
       console.log(`Current Damage Increase (iteration ${i+1}):`, currentDmgIncrease);
 
       const currentDamage = Math.floor(originalDamage * (1 + (currentDmgIncrease / 100)));

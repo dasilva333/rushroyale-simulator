@@ -90,6 +90,11 @@
         }
     }
     
+    .unit-talent-configuration-modal .mb-3:not(:last-child) {
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 1rem; /* Give some space between the border and the content above */
+    }
+    
     .unit-configuration-modal {
         z-index: 101; /* One level higher than .unit-selection-modal */
     }    
