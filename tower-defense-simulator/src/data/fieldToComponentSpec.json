@@ -99,8 +99,8 @@
         "isNullable": false
     },
     "swordStacks": {
-        "componentType": "select",
-        "options": "cardMerges(unitsService.cards.sword)",
+        "componentType": "input",
+        "inputType": "number",
         "label": "Sword Stacks",
         "defaultValue": 0
     },

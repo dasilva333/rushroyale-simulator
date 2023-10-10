@@ -19,6 +19,7 @@ class BaseUnit {
         this.level = config.level || 15;
         this.x = x || -1;
         this.y = y || -1;
+        this.swordStacks  = config.swordStacks || 0;
         this.neighbors = config.neighbors || 0;
         this.buffs = config.buffs || [];
     }
@@ -53,6 +54,7 @@ class BaseUnit {
             level: this.level,
             x: this.x,
             y: this.y,
+            swordStacks: this.swordStacks,
             neighbors: this.neighbors,
             buffs: this.buffs
         };

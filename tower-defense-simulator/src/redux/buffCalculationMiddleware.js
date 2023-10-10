@@ -5,6 +5,7 @@ import {
 import BoardManager from '../components/BoardManager';
 import { rehydrateUnit } from '../utils/unitUtilities';
 import { updateBuffs } from './actions';
+import { Sword } from '../components/UnitComponents/Sword';
 
 function calculateBuffs(boardState, globalUnits = []) {
     let hydratedBoard = boardState.map(row =>
@@ -51,6 +52,25 @@ function calculateBuffs(boardState, globalUnits = []) {
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+
+    const swordIndex = globalUnits.findIndex(unit => unit.name === "Sword");
+    console.log('calculateBuffs swordIndex', swordIndex);
+    if (swordIndex !== -1) {
+        const swordLevel = globalUnits[swordIndex].level;
+        const hasKnightStatue = globalUnits.findIndex(unit => unit.name === "Knight_Statue") !== -1;
+        console.log('calculateBuffs swordLevel', swordLevel);
+        for (let i = 0; i < hydratedBoard.length; i++) {
+            for (let j = 0; j < hydratedBoard[i].length; j++) {
+                const unit = hydratedBoard[i][j]
+                console.log('unit', unit);
+                if (unit && unit.class && unit.class.swordStacks) {
+                    console.log('unit.swordStacks', unit.class.swordStacks);
+                    const swordBuffs = Sword.getSwordBuffs(swordLevel, unit.class.swordStacks, hasKnightStatue);
+                    unit.class.buffs = [...unit.class.buffs, ...swordBuffs];
                 }
             }
         }

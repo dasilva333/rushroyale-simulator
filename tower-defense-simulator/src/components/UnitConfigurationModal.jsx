@@ -10,7 +10,7 @@ function UnitConfigurationModal({ unit, unitConfig, onConfirm, onConfigChange })
   const config = unitConfiguration[unit ? unit.name.toLowerCase() : ''];
   const { fields, defaults } = config || {};
 
-  const combinedFieldsSet = new Set([...(fields || []), ...(Object.keys(defaults || {}))]);
+  const combinedFieldsSet = new Set(['swordStacks', ...(fields || []), ...(Object.keys(defaults || {}))]);
   const combinedFields = [...combinedFieldsSet];
   
   // Set merged default values
