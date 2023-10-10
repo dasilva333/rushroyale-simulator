@@ -1,0 +1,48 @@
+
+    
+    .unit-selection-modal {
+        .modal-header {
+            .btn:first-child {
+                margin-right: 10px !important; // Use !important to override Bootstrap's default styles
+            }
+        }
+        
+        .unit-card {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            .responsive-img {
+                max-width: 100%;
+                height: auto;
+            }  
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+    
+            li {
+                cursor: pointer;
+                padding: 5px;
+                margin: 5px;
+                flex-basis: calc(50% - 10px); /* Default for mobile */
+    
+                @media (min-width: 576px) { /* Bootstrap's breakpoint for SM screens */
+                    flex-basis: calc(33% - 10px);
+                }
+    
+                @media (min-width: 768px) { /* Bootstrap's breakpoint for MD screens */
+                    flex-basis: calc(25% - 10px);
+                }
+    
+                text-align: center;
+    
+                &:hover {
+                    background: lightgray;
+                }
+            }
+        }
+    }

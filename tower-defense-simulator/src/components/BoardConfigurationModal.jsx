@@ -1,6 +1,7 @@
 // BoardConfigurationModal.jsx
 import React from 'react';
 
+
 function BoardConfigurationModal({ boardConfig, onConfigChange, onClose }) {
   const handlePlayerCritChange = (e) => {
     const newConfig = { ...boardConfig, playerCrit: parseFloat(e.target.value) };

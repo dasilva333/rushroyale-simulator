@@ -1,0 +1,29 @@
+{
+    "Inquisitor": {
+        "KnightOfLight": {
+            "selected": true,
+            "bossesKilled": 3
+        },
+        "KnightOfDarkness": {
+            "selected": false,
+            "absorbs": 0
+        },
+        "Purification": {
+            "selected": true,
+            "isActive": false
+        },
+        "ShieldOfFaith": {
+            "selected": false
+        },
+        "Ronin": {
+            "selected": false
+        },
+        "Unity": {
+            "selected": true
+        },
+        "HammerOfFaith": {
+            "selected": false,
+            "hammerStunActive": false
+        }
+    }
+}

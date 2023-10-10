@@ -33,71 +33,8 @@
         justify-content: center;
         cursor: pointer;
     }
-
-    .unit-selection-modal, .unit-configuration-modal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        border: 1px solid gray;
-        padding: 10px;
-        z-index: 100;
-        width: 90%; /* Default width for mobile */
     
-        /* Adjust modal width for larger screens */
-        @media (min-width: 576px) { /* Bootstrap's breakpoint for SM screens */
-            width: 70%;
-        }
-    
-        @media (min-width: 768px) { /* Bootstrap's breakpoint for MD screens */
-            width: 50%;
-        }
-    
-        @media (min-width: 992px) { /* Bootstrap's breakpoint for LG screens */
-            width: 40%;
-        }
-    }
-    
-    .unit-selection-modal {
-        ul {
-            list-style-type: none;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-    
-            li {
-                cursor: pointer;
-                padding: 5px;
-                margin: 5px;
-                flex-basis: calc(50% - 10px); /* Default for mobile */
-    
-                @media (min-width: 576px) { /* Bootstrap's breakpoint for SM screens */
-                    flex-basis: calc(33% - 10px);
-                }
-    
-                @media (min-width: 768px) { /* Bootstrap's breakpoint for MD screens */
-                    flex-basis: calc(25% - 10px);
-                }
-    
-                text-align: center;
-    
-                &:hover {
-                    background: lightgray;
-                }
-            }
-        }
-    }
-    
-    .unit-talent-configuration-modal .mb-3:not(:last-child) {
-        border-bottom: 1px solid lightgray;
-        padding-bottom: 1rem; /* Give some space between the border and the content above */
-    }
-    
-    .unit-configuration-modal {
-        z-index: 101; /* One level higher than .unit-selection-modal */
-    }    
+  
 
     .board-stats {
         margin-top: 10px;

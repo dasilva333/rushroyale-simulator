@@ -9,6 +9,7 @@
                 "extraFields": [
                     {
                         "name": "bossesKilled",
+                        "label": "Bosses Killed",
                         "type": "number",
                         "default": 0
                     }
@@ -21,6 +22,7 @@
                 "extraFields": [
                     {
                         "name": "absorbs",
+                        "label": "Absorbs",
                         "type": "number",
                         "default": 0
                     }
@@ -34,7 +36,8 @@
                 "description": "Activating them also increases their speed by 10% for 10 sec.",
                 "extraFields": [
                     {
-                        "name": "IsActive",
+                        "name": "isActive",
+                        "label": "Is Active",
                         "type": "checkbox",
                         "default": false
                     }
@@ -65,7 +68,8 @@
                 "description": "Increased damage by 777%",
                 "extraFields": [
                     {
-                        "name": "HammerStunActive",
+                        "name": "hammerStunActive",
+                        "label": "Hammer Stun Active",
                         "type": "checkbox",
                         "default": false
                     }

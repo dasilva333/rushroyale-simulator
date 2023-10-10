@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addUnit, updateUnit, undoAction, redoAction, removeGlobalUnit, addGlobalUnit, updateGlobalUnit } from '../redux/actions';
 
+import { addUnit, updateUnit, undoAction, redoAction, removeGlobalUnit, addGlobalUnit, updateGlobalUnit } from '../redux/actions';
 import UnitSelectionModal from './UnitSelectionModal';
 import UnitConfigurationModal from './UnitConfigurationModal';
 import BoardConfigurationModal from './BoardConfigurationModal';
