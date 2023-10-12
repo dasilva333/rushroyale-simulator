@@ -1,0 +1,39 @@
+{
+    "name": "Boreas",
+    "talents": [
+        [
+            {
+                "name": "TeamVolley",
+                "label": "Team Volley",
+                "description": "When merging, all Boreas units enter the second phase. The interval for triggering other phases remains unchanged."
+            },
+            {
+                "name": "SecondBreath",
+                "label": "Second Breath",
+                "description": "There's a 35% chance that the transition to the second phase gets reactivated.",
+                "extraFields": [
+                    {
+                        "name": "secondPhaseReactivated",
+                        "label": "Second Phase Reactivated",
+                        "type": "checkbox",
+                        "default": false
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "name": "SleepArrows",
+                "label": "Sleep Arrows",
+                "description": "During the second phase activation, there's a 20% chance to fire two arrows. These arrows slow enemy attack by 25% for 10s in PvP or increase attack speed in Co-Op."
+            },
+            {
+                "name": "ShowerOfArrows",
+                "label": "Shower of Arrows",
+                "description": "On second phase activation, there's a 30% chance to release a shower of arrows dealing 200 damage. The damage is based on the unit's merge rank and is always critical."
+            }
+        ],
+        [],
+        []
+    ]
+}

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import availableTalents from '../data/UnitTalentsStore';
-// import staticUnitConfig from '../data/staticUnitConfig.json';
+import React from 'react';
+import TalentsManager from '../classes/TalentsManager';
 import { Modal, Button, Row, Col } from 'react-bootstrap';
 
-function RadioSwitch({ talent, unitConfig, tierIndex, handleTalentChange }) {
+function RadioSwitch({ talent, talentsManager, unitConfig, tierIndex, handleTalentChange }) {
+    const isSelected = talentsManager.getInstanceTalentProperty(talent.name, 'selected');
     return (
         <div className="col">
             <div className="form-check">
@@ -16,7 +16,7 @@ function RadioSwitch({ talent, unitConfig, tierIndex, handleTalentChange }) {
                     name={`tier-${tierIndex}`}
                     id={`radio-${talent.name}`}
                     value={talent.name}
-                    checked={unitConfig.talents[talent.name].selected || false}  // <- Added this line
+                    checked={isSelected || false}
                     onChange={e => {
                         const isChecked = e.target.checked;
                         handleTalentChange(talent.name, tierIndex, isChecked)
@@ -27,7 +27,8 @@ function RadioSwitch({ talent, unitConfig, tierIndex, handleTalentChange }) {
     );
 }
 
-function CheckboxSwitch({ talent, unitConfig, tierIndex, handleTalentChange }) {
+function CheckboxSwitch({ talent, talentsManager, unitConfig, tierIndex, handleTalentChange }) {
+    const isSelected = talentsManager.getInstanceTalentProperty(talent.name, 'selected');
     return (
         <div>
             <div className="form-check">
@@ -36,7 +37,7 @@ function CheckboxSwitch({ talent, unitConfig, tierIndex, handleTalentChange }) {
                     type="checkbox"
                     name={talent.name}
                     id={`checkbox-${talent.name}`}
-                    checked={unitConfig.talents[talent.name]?.selected || false}  // <- Modified this line
+                    checked={isSelected || false}
                     onChange={e => {
                         const isChecked = e.target.checked;
                         handleTalentChange(talent.name, tierIndex, isChecked)
@@ -51,8 +52,9 @@ function CheckboxSwitch({ talent, unitConfig, tierIndex, handleTalentChange }) {
 }
 
 function UnitTalentConfigurationModal({ unit, unitConfig, setUnitConfig, onTalentConfigChange }) {
-    const unitTalents = availableTalents.find(t => t.name === unit.name)?.talents || [];
-    console.log('UnitTalentConfigurationModal', unitConfig);
+    const talentsManager = new TalentsManager(unit.name, unitConfig.talents);  // Initialize TalentsManager
+    const unitTalents = talentsManager.getUnitTalents();  // Using TalentsManager method
+
     const handleTalentChange = (talentName, tierIndex, isChecked) => {
         // Create a shallow copy of the unitConfig state
         const updatedUnitConfig = { ...unitConfig };
@@ -89,11 +91,11 @@ function UnitTalentConfigurationModal({ unit, unitConfig, setUnitConfig, onTalen
                         {tier.map((talent, talentIndex) => (
                             <Col key={talent.name}>
                                 {tier.length === 2 ?
-                                    <RadioSwitch unitConfig={unitConfig} talent={talent} tierIndex={idx} handleTalentChange={handleTalentChange} />
+                                    <RadioSwitch talentsManager={talentsManager} unitConfig={unitConfig} talent={talent} tierIndex={idx} handleTalentChange={handleTalentChange} />
                                     :
-                                    <CheckboxSwitch unitConfig={unitConfig} talent={talent} tierIndex={idx} handleTalentChange={handleTalentChange} />
+                                    <CheckboxSwitch talentsManager={talentsManager} unitConfig={unitConfig} talent={talent} tierIndex={idx} handleTalentChange={handleTalentChange} />
                                 }
-                                <TalentExtraFields unitConfig={unitConfig} talent={talent} handleTalentChange={handleTalentChange} />
+                                <TalentExtraFields talentsManager={talentsManager} unitConfig={unitConfig} talent={talent} handleTalentChange={handleTalentChange} />
                             </Col>
                         ))}
                     </Row>
@@ -105,23 +107,23 @@ function UnitTalentConfigurationModal({ unit, unitConfig, setUnitConfig, onTalen
 
 }
 
-function TalentExtraFields({ talent, unitConfig, handleTalentChange }) {
-    // console.log('TalentExtraFields', talent, unitConfig);
-
-    if (!talent.extraFields || !unitConfig.talents[talent.name].selected) return null;  // Return early if no extra fields or if the talent isn't selected.
+function TalentExtraFields({ talent, talentsManager, handleTalentChange }) {
+    // Check if talent has extraFields and if the talent is selected using talentsManager
+    const isTalentSelected = talentsManager.getInstanceTalentProperty(talent.name, 'selected');
+    if (!talent.extraFields || !isTalentSelected) return null;  // Return early if no extra fields or if the talent isn't selected.
 
     return (
         <div>
             {talent.extraFields.map(field => (
-                renderExtraField(field, talent.name, unitConfig, handleTalentChange)
+                renderExtraField(field, talent.name, talentsManager, handleTalentChange)
             ))}
         </div>
     );
 }
-
-function renderExtraField(field, talentName, unitConfig, handleTalentChange) {
+function renderExtraField(field, talentName, talentsManager, handleTalentChange) {
     const fieldName = `${talentName}-${field.name}`;
-    console.log('fieldName', fieldName, field, unitConfig);
+    const fieldValue = talentsManager.getInstanceTalentProperty(talentName, field.name);
+
     switch (field.type) {
         case 'number':
             return (
@@ -131,7 +133,7 @@ function renderExtraField(field, talentName, unitConfig, handleTalentChange) {
                         type="number"
                         className="form-control"
                         id={fieldName}
-                        defaultValue={unitConfig.talents[talentName][field.name] || field.default}
+                        defaultValue={fieldValue || field.default}
                         onChange={e => {
                             // You might want to implement logic to update the unitConfig based on this field change.
                             // handleTalentChange(...);
@@ -146,7 +148,7 @@ function renderExtraField(field, talentName, unitConfig, handleTalentChange) {
                         type="checkbox"
                         className="form-check-input"
                         id={fieldName}
-                        defaultChecked={unitConfig.talents[talentName][field.name] || field.default}
+                        defaultChecked={fieldValue || field.default}
                         onChange={e => {
                             // You might want to implement logic to update the unitConfig based on this field change.
                             // handleTalentChange(...);

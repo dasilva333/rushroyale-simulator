@@ -1,0 +1,56 @@
+{
+    "name": "Knight_Statue",
+    "talents": [
+        [
+            {
+                "name": "SharpenedSpear",
+                "label": "Sharpened Spear",
+                "description": "Knight Statues buff all units vertically and horizontally aligned with them, increasing their damage by 0.8%. Each new Statue on an intersection increases the bonus damage. A Statue is active if there are no other Statues on the same intersection as it, regardless of how many Statues are on the battlefield."
+            },
+            {
+                "name": "CovenantOfVeterans",
+                "label": "Covenant of Veterans",
+                "description": "Knight Statue increases its neighbors' damage by 0.8%. Every merge and increase in merge rank next to Knight Statue increases this bonus.",
+                "extraFields": [
+                    {
+                        "name": "mergesNextToStatue",
+                        "label": "Merges Next to Statue",
+                        "type": "number",
+                        "default": 0
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "name": "Barrier",
+                "label": "Barrier",
+                "description": "The Knight Statue appears with a shield against negative effects. The shield has 2 charges. Once destroyed, the shield regenerates in 30s."
+            },
+            {
+                "name": "RollCall",
+                "label": "Roll Call",
+                "description": "When one Knight Statue gets a bonus damage charge, other Statues have a 15% chance of receiving that bonus as well. This chance is unique to each statue."
+            }
+        ],
+        [
+            {
+                "name": "HoldTheLine",
+                "label": "Hold the Line!",
+                "description": "If all of Knight Statue's neighbors are the same unit, then, in addition to attack speed, it will also increase their critical damage by 10%."
+            },
+            {
+                "name": "StoneLegion",
+                "label": "Stone Legion",
+                "description": "In addition to attack speed, Knight Statue increases unit critical damage by 0.7% for each merge rank of Statues on the battlefield."
+            }
+        ],
+        [
+            {
+                "name": "SoulOfAWarrior",
+                "label": "Soul of a Warrior",
+                "description": "While active, Knight Statue performs an area attack every 10s. The attack deals 50% of its critical damage value per merge rank and reduces monster armor by 20%. Its attack interval goes down 2s for every unit neighboring it."
+            }
+        ]
+    ]
+}

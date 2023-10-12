@@ -1,7 +1,8 @@
 import React from 'react';
-import DPSUnit from '../../classes/DPSUnit';
+import DmgSteppedUnit from '../../classes/DmgSteppedUnit';
+import TalentsManager from '../../classes/TalentsManager';
 
-class Inquisitor extends DPSUnit {
+class Inquisitor extends DmgSteppedUnit {
   static name = "Inquisitor";
   static defaultImage = "inquisitor.png";
   static damageIncrease = 600;
@@ -28,137 +29,88 @@ class Inquisitor extends DPSUnit {
   };
   static baseDamage = 120;
   static baseSpeed = 0.6;
-  static talents = {
-    "KnightOfLight": {
-      "selected": true,
-      "bossesKilled": 3
-    },
-    "KnightOfDarkness": {
-      "selected": false,
-      "absorbs": 0
-    },
-    "Purification": {
-      "selected": true,
-      "isActive": false
-    },
-    "ShieldOfFaith": {
-      "selected": false
-    },
-    "Ronin": {
-      "selected": false
-    },
-    "Unity": {
-      "selected": true
-    },
-    "HammerOfFaith": {
-      "selected": false,
-      "hammerStunActive": false
-    }
-  };
+  // static talents = {
+  //   "KnightOfLight": { "selected": true, "bossesKilled": 3 },
+  //   "KnightOfDarkness": { "selected": false, "absorbs": 0 },
+  //   "Purification": { "selected": true, "isActive": false },
+  //   "ShieldOfFaith": { "selected": false },
+  //   "Ronin": { "selected": false },
+  //   "Unity": { "selected": true },
+  //   "HammerOfFaith": { "selected": false, "hammerStunActive": false }
+  // };
 
+  // Talent-related constants
+  static KNIGHT_OF_LIGHT_BONUS = 2.5;
+  static KNIGHT_OF_DARKNESS_ABSORPTION_LIMIT = 20;
+  static KNIGHT_OF_DARKNESS_LOW_BONUS = 6;
+  static KNIGHT_OF_DARKNESS_HIGH_BONUS = 3.5;
+  static PURIFICATION_SPEED_BONUS = 1.1;
+  static UNITY_EMPPOWERED_DAMAGE_BONUS = 1.15;
+  static UNITY_EMPPOWERED_CRITICAL_DAMAGE_BONUS = 1.35;
+  static UNITY_EMPPOWERED_CRIT_CHANCE_BONUS = 8;
+  static HAMMER_OF_FAITH_DAMAGE_MULTIPLIER = 7.77;
+  
   constructor(config) {
     super(config);
-    this.absorbs = config.absorbs || 0;
-    this.talents = config.talents || Inquisitor.talents;
+    // this.talents = config.talents || Inquisitor.talents;
+    this.talentsManager = new TalentsManager(Inquisitor.name, config.talents);
     this.empowered = config.empowered || 0;
     this.damageIncrease = config.damageIncrease || Inquisitor.damageIncrease;
     this.component = InquisitorComponent;
   }
 
   static getEmpowermentCondition(boardManager) {
-    // Return the total number of Inquisitors
     return boardManager.getUnitCounts(Inquisitor.name);
   }
 
   calculateDPS(boardConfig) {
-    console.group('Inquisitor DPS Calculation');
-
+    // Step 1: Calculate base stats
     const damageInfo = super.baseCalculateDPS(boardConfig);
 
-    if (this.talents.KnightOfLight.selected) {
-      const bonusPercentage = 2.5 * this.talents.KnightOfLight.bossesKilled;
+    // Step 2: Apply talent buffs/modifications
+    if (this.talentsManager.isTalentSelected('KnightOfLight')) {
+      const bossesKilled = this.talentsManager.getInstanceTalentProperty('KnightOfLight', 'bossesKilled') || 0;
+      const bonusPercentage = Inquisitor.KNIGHT_OF_LIGHT_BONUS * bossesKilled;
       damageInfo.newAttackDamage += damageInfo.newAttackDamage * (bonusPercentage / 100);
     }
 
-    if (this.talents.KnightOfDarkness.selected) {
-      const absorption = this.talents.KnightOfDarkness.absorbs;
-      const bonusPercentage = absorption <= 20 ? 6 * absorption : (6 * 20) + ((absorption - 20) * 3.5);
+    if (this.talentsManager.isTalentSelected('KnightOfDarkness')) {
+      const absorption = this.talentsManager.getInstanceTalentProperty('KnightOfDarkness', 'absorbs') || 0;
+      const bonusPercentage = absorption <= Inquisitor.KNIGHT_OF_DARKNESS_ABSORPTION_LIMIT ? 
+        Inquisitor.KNIGHT_OF_DARKNESS_LOW_BONUS * absorption : 
+        (Inquisitor.KNIGHT_OF_DARKNESS_LOW_BONUS * Inquisitor.KNIGHT_OF_DARKNESS_ABSORPTION_LIMIT) + 
+        ((absorption - Inquisitor.KNIGHT_OF_DARKNESS_ABSORPTION_LIMIT) * Inquisitor.KNIGHT_OF_DARKNESS_HIGH_BONUS);
       damageInfo.newAttackDamage += damageInfo.newAttackDamage * (bonusPercentage / 100);
     }
 
-    if (this.talents.Purification.selected && this.talents.Purification.isActive) {
-      damageInfo.newAttackSpeed *= 1.1; // 10% increase
+    if (this.talentsManager.isTalentSelected('Purification') && this.talentsManager.getInstanceTalentProperty('Purification', 'isActive')) {
+      damageInfo.newAttackSpeed *= Inquisitor.PURIFICATION_SPEED_BONUS;
     }
 
-    if (this.talents.Unity.selected) {
+    if (this.talentsManager.isTalentSelected('Unity')) {
       if (this.empowered >= 10) {
-        damageInfo.totalCritChance += 8; // additional 8% critical chance
+        damageInfo.totalCritChance += Inquisitor.UNITY_EMPPOWERED_CRIT_CHANCE_BONUS;
       }
       if (this.empowered >= 7) {
-        damageInfo.criticalDamage *= 1.35; // 35% increase in critical damage
+        damageInfo.criticalDamage *= Inquisitor.UNITY_EMPPOWERED_CRITICAL_DAMAGE_BONUS;
       }
       if (this.empowered >= 4) {
-        damageInfo.newAttackDamage *= 1.15; // 15% increase in damage
+        damageInfo.newAttackDamage *= Inquisitor.UNITY_EMPPOWERED_DAMAGE_BONUS;
       }
     }
 
-    if (this.talents.HammerOfFaith.selected && this.talents.HammerOfFaith.hammerStunActive) {
-      damageInfo.newAttackDamage *= 7.77; // Increase damage by 777%
+    if (this.talentsManager.isTalentSelected('HammerOfFaith') && this.talentsManager.getInstanceTalentProperty('HammerOfFaith', 'hammerStunActive')) {
+      damageInfo.newAttackDamage *= Inquisitor.HAMMER_OF_FAITH_DAMAGE_MULTIPLIER;
     }
 
-
-
-    console.log('Base Damage Info:', damageInfo);
-    console.log('Damage Increase:', this.damageIncrease, 'Damage Increase Steps:', Inquisitor.damageIncreaseSteps);
-    const totalPhaseParts = Math.ceil(this.damageIncrease / Inquisitor.damageIncreaseSteps);
-    console.log('Total Phase Parts:', totalPhaseParts);
-
-    damageInfo.totalPhaseLengthSeconds = totalPhaseParts * damageInfo.newAttackSpeed;
-    console.log('Total Phase Length (seconds):', damageInfo.totalPhaseLengthSeconds);
-
-    let totalHitDamage = 0;
-    let originalDamage = damageInfo.newAttackDamage;
-    console.log('Original Damage:', originalDamage);
-
-    for (let i = 0; i < totalPhaseParts; i++) {
-      const currentDmgIncrease = Math.min(this.damageIncrease, Inquisitor.damageIncreaseSteps * (i + 1));
-      console.log(`Current Damage Increase (iteration ${i + 1}):`, currentDmgIncrease);
-
-      const currentDamage = Math.floor(originalDamage * (1 + (currentDmgIncrease / 100)));
-      console.log(`Current Damage (iteration ${i + 1}):`, currentDamage);
-
-      totalHitDamage += currentDamage;
-      damageInfo.maxHitDamage = currentDamage;
-    }
-
-    console.log('Total Hit Damage:', totalHitDamage);
-
-    const totalCritChance = damageInfo.totalCritChance;
-    console.log('Total Critical Chance:', totalCritChance);
-
-    const numberOfCrits = totalCritChance * totalPhaseParts;
-    console.log('Number of Critical Hits:', numberOfCrits);
-
-    damageInfo.critDmgPerSecond = Math.floor((numberOfCrits * damageInfo.criticalDamage) / damageInfo.totalPhaseLengthSeconds);
-    console.log('Critical Damage Per Second:', damageInfo.critDmgPerSecond);
-
-    damageInfo.dmgPerSecond = Math.floor(totalHitDamage / damageInfo.totalPhaseLengthSeconds);
-    console.log('Damage Per Second:', damageInfo.dmgPerSecond);
-
-    damageInfo.total = damageInfo.dmgPerSecond + damageInfo.critDmgPerSecond;
-    console.log('Total Damage:', damageInfo.total);
-
-    console.groupEnd();
-
-    return damageInfo;
+   // Step 3: Call calculateSteppedDamage() to compute damage over the stepped phases
+   return this.calculateSteppedDamage(damageInfo);
   }
-
 
   toObject() {
     const baseObject = super.toObject();
     return {
       ...baseObject,
-      absorbs: this.absorbs,
       talents: this.talents,
       damageIncrease: this.damageIncrease,
       empowered: this.empowered 

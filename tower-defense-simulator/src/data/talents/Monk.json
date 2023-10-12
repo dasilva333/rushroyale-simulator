@@ -1,0 +1,64 @@
+{
+    "name": "Monk",
+    "talents": [
+        [
+            {
+                "name": "Blessing",
+                "label": "Blessing",
+                "description": "Monks appear with an orb of Power, enhancing their damage by 3% per orb. When merged or absorbed, orbs transfer to a Monk at an intersection or another Monk if intersections are unoccupied.",
+                "extraFields": [
+                    {
+                        "name": "orbsCount",
+                        "label": "Number of Orbs",
+                        "type": "number",
+                        "default": 0
+                    }
+                ]
+            },
+            {
+                "name": "Equilibrium",
+                "label": "Equilibrium",
+                "description": "A Monk periodically gets a balance sphere. When a unit with this sphere merges or ranks up, all Monks boost their damage. After merging or movement, if not merged within 10 seconds, the sphere disappears. Monks at intersections absorb the sphere.",
+                "extraFields": [
+                    {
+                        "name": "spheresMergedCount",
+                        "label": "Spheres Merged Count",
+                        "type": "number",
+                        "default": 0
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "name": "Tranquility",
+                "label": "Tranquility",
+                "description": "Activating a boost will remove negative effects from Monks in intersections."
+            },
+            {
+                "name": "Illumination",
+                "label": "Illumination",
+                "description": "Activating a buff increases the rank of a random Monk."
+            }
+        ],
+        [
+            {
+                "name": "Rebirth",
+                "label": "Rebirth",
+                "description": "During each Power-up, the first Monk merge will turn a random non-Monk unit into a Monk."
+            },
+            {
+                "name": "Novice",
+                "label": "Novice",
+                "description": "After each buff, the first merge of a Monk summons a Monk to the battlefield from merge rank 1 to 3 and produces an additional sphere."
+            }
+        ],
+        [
+            {
+                "name": "Nirvana",
+                "label": "Nirvana",
+                "description": "Gaining a buff increases Monk's critical damage chance by 5% and increases Monk's area attack bonus at intersections to 50%."
+            }
+        ]
+    ]
+}

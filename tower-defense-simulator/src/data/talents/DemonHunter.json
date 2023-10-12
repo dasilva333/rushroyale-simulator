@@ -1,0 +1,72 @@
+{
+    "name": "DemonHunter",
+    "talents": [
+        [
+            {
+                "name": "AbsorptionOfEvil",
+                "label": "Absorption of Evil",
+                "description": "Marks are distributed among the highest-ranked Hunters upon merging or absorbing marked Hunters. Damage increases with each mark.",
+                "extraFields": [
+                    {
+                        "name": "marks",
+                        "label": "Marks",
+                        "type": "number",
+                        "default": 0
+                    }
+                ]
+            },
+            {
+                "name": "TwilightHunting",
+                "label": "Twilight Hunting",
+                "description": "Some Hunters transform into Twilight Hunters with increased attack speed. Regular Demon Hunters lose merge rank periodically, marking Twilight Hunters.",
+                "extraFields": [
+                    {
+                        "name": "twilightHunterMarks",
+                        "label": "Twilight Hunter Marks",
+                        "type": "number",
+                        "default": 0
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "name": "CloakOfShadows",
+                "label": "Cloak of Shadows",
+                "description": "Demon Hunter has a 20% chance to cleanse herself of negative effects when they are received."
+            },
+            {
+                "name": "DarkPact",
+                "label": "Dark Pact",
+                "description": "Once per wave, upon destroying a boss, affects the merge rank of a non-Hunter unit and applies multiple marks."
+            }
+        ],
+        [
+            {
+                "name": "StealthAttack",
+                "label": "Stealth Attack",
+                "description": "Demon Hunter has a 7% chance to make an extra attack, inflicting an additional 100% damage to the first target for each merge rank."
+            },
+            {
+                "name": "ShadowTwin",
+                "label": "Shadow Twin",
+                "description": "When the first boss appears, certain Hunters release a Shadow that mirrors its attack. Shadows also have a chance to spawn upon mini boss appearances. Shadows last for 12 seconds and do 20% of the Hunter's damage.",
+                "extraFields": [
+                    {
+                        "name": "shadowSpawned",
+                        "label": "Shadow Spawned",
+                        "type": "checkbox",
+                        "default": false
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "name": "NightParasite",
+                "label": "Night Parasite",
+                "description": "Increases the chance of critical damage to bosses and mini bosses by 5% for all Hunters."
+            }
+        ]
+    ]
+}

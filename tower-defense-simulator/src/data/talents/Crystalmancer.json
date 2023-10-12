@@ -1,0 +1,89 @@
+{
+    "name": "Crystalmancer",
+    "talents": [
+        [
+            {
+                "name": "CrystalArcanist",
+                "label": "Crystal Arcanist",
+                "description": "Mages have a chance to appear with a crystal. Merging this mage summons an Arcanist, which can reduce armor by 0.5% with its attacks. The Arcanist also has a 40% chain attack possibility.",
+                "extraFields": [
+                    {
+                        "name": "mageWithCrystal",
+                        "label": "Mage with Crystal",
+                        "type": "checkbox",
+                        "default": false
+                    }
+                ]
+            },
+            {
+                "name": "HighArcanist",
+                "label": "High Arcanist",
+
+                "description": "One mage is always an Arcanist. Mages might appear with crystals that charge the Arcanist. The Arcanist has a powerful area attack, and over time its damage can increase. However, its critical damage is reduced.",
+
+                "extraFields": [
+                    {
+                        "name": "mageAlwaysArcanist",
+                        "label": "Mage Always Arcanist",
+                        "type": "checkbox",
+                        "default": true
+                    },
+                    {
+                        "name": "charges",
+                        "label": "Arcanist Charges",
+                        "type": "number",
+                        "default": 0
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "name": "CrystalConnection",
+                "label": "Crystal Connection",
+                "description": "Mages have an increased chance to appear with a crystal. For each mage with a crystal, the Arcanist's damage increases by 3%."
+            },
+            {
+                "name": "Crystallization",
+                "label": "Crystallization",
+                "description": "Merging a mage spawns 2 crystals that have the mage's stats with additional Arcanist bonuses. These crystals last for 15 seconds and can explode on contact with monsters, dealing significant damage.",
+                "extraFields": [
+                    {
+                        "name": "crystalsActive",
+                        "label": "Crystals Active",
+                        "type": "checkbox",
+                        "default": false
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "name": "LightningRod",
+                "label": "Lightning Rod",
+                "description": "Every 10 seconds, Arcanists charge their attacks, significantly increasing their critical chance. This also leaves behind damaging ball lightning."
+            },
+           {
+            "name": "MagmaFlow",
+            "label": "Magma Flow",
+            "description": "Arcanists have a chance to spray magma on attacks. Afflicted monsters take increased periodic damage and are more susceptible to critical hits. This damage can stack multiple times.",
+            "extraFields": [
+                {
+                    "name": "magmaStacks",
+                    "label": "Magma Stacks",
+                    "type": "number",
+                    "default": 0,
+                    "max": 5
+                }
+            ]
+            }
+        ],
+        [
+            {
+                "name": "AbsorbEnergy",
+                "label": "Absorb Energy",
+                "description": "After defeating a boss, an Arcanist may absorb its energy to rank up. If no suitable Arcanists are present, a random mage will rank up. This talent offers no direct performance buffs."
+            }
+        ]
+    ]
+}
