@@ -1,0 +1,23 @@
+{
+    "track": {
+      "north": {
+        "topY": 675,
+        "bottomY": 975,
+        "height": 300
+      },
+      "west": {
+        "leftX": 50,
+        "rightX": 540,
+        "width": 490
+      },
+      "south": {
+        "height": 300
+      },
+      "totalLength": 1090
+    },
+    "enemyUnit": {
+      "width": 40,
+      "height": 35
+    }
+  }
+  

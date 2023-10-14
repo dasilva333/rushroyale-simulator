@@ -20,8 +20,14 @@ import { Scrapper, ScrapperComponent } from '../components/UnitComponents/Scrapp
 import { Knight_Statue, Knight_StatueComponent } from '../components/UnitComponents/Knight_Statue.jsx';       
 import { Witch, WitchComponent } from '../components/UnitComponents/Witch.jsx';
 import { Grindstone, GrindstoneComponent } from '../components/UnitComponents/Grindstone.jsx';
+import { Pyrotechnic, PyrotechnicComponent } from '../components/UnitComponents/Pyrotechnic.jsx';
 
 export const availableUnits = [
+  {
+    name: 'Pyrotechnic',
+    component: PyrotechnicComponent,
+    class: Pyrotechnic
+  },
     {
       name: 'Inquisitor',
       component: InquisitorComponent,

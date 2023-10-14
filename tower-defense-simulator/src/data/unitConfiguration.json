@@ -1,4 +1,18 @@
 {
+  "pyrotechnic": {
+    "fields": [
+      "baseDamage",
+      "baseSpeed",
+      "baseCritChance",
+      "damageIncrease"
+    ],
+    "defaults": {
+      "baseDamage": 1562,
+      "baseSpeed": 0.11,
+      "baseCritChance": 0,
+      "damageIncrease": 0
+    }
+  },
   "inquisitor": {
     "fields": [
       "baseDamage",

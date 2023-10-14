@@ -1,0 +1,82 @@
+-track specs-
+
+y-axis of the top of the north track: 675
+y-axis of the bottom of the north track: 975
+height of the north track: 300px
+
+x-axis of the left side of the west track: 50
+x-axis of the right side of the west track:  540
+width of the west track: 490px
+
+total length of track: 300 (north) + 490 (west) + 300 (south) = 1090px
+
+enemy unit dimensions: 40x35 px
+
+-inquis aoe specs-
+
+damage zone: 
+y-axis: 735 - from center of puff smoke
+distance to vertix: 675-735= 60px
+y-axis: 720 - from top edge of the smoke
+disance to vertix: 675-720= 45px
+
+hit zone:
+x-axis: 115 - from center of hit
+distance to vertix: 115-50= 65px
+
+x-axis: 105 - from left edge of the hit
+distance to vertix: 105-50= 55px
+
+longest aoe length: 60 + 65 = 125 px
+shortest aoe length: 55 + 45 = 100 px
+
+-pyro aoe specs-
+
+hit zone:
+x-axis: 328 - from center of hit
+distance to vertix: 328-50= 278px
+x-axis: 315 - from left edge of the hit
+distance to vertix: 315-50= 265px
+
+damage zone: 
+y-axis: 255 - from center of puff smoke
+distance to vertix: 255-50 = 205px
+y-axis: 270 - from right edge of the smoke
+disance to vertix: 270-50= 220px
+
+longest aoe length:  278 - 205 = 73px
+shortest aoe length:  265 - 220 = 45px
+
+-inquis attempt 2-
+
+hit zone:
+x-axis: 335 - from center of hit
+distance to vertix: 285px
+x-axis: 320 - from left edge of the hit
+distance to vertix: 368px
+
+damage zone: 
+y-axis: 262 - from center of puff smoke
+distance to vertix: 212 px
+y-axis: 270 - from right edge of the smoke
+disance to vertix: 270-50= 220px
+
+longest aoe length:  278 - 205 = 73px
+shortest aoe length:  265 - 220 = 45px
+
+-inquis attempt 3-
+
+hit zone:
+x-axis: 262 - from center of hit
+distance to vertix: 212
+x-axis: 250 - from left edge of the hit
+distance to vertix: 200
+
+damage zone: 
+y-axis: 188 - from center of puff smoke
+distance to vertix: 138px
+y-axis: 175 - from left edge of the smoke
+disance to vertix: 125px
+
+aoe from center: 75px
+aoe from edges: 75px 

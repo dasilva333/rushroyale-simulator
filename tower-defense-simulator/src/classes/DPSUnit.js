@@ -3,6 +3,8 @@ import DamageValues from './DamageValues';
 
 class DPSUnit extends BaseUnit {
 
+    static aoeRadius = 75;
+    
     constructor(config) {
         super(config);
         this.baseSpeed = config.baseSpeed || this.constructor.baseSpeed || 0;

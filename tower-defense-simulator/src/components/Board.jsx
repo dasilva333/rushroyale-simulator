@@ -23,7 +23,8 @@ function Board() {
     const [cellContext, setCellContext] = useState("BoardCell");
 
     const [boardConfig, setBoardConfig] = useState({
-        playerCrit: 2923, // default value, adjust as needed
+        playerCrit: 2923,
+        waveIndex: 1
     });
 
     // Modal Management

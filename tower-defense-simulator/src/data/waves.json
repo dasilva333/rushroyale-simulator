@@ -1,0 +1,32 @@
+[
+  {
+    "waveIndex": 1,
+    "totalUnits": 200,
+    "totalTime": 120,
+    "firstUnitHealth": 115,
+    "lastUnitHealth": 1000,
+    "minibossesHealth": 1000,
+    "minibossesCount": 1,
+    "extrapolation": "15 seconds measured 25 units. Extrapolate 100 units for 60 seconds, 200 units for 2 minutes."
+  },
+  {
+    "waveIndex": 2,
+    "totalUnits": 253,
+    "totalTime": 233,
+    "firstUnitHealth": 3000,
+    "lastUnitHealth": 22000,
+    "minibossesHealth": 0,
+    "minibossesCount": 0,
+    "extrapolation": "15 seconds measured 38 units. Extrapolate 253 units for 100 seconds (38/15 x 100)."
+  },
+  {
+    "waveIndex": 3,
+    "totalUnits": 293,
+    "totalTime": 80,
+    "firstUnitHealth": 26000,
+    "lastUnitHealth": 69000,
+    "minibossesHealth": 0,
+    "minibossesCount": 0,
+    "extrapolation": "15 seconds measured 55 units. Extrapolate 293 units for 80 seconds (55/15 x 80)."
+  }
+]

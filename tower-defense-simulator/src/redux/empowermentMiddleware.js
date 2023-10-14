@@ -4,7 +4,7 @@ import { DemonHunter } from '../components/UnitComponents/DemonHunter';
 import { Cultist } from '../components/UnitComponents/Cultist';
 import { BladeDancer } from '../components/UnitComponents/BladeDancer';
 import { Inquisitor } from '../components/UnitComponents/Inquisitor';
-// import { Monk } from '../components/UnitComponents/Monk';
+import { Pyrotechnic } from '../components/UnitComponents/Pyrotechnic';
 
 export const empowermentMiddleware = store => next => action => {
     const result = next(action); // let the action pass through
@@ -17,7 +17,7 @@ export const empowermentMiddleware = store => next => action => {
         const boardManager = new BoardManager(boardState);
 
         // Check and set empowerment for units you care about
-        const newBoardState = boardManager.updateAllEmpowermentStatus([DemonHunter, Cultist, BladeDancer, Inquisitor]);
+        const newBoardState = boardManager.updateAllEmpowermentStatus([DemonHunter, Cultist, BladeDancer, Inquisitor, Pyrotechnic]);
 
         store.dispatch({ type: UPDATE_BOARD, payload: { board: newBoardState } });
 
