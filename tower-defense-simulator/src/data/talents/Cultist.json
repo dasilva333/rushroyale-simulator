@@ -1,0 +1,72 @@
+{
+    "name": "Cultist",
+    "talents": [
+        [
+            {
+                "name": "HarbingerOfEvil",
+                "label": "Harbinger of Evil",
+                "description": "Cultists receive souls when merging or making a sacrifice. Each soul increases Cultist damage by 2%. When the number of souls reaches 20, a Cultist in demon form transforms into a Harbinger, which increases their attack speed by 15%.",
+                "extraFields": [
+                    {
+                        "name": "souls",
+                        "label": "Souls",
+                        "type": "number",
+                        "default": 0
+                    }
+                ]
+            },
+            {
+                "name": "HarbingerOfTheAbyss",
+                "label": "Harbinger of the Abyss",
+                "description": "Cultists in demon form receive souls when merging or making a sacrifice. For every 6 souls, a guardian demon is summoned. Upon death, the demon sets fire to a random unit, reducing its rank. Summoning 4 guardians transforms a demonic Cultist into a Harbinger, which receives a soul every 20 s. In Co-Op mode and in the Plunder Chalenge, guardians grant mana.",
+                "extraFields": [
+                    {
+                        "name": "souls",
+                        "label": "Souls",
+                        "type": "number",
+                        "default": 0
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "name": "GreatRitual",
+                "label": "Great Ritual",
+                "description": "When a Sacrifice is activated, it destroys both Cultist and other units on the field corners. The other units don't grant mana, but they have a 40% chance of granting a soul."
+            },
+            {
+                "name": "CleansingSacrifice",
+                "label": "Cleansing Sacrifice",
+                "description": "When a Sacrifice is activated, every Cultist destroyed will remove the negative effect from 1 random Cultists and will increase its damage by 10% for 10s."
+            }
+        ],
+        [
+            {
+                "name": "UnityOfTheCult",
+                "label": "Unity of the Cult",
+                "description": "A Cultist in Harbinger form increases its damage by 5% for every Cultist on the field, including Harbingers.",
+                "extraFields": [
+                    {
+                        "name": "numberOfCultists",
+                        "label": "Number of Cultists",
+                        "type": "number",
+                        "default": 0
+                    }
+                ]
+            },
+            {
+                "name": "Monsters of the Abyss",
+                "label": "MonstersOfTheAbyss",
+                "description": "When killing monsters, one Cultist in the Harbinger form will have a 15% chance of summoning fast demons onto the enemy's path. When a mini boss or a demon guardian appears on the enemy's path, the Cultist in the from of a Harbinger will increase its damage by 25% for 15 seconds. Doesn't work in Co-Op mode or in the Plunder Challlenge."
+            }
+        ],
+        [
+            {
+                "name": "FlameOfTheAbyss",
+                "label": "Flame of the Abyss",
+                "description": "When attacking, Harbinger creates a pulse of fire that lasts 2s. The pulse deals 100% of the Cultist's damage value every 0.2s and reduces monster armor in its radius by 40%. There can only be one pulse on the field at a time."
+            }
+        ]
+    ]
+}
