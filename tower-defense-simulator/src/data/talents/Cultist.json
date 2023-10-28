@@ -30,7 +30,15 @@
             {
                 "name": "CleansingSacrifice",
                 "label": "Cleansing Sacrifice",
-                "description": "When a Sacrifice is activated, every Cultist destroyed will remove the negative effect from 1 random Cultists and will increase its damage by 10% for 10s."
+                "description": "When a Sacrifice is activated, every Cultist destroyed will remove the negative effect from 1 random Cultists and will increase its damage by 10% for 10s.",
+                "extraFields": [
+                    {
+                        "name": "sacrifice",
+                        "label": "Sacrifice",
+                        "type": "checkbox",
+                        "default": false
+                    }
+                ]
             }
         ],
         [
