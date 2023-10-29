@@ -18,7 +18,15 @@
             {
                 "name": "HarbingerOfTheAbyss",
                 "label": "Harbinger of the Abyss",
-                "description": "Cultists in demon form receive souls when merging or making a sacrifice. For every 6 souls, a guardian demon is summoned. Upon death, the demon sets fire to a random unit, reducing its rank. Summoning 4 guardians transforms a demonic Cultist into a Harbinger, which receives a soul every 20 s. In Co-Op mode and in the Plunder Chalenge, guardians grant mana."
+                "description": "Cultists in demon form receive souls when merging or making a sacrifice. For every 6 souls, a guardian demon is summoned. Upon death, the demon sets fire to a random unit, reducing its rank. Summoning 4 guardians transforms a demonic Cultist into a Harbinger, which receives a soul every 20 s. In Co-Op mode and in the Plunder Chalenge, guardians grant mana.",
+                "extraFields": [
+                    {
+                        "name": "souls",
+                        "label": "Souls",
+                        "type": "number",
+                        "default": 0
+                    }
+                ]
             }
         ],
         [
@@ -33,8 +41,8 @@
                 "description": "When a Sacrifice is activated, every Cultist destroyed will remove the negative effect from 1 random Cultists and will increase its damage by 10% for 10s.",
                 "extraFields": [
                     {
-                        "name": "sacrifice",
-                        "label": "Sacrifice",
+                        "name": "sacrificeActive",
+                        "label": "Sacrifice Active",
                         "type": "checkbox",
                         "default": false
                     }
