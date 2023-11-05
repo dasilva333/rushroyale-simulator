@@ -1,0 +1,19 @@
+{
+  "UnitInfo": {
+    "Name": "Pyrotechnic",
+    "Rarity": "Epic",
+    "Faction": "Techonogenic Society",
+    "UnitType": "Damage",
+    "Target": "Random",
+    "Arena": 10,
+    "AoE": "Yes at Odd number",
+    "Lv": "5,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 3
+  },
+  "Levels": {},
+  "ManaLevels": {},
+  "MergeRanks": {},
+  "SpecialAbilities": {}
+}

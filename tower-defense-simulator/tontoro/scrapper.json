@@ -1,0 +1,99 @@
+{
+  "UnitInfo": {
+    "Name": "Scrapper",
+    "Rarity": "Legendary",
+    "Faction": "Technogenic Society",
+    "UnitType": "Support",
+    "Target": "First",
+    "Arena": 13,
+    "AoE": "No",
+    "Lv": "7,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 4
+  },
+  "Levels": {
+    "1": {
+      "Damage": 114,
+      "Attack Interval": 1,
+      "Chance of bonus enhancement": 0.2,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Damage": 0,
+      "Chance of bonus enhancement": 0,
+      "Hero Cooldown": 0
+    },
+    "3": {
+      "Damage": 17,
+      "Chance of bonus enhancement": 0.025,
+      "Hero Cooldown": 0.5
+    },
+    "4": {
+      "Damage": 37,
+      "Chance of bonus enhancement": 0.05,
+      "Hero Cooldown": 1
+    },
+    "5": {
+      "Damage": 59,
+      "Chance of bonus enhancement": 0.075,
+      "Hero Cooldown": 1.5
+    },
+    "6": {
+      "Damage": 86,
+      "Chance of bonus enhancement": 0.1,
+      "Hero Cooldown": 2
+    },
+    "7": {
+      "Damage": 116,
+      "Chance of bonus enhancement": 0.125,
+      "Hero Cooldown": 2.5
+    },
+    "8": {
+      "Damage": 150,
+      "Chance of bonus enhancement": 0.15,
+      "Hero Cooldown": 3
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 114,
+      "Attack Interval": 1,
+      "Chance of bonus enhancement": 0.2,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Damage": 0
+    },
+    "3": {
+      "Damage": 20
+    },
+    "4": {
+      "Damage": 40
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Damage": 114,
+      "Attack Interval": 1,
+      "Chance of bonus enhancement": 0.2,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Attack Interval": 0
+    },
+    "3": {
+      "Attack Interval": -0.5
+    },
+    "4": {
+      "Attack Interval": -0.67
+    },
+    "5": {
+      "Attack Interval": -0.75
+    },
+    "6": {
+      "Attack Interval": -0.8
+    }
+  },
+  "SpecialAbilities": {}
+}

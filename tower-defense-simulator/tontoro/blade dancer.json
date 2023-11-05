@@ -1,0 +1,126 @@
+{
+  "UnitInfo": {
+    "Name": "Blade Dancer",
+    "Rarity": "Legendary",
+    "Faction": "Forest Alliance",
+    "UnitType": "Damage",
+    "Target": "First",
+    "Arena": 11,
+    "AoE": "No",
+    "Lv": "7,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 6
+  },
+  "Levels": {
+    "1": {
+      "Damage": 275,
+      "Attack Interval": 1,
+      "Minimum boost": 2,
+      "Maximum boost": 4.5,
+      "Attack speed increase": 1.5,
+      "Hero cooldown": 4
+    },
+    "2": {
+      "Damage": 0,
+      "Attack Interval": 0,
+      "Minimum boost": 0,
+      "Maximum boost": 0,
+      "Attack speed increase": 0,
+      "Hero cooldown": 0
+    },
+    "3": {
+      "Damage": 55,
+      "Attack Interval": 0,
+      "Minimum boost": 0,
+      "Maximum boost": 0,
+      "Attack speed increase": 0,
+      "Hero cooldown": 0.5
+    },
+    "4": {
+      "Damage": 121,
+      "Attack Interval": 0,
+      "Minimum boost": 0,
+      "Maximum boost": 0,
+      "Attack speed increase": 0,
+      "Hero cooldown": 1
+    },
+    "5": {
+      "Damage": 200,
+      "Attack Interval": 0,
+      "Minimum boost": 0,
+      "Maximum boost": 0,
+      "Attack speed increase": 0,
+      "Hero cooldown": 1.5
+    },
+    "6": {
+      "Damage": 295,
+      "Attack Interval": 0,
+      "Minimum boost": 0,
+      "Maximum boost": 0,
+      "Attack speed increase": 0,
+      "Hero cooldown": 2
+    },
+    "7": {
+      "Damage": 409,
+      "Attack Interval": 0,
+      "Minimum boost": 0,
+      "Maximum boost": 0,
+      "Attack speed increase": 0,
+      "Hero cooldown": 2.5
+    },
+    "8": {
+      "Damage": 546,
+      "Attack Interval": 0,
+      "Minimum boost": 0,
+      "Maximum boost": 0,
+      "Attack speed increase": 0,
+      "Hero cooldown": 3
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 215,
+      "Attack Interval": 1,
+      "Minimum boost": 2,
+      "Maximum boost": 4.5,
+      "Attack speed increase": 1.5,
+      "Hero cooldown": 1.7
+    },
+    "2": {
+      "Damage": 0
+    },
+    "3": {
+      "Damage": 75
+    },
+    "4": {
+      "Damage": 150
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Damage": 215,
+      "Attack Interval": 1,
+      "Minimum boost": 2,
+      "Maximum boost": 4.5,
+      "Attack speed increase": 1.5,
+      "Hero cooldown": 1.7
+    },
+    "2": {
+      "Attack Interval": 0
+    },
+    "3": {
+      "Attack Interval": -0.5
+    },
+    "4": {
+      "Attack Interval": -0.67
+    },
+    "5": {
+      "Attack Interval": -0.75
+    },
+    "6": {
+      "Attack Interval": -0.8
+    }
+  },
+  "SpecialAbilities": {}
+}

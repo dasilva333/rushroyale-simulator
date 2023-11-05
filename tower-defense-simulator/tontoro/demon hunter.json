@@ -1,0 +1,101 @@
+{
+  "UnitInfo": {
+    "Name": "Demon Hunter",
+    "Rarity": "Legendary",
+    "Faction": "Magic Council",
+    "UnitType": "Damage",
+    "Target": "First",
+    "Arena": 8,
+    "AoE": "Extra targets based on Tier",
+    "Lv": "7,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 6
+  },
+  "Levels": {
+    "1": {
+      "Damage": 181,
+      "Attack Interval": 0.45,
+      "Bonus per rank": 0.07,
+      "Extra 20 rank bonus:": 0.25,
+      "Extra 40% rank bonus:": 0.75,
+      "Number of shots": 1,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Damage": 0,
+      "Hero Cooldown": 0
+    },
+    "3": {
+      "Damage": 34,
+      "Hero Cooldown": 0.5
+    },
+    "4": {
+      "Damage": 75,
+      "Hero Cooldown": 1
+    },
+    "5": {
+      "Damage": 124,
+      "Hero Cooldown": 1.5
+    },
+    "6": {
+      "Damage": 182,
+      "Hero Cooldown": 2
+    },
+    "7": {
+      "Damage": 251,
+      "Hero Cooldown": 2.5
+    },
+    "8": {
+      "Damage": 333,
+      "Hero Cooldown": 3
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 181,
+      "Attack Interval": 0.45,
+      "Bonus per rank": 0.07,
+      "Extra 20 rank bonus:": 0.25,
+      "Extra 40% rank bonus:": 0.75,
+      "Number of shots": 1,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Damage": 0
+    },
+    "3": {
+      "Damage": 55
+    },
+    "4": {
+      "Damage": 110
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Damage": 181,
+      "Attack Interval": 0.45,
+      "Bonus per rank": 0.07,
+      "Extra 20 rank bonus:": 0.25,
+      "Extra 40% rank bonus:": 0.75,
+      "Number of shots": 1,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Number of shots": 0
+    },
+    "3": {
+      "Number of shots": 1
+    },
+    "4": {
+      "Number of shots": 2
+    },
+    "5": {
+      "Number of shots": 3
+    },
+    "6": {
+      "Number of shots": 4
+    }
+  },
+  "SpecialAbilities": {}
+}

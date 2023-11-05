@@ -1,0 +1,19 @@
+{
+  "UnitInfo": {
+    "Name": "Sentry",
+    "Rarity": "Rare",
+    "Faction": "Kingdom of Light",
+    "UnitType": "Damage",
+    "Target": "First",
+    "Arena": 4,
+    "AoE": "No",
+    "Lv": "3,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 5
+  },
+  "Levels": {},
+  "ManaLevels": {},
+  "MergeRanks": {},
+  "SpecialAbilities": {}
+}

@@ -1,0 +1,111 @@
+{
+  "UnitInfo": {
+    "Name": "Trapper",
+    "Rarity": "Legendary",
+    "Faction": "Forest Alliance",
+    "UnitType": "Debuff",
+    "Target": "First",
+    "Arena": 5,
+    "AoE": "No",
+    "Lv": "7,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 9
+  },
+  "Levels": {
+    "1": {
+      "Damage": 123,
+      "Attack Interval": 0.6,
+      "Trap duration": 6,
+      "Slow target": 0.15,
+      "Max slowing": 0.3,
+      "Armor Destruction": 0.4,
+      "Max armor destruction": 0.8
+    },
+    "2": {
+      "Damage": 0,
+      "Armor Destruction": 0,
+      "Max armor destruction": 0
+    },
+    "3": {
+      "Damage": 15,
+      "Armor Destruction": 0.025,
+      "Max armor destruction": 0.05
+    },
+    "4": {
+      "Damage": 32,
+      "Armor Destruction": 0.05,
+      "Max armor destruction": 0.1
+    },
+    "5": {
+      "Damage": 50,
+      "Armor Destruction": 0.075,
+      "Max armor destruction": 0.15
+    },
+    "6": {
+      "Damage": 71,
+      "Armor Destruction": 0.1,
+      "Max armor destruction": 0.2
+    },
+    "7": {
+      "Damage": 95,
+      "Armor Destruction": 0.125,
+      "Max armor destruction": 0.25
+    },
+    "8": {
+      "Damage": 121,
+      "Armor Destruction": 0.15,
+      "Max armor destruction": 0.3
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 123,
+      "Attack Interval": 0.6,
+      "Trap duration": 6,
+      "Slow target": 0.15,
+      "Max slowing": 0.3,
+      "Armor Destruction": 0.4,
+      "Max armor destruction": 0.8
+    },
+    "2": {
+      "Damage": 0,
+      "Trap duration": 0
+    },
+    "3": {
+      "Damage": 60,
+      "Trap duration": 1.5
+    },
+    "4": {
+      "Damage": 120,
+      "Trap duration": 3
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Damage": 123,
+      "Attack Interval": 0.6,
+      "Trap duration": 6,
+      "Slow target": 0.15,
+      "Max slowing": 0.3,
+      "Armor Destruction": 0.4,
+      "Max armor destruction": 0.8
+    },
+    "2": {
+      "Attack Interval": 0
+    },
+    "3": {
+      "Attack Interval": -0.3
+    },
+    "4": {
+      "Attack Interval": -0.4
+    },
+    "5": {
+      "Attack Interval": -0.45
+    },
+    "6": {
+      "Attack Interval": -0.48
+    }
+  },
+  "SpecialAbilities": {}
+}

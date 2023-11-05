@@ -1,0 +1,122 @@
+{
+  "UnitInfo": {
+    "Name": "Boreas",
+    "Rarity": "Legendary",
+    "Faction": "Forest Alliance",
+    "UnitType": "Damage",
+    "Target": "First",
+    "Arena": 4,
+    "AoE": "No",
+    "Lv": "7,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 7
+  },
+  "Levels": {
+    "1": {
+      "Damage": 20,
+      "Attack Interval": 0.6,
+      "Phase1 duration": 4,
+      "Phase 2 duration": 1.5,
+      "Activation interval": 5.5,
+      "Attack speed increase": 6,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Damage": 0,
+      "Phase1 duration": 0,
+      "Phase 2 duration": 0,
+      "Activation interval": 0,
+      "Hero Cooldown": 0
+    },
+    "3": {
+      "Damage": 3,
+      "Phase1 duration": 0.3,
+      "Phase 2 duration": 0.1,
+      "Activation interval": -0.4,
+      "Hero Cooldown": 0.5
+    },
+    "4": {
+      "Damage": 7,
+      "Phase1 duration": 0.6,
+      "Phase 2 duration": 0.2,
+      "Activation interval": -0.8,
+      "Hero Cooldown": 1
+    },
+    "5": {
+      "Damage": 11,
+      "Phase1 duration": 0.9,
+      "Phase 2 duration": 0.3,
+      "Activation interval": -1.2,
+      "Hero Cooldown": 1.5
+    },
+    "6": {
+      "Damage": 16,
+      "Phase1 duration": 1.2,
+      "Phase 2 duration": 0.4,
+      "Activation interval": -1.6,
+      "Hero Cooldown": 2
+    },
+    "7": {
+      "Damage": 22,
+      "Phase1 duration": 1.5,
+      "Phase 2 duration": 0.5,
+      "Activation interval": -2,
+      "Hero Cooldown": 2.5
+    },
+    "8": {
+      "Damage": 28,
+      "Phase1 duration": 1.8,
+      "Phase 2 duration": 0.6,
+      "Activation interval": -2.4,
+      "Hero Cooldown": 3
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 20,
+      "Attack Interval": 0.6,
+      "Phase1 duration": 4,
+      "Phase 2 duration": 1.5,
+      "Activation interval": 5.5,
+      "Attack speed increase": 6,
+      "Hero Cooldown": 1.7
+    },
+    "2": {
+      "Damage": 0
+    },
+    "3": {
+      "Damage": 25
+    },
+    "4": {
+      "Damage": 50
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Damage": 20,
+      "Attack Interval": 0.6,
+      "Phase1 duration": 4,
+      "Phase 2 duration": 1.5,
+      "Activation interval": 5.5,
+      "Attack speed increase": 6,
+      "Hero Cooldown": 1.7
+    },
+    "2": {
+      "Attack Interval": 0
+    },
+    "3": {
+      "Attack Interval": -0.3
+    },
+    "4": {
+      "Attack Interval": -0.4
+    },
+    "5": {
+      "Attack Interval": -0.45
+    },
+    "6": {
+      "Attack Interval": -0.48
+    }
+  },
+  "SpecialAbilities": {}
+}

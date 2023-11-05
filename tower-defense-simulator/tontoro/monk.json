@@ -1,0 +1,95 @@
+{
+  "UnitInfo": {
+    "Name": "Monk",
+    "Rarity": "Legendary",
+    "Faction": "Kingdom of Light",
+    "UnitType": "Damage",
+    "Target": "First",
+    "Arena": 12,
+    "AoE": "No",
+    "Lv": "7,15",
+    "Mana Lv": "1,2",
+    "Merge Rank": "1,7",
+    "Attributes": 9
+  },
+  "Levels": {
+    "1": {
+      "Damage": 350,
+      "Attack Interval": 0.7,
+      "Attack speed increase - vertical": 1,
+      "Damage increase - horizontal": 2,
+      "Damage increase per intersection": 1.5,
+      "Area Damage": 0.25,
+      "Damage increase w/ Power-Up": 0.4
+    },
+    "2": {
+      "Damage": 0,
+      "Damage increase w/ Power-Up": 0
+    },
+    "3": {
+      "Damage": 63,
+      "Damage increase w/ Power-Up": 0.05
+    },
+    "4": {
+      "Damage": 137,
+      "Damage increase w/ Power-Up": 0.1
+    },
+    "5": {
+      "Damage": 225,
+      "Damage increase w/ Power-Up": 0.15
+    },
+    "6": {
+      "Damage": 328,
+      "Damage increase w/ Power-Up": 0.2
+    },
+    "7": {
+      "Damage": 450,
+      "Damage increase w/ Power-Up": 0.25
+    },
+    "8": {
+      "Damage": 594,
+      "Damage increase w/ Power-Up": 0.3
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 350,
+      "Attack Interval": 0.7,
+      "Attack speed increase - vertical": 1,
+      "Damage increase - horizontal": 2,
+      "Damage increase per intersection": 1.5,
+      "Damage increase w/ Power-Up": 0.4
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Damage": 350,
+      "Attack Interval": 0.7,
+      "Attack speed increase - vertical": 1,
+      "Damage increase - horizontal": 2,
+      "Damage increase per intersection": 1.5,
+      "Damage increase w/ Power-Up": 0.4
+    },
+    "2": {
+      "Attack Interval": 0,
+      "Damage increase per intersection": 0
+    },
+    "3": {
+      "Attack Interval": -0.35,
+      "Damage increase per intersection": 0.375
+    },
+    "4": {
+      "Attack Interval": -0.47,
+      "Damage increase per intersection": 0.75
+    },
+    "5": {
+      "Attack Interval": -0.53,
+      "Damage increase per intersection": 1.125
+    },
+    "6": {
+      "Attack Interval": -0.56,
+      "Damage increase per intersection": 1.5
+    }
+  },
+  "SpecialAbilities": {}
+}

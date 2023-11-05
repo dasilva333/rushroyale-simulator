@@ -1,0 +1,90 @@
+{
+  "UnitInfo": {
+    "Name": "Cultist",
+    "Rarity": "Legendary",
+    "Faction": "Dark Domain",
+    "UnitType": "Damage",
+    "Target": "First",
+    "Arena": 10,
+    "AoE": "Demon form",
+    "Lv": "7,15",
+    "Mana Lv": "1,2",
+    "Merge Rank": "1,7",
+    "Attributes": 9
+  },
+  "Levels": {
+    "1": {
+      "Damage": 295,
+      "Attack Interval": 0.8,
+      "Damage Increase": 3,
+      "Critical damage chance": 0.05,
+      "Damage increase per sacrifice": 0.05,
+      "Sacrifice buff duration": 10,
+      "Sacrifice cooldown": 20
+    },
+    "2": {
+      "Damage": 0
+    },
+    "3": {
+      "Damage": 49
+    },
+    "4": {
+      "Damage": 107
+    },
+    "5": {
+      "Damage": 175
+    },
+    "6": {
+      "Damage": 254
+    },
+    "7": {
+      "Damage": 346
+    },
+    "8": {
+      "Damage": 454
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 295,
+      "Attack Interval": 0.8,
+      "Damage Increase": 3,
+      "Critical damage chance": 0.05,
+      "Damage increase per sacrifice": 0.05,
+      "Sacrifice buff duration": 10,
+      "Sacrifice cooldown": 20
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Damage": 295,
+      "Attack Interval": 0.8,
+      "Damage Increase": 3,
+      "Critical damage chance": 0.05,
+      "Damage increase per sacrifice": 0.05,
+      "Sacrifice buff duration": 10,
+      "Sacrifice cooldown": 20
+    },
+    "2": {
+      "Attack Interval": 0,
+      "Critical damage chance": 0
+    },
+    "3": {
+      "Attack Interval": -0.4,
+      "Critical damage chance": 0.02
+    },
+    "4": {
+      "Attack Interval": -0.53,
+      "Critical damage chance": 0.04
+    },
+    "5": {
+      "Attack Interval": -0.6,
+      "Critical damage chance": 0.06
+    },
+    "6": {
+      "Attack Interval": -0.64,
+      "Critical damage chance": 0.08
+    }
+  },
+  "SpecialAbilities": {}
+}

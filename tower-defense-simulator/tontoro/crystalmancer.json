@@ -1,0 +1,19 @@
+{
+  "UnitInfo": {
+    "Name": "Crystalmancer",
+    "Rarity": "Epic",
+    "Faction": "Dark Domain",
+    "UnitType": "Damage",
+    "Target": "First",
+    "Arena": 7,
+    "AoE": "No",
+    "Lv": "5,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 4
+  },
+  "Levels": {},
+  "ManaLevels": {},
+  "MergeRanks": {},
+  "SpecialAbilities": {}
+}

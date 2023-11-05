@@ -1,0 +1,19 @@
+{
+  "UnitInfo": {
+    "Name": "Chemist",
+    "Rarity": "Rare",
+    "Faction": "Technogenic Society",
+    "UnitType": "Debuff",
+    "Target": "First",
+    "Arena": 5,
+    "AoE": "No",
+    "Lv": "3,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 4
+  },
+  "Levels": {},
+  "ManaLevels": {},
+  "MergeRanks": {},
+  "SpecialAbilities": {}
+}

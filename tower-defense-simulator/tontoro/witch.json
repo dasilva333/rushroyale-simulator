@@ -1,0 +1,118 @@
+{
+  "UnitInfo": {
+    "Name": "Witch",
+    "Rarity": "Legendary",
+    "Faction": "Magic Counsil",
+    "UnitType": "Debuff",
+    "Target": "First",
+    "Arena": 10,
+    "AoE": "No",
+    "Lv": "7,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 6
+  },
+  "Levels": {
+    "1": {
+      "Damage": 100,
+      "Attack Interval": 1,
+      "Activation chance": 0.5,
+      "Monster healing": 0.3,
+      "Damage increase": 0.3,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Damage": 0,
+      "Monster healing": 0,
+      "Damage increase": 0,
+      "Hero Cooldown": 0
+    },
+    "3": {
+      "Damage": 16,
+      "Monster healing": 0.07,
+      "Damage increase": 0.04,
+      "Hero Cooldown": 0.5
+    },
+    "4": {
+      "Damage": 36,
+      "Monster healing": 0.14,
+      "Damage increase": 0.08,
+      "Hero Cooldown": 1
+    },
+    "5": {
+      "Damage": 59,
+      "Monster healing": 0.21,
+      "Damage increase": 0.12,
+      "Hero Cooldown": 1.5
+    },
+    "6": {
+      "Damage": 87,
+      "Monster healing": 0.28,
+      "Damage increase": 0.16,
+      "Hero Cooldown": 2
+    },
+    "7": {
+      "Damage": 118,
+      "Monster healing": 0.35,
+      "Damage increase": 0.2,
+      "Hero Cooldown": 2.5
+    },
+    "8": {
+      "Damage": 155,
+      "Monster healing": 0.42,
+      "Damage increase": 0.24,
+      "Hero Cooldown": 3
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 100,
+      "Attack Interval": 1,
+      "Activation chance": 0.5,
+      "Monster healing": 0.3,
+      "Damage increase": 0.3,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Damage": 0,
+      "Monster healing": 0,
+      "Damage increase": 0
+    },
+    "3": {
+      "Damage": 25,
+      "Monster healing": 0.025,
+      "Damage increase": 0.025
+    },
+    "4": {
+      "Damage": 50,
+      "Monster healing": 0.05,
+      "Damage increase": 0.05
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Damage": 100,
+      "Attack Interval": 1,
+      "Activation chance": 0.5,
+      "Monster healing": 0.3,
+      "Damage increase": 0.3,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Attack Interval": 0
+    },
+    "3": {
+      "Attack Interval": -0.5
+    },
+    "4": {
+      "Attack Interval": -0.67
+    },
+    "5": {
+      "Attack Interval": -0.75
+    },
+    "6": {
+      "Attack Interval": -0.8
+    }
+  },
+  "SpecialAbilities": {}
+}

@@ -1,0 +1,112 @@
+{
+  "UnitInfo": {
+    "Name": "Knight Statue",
+    "Rarity": "Legendary",
+    "Faction": "Kingdom of Light",
+    "UnitType": "Support",
+    "Target": "-",
+    "Arena": 12,
+    "AoE": "-",
+    "Lv": "7,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 4
+  },
+  "Levels": {
+    "1": {
+      "Attack speed increase": 0.08,
+      "Upon Activation": 0.1,
+      "Critical damage chanse": 0.03,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Attack speed increase": 0,
+      "Upon Activation": 0,
+      "Hero Cooldown": 0
+    },
+    "3": {
+      "Attack speed increase": 0.01,
+      "Upon Activation": 0.01,
+      "Hero Cooldown": 0.5
+    },
+    "4": {
+      "Attack speed increase": 0.02,
+      "Upon Activation": 0.02,
+      "Hero Cooldown": 1
+    },
+    "5": {
+      "Attack speed increase": 0.03,
+      "Upon Activation": 0.03,
+      "Hero Cooldown": 1.5
+    },
+    "6": {
+      "Attack speed increase": 0.04,
+      "Upon Activation": 0.04,
+      "Hero Cooldown": 2
+    },
+    "7": {
+      "Attack speed increase": 0.05,
+      "Upon Activation": 0.05,
+      "Hero Cooldown": 2.5
+    },
+    "8": {
+      "Attack speed increase": 0.06,
+      "Upon Activation": 0.06,
+      "Hero Cooldown": 3
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Attack speed increase": 0.08,
+      "Upon Activation": 0.1,
+      "Critical damage chanse": 0.03,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Attack speed increase": 0,
+      "Upon Activation": 0
+    },
+    "3": {
+      "Attack speed increase": 0.01,
+      "Upon Activation": 0.03
+    },
+    "4": {
+      "Attack speed increase": 0.02,
+      "Upon Activation": 0.06
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Attack speed increase": 0.08,
+      "Upon Activation": 0.1,
+      "Critical damage chanse": 0.03,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Attack speed increase": 0,
+      "Upon Activation": 0,
+      "Critical damage chanse": 0
+    },
+    "3": {
+      "Attack speed increase": 1,
+      "Upon Activation": 1,
+      "Critical damage chanse": 0.015
+    },
+    "4": {
+      "Attack speed increase": 2,
+      "Upon Activation": 2,
+      "Critical damage chanse": 0.03
+    },
+    "5": {
+      "Attack speed increase": 3,
+      "Upon Activation": 3,
+      "Critical damage chanse": 0.045
+    },
+    "6": {
+      "Attack speed increase": 4,
+      "Upon Activation": 4,
+      "Critical damage chanse": 0.06
+    }
+  },
+  "SpecialAbilities": {}
+}

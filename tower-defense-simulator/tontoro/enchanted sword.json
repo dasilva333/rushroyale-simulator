@@ -1,0 +1,108 @@
+{
+  "UnitInfo": {
+    "Name": "Enchanted Sword",
+    "Rarity": "Legendary",
+    "Faction": "Magic Council",
+    "UnitType": "Special",
+    "Target": "Random",
+    "Arena": 8,
+    "AoE": "Yes",
+    "Lv": "7,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 9
+  },
+  "Levels": {
+    "1": {
+      "Damage": 114,
+      "Attack Interval": 2,
+      "Number of targets": 2,
+      "Max enhancements": 10,
+      "Damage boost": 0.135,
+      "Critical damage chance": 0.03,
+      "Damage debuff": 0.1
+    },
+    "2": {
+      "Damage": 0,
+      "Damage boost": 0,
+      "Damage debuff": 0
+    },
+    "3": {
+      "Damage": 24,
+      "Damage boost": 0.015,
+      "Damage debuff": 0.005
+    },
+    "4": {
+      "Damage": 53,
+      "Damage boost": 0.03,
+      "Damage debuff": 0.01
+    },
+    "5": {
+      "Damage": 89,
+      "Damage boost": 0.045,
+      "Damage debuff": 0.015
+    },
+    "6": {
+      "Damage": 131,
+      "Damage boost": 0.06,
+      "Damage debuff": 0.02
+    },
+    "7": {
+      "Damage": 183,
+      "Damage boost": 0.075,
+      "Damage debuff": 0.025
+    },
+    "8": {
+      "Damage": 245,
+      "Damage boost": 0.09,
+      "Damage debuff": 0.03
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 114,
+      "Attack Interval": 2,
+      "Number of targets": 2,
+      "Max enhancements": 10,
+      "Damage boost": 0.135,
+      "Critical damage chance": 0.03,
+      "Damage debuff": 0.1
+    },
+    "2": {
+      "Damage": 0
+    },
+    "3": {
+      "Damage": 76
+    },
+    "4": {
+      "Damage": 152
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Damage": 114,
+      "Attack Interval": 2,
+      "Number of targets": 2,
+      "Max enhancements": 10,
+      "Damage boost": 0.135,
+      "Critical damage chance": 0.03,
+      "Damage debuff": 0.1
+    },
+    "2": {
+      "Attack Interval": 0
+    },
+    "3": {
+      "Attack Interval": -1
+    },
+    "4": {
+      "Attack Interval": -1.33
+    },
+    "5": {
+      "Attack Interval": -1.5
+    },
+    "6": {
+      "Attack Interval": -1.6
+    }
+  },
+  "SpecialAbilities": {}
+}

@@ -1,0 +1,19 @@
+{
+  "UnitInfo": {
+    "Name": "Banner",
+    "Rarity": "Rare",
+    "Faction": "Kingdom of Light",
+    "UnitType": "Support",
+    "Target": "-",
+    "Arena": 3,
+    "AoE": "-",
+    "Lv": "3,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 2
+  },
+  "Levels": {},
+  "ManaLevels": {},
+  "MergeRanks": {},
+  "SpecialAbilities": {}
+}

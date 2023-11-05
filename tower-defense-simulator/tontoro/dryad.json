@@ -1,0 +1,109 @@
+{
+  "UnitInfo": {
+    "Name": "Dryad",
+    "Rarity": "Legendary",
+    "Faction": "Forest Alliance",
+    "UnitType": "Support",
+    "Target": "First",
+    "Arena": 8,
+    "AoE": "No",
+    "Lv": "7,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 5
+  },
+  "Levels": {
+    "1": {
+      "Damage": 28,
+      "Attack Interval": 0.75,
+      "Attack speed reduction": 0.35,
+      "Negative effect duration": 40,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Damage": 0,
+      "Attack speed reduction": 0,
+      "Negative effect duration": 0,
+      "Hero Cooldown": 0
+    },
+    "3": {
+      "Damage": 7,
+      "Attack speed reduction": -0.025,
+      "Negative effect duration": -2.5,
+      "Hero Cooldown": 0.5
+    },
+    "4": {
+      "Damage": 16,
+      "Attack speed reduction": -0.05,
+      "Negative effect duration": -5,
+      "Hero Cooldown": 1
+    },
+    "5": {
+      "Damage": 27,
+      "Attack speed reduction": -0.075,
+      "Negative effect duration": -7.5,
+      "Hero Cooldown": 1.5
+    },
+    "6": {
+      "Damage": 41,
+      "Attack speed reduction": -0.1,
+      "Negative effect duration": -10,
+      "Hero Cooldown": 2
+    },
+    "7": {
+      "Damage": 59,
+      "Attack speed reduction": -0.125,
+      "Negative effect duration": -12.5,
+      "Hero Cooldown": 2.5
+    },
+    "8": {
+      "Damage": 81,
+      "Attack speed reduction": -0.15,
+      "Negative effect duration": -15,
+      "Hero Cooldown": 3
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 28,
+      "Attack Interval": 0.75,
+      "Attack speed reduction": 0.35,
+      "Negative effect duration": 40,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Damage": 0
+    },
+    "3": {
+      "Damage": 16
+    },
+    "4": {
+      "Damage": 32
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Damage": 28,
+      "Attack Interval": 0.75,
+      "Attack speed reduction": 0.35,
+      "Negative effect duration": 40,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Attack Interval": 0
+    },
+    "3": {
+      "Attack Interval": -0.38
+    },
+    "4": {
+      "Attack Interval": -0.5
+    },
+    "5": {
+      "Attack Interval": -0.56
+    },
+    "6": {
+      "Attack Interval": -0.6
+    }
+  },
+  "SpecialAbilities": {}
+}

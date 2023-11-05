@@ -1,0 +1,99 @@
+{
+  "UnitInfo": {
+    "Name": "Harlequin",
+    "Rarity": "Legendary",
+    "Faction": "Dark Domain",
+    "UnitType": "Special",
+    "Target": "First",
+    "Arena": 9,
+    "AoE": "No",
+    "Lv": "7,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 4
+  },
+  "Levels": {
+    "1": {
+      "Damage": 42,
+      "Attack Interval": 1,
+      "Damage Reduction": -0.35,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Damage": 0,
+      "Damage Reduction": 0,
+      "Hero Cooldown": 0
+    },
+    "3": {
+      "Damage": 9,
+      "Damage Reduction": 0.04,
+      "Hero Cooldown": 0.5
+    },
+    "4": {
+      "Damage": 19,
+      "Damage Reduction": 0.08,
+      "Hero Cooldown": 1
+    },
+    "5": {
+      "Damage": 32,
+      "Damage Reduction": 0.12,
+      "Hero Cooldown": 1.5
+    },
+    "6": {
+      "Damage": 47,
+      "Damage Reduction": 0.16,
+      "Hero Cooldown": 2
+    },
+    "7": {
+      "Damage": 64,
+      "Damage Reduction": 0.2,
+      "Hero Cooldown": 2.5
+    },
+    "8": {
+      "Damage": 86,
+      "Damage Reduction": 0.24,
+      "Hero Cooldown": 3
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 42,
+      "Attack Interval": 1,
+      "Damage Reduction": -0.35,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Damage": 0
+    },
+    "3": {
+      "Damage": 36
+    },
+    "4": {
+      "Damage": 72
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Damage": 42,
+      "Attack Interval": 1,
+      "Damage Reduction": -0.35,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Attack Interval": 0
+    },
+    "3": {
+      "Attack Interval": -0.5
+    },
+    "4": {
+      "Attack Interval": -0.67
+    },
+    "5": {
+      "Attack Interval": -0.75
+    },
+    "6": {
+      "Attack Interval": -0.8
+    }
+  },
+  "SpecialAbilities": {}
+}

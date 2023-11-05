@@ -1,0 +1,98 @@
+{
+  "UnitInfo": {
+    "Name": "Robot",
+    "Rarity": "Legendary",
+    "Faction": "Technogenic Society",
+    "UnitType": "Damage",
+    "Target": "First",
+    "Arena": 6,
+    "AoE": "10 merge",
+    "Lv": "7,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 6
+  },
+  "Levels": {
+    "1": {
+      "Damage": 224,
+      "Attack Interval": 0.7,
+      "Attack speed incrase": 0.5,
+      "Damage increase": 0.5,
+      "Critical damage chance": 0.05,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Damage": 0,
+      "Hero Cooldown": 0
+    },
+    "3": {
+      "Damage": 47,
+      "Hero Cooldown": 0.5
+    },
+    "4": {
+      "Damage": 104,
+      "Hero Cooldown": 1
+    },
+    "5": {
+      "Damage": 172,
+      "Hero Cooldown": 1.5
+    },
+    "6": {
+      "Damage": 256,
+      "Hero Cooldown": 2
+    },
+    "7": {
+      "Damage": 357,
+      "Hero Cooldown": 2.5
+    },
+    "8": {
+      "Damage": 479,
+      "Hero Cooldown": 3
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 224,
+      "Attack Interval": 0.7,
+      "Attack speed incrase": 0.5,
+      "Damage increase": 0.5,
+      "Critical damage chance": 0.05,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Damage": 0
+    },
+    "3": {
+      "Damage": 75
+    },
+    "4": {
+      "Damage": 150
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Damage": 224,
+      "Attack Interval": 0.7,
+      "Attack speed incrase": 0.5,
+      "Damage increase": 0.5,
+      "Critical damage chance": 0.05,
+      "Hero Cooldown": 4
+    },
+    "2": {
+      "Attack Interval": 0
+    },
+    "3": {
+      "Attack Interval": -0.35
+    },
+    "4": {
+      "Attack Interval": -0.47
+    },
+    "5": {
+      "Attack Interval": -0.53
+    },
+    "6": {
+      "Attack Interval": -0.56
+    }
+  },
+  "SpecialAbilities": {}
+}

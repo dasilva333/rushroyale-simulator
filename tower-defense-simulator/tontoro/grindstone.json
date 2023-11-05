@@ -1,0 +1,19 @@
+{
+  "UnitInfo": {
+    "Name": "Grindstone",
+    "Rarity": "Rare",
+    "Faction": "Technogenic Society",
+    "UnitType": "Support",
+    "Target": "-",
+    "Arena": 6,
+    "AoE": "-",
+    "Lv": "3,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 3
+  },
+  "Levels": {},
+  "ManaLevels": {},
+  "MergeRanks": {},
+  "SpecialAbilities": {}
+}
