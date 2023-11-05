@@ -12,8 +12,10 @@ import '../styles/unit-configuration-modal.scss';
 
 function UnitConfigurationModal({ unit, unitConfig, onConfirm, onConfigChange }) {
   const [showTalentModal, setShowTalentModal] = useState(false); // state for modal visibility
-
+  // console.log('UnitConfigurationModal', unit, unitConfig);
   const config = unitConfiguration[unit ? unit.name.toLowerCase() : ''];
+  // console.log('config', config);
+
   const { fields, defaults } = config || {};
   const combinedFieldsSet = new Set(['swordStacks', ...(fields || []), ...(Object.keys(defaults || {}))]);
   const combinedFields = [...combinedFieldsSet].sort((a, b) => {
@@ -21,6 +23,7 @@ function UnitConfigurationModal({ unit, unitConfig, onConfirm, onConfigChange })
     const priorityB = fieldToComponentSpec[b]?.priority || 0;
     return priorityA - priorityB;  // If you want descending order, swap priorityA and priorityB
   });
+  // console.log('combinedFields', combinedFields);
 
   useEffect(() => {
     if (unit && !Object.keys(unitConfig).length) {
@@ -30,7 +33,7 @@ function UnitConfigurationModal({ unit, unitConfig, onConfirm, onConfigChange })
       }, {});
 
       mergedDefaults = adjustValuesForTierAndLevel({ ...unit.class, ...mergedDefaults });
-      console.log('mergedDefaults', mergedDefaults);
+      // console.log('mergedDefaults', mergedDefaults);
       onConfigChange(mergedDefaults);
     }
   }, [unit, onConfigChange, defaults, unitConfig]);
@@ -78,21 +81,25 @@ function UnitConfigurationModal({ unit, unitConfig, onConfirm, onConfigChange })
                   const fieldSpec = fieldToComponentSpec[fieldName];
                   const fieldProps = {
                     ...fieldSpec,
-                    value: unitConfig[fieldName] || fieldSpec.defaultValue,
+                    value: unitConfig[fieldName] || fieldSpec?.defaultValue || '',
                     onChange: event => handleChange(fieldName, event)
                   };
+                  // console.log('fieldName', fieldName, fieldSpec);
 
-                  switch (fieldSpec.componentType) {
-                    case 'input':
-                      return <NumberInput {...fieldProps} key={fieldName} />;
-                    case 'select':
-                      return <SelectWithMinMax {...fieldProps} key={fieldName} />;
-                    case 'checkbox':
-                      return <CheckboxField {...fieldProps} key={fieldName} />;
-                    // ... other cases
-                    default:
-                      return null;
+                  if (fieldSpec){
+                    switch (fieldSpec.componentType) {
+                      case 'input':
+                        return <NumberInput {...fieldProps} key={fieldName} />;
+                      case 'select':
+                        return <SelectWithMinMax {...fieldProps} key={fieldName} />;
+                      case 'checkbox':
+                        return <CheckboxField {...fieldProps} key={fieldName} />;
+                      // ... other cases
+                      default:
+                        return null;
+                    }
                   }
+
                 })}
 
 {showTalentModal &&

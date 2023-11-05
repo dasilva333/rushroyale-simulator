@@ -54,7 +54,10 @@ function CheckboxSwitch({ talent, talentsManager, unitConfig, tierIndex, handleT
 function UnitTalentConfigurationModal({ unit, unitConfig, setUnitConfig, onTalentConfigChange }) {
     const talentsManager = new TalentsManager(unit.name, unitConfig.talents);  // Initialize TalentsManager
     const unitTalents = talentsManager.getUnitTalents();  // Using TalentsManager method
-
+    if (!unitConfig.talents) {
+        setUnitConfig({ ...unitConfig, talents: talentsManager.getInstanceTalents() });
+    }
+    console.log('UnitTalentConfigurationModal', unitTalents, unitConfig.talents);
     const handleTalentChange = (talentName, tierIndex, isChecked) => {
         // Create a shallow copy of the unitConfig state
         const updatedUnitConfig = { ...unitConfig };

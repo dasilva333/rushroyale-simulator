@@ -4,10 +4,15 @@ class TalentsManager {
     constructor(unitName, instanceTalents) {
         this.unitName = unitName;
         this.instanceTalents = instanceTalents || unitTalentsStore.getDefaultTalentState(unitName);
+        // console.log('this.instanceTalents', this.instanceTalents);
     }
 
     isTalentSelected(talentName) {
         return unitTalentsStore.isTalentSelected(this.unitName, talentName);
+    }
+
+    getInstanceTalents() {
+        return this.instanceTalents;
     }
 
     getInstanceTalentProperty(talentName, property) {

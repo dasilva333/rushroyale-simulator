@@ -1,0 +1,45 @@
+{
+  "UnitInfo": {
+    "Name": "Bruiser",
+    "Rarity": "Legendary",
+    "Faction": "Magic Council",
+    "UnitType": "Damage",
+    "Target": "First",
+    "Arena": 7,
+    "AoE": "Enraged",
+    "Lv": "7,15",
+    "Mana Lv": "1,5",
+    "Merge Rank": "1,7",
+    "Attributes": 7
+  },
+  "Levels": {},
+  "ManaLevels": {
+    "1": {
+      "Damage": 0
+    },
+    "2": {
+      "Damage": 30
+    },
+    "3": {
+      "Damage": 60
+    },
+    "4": {
+      "Damage": 90
+    },
+    "5": {
+      "Damage": 120
+    },
+    "Base": {
+      "Damage": "Mana Lv",
+      "Attack Interval": 132,
+      "Attack speed increase": 1.2,
+      "Damage increase": 1,
+      "Increased damage against bosses": 3.5,
+      "Enrage change": 5.5,
+      "Hero cooldown": 0.1
+    }
+  },
+  "MergeRanks": {},
+  "Enraged": {},
+  "SpecialAbilities": {}
+}

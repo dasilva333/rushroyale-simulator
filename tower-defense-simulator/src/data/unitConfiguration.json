@@ -24,11 +24,40 @@
       "damageIncrease"
     ],
     "defaults": {
+      "damageIncrease": 600,
+      "damageLevels": {
+        "7": 320,
+        "8": 338,
+        "9": 359,
+        "10": 383,
+        "11": 410,
+        "12": 442,
+        "13": 478,
+        "14": 520,
+        "15": 568
+      },
+      "speedTiers": {
+        "1": 0,
+        "2": 0.3,
+        "3": 0.4,
+        "4": 0.45,
+        "5": 0.48,
+        "6": 0.5,
+        "7": 0.51
+      },
       "baseDamage": 120,
-      "baseSpeed": 0.6,
-      "baseCritChance": 0,
-      "absorbs": 1,
-      "damageIncrease": 600
+      "baseSpeed": 0.6
+    },
+    "static": {
+      "knightOfLightBonus": 2.5,
+      "knightOfDarknessAbsorptionLimit": 20,
+      "knightOfDarknessLowBonus": 6,
+      "knightOfDarknessHighBonus": 3.5,
+      "purificationSpeedBonus": 1.1,
+      "unityEmpoweredDamageBonus": 1.15,
+      "unityEmpoweredCriticalDamageBonus": 1.35,
+      "unityEmpoweredCritChanceBonus": 8,
+      "hammerOfFaithDamageMultiplier": 7.77
     }
   },
   "boreas": {

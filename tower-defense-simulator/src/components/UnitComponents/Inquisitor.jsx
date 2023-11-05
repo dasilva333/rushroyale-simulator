@@ -5,58 +5,36 @@ import TalentsManager from '../../classes/TalentsManager';
 class Inquisitor extends DmgSteppedUnit {
   static name = "Inquisitor";
   static defaultImage = "inquisitor.png";
-  static damageIncrease = 600;
-  static damageIncreaseSteps = 15;
-  static damageLevels = {
-    7: 320,
-    8: 338,
-    9: 359,
-    10: 383,
-    11: 410,
-    12: 442,
-    13: 478,
-    14: 520,
-    15: 568
-  };
-  static speedTiers = {
-    1: 0,
-    2: 0.3,
-    3: 0.4,
-    4: 0.45,
-    5: 0.48,
-    6: 0.5,
-    7: 0.51
-  };
-  static baseDamage = 120;
-  static baseSpeed = 0.6;
-  // static talents = {
-  //   "KnightOfLight": { "selected": true, "bossesKilled": 3 },
-  //   "KnightOfDarkness": { "selected": false, "absorbs": 0 },
-  //   "Purification": { "selected": true, "isActive": false },
-  //   "ShieldOfFaith": { "selected": false },
-  //   "Ronin": { "selected": false },
-  //   "Unity": { "selected": true },
-  //   "HammerOfFaith": { "selected": false, "hammerStunActive": false }
-  // };
-
-  // Talent-related constants
-  static KNIGHT_OF_LIGHT_BONUS = 2.5;
-  static KNIGHT_OF_DARKNESS_ABSORPTION_LIMIT = 20;
-  static KNIGHT_OF_DARKNESS_LOW_BONUS = 6;
-  static KNIGHT_OF_DARKNESS_HIGH_BONUS = 3.5;
-  static PURIFICATION_SPEED_BONUS = 1.1;
-  static UNITY_EMPPOWERED_DAMAGE_BONUS = 1.15;
-  static UNITY_EMPPOWERED_CRITICAL_DAMAGE_BONUS = 1.35;
-  static UNITY_EMPPOWERED_CRIT_CHANCE_BONUS = 8;
-  static HAMMER_OF_FAITH_DAMAGE_MULTIPLIER = 7.77;
   
   constructor(config) {
     super(config);
-    // this.talents = config.talents || Inquisitor.talents;
+    // Inquisitor.applyDefaultConfig(config.defaults);
+    // Inquisitor.applyStaticConfig(config.static);
     this.talentsManager = new TalentsManager(Inquisitor.name, config.talents);
     this.empowered = config.empowered || 0;
     this.damageIncrease = config.damageIncrease || Inquisitor.damageIncrease;
     this.component = InquisitorComponent;
+  }
+
+  static applyDefaultConfig(defaultConfig) {
+    if (defaultConfig) {
+      this.damageLevels = defaultConfig.damageLevels;
+      this.speedTiers = defaultConfig.speedTiers;
+    }
+  }
+
+  static applyStaticConfig(staticConfig) {
+    if (staticConfig) {
+      this.knightOfLightBonus = staticConfig.knightOfLightBonus;
+      this.knightOfDarknessAbsorptionLimit = staticConfig.knightOfDarknessAbsorptionLimit;
+      this.knightOfDarknessLowBonus = staticConfig.knightOfDarknessLowBonus;
+      this.knightOfDarknessHighBonus = staticConfig.knightOfDarknessHighBonus;
+      this.purificationSpeedBonus = staticConfig.purificationSpeedBonus;
+      this.unityEmpoweredDamageBonus = staticConfig.unityEmpoweredDamageBonus;
+      this.unityEmpoweredCriticalDamageBonus = staticConfig.unityEmpoweredCriticalDamageBonus;
+      this.unityEmpoweredCritChanceBonus = staticConfig.unityEmpoweredCritChanceBonus;
+      this.hammerOfFaithDamageMultiplier = staticConfig.hammerOfFaithDamageMultiplier;
+    }
   }
 
   static getEmpowermentCondition(boardManager) {
