@@ -7,13 +7,153 @@
     "Target": "-",
     "Arena": 6,
     "AoE": "-",
-    "Lv": "3,15",
-    "Mana Lv": "1,5",
-    "Merge Rank": "1,7",
+    "Lv": [
+      3,
+      15
+    ],
+    "Mana Lv": [
+      1,
+      5
+    ],
+    "Merge Rank": [
+      1,
+      7
+    ],
     "Attributes": 3
   },
-  "Levels": {},
-  "ManaLevels": {},
-  "MergeRanks": {},
+  "Levels": {
+    "3": {
+      "Damage (single target)": 0,
+      "Damage (multiple target)": 0,
+      "Hero Cooldown": 0
+    },
+    "4": {
+      "Damage (single target)": 14,
+      "Damage (multiple target)": 3,
+      "Hero Cooldown": 0.5
+    },
+    "5": {
+      "Damage (single target)": 30,
+      "Damage (multiple target)": 6,
+      "Hero Cooldown": 1
+    },
+    "6": {
+      "Damage (single target)": 48,
+      "Damage (multiple target)": 10,
+      "Hero Cooldown": 1.5
+    },
+    "7": {
+      "Damage (single target)": 68,
+      "Damage (multiple target)": 14,
+      "Hero Cooldown": 2
+    },
+    "8": {
+      "Damage (single target)": 91,
+      "Damage (multiple target)": 18,
+      "Hero Cooldown": 2.5
+    },
+    "9": {
+      "Damage (single target)": 117,
+      "Damage (multiple target)": 24,
+      "Hero Cooldown": 3
+    },
+    "10": {
+      "Damage (single target)": 146,
+      "Damage (multiple target)": 29,
+      "Hero Cooldown": 3.5
+    },
+    "11": {
+      "Damage (single target)": 179,
+      "Damage (multiple target)": 36,
+      "Hero Cooldown": 4
+    },
+    "12": {
+      "Damage (single target)": 217,
+      "Damage (multiple target)": 44,
+      "Hero Cooldown": 4.5
+    },
+    "13": {
+      "Damage (single target)": 259,
+      "Damage (multiple target)": 52,
+      "Hero Cooldown": 5
+    },
+    "14": {
+      "Damage (single target)": 307,
+      "Damage (multiple target)": 62,
+      "Hero Cooldown": 5.5
+    },
+    "15": {
+      "Damage (single target)": 361,
+      "Damage (multiple target)": 72,
+      "Hero Cooldown": 6
+    },
+    "Base": {
+      "Damage (single target)": 108,
+      "Damage (multiple target)": 21,
+      "Hero Cooldown": 2
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage (single target)": 0,
+      "Damage (multiple target)": 0
+    },
+    "2": {
+      "Damage (single target)": 50,
+      "Damage (multiple target)": 10
+    },
+    "3": {
+      "Damage (single target)": 100,
+      "Damage (multiple target)": 20
+    },
+    "4": {
+      "Damage (single target)": 150,
+      "Damage (multiple target)": 30
+    },
+    "5": {
+      "Damage (single target)": 200,
+      "Damage (multiple target)": 40
+    },
+    "Base": {
+      "Damage (single target)": 108,
+      "Damage (multiple target)": 21,
+      "Hero Cooldown": 2
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Damage (single target)": 0,
+      "Damage (multiple target)": 0
+    },
+    "2": {
+      "Damage (single target)": 54,
+      "Damage (multiple target)": 11
+    },
+    "3": {
+      "Damage (single target)": 108,
+      "Damage (multiple target)": 21
+    },
+    "4": {
+      "Damage (single target)": 162,
+      "Damage (multiple target)": 32
+    },
+    "5": {
+      "Damage (single target)": 216,
+      "Damage (multiple target)": 42
+    },
+    "6": {
+      "Damage (single target)": 270,
+      "Damage (multiple target)": 53
+    },
+    "7": {
+      "Damage (single target)": 324,
+      "Damage (multiple target)": 63
+    },
+    "Base": {
+      "Damage (single target)": 108,
+      "Damage (multiple target)": 21,
+      "Hero Cooldown": 2
+    }
+  },
   "SpecialAbilities": {}
 }

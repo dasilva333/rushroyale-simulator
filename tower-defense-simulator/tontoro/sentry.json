@@ -7,13 +7,176 @@
     "Target": "First",
     "Arena": 4,
     "AoE": "No",
-    "Lv": "3,15",
-    "Mana Lv": "1,5",
-    "Merge Rank": "1,7",
+    "Lv": [
+      3,
+      15
+    ],
+    "Mana Lv": [
+      1,
+      5
+    ],
+    "Merge Rank": [
+      1,
+      7
+    ],
     "Attributes": 5
   },
-  "Levels": {},
-  "ManaLevels": {},
-  "MergeRanks": {},
+  "Levels": {
+    "3": {
+      "Damage": 0,
+      "Attack Interval": 0,
+      "Damage increase": 0,
+      "Activation interval": 0,
+      "Hero Cooldown": 0
+    },
+    "4": {
+      "Damage": 13,
+      "Attack Interval": -0.01,
+      "Damage increase": 0.06,
+      "Activation interval": -0.2,
+      "Hero Cooldown": 0.5
+    },
+    "5": {
+      "Damage": 27,
+      "Attack Interval": -0.02,
+      "Damage increase": 0.12,
+      "Activation interval": -0.4,
+      "Hero Cooldown": 1
+    },
+    "6": {
+      "Damage": 43,
+      "Attack Interval": -0.03,
+      "Damage increase": 0.18,
+      "Activation interval": -0.6,
+      "Hero Cooldown": 1.5
+    },
+    "7": {
+      "Damage": 60,
+      "Attack Interval": -0.04,
+      "Damage increase": 0.24,
+      "Activation interval": -0.8,
+      "Hero Cooldown": 2
+    },
+    "8": {
+      "Damage": 79,
+      "Attack Interval": -0.05,
+      "Damage increase": 0.3,
+      "Activation interval": -1,
+      "Hero Cooldown": 2.5
+    },
+    "9": {
+      "Damage": 101,
+      "Attack Interval": -0.06,
+      "Damage increase": 0.36,
+      "Activation interval": -1.2,
+      "Hero Cooldown": 3
+    },
+    "10": {
+      "Damage": 124,
+      "Attack Interval": -0.07,
+      "Damage increase": 0.42,
+      "Activation interval": -1.4,
+      "Hero Cooldown": 3.5
+    },
+    "11": {
+      "Damage": 151,
+      "Attack Interval": -0.08,
+      "Damage increase": 0.48,
+      "Activation interval": -1.6,
+      "Hero Cooldown": 4
+    },
+    "12": {
+      "Damage": 180,
+      "Attack Interval": -0.09,
+      "Damage increase": 0.54,
+      "Activation interval": -1.8,
+      "Hero Cooldown": 4.5
+    },
+    "13": {
+      "Damage": 213,
+      "Attack Interval": -0.1,
+      "Damage increase": 0.6,
+      "Activation interval": -2,
+      "Hero Cooldown": 5
+    },
+    "14": {
+      "Damage": 249,
+      "Attack Interval": -0.11,
+      "Damage increase": 0.66,
+      "Activation interval": -2.2,
+      "Hero Cooldown": 5.5
+    },
+    "15": {
+      "Damage": 289,
+      "Attack Interval": -0.12,
+      "Damage increase": 0.72,
+      "Activation interval": -2.4,
+      "Hero Cooldown": 6
+    },
+    "Base": {
+      "Damage": 115,
+      "Attack Interval": 0.8,
+      "Damage increase": 0.48,
+      "Activation interval": 5,
+      "Hero Cooldown": 2
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 0,
+      "Damage increase": 0
+    },
+    "2": {
+      "Damage": 60,
+      "Damage increase": 0.4
+    },
+    "3": {
+      "Damage": 120,
+      "Damage increase": 0.8
+    },
+    "4": {
+      "Damage": 180,
+      "Damage increase": 1.2
+    },
+    "5": {
+      "Damage": 240,
+      "Damage increase": 1.6
+    },
+    "Base": {
+      "Damage": 115,
+      "Attack Interval": 0.8,
+      "Damage increase": 0.48,
+      "Activation interval": 5,
+      "Hero Cooldown": 2
+    }
+  },
+  "MergeRanks": {
+    "1": {},
+    "2": {
+      "Activation interval": 0.3333333333
+    },
+    "3": {
+      "Activation interval": 0.5
+    },
+    "4": {
+      "Activation interval": 0.6
+    },
+    "5": {
+      "Activation interval": 0.6666666667
+    },
+    "6": {
+      "Activation interval": 0.7142857143
+    },
+    "7": {
+      "Activation interval": 0.75
+    },
+    "Base": {
+      "Damage": 115,
+      "Attack Interval": 0.8,
+      "Damage increase": 0.48,
+      "Activation interval": 5,
+      "Hero Cooldown": 2
+    }
+  },
   "SpecialAbilities": {}
 }

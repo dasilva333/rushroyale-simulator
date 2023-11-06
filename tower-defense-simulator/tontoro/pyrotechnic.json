@@ -7,13 +7,106 @@
     "Target": "Random",
     "Arena": 10,
     "AoE": "Yes at Odd number",
-    "Lv": "5,15",
-    "Mana Lv": "1,5",
-    "Merge Rank": "1,7",
+    "Lv": [
+      5,
+      15
+    ],
+    "Mana Lv": [
+      1,
+      5
+    ],
+    "Merge Rank": [
+      1,
+      7
+    ],
     "Attributes": 3
   },
-  "Levels": {},
-  "ManaLevels": {},
-  "MergeRanks": {},
+  "Levels": {
+    "5": {
+      "Damage": 0,
+      "Hero Cooldown": 0
+    },
+    "6": {
+      "Damage": 28,
+      "Hero Cooldown": 0.5
+    },
+    "7": {
+      "Damage": 61,
+      "Hero Cooldown": 1
+    },
+    "8": {
+      "Damage": 101,
+      "Hero Cooldown": 1.5
+    },
+    "9": {
+      "Damage": 149,
+      "Hero Cooldown": 2
+    },
+    "10": {
+      "Damage": 207,
+      "Hero Cooldown": 2.5
+    },
+    "11": {
+      "Damage": 277,
+      "Hero Cooldown": 3
+    },
+    "12": {
+      "Damage": 360,
+      "Hero Cooldown": 3.5
+    },
+    "13": {
+      "Damage": 460,
+      "Hero Cooldown": 4
+    },
+    "14": {
+      "Damage": 579,
+      "Hero Cooldown": 4.5
+    },
+    "15": {
+      "Damage": 723,
+      "Hero Cooldown": 5
+    },
+    "Base": {
+      "Damage": 139,
+      "Attack Interval": 0.8,
+      "Hero Cooldown": 3
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 0
+    },
+    "2": {
+      "Damage": 45
+    },
+    "3": {
+      "Damage": 91
+    },
+    "4": {
+      "Damage": 136
+    },
+    "5": {
+      "Damage": 182
+    },
+    "Base": {
+      "Damage": 139,
+      "Attack Interval": 0.8,
+      "Hero Cooldown": 3
+    }
+  },
+  "MergeRanks": {
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {},
+    "7": {},
+    "Base": {
+      "Damage": 139,
+      "Attack Interval": 0.8,
+      "Hero Cooldown": 3
+    }
+  },
   "SpecialAbilities": {}
 }

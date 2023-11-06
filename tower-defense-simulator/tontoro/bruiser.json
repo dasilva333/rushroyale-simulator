@@ -7,22 +7,22 @@
     "Target": "First",
     "Arena": 7,
     "AoE": "Enraged",
-    "Lv": "7,15",
-    "Mana Lv": "1,5",
-    "Merge Rank": "1,7",
+    "Lv": [
+      7,
+      15
+    ],
+    "Mana Lv": [
+      1,
+      5
+    ],
+    "Merge Rank": [
+      1,
+      7
+    ],
     "Attributes": 7
   },
   "Levels": {
-    "1": {
-      "Damage": 132,
-      "Attack Interval": 1.2,
-      "Attack speed increase": 1,
-      "Damage increase": 3.5,
-      "Increased damage against bosses": 5.5,
-      "Enrage change": 0.1,
-      "Hero cooldown": 4
-    },
-    "2": {
+    "7": {
       "Damage": 0,
       "Attack Interval": 0,
       "Attack speed increase": 0,
@@ -30,7 +30,7 @@
       "Enrage change": 0,
       "Hero cooldown": 0
     },
-    "3": {
+    "8": {
       "Damage": 27,
       "Attack Interval": 0,
       "Attack speed increase": 0,
@@ -38,7 +38,7 @@
       "Enrage change": 0,
       "Hero cooldown": 0.5
     },
-    "4": {
+    "9": {
       "Damage": 58,
       "Attack Interval": 0,
       "Attack speed increase": 0,
@@ -46,7 +46,7 @@
       "Enrage change": 0,
       "Hero cooldown": 1
     },
-    "5": {
+    "10": {
       "Damage": 97,
       "Attack Interval": 0,
       "Attack speed increase": 0,
@@ -54,7 +54,7 @@
       "Enrage change": 0,
       "Hero cooldown": 1.5
     },
-    "6": {
+    "11": {
       "Damage": 142,
       "Attack Interval": 0,
       "Attack speed increase": 0,
@@ -62,7 +62,7 @@
       "Enrage change": 0,
       "Hero cooldown": 2
     },
-    "7": {
+    "12": {
       "Damage": 197,
       "Attack Interval": 0,
       "Attack speed increase": 0,
@@ -70,17 +70,57 @@
       "Enrage change": 0,
       "Hero cooldown": 2.5
     },
-    "8": {
+    "13": {
       "Damage": 263,
       "Attack Interval": 0,
       "Attack speed increase": 0,
       "Damage increase": 0,
       "Enrage change": 0,
       "Hero cooldown": 3
+    },
+    "14": {
+      "Damage": 343,
+      "Attack Interval": 0,
+      "Attack speed increase": 0,
+      "Damage increase": 0,
+      "Enrage change": 0,
+      "Hero cooldown": 3.5
+    },
+    "15": {
+      "Damage": 438,
+      "Attack Interval": 0,
+      "Attack speed increase": 0,
+      "Damage increase": 0,
+      "Enrage change": 0,
+      "Hero cooldown": 4
+    },
+    "Base": {
+      "Damage": 132,
+      "Attack Interval": 1.2,
+      "Attack speed increase": 1,
+      "Damage increase": 3.5,
+      "Increased damage against bosses": 5.5,
+      "Enrage change": 0.1,
+      "Hero cooldown": 4
     }
   },
   "ManaLevels": {
     "1": {
+      "Damage": 0
+    },
+    "2": {
+      "Damage": 30
+    },
+    "3": {
+      "Damage": 60
+    },
+    "4": {
+      "Damage": 90
+    },
+    "5": {
+      "Damage": 120
+    },
+    "Base": {
       "Damage": 132,
       "Attack Interval": 1.2,
       "Attack speed increase": 1,
@@ -88,19 +128,31 @@
       "Increased damage against bosses": 5.5,
       "Enrage change": 0.1,
       "Hero cooldown": 4
-    },
-    "2": {
-      "Damage": 0
-    },
-    "3": {
-      "Damage": 30
-    },
-    "4": {
-      "Damage": 60
     }
   },
   "MergeRanks": {
     "1": {
+      "Attack Interval": 0
+    },
+    "2": {
+      "Attack Interval": -0.6
+    },
+    "3": {
+      "Attack Interval": -0.8
+    },
+    "4": {
+      "Attack Interval": -0.9
+    },
+    "5": {
+      "Attack Interval": -0.96
+    },
+    "6": {
+      "Attack Interval": -1
+    },
+    "7": {
+      "Attack Interval": -1.03
+    },
+    "Base": {
       "Damage": 132,
       "Attack Interval": 1.2,
       "Attack speed increase": 1,
@@ -108,21 +160,6 @@
       "Increased damage against bosses": 5.5,
       "Enrage change": 0.1,
       "Hero cooldown": 4
-    },
-    "2": {
-      "Attack Interval": 0
-    },
-    "3": {
-      "Attack Interval": -0.6
-    },
-    "4": {
-      "Attack Interval": -0.8
-    },
-    "5": {
-      "Attack Interval": -0.9
-    },
-    "6": {
-      "Attack Interval": -0.96
     }
   },
   "SpecialAbilities": {

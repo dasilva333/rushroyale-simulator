@@ -7,21 +7,22 @@
     "Target": "First",
     "Arena": 11,
     "AoE": "No",
-    "Lv": "7,15",
-    "Mana Lv": "1,5",
-    "Merge Rank": "1,7",
+    "Lv": [
+      7,
+      15
+    ],
+    "Mana Lv": [
+      1,
+      5
+    ],
+    "Merge Rank": [
+      1,
+      7
+    ],
     "Attributes": 6
   },
   "Levels": {
-    "1": {
-      "Damage": 275,
-      "Attack Interval": 1,
-      "Minimum boost": 2,
-      "Maximum boost": 4.5,
-      "Attack speed increase": 1.5,
-      "Hero cooldown": 4
-    },
-    "2": {
+    "7": {
       "Damage": 0,
       "Attack Interval": 0,
       "Minimum boost": 0,
@@ -29,7 +30,7 @@
       "Attack speed increase": 0,
       "Hero cooldown": 0
     },
-    "3": {
+    "8": {
       "Damage": 55,
       "Attack Interval": 0,
       "Minimum boost": 0,
@@ -37,7 +38,7 @@
       "Attack speed increase": 0,
       "Hero cooldown": 0.5
     },
-    "4": {
+    "9": {
       "Damage": 121,
       "Attack Interval": 0,
       "Minimum boost": 0,
@@ -45,7 +46,7 @@
       "Attack speed increase": 0,
       "Hero cooldown": 1
     },
-    "5": {
+    "10": {
       "Damage": 200,
       "Attack Interval": 0,
       "Minimum boost": 0,
@@ -53,7 +54,7 @@
       "Attack speed increase": 0,
       "Hero cooldown": 1.5
     },
-    "6": {
+    "11": {
       "Damage": 295,
       "Attack Interval": 0,
       "Minimum boost": 0,
@@ -61,7 +62,7 @@
       "Attack speed increase": 0,
       "Hero cooldown": 2
     },
-    "7": {
+    "12": {
       "Damage": 409,
       "Attack Interval": 0,
       "Minimum boost": 0,
@@ -69,57 +70,93 @@
       "Attack speed increase": 0,
       "Hero cooldown": 2.5
     },
-    "8": {
+    "13": {
       "Damage": 546,
       "Attack Interval": 0,
       "Minimum boost": 0,
       "Maximum boost": 0,
       "Attack speed increase": 0,
       "Hero cooldown": 3
+    },
+    "14": {
+      "Damage": 711,
+      "Attack Interval": 0,
+      "Minimum boost": 0,
+      "Maximum boost": 0,
+      "Attack speed increase": 0,
+      "Hero cooldown": 3.5
+    },
+    "15": {
+      "Damage": 908,
+      "Attack Interval": 0,
+      "Minimum boost": 0,
+      "Maximum boost": 0,
+      "Attack speed increase": 0,
+      "Hero cooldown": 4
+    },
+    "Base": {
+      "Damage": 275,
+      "Attack Interval": 1,
+      "Minimum boost": 2,
+      "Maximum boost": 4.5,
+      "Attack speed increase": 1.5,
+      "Hero cooldown": 4
     }
   },
   "ManaLevels": {
     "1": {
+      "Damage": 0
+    },
+    "2": {
+      "Damage": 75
+    },
+    "3": {
+      "Damage": 150
+    },
+    "4": {
+      "Damage": 225
+    },
+    "5": {
+      "Damage": 300
+    },
+    "Base": {
       "Damage": 215,
       "Attack Interval": 1,
       "Minimum boost": 2,
       "Maximum boost": 4.5,
       "Attack speed increase": 1.5,
       "Hero cooldown": 1.7
-    },
-    "2": {
-      "Damage": 0
-    },
-    "3": {
-      "Damage": 75
-    },
-    "4": {
-      "Damage": 150
     }
   },
   "MergeRanks": {
     "1": {
+      "Attack Interval": 0
+    },
+    "2": {
+      "Attack Interval": -0.5
+    },
+    "3": {
+      "Attack Interval": -0.67
+    },
+    "4": {
+      "Attack Interval": -0.75
+    },
+    "5": {
+      "Attack Interval": -0.8
+    },
+    "6": {
+      "Attack Interval": -0.83
+    },
+    "7": {
+      "Attack Interval": -0.86
+    },
+    "Base": {
       "Damage": 215,
       "Attack Interval": 1,
       "Minimum boost": 2,
       "Maximum boost": 4.5,
       "Attack speed increase": 1.5,
       "Hero cooldown": 1.7
-    },
-    "2": {
-      "Attack Interval": 0
-    },
-    "3": {
-      "Attack Interval": -0.5
-    },
-    "4": {
-      "Attack Interval": -0.67
-    },
-    "5": {
-      "Attack Interval": -0.75
-    },
-    "6": {
-      "Attack Interval": -0.8
     }
   },
   "SpecialAbilities": {}

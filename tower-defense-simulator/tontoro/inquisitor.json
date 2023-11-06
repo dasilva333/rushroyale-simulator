@@ -7,21 +7,22 @@
     "Target": "First",
     "Arena": 10,
     "AoE": "Activated",
-    "Lv": "7,15",
-    "Mana Lv": "1,5",
-    "Merge Rank": "1,7",
+    "Lv": [
+      7,
+      15
+    ],
+    "Mana Lv": [
+      1,
+      5
+    ],
+    "Merge Rank": [
+      1,
+      7
+    ],
     "Attributes": 6
   },
   "Levels": {
-    "1": {
-      "Damage": 120,
-      "Attack Interval": 1,
-      "Damage Increase": 0.15,
-      "Attack Interval is active": 0.6,
-      "Damage Increase Limit": 6,
-      "Hero Cooldown": 4
-    },
-    "2": {
+    "7": {
       "Damage": 0,
       "Attack Interval": 0,
       "Damage Increase": 0,
@@ -29,7 +30,7 @@
       "Damage Increase Limit": 0,
       "Hero Cooldown": 0
     },
-    "3": {
+    "8": {
       "Damage": 18,
       "Attack Interval": 0,
       "Damage Increase": 0,
@@ -37,7 +38,7 @@
       "Damage Increase Limit": 0,
       "Hero Cooldown": 0.5
     },
-    "4": {
+    "9": {
       "Damage": 39,
       "Attack Interval": 0,
       "Damage Increase": 0,
@@ -45,7 +46,7 @@
       "Damage Increase Limit": 0,
       "Hero Cooldown": 1
     },
-    "5": {
+    "10": {
       "Damage": 63,
       "Attack Interval": 0,
       "Damage Increase": 0,
@@ -53,7 +54,7 @@
       "Damage Increase Limit": 0,
       "Hero Cooldown": 1.5
     },
-    "6": {
+    "11": {
       "Damage": 90,
       "Attack Interval": 0,
       "Damage Increase": 0,
@@ -61,7 +62,7 @@
       "Damage Increase Limit": 0,
       "Hero Cooldown": 2
     },
-    "7": {
+    "12": {
       "Damage": 122,
       "Attack Interval": 0,
       "Damage Increase": 0,
@@ -69,65 +70,105 @@
       "Damage Increase Limit": 0,
       "Hero Cooldown": 2.5
     },
-    "8": {
+    "13": {
       "Damage": 158,
       "Attack Interval": 0,
       "Damage Increase": 0,
       "Attack Interval is active": 0,
       "Damage Increase Limit": 0,
       "Hero Cooldown": 3
+    },
+    "14": {
+      "Damage": 200,
+      "Attack Interval": 0,
+      "Damage Increase": 0,
+      "Attack Interval is active": 0,
+      "Damage Increase Limit": 0,
+      "Hero Cooldown": 3.5
+    },
+    "15": {
+      "Damage": 248,
+      "Attack Interval": 0,
+      "Damage Increase": 0,
+      "Attack Interval is active": 0,
+      "Damage Increase Limit": 0,
+      "Hero Cooldown": 4
+    },
+    "Base": {
+      "Damage": 120,
+      "Attack Interval": 1,
+      "Damage Increase": 0.15,
+      "Attack Interval is active": 0.6,
+      "Damage Increase Limit": 6,
+      "Hero Cooldown": 4
     }
   },
   "ManaLevels": {
     "1": {
+      "Damage": 0,
+      "Damage Increase": 0
+    },
+    "2": {
+      "Damage": 80,
+      "Damage Increase": 0.025
+    },
+    "3": {
+      "Damage": 160,
+      "Damage Increase": 0.05
+    },
+    "4": {
+      "Damage": 240,
+      "Damage Increase": 0.075
+    },
+    "5": {
+      "Damage": 320,
+      "Damage Increase": 0.1
+    },
+    "Base": {
       "Damage": 120,
       "Attack Interval": 1,
       "Damage Increase": 0.15,
       "Attack Interval is active": 0.6,
       "Damage Increase Limit": 6,
       "Morale": 2.8
-    },
-    "2": {
-      "Damage": 0,
-      "Damage Increase": 0
-    },
-    "3": {
-      "Damage": 80,
-      "Damage Increase": 0.025
-    },
-    "4": {
-      "Damage": 160,
-      "Damage Increase": 0.05
     }
   },
   "MergeRanks": {
     "1": {
+      "Attack Interval": 0,
+      "Attack Interval is active": 0
+    },
+    "2": {
+      "Attack Interval": -0.5,
+      "Attack Interval is active": -0.3
+    },
+    "3": {
+      "Attack Interval": -0.67,
+      "Attack Interval is active": -0.4
+    },
+    "4": {
+      "Attack Interval": -0.75,
+      "Attack Interval is active": -0.45
+    },
+    "5": {
+      "Attack Interval": -0.8,
+      "Attack Interval is active": -0.48
+    },
+    "6": {
+      "Attack Interval": -0.83,
+      "Attack Interval is active": -0.5
+    },
+    "7": {
+      "Attack Interval": -0.86,
+      "Attack Interval is active": -0.51
+    },
+    "Base": {
       "Damage": 120,
       "Attack Interval": 1,
       "Damage Increase": 0.15,
       "Attack Interval is active": 0.6,
       "Damage Increase Limit": 6,
       "Morale": 2.8
-    },
-    "2": {
-      "Attack Interval": 0,
-      "Attack Interval is active": 0
-    },
-    "3": {
-      "Attack Interval": -0.5,
-      "Attack Interval is active": -0.3
-    },
-    "4": {
-      "Attack Interval": -0.67,
-      "Attack Interval is active": -0.4
-    },
-    "5": {
-      "Attack Interval": -0.75,
-      "Attack Interval is active": -0.45
-    },
-    "6": {
-      "Attack Interval": -0.8,
-      "Attack Interval is active": -0.48
     }
   },
   "SpecialAbilities": {}

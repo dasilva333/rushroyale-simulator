@@ -7,12 +7,13 @@ function parseTable(startRow, data, unitJson) {
     const tableType = data[startRow + 1][4];
     // console.log('tableType', tableType);
     const tableData = {};
-    const amountOfDataRows = unitJson.UnitInfo[tableType].split(",");
-    const totalRows = amountOfDataRows[1] - amountOfDataRows[0];
+    const amountOfDataRows = unitJson.UnitInfo[tableType];
+    // console.log('amountOfDataRows', amountOfDataRows);
+    const totalRows = amountOfDataRows[1] - amountOfDataRows[0] + 2;
 
     for (let i = 0; i < totalRows; i++) {
         const rowData = data[startRow + 1 + i].slice(5, 12);
-        const level = (i + 1).toString();
+        const level = i == 0 ? "Base" : (amountOfDataRows[0] + i - 1).toString();
         tableData[level] = {};
         headers.forEach((header, index) => {
             if (header) {
@@ -32,19 +33,19 @@ function parseUnitSheet(sheetName) {
     const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
     let unitJson = {
-  "UnitInfo": {
-      "Name": data[0][1],
-      "Rarity": data[1][1],
-      "Faction": data[2][1],
-      "UnitType": data[3][1],
-      "Target": data[4][1],
-      "Arena": data[5][1],
-      "AoE": data[6][1],
-      "Lv": data[9][1],
-      "Mana Lv": data[10][1],
-      "Merge Rank": data[11][1],
-      "Attributes": data[12][1]
-    },
+        "UnitInfo": {
+            "Name": data[0][1],
+            "Rarity": data[1][1],
+            "Faction": data[2][1],
+            "UnitType": data[3][1],
+            "Target": data[4][1],
+            "Arena": data[5][1],
+            "AoE": data[6][1],
+            "Lv": data[9][1].split(",").map(parseFloat),
+            "Mana Lv": data[10][1].split(",").map(parseFloat),
+            "Merge Rank": data[11][1].split(",").map(parseFloat),
+            "Attributes": data[12][1]
+        },
         "Levels": {},
         "ManaLevels": {},
         "MergeRanks": {},
@@ -54,12 +55,18 @@ function parseUnitSheet(sheetName) {
     // console.log('data', data);
     // console.log('unitJson', unitJson);
 
+    const baseRow = 6;
     // Parse Levels
-    unitJson.Levels = parseTable(6, data, unitJson);
+    console.log('parsing levels');
+    unitJson.Levels = parseTable(baseRow, data, unitJson);
     // // Parse ManaLevels
-    unitJson.ManaLevels = parseTable(18, data, unitJson);
+    console.log('parsing mana levels');
+    const manaLevelsRow = baseRow + 4 + (unitJson.UnitInfo.Lv[1] - unitJson.UnitInfo.Lv[0]);
+    console.log('manaLevelsRow', manaLevelsRow);
+    unitJson.ManaLevels = parseTable(manaLevelsRow, data, unitJson);
     // // Parse MergeRanks
-    unitJson.MergeRanks = parseTable(26, data, unitJson);
+    console.log('parsing merge ranks at ', manaLevelsRow);
+    unitJson.MergeRanks = parseTable(manaLevelsRow + 8, data, unitJson);
 
     // Unit specific parsing based on the sheet name
     switch (sheetName) {
@@ -77,7 +84,7 @@ function parseUnitSheet(sheetName) {
 }
 
 // Read the Excel file
-const workbook = XLSX.readFile('./Unit stats (22.0) - from Oct 27, 2023.xlsx');
+const workbook = XLSX.readFile('./Copy of Unit stats (22.0) - from Oct 27, 2023.xlsx');
 
 // Define an array of sheet names to parse
 const sheetNames = [
@@ -86,23 +93,23 @@ const sheetNames = [
     "Blade Dancer",
     "Inquisitor",
     "Cultist",
-    // "Engineer",
-    // "Pyrotechnic",
+    "Engineer",
+    "Pyrotechnic",
     "Boreas",
-    // "Sentry",
-    // "Crystalmancer",
+    "Sentry",
+    "Crystalmancer",
     "Robot",
     "Monk",
-    // "Banner",
+    "Banner",
     "Dryad",
     "Harlequin",
     "Enchanted Sword",
     "Trapper",
-    // "Chemist",
+    "Chemist", 
     "Scrapper",
     "Knight Statue",
     "Witch",
-    // "Grindstone"
+    "Grindstone"
 ];
 
 // Iterate over the array of sheet names and parse each one

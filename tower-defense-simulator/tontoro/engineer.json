@@ -5,13 +5,136 @@
     "Faction": "Technogenic Society",
     "UnitType": "Damage",
     "Target": "First",
-    "Lv": "5,15",
-    "Mana Lv": "1,5",
-    "Merge Rank": "1,7",
+    "Lv": [
+      5,
+      15
+    ],
+    "Mana Lv": [
+      1,
+      5
+    ],
+    "Merge Rank": [
+      1,
+      7
+    ],
     "Attributes": 4
   },
-  "Levels": {},
-  "ManaLevels": {},
-  "MergeRanks": {},
+  "Levels": {
+    "5": {
+      "Damage": 0,
+      "Attack Interval": 0,
+      "Damage increase limit": 0,
+      "Hero Cooldown": 0
+    },
+    "6": {
+      "Damage": 22,
+      "Attack Interval": -0.02,
+      "Damage increase limit": 0.005,
+      "Hero Cooldown": 0.5
+    },
+    "7": {
+      "Damage": 46,
+      "Attack Interval": -0.04,
+      "Damage increase limit": 0.01,
+      "Hero Cooldown": 1
+    },
+    "8": {
+      "Damage": 74,
+      "Attack Interval": -0.06,
+      "Damage increase limit": 0.015,
+      "Hero Cooldown": 1.5
+    },
+    "9": {
+      "Damage": 106,
+      "Attack Interval": -0.08,
+      "Damage increase limit": 0.02,
+      "Hero Cooldown": 2
+    },
+    "10": {
+      "Damage": 143,
+      "Attack Interval": -0.1,
+      "Damage increase limit": 0.025,
+      "Hero Cooldown": 2.5
+    },
+    "11": {
+      "Damage": 185,
+      "Attack Interval": -0.12,
+      "Damage increase limit": 0.03,
+      "Hero Cooldown": 3
+    },
+    "12": {
+      "Damage": 233,
+      "Attack Interval": -0.14,
+      "Damage increase limit": 0.035,
+      "Hero Cooldown": 3.5
+    },
+    "13": {
+      "Damage": 289,
+      "Attack Interval": -0.16,
+      "Damage increase limit": 0.04,
+      "Hero Cooldown": 4
+    },
+    "14": {
+      "Damage": 352,
+      "Attack Interval": -0.18,
+      "Damage increase limit": 0.045,
+      "Hero Cooldown": 4.5
+    },
+    "15": {
+      "Damage": 424,
+      "Attack Interval": -0.2,
+      "Damage increase limit": 0.05,
+      "Hero Cooldown": 5
+    },
+    "Base": {
+      "Damage": 147,
+      "Attack Interval": 0.7,
+      "Damage increase limit": 0.04,
+      "Hero Cooldown": 3
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 0,
+      "Damage increase limit": 0
+    },
+    "2": {
+      "Damage": 100,
+      "Damage increase limit": 0.03
+    },
+    "3": {
+      "Damage": 200,
+      "Damage increase limit": 0.06
+    },
+    "4": {
+      "Damage": 300,
+      "Damage increase limit": 0.09
+    },
+    "5": {
+      "Damage": 400,
+      "Damage increase limit": 0.12
+    },
+    "Base": {
+      "Damage": 147,
+      "Attack Interval": 0.7,
+      "Damage increase limit": 0.04,
+      "Hero Cooldown": 3
+    }
+  },
+  "MergeRanks": {
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {},
+    "7": {},
+    "Base": {
+      "Damage": 147,
+      "Attack Interval": 0.7,
+      "Damage increase limit": 0.04,
+      "Hero Cooldown": 3
+    }
+  },
   "SpecialAbilities": {}
 }

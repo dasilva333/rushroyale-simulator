@@ -7,13 +7,123 @@
     "Target": "First",
     "Arena": 7,
     "AoE": "No",
-    "Lv": "5,15",
-    "Mana Lv": "1,5",
-    "Merge Rank": "1,7",
+    "Lv": [
+      5,
+      15
+    ],
+    "Mana Lv": [
+      1,
+      5
+    ],
+    "Merge Rank": [
+      1,
+      7
+    ],
     "Attributes": 4
   },
-  "Levels": {},
-  "ManaLevels": {},
-  "MergeRanks": {},
+  "Levels": {
+    "5": {
+      "Damage": 0,
+      "Hero Cooldown": 0
+    },
+    "6": {
+      "Damage": 5,
+      "Hero Cooldown": 0.5
+    },
+    "7": {
+      "Damage": 12,
+      "Hero Cooldown": 1
+    },
+    "8": {
+      "Damage": 19,
+      "Hero Cooldown": 1.5
+    },
+    "9": {
+      "Damage": 27,
+      "Hero Cooldown": 2
+    },
+    "10": {
+      "Damage": 36,
+      "Hero Cooldown": 2.5
+    },
+    "11": {
+      "Damage": 46,
+      "Hero Cooldown": 3
+    },
+    "12": {
+      "Damage": 58,
+      "Hero Cooldown": 3.5
+    },
+    "13": {
+      "Damage": 71,
+      "Hero Cooldown": 4
+    },
+    "14": {
+      "Damage": 87,
+      "Hero Cooldown": 4.5
+    },
+    "15": {
+      "Damage": 104,
+      "Hero Cooldown": 5
+    },
+    "Base": {
+      "Damage": 38,
+      "Attack Interval": 0.4,
+      "Damage increase limit": 8,
+      "Hero Cooldown": 3
+    }
+  },
+  "ManaLevels": {
+    "1": {
+      "Damage": 0
+    },
+    "2": {
+      "Damage": 35
+    },
+    "3": {
+      "Damage": 70
+    },
+    "4": {
+      "Damage": 105
+    },
+    "5": {
+      "Damage": 140
+    },
+    "Base": {
+      "Damage": 38,
+      "Attack Interval": 0.4,
+      "Damage increase limit": 8,
+      "Hero Cooldown": 3
+    }
+  },
+  "MergeRanks": {
+    "1": {
+      "Attack Interval": 0
+    },
+    "2": {
+      "Attack Interval": -0.18
+    },
+    "3": {
+      "Attack Interval": -0.25
+    },
+    "4": {
+      "Attack Interval": -0.28
+    },
+    "5": {
+      "Attack Interval": -0.3
+    },
+    "6": {
+      "Attack Interval": -0.32
+    },
+    "7": {
+      "Attack Interval": -0.33
+    },
+    "Base": {
+      "Damage": 38,
+      "Attack Interval": 0.4,
+      "Damage increase limit": 8,
+      "Hero Cooldown": 3
+    }
+  },
   "SpecialAbilities": {}
 }

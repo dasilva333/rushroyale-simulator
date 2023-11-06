@@ -7,59 +7,98 @@
     "Target": "First",
     "Arena": 5,
     "AoE": "No",
-    "Lv": "7,15",
-    "Mana Lv": "1,5",
-    "Merge Rank": "1,7",
+    "Lv": [
+      7,
+      15
+    ],
+    "Mana Lv": [
+      1,
+      5
+    ],
+    "Merge Rank": [
+      1,
+      7
+    ],
     "Attributes": 9
   },
   "Levels": {
-    "1": {
-      "Damage": 123,
-      "Attack Interval": 0.6,
-      "Trap duration": 6,
-      "Slow target": 0.15,
-      "Max slowing": 0.3,
-      "Armor Destruction": 0.4,
-      "Max armor destruction": 0.8
-    },
-    "2": {
+    "7": {
       "Damage": 0,
       "Armor Destruction": 0,
       "Max armor destruction": 0
     },
-    "3": {
+    "8": {
       "Damage": 15,
       "Armor Destruction": 0.025,
       "Max armor destruction": 0.05
     },
-    "4": {
+    "9": {
       "Damage": 32,
       "Armor Destruction": 0.05,
       "Max armor destruction": 0.1
     },
-    "5": {
+    "10": {
       "Damage": 50,
       "Armor Destruction": 0.075,
       "Max armor destruction": 0.15
     },
-    "6": {
+    "11": {
       "Damage": 71,
       "Armor Destruction": 0.1,
       "Max armor destruction": 0.2
     },
-    "7": {
+    "12": {
       "Damage": 95,
       "Armor Destruction": 0.125,
       "Max armor destruction": 0.25
     },
-    "8": {
+    "13": {
       "Damage": 121,
       "Armor Destruction": 0.15,
       "Max armor destruction": 0.3
+    },
+    "14": {
+      "Damage": 150,
+      "Armor Destruction": 0.175,
+      "Max armor destruction": 0.35
+    },
+    "15": {
+      "Damage": 183,
+      "Armor Destruction": 0.2,
+      "Max armor destruction": 0.4
+    },
+    "Base": {
+      "Damage": 123,
+      "Attack Interval": 0.6,
+      "Trap duration": 6,
+      "Slow target": 0.15,
+      "Max slowing": 0.3,
+      "Armor Destruction": 0.4,
+      "Max armor destruction": 0.8
     }
   },
   "ManaLevels": {
     "1": {
+      "Damage": 0,
+      "Trap duration": 0
+    },
+    "2": {
+      "Damage": 60,
+      "Trap duration": 1.5
+    },
+    "3": {
+      "Damage": 120,
+      "Trap duration": 3
+    },
+    "4": {
+      "Damage": 180,
+      "Trap duration": 4.5
+    },
+    "5": {
+      "Damage": 240,
+      "Trap duration": 6
+    },
+    "Base": {
       "Damage": 123,
       "Attack Interval": 0.6,
       "Trap duration": 6,
@@ -67,22 +106,31 @@
       "Max slowing": 0.3,
       "Armor Destruction": 0.4,
       "Max armor destruction": 0.8
-    },
-    "2": {
-      "Damage": 0,
-      "Trap duration": 0
-    },
-    "3": {
-      "Damage": 60,
-      "Trap duration": 1.5
-    },
-    "4": {
-      "Damage": 120,
-      "Trap duration": 3
     }
   },
   "MergeRanks": {
     "1": {
+      "Attack Interval": 0
+    },
+    "2": {
+      "Attack Interval": -0.3
+    },
+    "3": {
+      "Attack Interval": -0.4
+    },
+    "4": {
+      "Attack Interval": -0.45
+    },
+    "5": {
+      "Attack Interval": -0.48
+    },
+    "6": {
+      "Attack Interval": -0.5
+    },
+    "7": {
+      "Attack Interval": -0.51
+    },
+    "Base": {
       "Damage": 123,
       "Attack Interval": 0.6,
       "Trap duration": 6,
@@ -90,21 +138,6 @@
       "Max slowing": 0.3,
       "Armor Destruction": 0.4,
       "Max armor destruction": 0.8
-    },
-    "2": {
-      "Attack Interval": 0
-    },
-    "3": {
-      "Attack Interval": -0.3
-    },
-    "4": {
-      "Attack Interval": -0.4
-    },
-    "5": {
-      "Attack Interval": -0.45
-    },
-    "6": {
-      "Attack Interval": -0.48
     }
   },
   "SpecialAbilities": {}

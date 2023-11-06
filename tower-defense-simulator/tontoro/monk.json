@@ -7,13 +7,58 @@
     "Target": "First",
     "Arena": 12,
     "AoE": "No",
-    "Lv": "7,15",
-    "Mana Lv": "1,2",
-    "Merge Rank": "1,7",
+    "Lv": [
+      7,
+      15
+    ],
+    "Mana Lv": [
+      1,
+      2
+    ],
+    "Merge Rank": [
+      1,
+      7
+    ],
     "Attributes": 9
   },
   "Levels": {
-    "1": {
+    "7": {
+      "Damage": 0,
+      "Damage increase w/ Power-Up": 0
+    },
+    "8": {
+      "Damage": 63,
+      "Damage increase w/ Power-Up": 0.05
+    },
+    "9": {
+      "Damage": 137,
+      "Damage increase w/ Power-Up": 0.1
+    },
+    "10": {
+      "Damage": 225,
+      "Damage increase w/ Power-Up": 0.15
+    },
+    "11": {
+      "Damage": 328,
+      "Damage increase w/ Power-Up": 0.2
+    },
+    "12": {
+      "Damage": 450,
+      "Damage increase w/ Power-Up": 0.25
+    },
+    "13": {
+      "Damage": 594,
+      "Damage increase w/ Power-Up": 0.3
+    },
+    "14": {
+      "Damage": 764,
+      "Damage increase w/ Power-Up": 0.35
+    },
+    "15": {
+      "Damage": 965,
+      "Damage increase w/ Power-Up": 0.4
+    },
+    "Base": {
       "Damage": 350,
       "Attack Interval": 0.7,
       "Attack speed increase - vertical": 1,
@@ -21,38 +66,16 @@
       "Damage increase per intersection": 1.5,
       "Area Damage": 0.25,
       "Damage increase w/ Power-Up": 0.4
-    },
-    "2": {
-      "Damage": 0,
-      "Damage increase w/ Power-Up": 0
-    },
-    "3": {
-      "Damage": 63,
-      "Damage increase w/ Power-Up": 0.05
-    },
-    "4": {
-      "Damage": 137,
-      "Damage increase w/ Power-Up": 0.1
-    },
-    "5": {
-      "Damage": 225,
-      "Damage increase w/ Power-Up": 0.15
-    },
-    "6": {
-      "Damage": 328,
-      "Damage increase w/ Power-Up": 0.2
-    },
-    "7": {
-      "Damage": 450,
-      "Damage increase w/ Power-Up": 0.25
-    },
-    "8": {
-      "Damage": 594,
-      "Damage increase w/ Power-Up": 0.3
     }
   },
   "ManaLevels": {
     "1": {
+      "Damage increase w/ Power-Up": 0
+    },
+    "2": {
+      "Damage increase w/ Power-Up": 0
+    },
+    "Base": {
       "Damage": 350,
       "Attack Interval": 0.7,
       "Attack speed increase - vertical": 1,
@@ -63,32 +86,40 @@
   },
   "MergeRanks": {
     "1": {
+      "Attack Interval": 0,
+      "Damage increase per intersection": 0
+    },
+    "2": {
+      "Attack Interval": -0.35,
+      "Damage increase per intersection": 0.375
+    },
+    "3": {
+      "Attack Interval": -0.47,
+      "Damage increase per intersection": 0.75
+    },
+    "4": {
+      "Attack Interval": -0.53,
+      "Damage increase per intersection": 1.125
+    },
+    "5": {
+      "Attack Interval": -0.56,
+      "Damage increase per intersection": 1.5
+    },
+    "6": {
+      "Attack Interval": -0.58,
+      "Damage increase per intersection": 1.875
+    },
+    "7": {
+      "Attack Interval": -0.6,
+      "Damage increase per intersection": 2.25
+    },
+    "Base": {
       "Damage": 350,
       "Attack Interval": 0.7,
       "Attack speed increase - vertical": 1,
       "Damage increase - horizontal": 2,
       "Damage increase per intersection": 1.5,
       "Damage increase w/ Power-Up": 0.4
-    },
-    "2": {
-      "Attack Interval": 0,
-      "Damage increase per intersection": 0
-    },
-    "3": {
-      "Attack Interval": -0.35,
-      "Damage increase per intersection": 0.375
-    },
-    "4": {
-      "Attack Interval": -0.47,
-      "Damage increase per intersection": 0.75
-    },
-    "5": {
-      "Attack Interval": -0.53,
-      "Damage increase per intersection": 1.125
-    },
-    "6": {
-      "Attack Interval": -0.56,
-      "Damage increase per intersection": 1.5
     }
   },
   "SpecialAbilities": {}

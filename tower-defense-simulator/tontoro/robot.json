@@ -7,91 +7,120 @@
     "Target": "First",
     "Arena": 6,
     "AoE": "10 merge",
-    "Lv": "7,15",
-    "Mana Lv": "1,5",
-    "Merge Rank": "1,7",
+    "Lv": [
+      7,
+      15
+    ],
+    "Mana Lv": [
+      1,
+      5
+    ],
+    "Merge Rank": [
+      1,
+      7
+    ],
     "Attributes": 6
   },
   "Levels": {
-    "1": {
+    "7": {
+      "Damage": 0,
+      "Hero Cooldown": 0
+    },
+    "8": {
+      "Damage": 47,
+      "Hero Cooldown": 0.5
+    },
+    "9": {
+      "Damage": 104,
+      "Hero Cooldown": 1
+    },
+    "10": {
+      "Damage": 172,
+      "Hero Cooldown": 1.5
+    },
+    "11": {
+      "Damage": 256,
+      "Hero Cooldown": 2
+    },
+    "12": {
+      "Damage": 357,
+      "Hero Cooldown": 2.5
+    },
+    "13": {
+      "Damage": 479,
+      "Hero Cooldown": 3
+    },
+    "14": {
+      "Damage": 626,
+      "Hero Cooldown": 3.5
+    },
+    "15": {
+      "Damage": 805,
+      "Hero Cooldown": 4
+    },
+    "Base": {
       "Damage": 224,
       "Attack Interval": 0.7,
       "Attack speed incrase": 0.5,
       "Damage increase": 0.5,
       "Critical damage chance": 0.05,
       "Hero Cooldown": 4
-    },
-    "2": {
-      "Damage": 0,
-      "Hero Cooldown": 0
-    },
-    "3": {
-      "Damage": 47,
-      "Hero Cooldown": 0.5
-    },
-    "4": {
-      "Damage": 104,
-      "Hero Cooldown": 1
-    },
-    "5": {
-      "Damage": 172,
-      "Hero Cooldown": 1.5
-    },
-    "6": {
-      "Damage": 256,
-      "Hero Cooldown": 2
-    },
-    "7": {
-      "Damage": 357,
-      "Hero Cooldown": 2.5
-    },
-    "8": {
-      "Damage": 479,
-      "Hero Cooldown": 3
     }
   },
   "ManaLevels": {
     "1": {
+      "Damage": 0
+    },
+    "2": {
+      "Damage": 75
+    },
+    "3": {
+      "Damage": 150
+    },
+    "4": {
+      "Damage": 225
+    },
+    "5": {
+      "Damage": 300
+    },
+    "Base": {
       "Damage": 224,
       "Attack Interval": 0.7,
       "Attack speed incrase": 0.5,
       "Damage increase": 0.5,
       "Critical damage chance": 0.05,
       "Hero Cooldown": 4
-    },
-    "2": {
-      "Damage": 0
-    },
-    "3": {
-      "Damage": 75
-    },
-    "4": {
-      "Damage": 150
     }
   },
   "MergeRanks": {
     "1": {
+      "Attack Interval": 0
+    },
+    "2": {
+      "Attack Interval": -0.35
+    },
+    "3": {
+      "Attack Interval": -0.47
+    },
+    "4": {
+      "Attack Interval": -0.53
+    },
+    "5": {
+      "Attack Interval": -0.56
+    },
+    "6": {
+      "Attack Interval": -0.58
+    },
+    "7": {
+      "Attack Interval": -0.6
+    },
+    "Base": {
       "Damage": 224,
       "Attack Interval": 0.7,
       "Attack speed incrase": 0.5,
       "Damage increase": 0.5,
       "Critical damage chance": 0.05,
       "Hero Cooldown": 4
-    },
-    "2": {
-      "Attack Interval": 0
-    },
-    "3": {
-      "Attack Interval": -0.35
-    },
-    "4": {
-      "Attack Interval": -0.47
-    },
-    "5": {
-      "Attack Interval": -0.53
-    },
-    "6": {
-      "Attack Interval": -0.56
     }
   },
   "SpecialAbilities": {}
