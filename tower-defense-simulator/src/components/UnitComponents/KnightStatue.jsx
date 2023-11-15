@@ -1,16 +1,16 @@
 import React from 'react';
 import SupportUnit from '../../classes/SupportUnit';
 
-class Knight_Statue extends SupportUnit {
+class KnightStatue extends SupportUnit {
   static defaultImage = "knight_statue.png";
   static critTiers = [5, 7.5, 10, 12.5, 15, 17.5, 20];
 
   constructor(config) {
     super({
-      name: "Knight_Statue",
+      name: "KnightStatue",
       ...config
     });
-    this.component = Knight_StatueComponent;
+    this.component = KnightStatueComponent;
   }
 
   static getUnitBuffs(key, { tier, level }) {
@@ -26,7 +26,7 @@ class Knight_Statue extends SupportUnit {
 
   static getKsCrit({ tier }) {
     // The card variable refers to the second parameter and is deconstructed
-    return Knight_Statue.critTiers[tier - 1]; // Assuming there's a critTiers array in SupportUnit
+    return KnightStatue.critTiers[tier - 1]; // Assuming there's a critTiers array in SupportUnit
   }
 
   static getKsSpeed({ tier, level }) {
@@ -38,12 +38,12 @@ class Knight_Statue extends SupportUnit {
   // Any additional methods specific to the Knight_Statue unit can be added here
 }
 
-function Knight_StatueComponent(props) {
+function KnightStatueComponent(props) {
   return (
-    <div className="unit Knight_Statue">
-      <img src={Knight_Statue.baseImage} width="70" alt="Knight_Statue Unit" />
+    <div className="unit KnightStatue">
+      <img src={KnightStatue.baseImage} width="70" alt="KnightStatue Unit" />
     </div>
   );
 }
 
-export { Knight_Statue, Knight_StatueComponent };
+export { KnightStatue, KnightStatueComponent };

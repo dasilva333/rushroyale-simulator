@@ -117,5 +117,5 @@ sheetNames.forEach(sheetName => {
     console.log('parsing', sheetName);
     const unitJson = parseUnitSheet(sheetName);
     // Write JSON to a file named after the unit
-    fs.writeFileSync(`${sheetName.toLowerCase()}.json`, JSON.stringify(unitJson, null, 2));
+    fs.writeFileSync(`../src/data/tontoro/${sheetName.replace(/ /g,'_').toLowerCase()}.json`, JSON.stringify(unitJson, null, 2));
 });

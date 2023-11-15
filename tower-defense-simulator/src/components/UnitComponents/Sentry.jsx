@@ -1,7 +1,7 @@
 import React from 'react';
-import BaseUnit from '../../classes/BaseUnit';
+import DPSUnit from '../../classes/DPSUnit';
 
-class Sentry extends BaseUnit {
+class Sentry extends DPSUnit {
   static defaultImage = "sentry.png";
 
   constructor(config) {

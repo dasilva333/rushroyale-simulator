@@ -17,7 +17,7 @@ import { Sword, SwordComponent } from '../components/UnitComponents/Sword.jsx';
 import { Trapper, TrapperComponent } from '../components/UnitComponents/Trapper.jsx';
 import { Chemist, ChemistComponent } from '../components/UnitComponents/Chemist.jsx';
 import { Scrapper, ScrapperComponent } from '../components/UnitComponents/Scrapper.jsx';
-import { Knight_Statue, Knight_StatueComponent } from '../components/UnitComponents/Knight_Statue.jsx';       
+import { KnightStatue, KnightStatueComponent } from '../components/UnitComponents/KnightStatue.jsx';       
 import { Witch, WitchComponent } from '../components/UnitComponents/Witch.jsx';
 import { Grindstone, GrindstoneComponent } from '../components/UnitComponents/Grindstone.jsx';
 import { Pyrotechnic, PyrotechnicComponent } from '../components/UnitComponents/Pyrotechnic.jsx';
@@ -124,9 +124,9 @@ export const availableUnits = [
       class: Scrapper
     },
 {
-      name: 'Knight_Statue',
-      component: Knight_StatueComponent,
-      class: Knight_Statue
+      name: 'KnightStatue',
+      component: KnightStatueComponent,
+      class: KnightStatue
     },
 {
       name: 'Witch',

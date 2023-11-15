@@ -9,6 +9,9 @@ import fieldToComponentSpec from '../data/fieldToComponentSpec.json';
 import unitConfiguration from '../data/unitConfiguration.json';
 
 import '../styles/unit-configuration-modal.scss';
+// In src/components/UnitConfigurationModal.jsx
+
+import UnitStatsManager from '../classes/UnitStatsManager';
 
 function UnitConfigurationModal({ unit, unitConfig, onConfirm, onConfigChange }) {
   const [showTalentModal, setShowTalentModal] = useState(false); // state for modal visibility
@@ -17,7 +20,7 @@ function UnitConfigurationModal({ unit, unitConfig, onConfirm, onConfigChange })
   // console.log('config', config);
 
   const { fields, defaults } = config || {};
-  const combinedFieldsSet = new Set(['swordStacks', ...(fields || []), ...(Object.keys(defaults || {}))]);
+  const combinedFieldsSet = new Set(['swordStacks', 'level', 'tier', ...(fields || []), ...(Object.keys(defaults || {}))]);
   const combinedFields = [...combinedFieldsSet].sort((a, b) => {
     const priorityA = fieldToComponentSpec[a]?.priority || 0;
     const priorityB = fieldToComponentSpec[b]?.priority || 0;
@@ -39,15 +42,18 @@ function UnitConfigurationModal({ unit, unitConfig, onConfirm, onConfigChange })
   }, [unit, onConfigChange, defaults, unitConfig]);
 
   const adjustValuesForTierAndLevel = (changeObj) => {
-    if (changeObj.hasOwnProperty('tier') && unit.class.speedTiers) {
-        changeObj.baseSpeed = unit.class.baseSpeed - unit.class.speedTiers[changeObj.tier];
+    const unitStatsManager = new UnitStatsManager(unit.name);
+
+    if (changeObj.hasOwnProperty('tier')) {
+        changeObj.baseSpeed = unitStatsManager.getSpeedTier(changeObj.tier);
     }
 
-    if (changeObj.hasOwnProperty('level') && unit.class.damageLevels) {
-        changeObj.baseDamage = unit.class.damageLevels[changeObj.level] + unit.class.baseDamage;
+    if (changeObj.hasOwnProperty('level')) {
+        changeObj.baseDamage = unitStatsManager.getDamageLevel(changeObj.level);
     }
+
     return changeObj;
-}
+};
 
 
   const handleChange = (fieldName, event) => {

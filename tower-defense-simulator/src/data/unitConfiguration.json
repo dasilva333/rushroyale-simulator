@@ -18,8 +18,6 @@
       "baseDamage",
       "baseSpeed",
       "baseCritChance",
-      "tier",
-      "level",
       "absorbs",
       "damageIncrease"
     ],
@@ -68,8 +66,6 @@
       "firstPhase",
       "secondPhase",
       "activationInterval",
-      "level",
-      "tier",
       "activeTalents"
     ],
     "defaults": {
@@ -104,9 +100,7 @@
       "baseSpeed",
       "baseCritChance",
       "damageIncrease",
-      "sacrifices",
-      "level",
-      "tier"
+      "sacrifices"
     ],
     "defaults": {
       "baseDamage": 1021,
@@ -121,9 +115,7 @@
       "baseDamage",
       "baseSpeed",
       "baseCritChance",
-      "damageIncrease",
-      "level",
-      "tier"
+      "damageIncrease"
     ],
     "defaults": {
       "baseDamage": 1301,
@@ -153,9 +145,7 @@
       "baseDamage",
       "baseSpeed",
       "baseCritChance",
-      "damageIncrease",
-      "level",
-      "tier"
+      "damageIncrease"
     ],
     "defaults": {
       "baseDamage": 1136,
@@ -170,9 +160,7 @@
       "baseSpeed",
       "baseCritChance",
       "damageIncrease",
-      "enraged",
-      "level",
-      "tier"
+      "enraged"
     ],
     "defaults": {
       "baseDamage": 112,
@@ -187,9 +175,7 @@
       "baseSpeed",
       "baseCritChance",
       "damageIncrease",
-      "merges",
-      "level",
-      "tier"
+      "merges"
     ],
     "defaults": {
       "baseDamage": 224,
@@ -218,9 +204,7 @@
       "baseDamage",
       "baseSpeed",
       "baseCritChance",
-      "isActivated",
-      "level",
-      "tier"
+      "isActivated"
     ],
     "defaults": {
       "baseDamage": 350,
@@ -245,8 +229,7 @@
   },
   "banner": {
     "fields": [
-      "level",
-      "tier"
+
     ],
     "defaults": {
       "damage": 0
@@ -263,8 +246,6 @@
   },
   "sword": {
     "fields": [
-      "level",
-      "tier"
     ],
     "defaults": {
       "damage": 200
@@ -280,8 +261,6 @@
   },
   "chemist": {
     "fields": [
-      "level",
-      "tier"
     ],
     "defaults": {
       "damage": 103
@@ -289,8 +268,6 @@
   },
   "knight_statue": {
     "fields": [
-      "level",
-      "tier"
     ],
     "defaults": {
       "damage": 0
@@ -301,9 +278,7 @@
       "merges",
       "baseDamage",
       "baseSpeed",
-      "baseCritChance",
-      "level",
-      "tier"
+      "baseCritChance"
     ],
     "defaults": {
       "baseDamage": 450,
@@ -315,8 +290,6 @@
   },
   "grindstone": {
     "fields": [
-      "level",
-      "tier",
       "damage",
       "merges",
       "activeTalents"
