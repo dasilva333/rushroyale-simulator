@@ -28,8 +28,8 @@ function parseTable(startRow, data, unitJson) {
 }
 
 // General function to parse any unit sheet
-function parseUnitSheet(unitName) {
-    const sheetName = Object.keys(workbook.Sheets).find(sheet => sheet.includes(unitName));
+function parseUnitSheet(sheetName) {
+    // const sheetName = Object.keys(workbook.Sheets).find(sheet => sheet.includes(unitName));
     const worksheet = workbook.Sheets[sheetName];
     const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
     console.log('parsing sheetName', sheetName);
@@ -86,7 +86,7 @@ function parseUnitSheet(unitName) {
 }
 
 // Read the Excel file
-const workbook = XLSX.readFile('./Unit stats (24.0) - 20240312.xlsx');
+const workbook = XLSX.readFile('./Unit stats (24.0) - 20240312 (1).xlsx');
 
 // Define an array of sheet names to parse
 const sheetNames = [
