@@ -5,7 +5,7 @@
     "Faction": "Magic Council",
     "UnitType": "Special",
     "Target": "Random",
-    "Arena": 8,
+    "Arena": "League 1",
     "AoE": "Yes",
     "Lv": [
       7,
@@ -70,7 +70,7 @@
     "Base": {
       "Damage": 114,
       "Attack Interval": 2,
-      "Number of targets": 2,
+      "Number of targets": 3,
       "Max enhancements": 10,
       "Damage boost": 0.135,
       "Critical damage chance": 0.03,
@@ -96,7 +96,7 @@
     "Base": {
       "Damage": 114,
       "Attack Interval": 2,
-      "Number of targets": 2,
+      "Number of targets": 3,
       "Max enhancements": 10,
       "Damage boost": 0.135,
       "Critical damage chance": 0.03,
@@ -128,7 +128,7 @@
     "Base": {
       "Damage": 114,
       "Attack Interval": 2,
-      "Number of targets": 2,
+      "Number of targets": 3,
       "Max enhancements": 10,
       "Damage boost": 0.135,
       "Critical damage chance": 0.03,

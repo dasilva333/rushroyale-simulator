@@ -5,7 +5,7 @@
     "Faction": "Technogenic Society",
     "UnitType": "Support",
     "Target": "First",
-    "Arena": 13,
+    "Arena": 12,
     "AoE": "No",
     "Lv": [
       7,
@@ -13,13 +13,13 @@
     ],
     "Mana Lv": [
       1,
-      5
+      2
     ],
     "Merge Rank": [
       1,
       7
     ],
-    "Attributes": 4
+    "Attributes": 7
   },
   "Levels": {
     "7": {
@@ -29,48 +29,51 @@
     },
     "8": {
       "Damage": 17,
-      "Chance of bonus enhancement": 0.025,
+      "Chance of bonus enhancement": 0.0125,
       "Hero Cooldown": 0.5
     },
     "9": {
       "Damage": 37,
-      "Chance of bonus enhancement": 0.05,
+      "Chance of bonus enhancement": 0.025,
       "Hero Cooldown": 1
     },
     "10": {
       "Damage": 59,
-      "Chance of bonus enhancement": 0.075,
+      "Chance of bonus enhancement": 0.0375,
       "Hero Cooldown": 1.5
     },
     "11": {
       "Damage": 86,
-      "Chance of bonus enhancement": 0.1,
+      "Chance of bonus enhancement": 0.05,
       "Hero Cooldown": 2
     },
     "12": {
       "Damage": 116,
-      "Chance of bonus enhancement": 0.125,
+      "Chance of bonus enhancement": 0.0625,
       "Hero Cooldown": 2.5
     },
     "13": {
       "Damage": 150,
-      "Chance of bonus enhancement": 0.15,
+      "Chance of bonus enhancement": 0.075,
       "Hero Cooldown": 3
     },
     "14": {
       "Damage": 190,
-      "Chance of bonus enhancement": 0.175,
+      "Chance of bonus enhancement": 0.0875,
       "Hero Cooldown": 3.5
     },
     "15": {
       "Damage": 235,
-      "Chance of bonus enhancement": 0.2,
+      "Chance of bonus enhancement": 0.1,
       "Hero Cooldown": 4
     },
     "Base": {
       "Damage": 114,
       "Attack Interval": 1,
-      "Chance of bonus enhancement": 0.2,
+      "Generate mana": 70,
+      "Charges for rank increase": 4,
+      "Chance of bonus enhancement": 0.1,
+      "Recharge": 15,
       "Hero Cooldown": 4
     }
   },
@@ -78,22 +81,14 @@
     "1": {
       "Damage": 0
     },
-    "2": {
-      "Damage": 20
-    },
-    "3": {
-      "Damage": 40
-    },
-    "4": {
-      "Damage": 60
-    },
-    "5": {
-      "Damage": 80
-    },
+    "2": {},
     "Base": {
       "Damage": 114,
       "Attack Interval": 1,
-      "Chance of bonus enhancement": 0.2,
+      "Generate mana": 70,
+      "Charges for rank increase": 4,
+      "Chance of bonus enhancement": 0.1,
+      "Recharge": 15,
       "Hero Cooldown": 4
     }
   },
@@ -122,7 +117,10 @@
     "Base": {
       "Damage": 114,
       "Attack Interval": 1,
-      "Chance of bonus enhancement": 0.2,
+      "Generate mana": 70,
+      "Charges for rank increase": 4,
+      "Chance of bonus enhancement": 0.1,
+      "Recharge": 15,
       "Hero Cooldown": 4
     }
   },

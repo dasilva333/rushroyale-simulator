@@ -120,12 +120,12 @@
       "Damage": 300
     },
     "Base": {
-      "Damage": 215,
+      "Damage": 275,
       "Attack Interval": 1,
       "Minimum boost": 2,
       "Maximum boost": 4.5,
       "Attack speed increase": 1.5,
-      "Hero cooldown": 1.7
+      "Hero cooldown": 4
     }
   },
   "MergeRanks": {
@@ -151,12 +151,12 @@
       "Attack Interval": -0.86
     },
     "Base": {
-      "Damage": 215,
+      "Damage": 275,
       "Attack Interval": 1,
       "Minimum boost": 2,
       "Maximum boost": 4.5,
       "Attack speed increase": 1.5,
-      "Hero cooldown": 1.7
+      "Hero cooldown": 4
     }
   },
   "SpecialAbilities": {}

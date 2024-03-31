@@ -5,7 +5,7 @@
     "Faction": "Kingdom of Light",
     "UnitType": "Damage",
     "Target": "First",
-    "Arena": 12,
+    "Arena": "League 1",
     "AoE": "No",
     "Lv": [
       7,

@@ -28,9 +28,11 @@ function parseTable(startRow, data, unitJson) {
 }
 
 // General function to parse any unit sheet
-function parseUnitSheet(sheetName) {
+function parseUnitSheet(unitName) {
+    const sheetName = Object.keys(workbook.Sheets).find(sheet => sheet.includes(unitName));
     const worksheet = workbook.Sheets[sheetName];
     const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    console.log('parsing sheetName', sheetName);
 
     let unitJson = {
         "UnitInfo": {
@@ -57,15 +59,15 @@ function parseUnitSheet(sheetName) {
 
     const baseRow = 6;
     // Parse Levels
-    console.log('parsing levels');
+    // console.log('parsing levels');
     unitJson.Levels = parseTable(baseRow, data, unitJson);
     // // Parse ManaLevels
-    console.log('parsing mana levels');
+    // console.log('parsing mana levels');
     const manaLevelsRow = baseRow + 4 + (unitJson.UnitInfo.Lv[1] - unitJson.UnitInfo.Lv[0]);
-    console.log('manaLevelsRow', manaLevelsRow);
+    // console.log('manaLevelsRow', manaLevelsRow);
     unitJson.ManaLevels = parseTable(manaLevelsRow, data, unitJson);
     // // Parse MergeRanks
-    console.log('parsing merge ranks at ', manaLevelsRow);
+    // console.log('parsing merge ranks at ', manaLevelsRow);
     unitJson.MergeRanks = parseTable(manaLevelsRow + 8, data, unitJson);
 
     // Unit specific parsing based on the sheet name
@@ -84,7 +86,7 @@ function parseUnitSheet(sheetName) {
 }
 
 // Read the Excel file
-const workbook = XLSX.readFile('./Copy of Unit stats (22.0) - from Oct 27, 2023.xlsx');
+const workbook = XLSX.readFile('./Unit stats (24.0) - 20240312.xlsx');
 
 // Define an array of sheet names to parse
 const sheetNames = [
@@ -114,8 +116,11 @@ const sheetNames = [
 
 // Iterate over the array of sheet names and parse each one
 sheetNames.forEach(sheetName => {
-    console.log('parsing', sheetName);
-    const unitJson = parseUnitSheet(sheetName);
-    // Write JSON to a file named after the unit
-    fs.writeFileSync(`../src/data/tontoro/${sheetName.replace(/ /g,'_').toLowerCase()}.json`, JSON.stringify(unitJson, null, 2));
+    try {
+        const unitJson = parseUnitSheet(sheetName);
+        // Write JSON to a file named after the unit
+        fs.writeFileSync(`../src/data/tontoro/${sheetName.replace(/ /g,'_').toLowerCase()}.json`, JSON.stringify(unitJson, null, 2));
+    } catch(e){
+        console.log(e);
+    }
 });

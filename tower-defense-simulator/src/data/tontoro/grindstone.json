@@ -28,68 +28,68 @@
       "Hero Cooldown": 0
     },
     "4": {
-      "Damage (single target)": 14,
+      "Damage (single target)": 16,
       "Damage (multiple target)": 3,
       "Hero Cooldown": 0.5
     },
     "5": {
-      "Damage (single target)": 30,
-      "Damage (multiple target)": 6,
+      "Damage (single target)": 35,
+      "Damage (multiple target)": 7,
       "Hero Cooldown": 1
     },
     "6": {
-      "Damage (single target)": 48,
-      "Damage (multiple target)": 10,
+      "Damage (single target)": 56,
+      "Damage (multiple target)": 11,
       "Hero Cooldown": 1.5
     },
     "7": {
-      "Damage (single target)": 68,
-      "Damage (multiple target)": 14,
+      "Damage (single target)": 81,
+      "Damage (multiple target)": 16,
       "Hero Cooldown": 2
     },
     "8": {
-      "Damage (single target)": 91,
-      "Damage (multiple target)": 18,
+      "Damage (single target)": 109,
+      "Damage (multiple target)": 22,
       "Hero Cooldown": 2.5
     },
     "9": {
-      "Damage (single target)": 117,
-      "Damage (multiple target)": 24,
+      "Damage (single target)": 142,
+      "Damage (multiple target)": 29,
       "Hero Cooldown": 3
     },
     "10": {
-      "Damage (single target)": 146,
-      "Damage (multiple target)": 29,
+      "Damage (single target)": 180,
+      "Damage (multiple target)": 36,
       "Hero Cooldown": 3.5
     },
     "11": {
-      "Damage (single target)": 179,
-      "Damage (multiple target)": 36,
+      "Damage (single target)": 223,
+      "Damage (multiple target)": 45,
       "Hero Cooldown": 4
     },
     "12": {
-      "Damage (single target)": 217,
-      "Damage (multiple target)": 44,
+      "Damage (single target)": 272,
+      "Damage (multiple target)": 55,
       "Hero Cooldown": 4.5
     },
     "13": {
-      "Damage (single target)": 259,
-      "Damage (multiple target)": 52,
+      "Damage (single target)": 330,
+      "Damage (multiple target)": 67,
       "Hero Cooldown": 5
     },
     "14": {
-      "Damage (single target)": 307,
-      "Damage (multiple target)": 62,
+      "Damage (single target)": 395,
+      "Damage (multiple target)": 80,
       "Hero Cooldown": 5.5
     },
     "15": {
-      "Damage (single target)": 361,
-      "Damage (multiple target)": 72,
+      "Damage (single target)": 471,
+      "Damage (multiple target)": 95,
       "Hero Cooldown": 6
     },
     "Base": {
       "Damage (single target)": 108,
-      "Damage (multiple target)": 21,
+      "Damage (multiple target)": 22,
       "Hero Cooldown": 2
     }
   },
@@ -99,24 +99,24 @@
       "Damage (multiple target)": 0
     },
     "2": {
-      "Damage (single target)": 50,
-      "Damage (multiple target)": 10
+      "Damage (single target)": 40,
+      "Damage (multiple target)": 8
     },
     "3": {
-      "Damage (single target)": 100,
-      "Damage (multiple target)": 20
+      "Damage (single target)": 80,
+      "Damage (multiple target)": 16
     },
     "4": {
-      "Damage (single target)": 150,
-      "Damage (multiple target)": 30
+      "Damage (single target)": 120,
+      "Damage (multiple target)": 24
     },
     "5": {
-      "Damage (single target)": 200,
-      "Damage (multiple target)": 40
+      "Damage (single target)": 160,
+      "Damage (multiple target)": 32
     },
     "Base": {
       "Damage (single target)": 108,
-      "Damage (multiple target)": 21,
+      "Damage (multiple target)": 22,
       "Hero Cooldown": 2
     }
   },
@@ -131,27 +131,27 @@
     },
     "3": {
       "Damage (single target)": 108,
-      "Damage (multiple target)": 21
+      "Damage (multiple target)": 22
     },
     "4": {
       "Damage (single target)": 162,
-      "Damage (multiple target)": 32
+      "Damage (multiple target)": 33
     },
     "5": {
       "Damage (single target)": 216,
-      "Damage (multiple target)": 42
+      "Damage (multiple target)": 44
     },
     "6": {
       "Damage (single target)": 270,
-      "Damage (multiple target)": 53
+      "Damage (multiple target)": 55
     },
     "7": {
       "Damage (single target)": 324,
-      "Damage (multiple target)": 63
+      "Damage (multiple target)": 66
     },
     "Base": {
       "Damage (single target)": 108,
-      "Damage (multiple target)": 21,
+      "Damage (multiple target)": 22,
       "Hero Cooldown": 2
     }
   },

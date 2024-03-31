@@ -31,7 +31,7 @@
       "Hero cooldown": 0
     },
     "8": {
-      "Damage": 27,
+      "Damage": 29,
       "Attack Interval": 0,
       "Attack speed increase": 0,
       "Damage increase": 0,
@@ -39,7 +39,7 @@
       "Hero cooldown": 0.5
     },
     "9": {
-      "Damage": 58,
+      "Damage": 64,
       "Attack Interval": 0,
       "Attack speed increase": 0,
       "Damage increase": 0,
@@ -47,7 +47,7 @@
       "Hero cooldown": 1
     },
     "10": {
-      "Damage": 97,
+      "Damage": 107,
       "Attack Interval": 0,
       "Attack speed increase": 0,
       "Damage increase": 0,
@@ -55,7 +55,7 @@
       "Hero cooldown": 1.5
     },
     "11": {
-      "Damage": 142,
+      "Damage": 159,
       "Attack Interval": 0,
       "Attack speed increase": 0,
       "Damage increase": 0,
@@ -63,7 +63,7 @@
       "Hero cooldown": 2
     },
     "12": {
-      "Damage": 197,
+      "Damage": 222,
       "Attack Interval": 0,
       "Attack speed increase": 0,
       "Damage increase": 0,
@@ -71,7 +71,7 @@
       "Hero cooldown": 2.5
     },
     "13": {
-      "Damage": 263,
+      "Damage": 299,
       "Attack Interval": 0,
       "Attack speed increase": 0,
       "Damage increase": 0,
@@ -79,7 +79,7 @@
       "Hero cooldown": 3
     },
     "14": {
-      "Damage": 343,
+      "Damage": 393,
       "Attack Interval": 0,
       "Attack speed increase": 0,
       "Damage increase": 0,
@@ -87,7 +87,7 @@
       "Hero cooldown": 3.5
     },
     "15": {
-      "Damage": 438,
+      "Damage": 507,
       "Attack Interval": 0,
       "Attack speed increase": 0,
       "Damage increase": 0,
@@ -100,7 +100,7 @@
       "Attack speed increase": 1,
       "Damage increase": 3.5,
       "Increased damage against bosses": 5.5,
-      "Enrage change": 0.1,
+      "Enrage change": 0.15,
       "Hero cooldown": 4
     }
   },
@@ -126,7 +126,7 @@
       "Attack speed increase": 1,
       "Damage increase": 3.5,
       "Increased damage against bosses": 5.5,
-      "Enrage change": 0.1,
+      "Enrage change": 0.15,
       "Hero cooldown": 4
     }
   },
@@ -158,7 +158,7 @@
       "Attack speed increase": 1,
       "Damage increase": 3.5,
       "Increased damage against bosses": 5.5,
-      "Enrage change": 0.1,
+      "Enrage change": 0.15,
       "Hero cooldown": 4
     }
   },

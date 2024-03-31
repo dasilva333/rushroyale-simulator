@@ -56,7 +56,7 @@
       "Critical damage chance": 0.05,
       "Damage increase per sacrifice": 0.05,
       "Sacrifice buff duration": 10,
-      "Sacrifice cooldown": 20
+      "Sacrifice cooldown": 15
     }
   },
   "ManaLevels": {
@@ -69,7 +69,7 @@
       "Critical damage chance": 0.05,
       "Damage increase per sacrifice": 0.05,
       "Sacrifice buff duration": 10,
-      "Sacrifice cooldown": 20
+      "Sacrifice cooldown": 15
     }
   },
   "MergeRanks": {
@@ -108,7 +108,7 @@
       "Critical damage chance": 0.05,
       "Damage increase per sacrifice": 0.05,
       "Sacrifice buff duration": 10,
-      "Sacrifice cooldown": 20
+      "Sacrifice cooldown": 15
     }
   },
   "SpecialAbilities": {}

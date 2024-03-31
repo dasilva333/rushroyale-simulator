@@ -5,6 +5,8 @@
     "Faction": "Technogenic Society",
     "UnitType": "Damage",
     "Target": "First",
+    "Arena": 2,
+    "AoE": "No",
     "Lv": [
       5,
       15
